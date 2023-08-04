@@ -3,7 +3,7 @@
 - [ ]ER diagram of the database![\[](https://iili.io/HtJyKsn.png) 
 
 
-- [ ] Table scripts 
+- [ ] Table scripts[/src/main/resources/db/migration/Queries.sql]
 
 ## Project Setup
 
