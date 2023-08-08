@@ -10,22 +10,24 @@ import in.fssa.minimal.model.User;
 import in.fssa.minimal.service.UserService;
 
 public class TestCreateUser {
+	
 	@Test
-	public void testCreateUserWithValidataInput() {
-		UserService userService = new UserService();
-		User newUser = new User();
-		newUser.setName("Sam");
-		newUser.setEmail("sam@gmail.com");
-		newUser.setPassword("Sam@2303");
-		newUser.setPhoneNumber(9923456787L);
-		newUser.setDesigner(false);
-		assertDoesNotThrow(() -> {
-			userService.create(newUser);
-		});
-	}
+    public void testCreateUserWithValidInput() {
+        UserService userService = new UserService();
+        User newUser = new User();
+        newUser.setName("Sam");
+        newUser.setEmail("sam@gmail.com");
+        newUser.setPassword("Sam@2303");
+        newUser.setPhoneNumber(9923456787L);
+        newUser.setDesigner(false);
+
+        assertDoesNotThrow(() -> {
+            userService.create(newUser);
+        });
+    }
 
 	@Test
-	public void testCreateUserWithInvalidataInput() {
+	public void testCreateUserWithInvalidInput() {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.create(null);
@@ -147,7 +149,27 @@ public class TestCreateUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.create(newUser);
 		});
-		String expectedMessage = "Email cannot be null or empty";
+		String expectedMessage = "Email doesn't match the pattern";
+		String actualMessage = exception.getMessage();
+
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	
+	@Test
+	public void testCreateUserWithEmailExists() {
+		UserService userService = new UserService();
+
+		User newUser = new User();
+		newUser.setName("Sesslyn");
+		newUser.setEmail("sesslyn@gmail.com");
+		newUser.setPassword("Sess@1512");
+		newUser.setPhoneNumber(6381040916L);
+		newUser.setDesigner(false);
+
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			userService.create(newUser);
+		});
+		String expectedMessage = "Email already exists";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -208,60 +230,60 @@ public class TestCreateUser {
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 	@Test
-	public void testCreateUserWithPhoneNumberZero() {
+	public void testCreateUserWithPasswordLength() {
 		UserService userService = new UserService();
 		User newUser = new User();
 		newUser.setName("Sam");
 		newUser.setEmail("sam@gmail.com");
-		newUser.setPassword("Sam@2303");
-		newUser.setPhoneNumber(0);
+		newUser.setPassword("Sam23");
+		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
 		Exception exception = assertThrows(Exception.class, () -> {
 			userService.create(newUser);
 		});
-		String expectedMessage = "PhoneNumber doesn't match the length";
+		String expectedMessage = "Password doesn't match the length";
 		String actualMessage = exception.getMessage();
-
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
+	
+	  @Test
+	    public void testCreateUserWithAllZeroPhoneNumber() {
+		  UserService userService = new UserService();
+	        User newUser = new User();
+	        newUser.setName("Sam");
+	        newUser.setEmail("sam@gmail.com");
+	        newUser.setPassword("Sam@2303");
+	        newUser.setPhoneNumber(0L);
+	        newUser.setDesigner(false);
+
+	        ValidationException exception = assertThrows(ValidationException.class, () -> {
+	            userService.create(newUser);
+	        });
+
+	        String expectedMessage = "PhoneNumber doesn't match the length";
+	        String actualMessage = exception.getMessage();
+
+	        assertTrue(expectedMessage.equals(actualMessage));
+	    }
 
 	@Test
-	public void testCreateUserWithPhoneNumberAllNumberZero() {
-		UserService userService = new UserService();
-		User newUser = new User();
-		newUser.setName("Sam");
-		newUser.setEmail("sam@gmail.com");
-		newUser.setPassword("Sam@2303");
-		newUser.setPhoneNumber(0000000000L);
-		newUser.setDesigner(false);
+    public void testCreateUserWithInvalidPhoneNumber() {
+        UserService userService = new UserService();
+        User newUser = new User();
+        newUser.setName("Sam");
+        newUser.setEmail("sam@gmail.com");
+        newUser.setPassword("Sam@2303");
+        newUser.setPhoneNumber(3895673456L);
+        newUser.setDesigner(false);
 
-		Exception exception = assertThrows(Exception.class, () -> {
-			userService.create(newUser);
-		});
-		String expectedMessage = "PhoneNumber doesn't match the pattern";
-		String actualMessage = exception.getMessage();
+        ValidationException exception = assertThrows(ValidationException.class, () -> {
+            userService.create(newUser);
+        });
 
-		assertTrue(expectedMessage.equals(actualMessage));
-	}
+        String expectedMessage = "PhoneNumber doesn't match the pattern";
+        String actualMessage = exception.getMessage();
 
-	@Test
-	public void testCreateUserWithPhoneNumberStarWithLessThanFive() {
-		UserService userService = new UserService();
-		User newUser = new User();
-		newUser.setName("Sam");
-		newUser.setEmail("sam@gmail.com");
-		newUser.setPassword("Sam@2303");
-		newUser.setPhoneNumber(3895673456L);
-		newUser.setDesigner(false);
-
-		Exception exception = assertThrows(Exception.class, () -> {
-			userService.create(newUser);
-		});
-		String expectedMessage = "PhoneNumber doesn't match the pattern";
-		String actualMessage = exception.getMessage();
-
-		assertTrue(expectedMessage.equals(actualMessage));
-	}
-
+        assertTrue(expectedMessage.equals(actualMessage));
+    }
 }

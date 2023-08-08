@@ -3,6 +3,7 @@ package in.fssa.minimal.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import in.fssa.minimal.interfaces.AppointmentInterface;
 import in.fssa.minimal.model.Appointment;
@@ -14,7 +15,7 @@ public class AppointmentDAO implements AppointmentInterface{
         Connection conn = null;
         PreparedStatement ps = null;
         try {
-            String query = "INSERT INTO appointment (from_user, to_user, email, phone_number, status, date, time) VALUES (?,?,?,?,?,?,?)";
+        	 String query = "INSERT INTO appointment (from_user, to_user, email, phone_number, status, date, time, address) VALUES (?,?,?,?,?,?,?,?)";
             conn = ConnectionUtil.getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, newAppointment.getFromUser());  
@@ -28,6 +29,13 @@ public class AppointmentDAO implements AppointmentInterface{
 
             java.sql.Time time = java.sql.Time.valueOf(newAppointment.getTime());
             ps.setTime(7, time);
+            
+            if (newAppointment.getAddress() != null) {
+                ps.setString(8, newAppointment.getAddress());
+            } else {
+                ps.setNull(8, Types.VARCHAR);
+            }
+            
             
             ps.executeUpdate();
             System.out.println("Appointment has been created successfully");

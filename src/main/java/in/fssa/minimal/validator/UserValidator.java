@@ -37,21 +37,25 @@ public class UserValidator {
 
 	public static void validatePassword(String password) throws ValidationException {
 		StringUtil.rejectIfInvalidString(password, "Password");
+		 if (password.length() != 8) {
+		        throw new ValidationException("Password doesn't match the length");
+		    }
+
 		if (!Pattern.matches(PASSWORD_PATTERN, password)) {
 			throw new ValidationException("Password doesn't match the pattern");
 		}
 	}
 
 	public static void validatePhoneNumber(long phoneNumber) throws ValidationException {
-		String phoneNumberStr = String.valueOf(phoneNumber);
+	    String phoneNumberStr = String.valueOf(phoneNumber);
 
-		if (phoneNumberStr.length() != 10) {
-			throw new ValidationException("PhoneNumber doesn't match the length");
-		}
+	    if (phoneNumberStr.length() != 10) {
+	        throw new ValidationException("PhoneNumber doesn't match the length");
+	    }
 
-		if (phoneNumber <= 6000000001L && phoneNumber >= 9999999999L) {
-			throw new ValidationException("PhoneNumber doesn't match the pattern");
-		}
+	    if (phoneNumber < 6000000000L || phoneNumber >= 10000000000L) {
+	        throw new ValidationException("PhoneNumber doesn't match the pattern");
+	    }
 	}
 
 	public static void validateId(int id) throws ValidationException{
