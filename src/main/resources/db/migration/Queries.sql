@@ -82,12 +82,18 @@ SELECT u.id, u.name, u.email, u.phone_number, a.email,a.phone_number,a.status, a
 FROM users u
 JOIN appointment a ON u.id = a.to_user
 WHERE u.is_designer = 1;
+-- to_user user.email, users.phonenumber,user.name, from_user user.name and appointment full row
+-- from_user = id
 
 -- approved appointment
 SELECT u.id, u.name, u.email, u.phone_number, a.email,a.phone_number,a.status, a.date, a.time, a.address
 FROM users u
 JOIN appointment a ON u.id = a.to_user
 WHERE u.is_designer = 1 AND a.status = 'approved';
+select * from (select * from users) a, (select * from appointment) b where a.id=b.from_user;
+
+select * from (select a.id,a.name,a.email,a.password from (select * from users) a, (select * from appointment) b 
+where a.id=b.from_user) c where c.id=3;
 
 -- rejected appointment
 SELECT u.id, u.name, u.email, u.phone_number, a.email,a.phone_number,a.status, a.date, a.time, a.address
@@ -103,3 +109,38 @@ WHERE u.is_designer = 1 AND a.status = 'waiting_list';
 
 SELECT *
 FROM appointment;
+
+CREATE TABLE IF NOT EXISTS styles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  is_active boolean DEFAULT true
+);
+
+CREATE TABLE IF NOT EXISTS assets (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  asset_url VARCHAR(500) NOT NULL,
+  is_active boolean DEFAULT true
+);
+
+CREATE TABLE IF NOT EXISTS designs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  description VARCHAR(5000) NOT NULL,
+  location VARCHAR(200) NOT NULL,
+  style_id INT NOT NULL,
+  created_by INT NOT NULL,
+  is_active boolean DEFAULT true,
+  FOREIGN KEY (style_id) REFERENCES styles (id),
+  FOREIGN KEY (created_by) REFERENCES users (id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS design_assets (
+   id INT AUTO_INCREMENT PRIMARY KEY,
+   designer_id INT NOT NULL,
+   assets_id INT NOT NULL,
+    is_active boolean DEFAULT true,
+   FOREIGN KEY (designer_id) REFERENCES designs (created_by),
+   FOREIGN KEY (assets_id) REFERENCES assets (id)
+);

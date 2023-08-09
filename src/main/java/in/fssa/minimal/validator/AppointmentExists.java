@@ -60,5 +60,28 @@ public class AppointmentExists {
 	        ConnectionUtil.close(conn, pre, rs);
 	    }
 	}
+	
+	public static void checkIdExists(int id) throws ValidationException {
+		Connection conn = null;
+		PreparedStatement pre = null;
+		ResultSet rs = null;
+
+		try {
+			String query = "Select * From appointment Where id = ?";
+			conn = ConnectionUtil.getConnection();
+			pre = conn.prepareStatement(query);
+			pre.setInt(1, id);
+			rs = pre.executeQuery();
+			if (!rs.next()) {
+				throw new ValidationException("Id doesn't exist");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new RuntimeException();
+		} finally {
+			ConnectionUtil.close(conn, pre, rs);
+		}
+	}
 
 }

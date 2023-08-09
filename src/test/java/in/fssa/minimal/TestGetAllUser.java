@@ -10,6 +10,7 @@ import in.fssa.minimal.model.User;
 import in.fssa.minimal.service.UserService;
 
 public class TestGetAllUser {
+	
 	@Test
 	public void getAllUser() {
 		UserService userService = new UserService();
@@ -20,7 +21,7 @@ public class TestGetAllUser {
 	@Test
 	public void getUserById() throws ValidationException {
 		UserService userService = new UserService();
-		User arr = userService.findById(2);
+		User arr = userService.findById(4);
 		System.out.println(arr);
 	}
 

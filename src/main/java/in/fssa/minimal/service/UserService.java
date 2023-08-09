@@ -17,7 +17,7 @@ public class UserService {
 		return userList;
 	}
 
-	public User findById(int userId) throws ValidationException {
+	public static User findById(int userId) throws ValidationException {
 		UserValidator.validateId(userId);
 		UserExists.checkIdExists(userId);
 		UserDAO userDao = new UserDAO();
