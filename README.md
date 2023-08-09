@@ -1,9 +1,9 @@
 # Minimal Application Checklist
 ## Database Design
-- [ ]ER diagram of the database![\[](https://iili.io/HtJyKsn.png) 
+- [ ] ER diagram of the database![\[](https://iili.io/HttzUPf.png) 
 
 
-- [ ] Table scripts : [script](/src/main/resources/db/migration/Queries.sql)
+- [ ] Table scripts 
 
 ## Project Setup
 
@@ -50,7 +50,7 @@
    * Password does not match the pattern.
    * Phone number can not be less than or more than 10 digits.
    * Phone number does not match the pattern.
-   * User already exists  
+   * Email already exists  
    
  #### Flow: 
 ```mermaid
@@ -166,7 +166,7 @@ graph TD;
       * Check whether the Id exists
 
 #### Messages:
-* Id can not be less than xero
+* Id can not be less than zero
 * Id doesn't exists
       
  #### Flow: 
@@ -226,10 +226,10 @@ B --> C(Get all designer profiles from Database)
 ```mermaid  
 graph TD;  
 A(Value Passed to UserService - Id) --> B(Form Validation) -- Valid --> C(Business Validation)
-  B --Invalid --> G(Validation Exception)
+B --Invalid --> G(Validation Exception)
 C -- Valid --> D(Value Passed to UserDAO)  
 D --> E(Return user)  
-C -- Invalid --> F(Validation Exception)  
+C --> F(Validation Exception)  
 ```
 ## Module: Appointment 
 ### Table
@@ -241,11 +241,13 @@ C -- Invalid --> F(Validation Exception)
 > User can book appointment with a designer.
 
 #### Pre-requisites:
+
 - [ ]  appointment model
 - [ ]  appointment dao (create )
 - [ ]  appointment service ( create )
 
 #### Validations:
+
  - [ ]   Form Validation
  
       * appointment object null
@@ -253,7 +255,7 @@ C -- Invalid --> F(Validation Exception)
       *  to_user ( id <= 0 ) (Exists check in user table )
       * email ( null, empty, pattern )
       * phone number ( length, >= 600000001 && <= 9999999999 )
-       * status (waiting or approved or rejected)
+       * status (null, empty, waiting or approved or rejected)
        *  Date cannot be null
        * Date range cannot be past days , cannot be in future more than 3 months              and cannot be today 
        *  Time cannot be null 
@@ -261,6 +263,7 @@ C -- Invalid --> F(Validation Exception)
           
                      
   - [ ]   Business Validation
+  
        * Check whether the from_user exists in user table
        * Check whether the from_user has any appointment in upcoming days
        * Check whether the to_user exists and is_designer in user table
@@ -277,10 +280,9 @@ C -- Invalid --> F(Validation Exception)
 * Status can not be null or empty
 * Status does not match the pattern.
 * Date can not be null
-* Date can not be past or can not be in future more than 3 months.
-* Date should be in this format ( yyyy - MM - dd )
+* Due date cannot be before today, equal to today, or more than 90 days from today
 * Time can not be null
-* Time should be in the range of 8am between 8pm.
+* Time should be in the range between 8am and 8pm.
 * User doesn't exists
 * The appointment you have is yet to be completed. Please be patient.
 * Designer doesn't exists
@@ -341,29 +343,177 @@ graph TD;
 #### Validations:
 - [ ]  appointment validator
    * id <= 0
-    * appointment null
     * status ( null, empty)
     * status ( waiting list // rejected // approved )    
            
- - [ ]   Business Validation
-
-      * Check whether the to_user exists and is_designer  in user table
-      * Check whether the to_user has an appointment 
  
  #### Messages:
 * Designer id can not be less than zero
 * Status can not be null or empty
 * Status does not match the pattern.
-* Designer doesn't exists
-* The designer has an appointment scheduled at that specific time. 
+
          
  #### Flow: 
 
 ```mermaid
-graph TD;
-  A(Value Passed  to  appointmentService - Id, Status) --> B(Form Validation) -- Valid --> C(Business Validation)
-  B --Invalid --> G(Validation Exception)
+graph TD; 
+ A(Value Passed  to  appointmentService - Id / Status) --> B(Form Validation)
+  B--> C{Validation  Result}
   C -- Valid --> D(Value  Passed  to  appointmentDAO)
-  D --> E(Update value in Database)
+  D --> E(Retrieve value from Database)
+  C -- Invalid --> F(Validation Exception)
+```
+
+## Module: Style
+
+- [ ]  style table
+
+### Feature: Create Style
+
+> Admin can create a new style
+
+#### Pre-requisites:
+- [ ]  style model
+- [ ]   style DAO ( create )
+- [ ]  style service ( create )
+
+#### Validations:
+
+ - [ ]   Form Validation
+   * style null
+   * name ( null, empty, pattern )
+   
+  - [ ]   Business Validation
+         * Name Already exists 
+
+#### Messages:
+
+   * Style object can not be null.
+   * Name can not be null or empty.
+   * Name does not match the pattern.
+   * Name already exists  
+   
+ #### Flow: 
+```mermaid
+graph TD;
+  A(Value Passed to StyleService - Style Object) --> B(Form Validation) -- Valid --> C(Business Validation)
+  B --Invalid --> G(Validation Exception)
+  C-- Valid --> D(Value Passed to StyleDAO)
+  D --> E(Store Value in Database)
+  C -- Invalid --> F(Validation Exception)
+```
+
+### Feature: Update Style
+
+> Admin can update an existing style
+
+#### Pre-requisites:
+- [ ]   style DAO ( update )
+- [ ]  style service ( update )
+
+#### Validations:
+
+ - [ ]   Form Validation
+   * id ( <= 0 )
+   * name ( null, empty, pattern )
+   
+  - [ ]   Business Validation
+         * Id doesn't exists
+
+#### Messages:
+
+   * Id can't  be less than zero.
+   * Name can not be null or empty.
+   * Name does not match the pattern.
+   * Name already exists  
+   
+
+ #### Flow: 
+```mermaid
+graph TD;
+  A(Value Passed to StyleService - Id / Name) --> B(Form Validation) -- Valid --> C(Business Validation)
+  B --Invalid --> G(Validation Exception)
+  C-- Valid --> D(Value Passed to StyleDAO)
+  D --> E(Store Value in Database)
+  C -- Invalid --> F(Validation Exception)
+```
+
+### Feature: Delete Style 
+
+ >Admin can delete the style
+ 
+#### Pre-requisites:
+ - [ ]  style dao ( delete  )
+
+ - [ ]  style service ( delete )
+ 
+#### Validations:
+ - [ ]   Form Validation
+
+     * Id <= 0
+
+ - [ ]   Business Validation
+
+      * Check whether the Id exists
+
+#### Messages:
+
+* Id can not be less than zero
+* Id doesn't exists
+      
+
+ #### Flow: 
+```mermaid
+graph TD;
+  A(Value Passed to StyleService - Id) --> B(Form Validation) -- Valid --> C(Business Validation)
+  B --Invalid --> G(Validation Exception)
+  C-- Valid --> D(Value Passed to StyleDAO)
+  D --> E(Store Value in Database)
+  C -- Invalid --> F(Validation Exception)
+```
+
+### Feature: Create Designs
+
+> Designers can create a new designs or projects.
+
+#### Pre-requisites:
+- [ ]  designs model
+- [ ]   designs DAO ( create )
+- [ ]  designs service ( create )
+
+#### Validations:
+
+ - [ ]   Form Validation
+   * design null
+   * name ( null, empty, pattern )
+   * description ( null, empty )
+   * location ( null, empty, pattern )
+   * style Id ( <= 0 )
+   * created by ( <= 0  ) 
+   
+  - [ ]   Business Validation
+         * Check style id exists in style table
+         * Check created by exists in users table as designer
+
+#### Messages:
+
+   * Design object can not be null.
+   * Name can not be null or empty.
+   * Name does not match the pattern.
+   * Description can not be null or empty.
+   * Location can not be null or empty.
+   * Location does not match the pattern.
+   * Style Id can't be less than zero.
+   * Created By Id can't be less than zero.
+   * Style Id doesn't exist.
+   * Designers doesn't exist.
+   
+ #### Flow: 
+```mermaid
+graph TD;
+  A(Value Passed to StyleService - Design Object) --> B(Form Validation) -- Valid --> C(Business Validation)
+  B --Invalid --> G(Validation Exception)
+  C-- Valid --> D(Value Passed to Design DAO)
+  D --> E(Store Value in Database)
   C -- Invalid --> F(Validation Exception)
 ```
