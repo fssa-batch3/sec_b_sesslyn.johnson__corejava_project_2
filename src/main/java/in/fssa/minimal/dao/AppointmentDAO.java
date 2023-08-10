@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import in.fssa.minimal.dto.AppointmentRespondDto;
+import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.interfaces.AppointmentInterface;
 import in.fssa.minimal.model.Appointment;
@@ -24,7 +25,7 @@ import in.fssa.minimal.util.ConnectionUtil;
 
 public class AppointmentDAO {
 	
-	public void create(Appointment newAppointment) {
+	public void create(Appointment newAppointment) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
@@ -55,13 +56,13 @@ public class AppointmentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps);
 		}
 	}
 
-	public Set<AppointmentRespondDto> findAll() throws ValidationException {
+	public Set<AppointmentRespondDto> findAll() throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -100,14 +101,14 @@ public class AppointmentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
 		}
 		return appointmentList;
 	}
 
-	public Set<AppointmentRespondDto> findAllByStatus(String status) throws ValidationException {
+	public Set<AppointmentRespondDto> findAllByStatus(String status) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -147,7 +148,7 @@ public class AppointmentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
 		}
@@ -155,7 +156,7 @@ public class AppointmentDAO {
 	}
 
 	
-	public AppointmentRespondDto findById(int id) throws ValidationException {
+	public AppointmentRespondDto findById(int id) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -194,7 +195,7 @@ public class AppointmentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
 		}
@@ -202,7 +203,7 @@ public class AppointmentDAO {
 	}
 	
 
-	public void updateRequestStatus(int id, String status) {
+	public void updateRequestStatus(int id, String status) throws PersistenceException {
 	    Connection conn = null;
 	    PreparedStatement ps = null;
 	    try {
@@ -216,7 +217,7 @@ public class AppointmentDAO {
 		    } catch (SQLException e) {
 		        e.printStackTrace();
 		        System.out.println(e.getMessage());
-		        throw new RuntimeException(e);
+		        throw new PersistenceException(e);
 		    } finally {
 		        ConnectionUtil.close(conn, ps, null);
 		    }

@@ -112,15 +112,15 @@ FROM appointment;
 
 CREATE TABLE IF NOT EXISTS styles (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(50) NOT NULL,
-  is_active boolean DEFAULT true
+  name VARCHAR(50) NOT NULL
 );
+
 
 CREATE TABLE IF NOT EXISTS assets (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  asset_url VARCHAR(500) NOT NULL,
-  is_active boolean DEFAULT true
+  asset_url VARCHAR(500) NOT NULL
 );
+
 
 CREATE TABLE IF NOT EXISTS designs (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -129,18 +129,18 @@ CREATE TABLE IF NOT EXISTS designs (
   location VARCHAR(200) NOT NULL,
   style_id INT NOT NULL,
   created_by INT NOT NULL,
-  is_active boolean DEFAULT true,
   FOREIGN KEY (style_id) REFERENCES styles (id),
   FOREIGN KEY (created_by) REFERENCES users (id),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+
 CREATE TABLE IF NOT EXISTS design_assets (
    id INT AUTO_INCREMENT PRIMARY KEY,
-   designer_id INT NOT NULL,
+   design_id INT NOT NULL,
    assets_id INT NOT NULL,
     is_active boolean DEFAULT true,
-   FOREIGN KEY (designer_id) REFERENCES designs (created_by),
+   FOREIGN KEY (design_id) REFERENCES designs (id),
    FOREIGN KEY (assets_id) REFERENCES assets (id)
 );

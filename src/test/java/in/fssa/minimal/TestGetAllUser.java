@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
 import org.junit.jupiter.api.Test;
+
+import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.User;
 import in.fssa.minimal.service.UserService;
@@ -12,14 +14,14 @@ import in.fssa.minimal.service.UserService;
 public class TestGetAllUser {
 	
 	@Test
-	public void getAllUser() {
+	public void getAllUser() throws PersistenceException {
 		UserService userService = new UserService();
 		Set<User> arr = userService.getAll();
 		System.out.println(arr);
 	}
 
 	@Test
-	public void getUserById() throws ValidationException {
+	public void getUserById() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
 		User arr = userService.findById(4);
 		System.out.println(arr);
@@ -38,7 +40,7 @@ public class TestGetAllUser {
 	}
 	
 	@Test
-	public void getUserByEmailId() throws ValidationException {
+	public void getUserByEmailId() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
 		User arr = userService.findByEmail("sesslyn@gmail.com");
 		System.out.println(arr);
@@ -57,7 +59,7 @@ public class TestGetAllUser {
 	}
 
 	@Test
-	public void testUpdateUser() throws ValidationException {
+	public void testUpdateUser() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
 		User newUser = new User();
 		newUser.setName("Sess");
@@ -68,7 +70,7 @@ public class TestGetAllUser {
 	}
 	
 	@Test
-	public void testUpdateSpecificFields() throws ValidationException {
+	public void testUpdateSpecificFields() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
 		User newUser = new User();
 		newUser.setPassword("Sess@2608");
@@ -92,7 +94,7 @@ public class TestGetAllUser {
 	}
 	
 	@Test
-	public void testDeleteUser() throws ValidationException {
+	public void testDeleteUser() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
 		userService.delete(4);
 	}
@@ -111,14 +113,14 @@ public class TestGetAllUser {
 
 	
 	@Test
-	public void getAllDesigner() {
+	public void getAllDesigner() throws PersistenceException {
 		UserService userService = new UserService();
 		Set<User> arr = userService.getAllDesigner();
 		System.out.println(arr);
 	}
 
 	@Test
-	public void getDesignerById() throws ValidationException {
+	public void getDesignerById() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
 		User arr = userService.findDesignerById(4);
 		System.out.println(arr);

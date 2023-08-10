@@ -9,13 +9,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.interfaces.UserInterface;
 import in.fssa.minimal.model.User;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class UserDAO implements UserInterface{
 	@Override
-	public Set<User> findAll() throws RuntimeException {
+	public Set<User> findAll() throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -39,7 +40,7 @@ public class UserDAO implements UserInterface{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
 		}
@@ -47,7 +48,7 @@ public class UserDAO implements UserInterface{
 	}
 
 	@Override
-	public User findById(int userId) {
+	public User findById(int userId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -71,7 +72,7 @@ public class UserDAO implements UserInterface{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
 		}
@@ -79,7 +80,7 @@ public class UserDAO implements UserInterface{
 	}
 
 	@Override
-	public User findByEmail(String email) {
+	public User findByEmail(String email) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -103,7 +104,7 @@ public class UserDAO implements UserInterface{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
 		}
@@ -111,7 +112,7 @@ public class UserDAO implements UserInterface{
 	}
 	
 	@Override
-	public void create(User newUser) {
+	public void create(User newUser) throws PersistenceException {
 		    Connection conn = null;
 		    PreparedStatement ps = null;
 		    try {
@@ -129,14 +130,14 @@ public class UserDAO implements UserInterface{
 		    } catch (SQLException e) {
 		        e.printStackTrace();
 		        System.out.println(e.getMessage());
-		        throw new RuntimeException(e);
+		        throw new PersistenceException(e);
 		    } finally {
 		        ConnectionUtil.close(conn, ps);
 		    }
 	}
 
 	@Override
-	public void update(int id, User updatedUser) {
+	public void update(int id, User updatedUser) throws PersistenceException {
 	    Connection conn = null;
 	    PreparedStatement ps = null;
 	    try {
@@ -181,13 +182,13 @@ public class UserDAO implements UserInterface{
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e);
+	        throw new PersistenceException(e);
 	    } finally {
 	        ConnectionUtil.close(conn, ps, null);
 	    }
 	}
 
-	private Boolean getDesignerValueFromDatabase(int userId) {
+	private Boolean getDesignerValueFromDatabase(int userId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -204,7 +205,7 @@ public class UserDAO implements UserInterface{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
 		}
@@ -213,7 +214,7 @@ public class UserDAO implements UserInterface{
 	}
 
 	@Override
-	public void delete(int userId) {
+	public void delete(int userId) throws PersistenceException {
 		 Connection conn = null;
 		    PreparedStatement ps = null;
 		    try {
@@ -226,7 +227,7 @@ public class UserDAO implements UserInterface{
 		    } catch (SQLException e) {
 		        e.printStackTrace();
 		        System.out.println(e.getMessage());
-		        throw new RuntimeException(e);
+		        throw new PersistenceException(e);
 		    } finally {
 		        ConnectionUtil.close(conn, ps, null);
 		    }
@@ -235,7 +236,7 @@ public class UserDAO implements UserInterface{
 	
 
 	@Override
-    public Set<User> findAllDesigner() throws RuntimeException {
+    public Set<User> findAllDesigner() throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -259,7 +260,7 @@ public class UserDAO implements UserInterface{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
 		}
@@ -267,7 +268,7 @@ public class UserDAO implements UserInterface{
 	}
 	
 	@Override
-	public User findDesignerById(int userId) {
+	public User findDesignerById(int userId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -291,7 +292,7 @@ public class UserDAO implements UserInterface{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
 		}

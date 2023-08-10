@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import in.fssa.minimal.dto.AppointmentRespondDto;
+import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.User;
 import in.fssa.minimal.service.AppointmentService;
@@ -12,13 +13,13 @@ import in.fssa.minimal.service.UserService;
 
 public class TestGetAllAppointment {
 	@Test
-	public void getAllAppointment() throws ValidationException {
+	public void getAllAppointment() throws ValidationException, PersistenceException {
 		AppointmentService appService = new AppointmentService();
 		Set<AppointmentRespondDto> arr = appService.getAll();
 	}
 
 	@Test
-	public void getAllByStatus() throws ValidationException {
+	public void getAllByStatus() throws ValidationException, PersistenceException {
 		AppointmentService appService = new AppointmentService();
 		Set<AppointmentRespondDto> arr = appService.getAllByStatus("approved");
 	}
@@ -60,14 +61,14 @@ public class TestGetAllAppointment {
 	}
 
 	@Test
-	public void getAppointmentById() throws ValidationException {
+	public void getAppointmentById() throws ValidationException, PersistenceException {
 		AppointmentService appService = new AppointmentService();
 		AppointmentRespondDto arr = appService.findById(2);
 		System.out.println(arr);
 	}
 
 	@Test
-	public void testUpdateUser() throws ValidationException {
+	public void testUpdateUser() throws ValidationException, PersistenceException {
 		AppointmentService appService = new AppointmentService();
 		appService.updateRequestStatus(1, "approved");
 	}
@@ -98,7 +99,7 @@ public class TestGetAllAppointment {
 	public void testUpdateUserWithStatusPattern() throws ValidationException {
 		AppointmentService appService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			appService.updateRequestStatus(1, "completed");
+			appService.updateRequestStatus(1, "rejected");
 		});
 		String expectedMessage = "Status doesn't match the expected values";
 		String actualMessage = exception.getMessage();

@@ -61,6 +61,14 @@ public class AppointmentValidator {
 			throw new ValidationException("Status doesn't match the expected values");
 		}
 	}
+	public static void validateUpdateStatus(String status) throws ValidationException {
+		StringUtil.rejectIfInvalidString(status, "Status");
+		if ("approved".equalsIgnoreCase(status)) {
+			return;
+		} else {
+			throw new ValidationException("Status doesn't match the expected values");
+		}
+	}
 	public static void validateDate(String date) throws ValidationException {
 	    StringUtil.rejectIfInvalidString(date, "Date");
 	    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

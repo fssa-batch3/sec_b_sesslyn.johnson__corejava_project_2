@@ -1,11 +1,9 @@
 package in.fssa.minimal.interfaces;
 
-import java.util.Set;
-
-import in.fssa.minimal.exception.ValidationException;
+import in.fssa.minimal.exception.PersistenceException;
 
 public interface Base<T> {
-	public abstract <T> T findAll();
-	public abstract void create(T object);
-	public abstract <T> T findById(int id) ;
+	public abstract <T> T findAll() throws PersistenceException;
+	public abstract void create(T object) throws PersistenceException;
+	public abstract <T> T findById(int id) throws PersistenceException ;
 }
