@@ -1,6 +1,6 @@
 # Minimal Application Checklist
 ## Database Design
-- [ ] ER diagram of the database![\[](https://iili.io/HttzUPf.png) 
+- [ ] ER diagram of the database![\[](https://iili.io/HDJxCYu.png) 
 
 
 - [ ] Table scripts 
@@ -15,15 +15,28 @@
 	- [ ] JUnit, 
 	- [ ] Dotenv
 
+-   Appointment and Design Module
+ 	- [ ] List All Designer Profiles    
+    - [ ] Designer Profile Details  
+     - [ ] Book Now  
+     - [ ]  List All Designer's Appointment Requests  
+     - [ ] Update Request Status
+     - [ ] create new design
+     - [ ] list all designs
+     - [ ] list all user designs
+     - [ ] update design details
+     - [ ] update design assets
+     - [ ] delete design 
+
 ## Module: User 
 
-- [ ]  users table
 
 ### Feature: Create User
 
 >User can create a new account.
 
 #### Pre-requisites:
+- [ ]  users table
 - [ ]  user model
 - [ ]   user DAO ( create )
 - [ ]  user service ( create )
@@ -234,14 +247,12 @@ C --> F(Validation Exception)
 ## Module: Appointment 
 ### Table
 
-- [ ]  appointment table
-
 ### Feature: Book Now
 
 > User can book appointment with a designer.
 
 #### Pre-requisites:
-
+- [ ]  appointment table
 - [ ]  appointment model
 - [ ]  appointment dao (create )
 - [ ]  appointment service ( create )
@@ -364,119 +375,19 @@ graph TD;
   C -- Invalid --> F(Validation Exception)
 ```
 
-## Module: Style
 
-- [ ]  style table
+## Module: 	Designs
 
-### Feature: Create Style
 
-> Admin can create a new style
-
-#### Pre-requisites:
-- [ ]  style model
-- [ ]   style DAO ( create )
-- [ ]  style service ( create )
-
-#### Validations:
-
- - [ ]   Form Validation
-   * style null
-   * name ( null, empty, pattern )
-   
-  - [ ]   Business Validation
-         * Name Already exists 
-
-#### Messages:
-
-   * Style object can not be null.
-   * Name can not be null or empty.
-   * Name does not match the pattern.
-   * Name already exists  
-   
- #### Flow: 
-```mermaid
-graph TD;
-  A(Value Passed to StyleService - Style Object) --> B(Form Validation) -- Valid --> C(Business Validation)
-  B --Invalid --> G(Validation Exception)
-  C-- Valid --> D(Value Passed to StyleDAO)
-  D --> E(Store Value in Database)
-  C -- Invalid --> F(Validation Exception)
-```
-
-### Feature: Update Style
-
-> Admin can update an existing style
-
-#### Pre-requisites:
-- [ ]   style DAO ( update )
-- [ ]  style service ( update )
-
-#### Validations:
-
- - [ ]   Form Validation
-   * id ( <= 0 )
-   * name ( null, empty, pattern )
-   
-  - [ ]   Business Validation
-         * Id doesn't exists
-
-#### Messages:
-
-   * Id can't  be less than zero.
-   * Name can not be null or empty.
-   * Name does not match the pattern.
-   * Name already exists  
-   
-
- #### Flow: 
-```mermaid
-graph TD;
-  A(Value Passed to StyleService - Id / Name) --> B(Form Validation) -- Valid --> C(Business Validation)
-  B --Invalid --> G(Validation Exception)
-  C-- Valid --> D(Value Passed to StyleDAO)
-  D --> E(Store Value in Database)
-  C -- Invalid --> F(Validation Exception)
-```
-
-### Feature: Delete Style 
-
- >Admin can delete the style
- 
-#### Pre-requisites:
- - [ ]  style dao ( delete  )
-
- - [ ]  style service ( delete )
- 
-#### Validations:
- - [ ]   Form Validation
-
-     * Id <= 0
-
- - [ ]   Business Validation
-
-      * Check whether the Id exists
-
-#### Messages:
-
-* Id can not be less than zero
-* Id doesn't exists
-      
-
- #### Flow: 
-```mermaid
-graph TD;
-  A(Value Passed to StyleService - Id) --> B(Form Validation) -- Valid --> C(Business Validation)
-  B --Invalid --> G(Validation Exception)
-  C-- Valid --> D(Value Passed to StyleDAO)
-  D --> E(Store Value in Database)
-  C -- Invalid --> F(Validation Exception)
-```
-
-### Feature: Create Designs
+### Feature: Create New Designs
 
 > Designers can create a new designs or projects.
 
 #### Pre-requisites:
+- [ ]  designs table
+- [ ]  style table
+- [ ]  style service ( create, update )
+- [ ]  style dao ( create, update )
 - [ ]  designs model
 - [ ]   designs DAO ( create )
 - [ ]  designs service ( create )
@@ -517,3 +428,174 @@ graph TD;
   D --> E(Store Value in Database)
   C -- Invalid --> F(Validation Exception)
 ```
+
+### Feature: List all designs
+> Designer can delete their design and its assets.
+
+#### Pre-requisites:
+- [ ]  asset model
+- [ ]  design asset DAO ( findAllDesigns )
+- [ ]  design asset service ( findAllDesigns )
+
+ #### Flow: 
+```mermaid
+graph TD;
+A(DesignService) --> B(DesignDAO to reterive data)  
+B --> C(Get all designs from Database)  
+```
+
+### Feature: List all user designs
+> Designer can delete their design and its assets.
+
+#### Pre-requisites:
+- [ ]  asset model
+- [ ]  design asset DAO ( findAllDesignsByDesignerId )
+- [ ]  design asset service ( findAllDesignsByDesignerId )
+
+#### Validations:
+
+ - [ ]   Form Validation
+   * id ( <= 0 )
+     
+  - [ ]   Business Validation
+         * Check id exist in user table 
+
+#### Messages:
+
+   *  id can't be less than zero
+   * Id doesn't exist in design asset table.
+    * Id doesn't exist in user table.
+   
+ #### Flow: 
+```mermaid
+graph TD;
+  A(Value Passed to Design_asset Service - ID ) --> B(Form Validation) -- Valid --> C(Business Validation)
+  B --Invalid --> G(Validation Exception)
+  C-- Valid --> D(Value Passed to Design_assetDAO)
+  D --> E(Update Value in Database)
+  C -- Invalid --> F(Validation Exception)
+```
+
+### Feature: Update Design details
+
+> Designers can update an existing designs.
+
+#### Pre-requisites:
+- [ ]  designs model
+- [ ]   designs DAO ( update )
+- [ ]  designs service ( update )
+
+#### Validations:
+
+ - [ ]   Form Validation
+   * design null
+   * id can't be less than zero
+   * name ( null, empty, pattern )
+   * description ( null, empty )
+   * location ( null, empty, pattern )
+   * style Id ( <= 0 )
+   * created by ( <= 0  ) 
+   
+  - [ ]   Business Validation
+         * Check style id exists in style table
+         * Check design id exists in designs table
+         * Check created by exists in users table as designer
+
+#### Messages:
+
+   * Design object can not be null.
+   * Id can't be less than zero.
+   * Name can not be null or empty.
+   * Name does not match the pattern.
+   * Description can not be null or empty.
+   * Location can not be null or empty.
+   * Location does not match the pattern.
+   * Style Id can't be less than zero.
+   * Created By Id can't be less than zero.
+   * Style Id doesn't exist.
+   * Design Id doesn't exist.
+   * Designers doesn't exist.
+   
+ #### Flow: 
+```mermaid
+graph TD;
+  A(Value Passed to StyleService - Id / Design Object) --> B(Form Validation) -- Valid --> C(Business Validation)
+  B --Invalid --> G(Validation Exception)
+  C-- Valid --> D(Value Passed to Design DAO)
+  D --> E(Update Value in Database)
+  C -- Invalid --> F(Validation Exception)
+```
+
+### Feature: Update Design Assets
+> Designer can update their design and its assets.
+
+#### Pre-requisites:
+- [ ]  asset model
+- [ ]  design asset DAO ( create )
+- [ ]  design asset service ( create )
+- [ ]  design asset DAO ( update )
+- [ ]  design asset service ( update )
+
+#### Validations:
+
+ - [ ]   Form Validation
+   * id ( <= 0 )
+   * designs id ( <= 0 )
+   * asset id ( <= 0 )
+   
+  - [ ]   Business Validation
+         * Check id exist in design asset table 
+         * Check design id exist in design table
+         * Check asset id exist in asset table
+
+#### Messages:
+
+   *  id can't be less than zero
+   * design id can't be less than zero
+   * asset id can't be less than zero
+   * Id doesn't exist in design asset table.
+   * Design Id doesn't exist in design table
+   * Asset Id doesn't exist in asset table
+   
+ #### Flow: 
+```mermaid
+graph TD;
+  A(Value Passed to Design_asset Service - ID / Design_asset Object) --> B(Form Validation) -- Valid --> C(Business Validation)
+  B --Invalid --> G(Validation Exception)
+  C-- Valid --> D(Value Passed to Design_assetDAO)
+  D --> E(Update Value in Database)
+  C -- Invalid --> F(Validation Exception)
+```
+### Feature: Delete Design  Assets
+> Designer can delete their design and its assets.
+
+#### Pre-requisites:
+- [ ]  asset model
+- [ ]  design_assets DAO ( delete )
+- [ ]  design_assets service ( delete )
+
+#### Validations:
+
+ - [ ]   Form Validation
+   * id ( <= 0 )
+     
+  - [ ]   Business Validation
+         * Check id exist in design_assets table 
+
+#### Messages:
+
+   *  id can't be less than zero
+   * Id doesn't exist in design table.
+   
+ #### Flow: 
+```mermaid
+graph TD;
+  A(Value Passed to design_assets Service - ID ) --> B(Form Validation) -- Valid --> C(Business Validation)
+  B --Invalid --> G(Validation Exception)
+  C-- Valid --> D(Value Passed to design_assets DAO)
+  D --> E(Update Value in Database)
+  C -- Invalid --> F(Validation Exception)
+```
+
+
+
