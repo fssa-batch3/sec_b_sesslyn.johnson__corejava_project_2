@@ -38,7 +38,7 @@ public class StyleExists {
 		ResultSet rs = null;
 
 		try {
-			String query = "Select * From styles Where is_active = 1 AND id = ?";
+			String query = "Select * From styles Where id = ?";
 			conn = ConnectionUtil.getConnection();
 			pre = conn.prepareStatement(query);
 			pre.setInt(1, id);

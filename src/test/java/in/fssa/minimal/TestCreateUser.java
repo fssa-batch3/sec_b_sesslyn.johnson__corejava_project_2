@@ -16,7 +16,7 @@ public class TestCreateUser {
         UserService userService = new UserService();
         User newUser = new User();
         newUser.setName("Sam");
-        newUser.setEmail("sam@gmail.com");
+        newUser.setEmail("john@gmail.com");
         newUser.setPassword("Sam@2303");
         newUser.setPhoneNumber(9923456787L);
         newUser.setDesigner(false);

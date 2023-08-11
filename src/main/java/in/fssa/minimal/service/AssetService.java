@@ -10,16 +10,23 @@ import in.fssa.minimal.validator.DesignValidator;
 public class AssetService {
 	public void create(Asset newAsset) throws ValidationException, PersistenceException {
 		DesignValidator.validateName(newAsset.getAssetsUrl());
-		AssetExists.chechAssetUrlExists(newAsset.getAssetsUrl());
+		AssetExists.checkAssetUrlExists(newAsset.getAssetsUrl());
 		AssetDAO assetDao = new AssetDAO();
 		assetDao.create(newAsset);
 	}
 
 	public void update(int id, Asset updateAsset) throws ValidationException, PersistenceException {
 		DesignValidator.validateName(updateAsset.getAssetsUrl());
-		AssetExists.chechAssetUrlExists(updateAsset.getAssetsUrl());
+		AssetExists.checkAssetUrlExists(updateAsset.getAssetsUrl());
 		AssetDAO assetDao = new AssetDAO();
 		assetDao.update(id, updateAsset);
+	}
+	
+	public static Asset findByAssetId(int id) throws ValidationException, PersistenceException {
+		DesignValidator.validateId(id);
+	    AssetExists.checkIdExists(id);
+	    AssetDAO assetDao = new AssetDAO();
+		return assetDao.findById(id);
 	}
 
 }

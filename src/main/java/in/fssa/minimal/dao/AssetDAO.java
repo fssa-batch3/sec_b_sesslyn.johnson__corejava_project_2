@@ -2,6 +2,7 @@ package in.fssa.minimal.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import in.fssa.minimal.exception.PersistenceException;
@@ -47,5 +48,31 @@ public class AssetDAO {
 		} finally {
 			ConnectionUtil.close(conn, ps, null);
 		}
+	}
+	
+	public Asset findById(int id) throws PersistenceException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Asset asset = null;
+		try {
+			String query = "SELECT * FROM assets WHERE id = ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				asset = new Asset();
+				asset.setId(rs.getInt("id"));
+				asset.setAssetsUrl(rs.getString("asset_url"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e);
+		} finally {
+			ConnectionUtil.close(conn, ps, rs);
+		}
+		return asset;
 	}
 }

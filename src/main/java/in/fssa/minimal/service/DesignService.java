@@ -3,16 +3,13 @@
 import java.util.Set;
 
 import in.fssa.minimal.dao.DesignDAO;
-import in.fssa.minimal.dao.UserDAO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Design;
-import in.fssa.minimal.model.User;
 import in.fssa.minimal.validator.DesignExists;
 import in.fssa.minimal.validator.DesignValidator;
 import in.fssa.minimal.validator.StyleExists;
 import in.fssa.minimal.validator.UserExists;
-import in.fssa.minimal.validator.UserValidator;
 
 
 public class DesignService {
@@ -64,5 +61,12 @@ public class DesignService {
 		DesignExists.checkCreatedByExists(id);
 		DesignDAO designDao = new DesignDAO();
 		return designDao.findAllDesignsByDesignerId(id);
+	}
+	
+	public static Design findByDesignId(int id) throws ValidationException, PersistenceException {
+		DesignValidator.validateId(id);
+	    DesignExists.checkIdExists(id);
+		DesignDAO designDao = new DesignDAO();
+		return designDao.findByDesignId(id);
 	}
 }

@@ -34,7 +34,7 @@ public class StyleDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
-			String query = "UPDATE styles SET name = ? WHERE is_active = 1 AND id = ?";
+			String query = "UPDATE styles SET name = ? WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, updatedStyle.getName());

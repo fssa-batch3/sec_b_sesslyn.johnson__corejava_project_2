@@ -1,9 +1,9 @@
 package in.fssa.minimal.model;
 
 public class DesignAssetEntity {
+	
 	private int id;
-
-	private int designerId;
+	private int designId;
 	private int assetsId;
 	private boolean isActive = true;
 
@@ -15,12 +15,12 @@ public class DesignAssetEntity {
 		this.id = id;
 	}
 
-	public int getDesignerId() {
-		return designerId;
+	public int getDesignId() {
+		return designId;
 	}
 
-	public void setDesignerId(int designerId) {
-		this.designerId = designerId;
+	public void setDesignId(int designId) {
+		this.designId = designId;
 	}
 
 	public int getAssetsId() {
@@ -41,7 +41,7 @@ public class DesignAssetEntity {
 
 	@Override
 	public String toString() {
-		return "DesignAssetEntity [id=" + id + ", designerId=" + designerId + ", assetsId=" + assetsId + ", isActive="
+		return "DesignAssetEntity [id=" + id + ", designId=" + designId + ", assetsId=" + assetsId + ", isActive="
 				+ isActive + "]";
 	}
 }
