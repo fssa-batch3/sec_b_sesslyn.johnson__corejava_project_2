@@ -27,6 +27,19 @@ public class TestGetAllUser {
 		System.out.println(arr);
 	}
 
+	
+	@Test
+	public void testWithIdLessThanZero() {
+		UserService userService = new UserService();
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			User arr = userService.findById(-5);
+		});
+		String expectedMessage = "Id can't be less than or equal to zero";
+		String actualMessage = exception.getMessage();
+
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	
 	@Test
 	public void testWitNonExistingId() {
 		UserService userService = new UserService();

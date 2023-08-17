@@ -121,36 +121,7 @@ public class DesignDAO {
 		return designList;
 	}
 	
-	public Design findAllDesignsByDesignerId(int id) throws PersistenceException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Design design = null;
-		try {
-			String query = "SELECT * FROM designs WHERE created_by = ?";
-			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(query);
-			ps.setInt(1, id);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				design = new Design();
-				design.setId(rs.getInt("id"));
-				design.setName(rs.getString("name"));
-				design.setDescription(rs.getString("description"));
-				design.setLocation(rs.getString("location"));
-				design.setStyleId(rs.getInt("style_id"));
-				design.setCreatedBy(rs.getInt("created_by"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, ps, rs);
-		}
-		return design;
-	}
-	
+
 	public Design findByDesignId(int id) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -181,5 +152,37 @@ public class DesignDAO {
 		return design;
 	}
 	
+	public Set<Design> findAllDesignsByDesignerId(int id) throws PersistenceException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Design design = null;
+		Set<Design> designList = new HashSet<>();
+		try {
+			String query = "SELECT * FROM designs WHERE created_by = ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+			    design = new Design(); 
+			    design.setId(rs.getInt("id"));
+			    design.setName(rs.getString("name"));
+			    design.setDescription(rs.getString("description"));
+			    design.setLocation(rs.getString("location"));
+			    design.setStyleId(rs.getInt("style_id"));
+			    design.setCreatedBy(rs.getInt("created_by"));
+			    designList.add(design);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e);
+		} finally {
+			ConnectionUtil.close(conn, ps, rs);
+		}
+		return designList;
+	}
 	
 }

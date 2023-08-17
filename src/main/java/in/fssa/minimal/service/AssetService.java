@@ -9,6 +9,9 @@ import in.fssa.minimal.validator.DesignValidator;
 
 public class AssetService {
 	public void create(Asset newAsset) throws ValidationException, PersistenceException {
+		if(newAsset == null) {
+			throw new ValidationException("Asset object can not be null");
+		}
 		DesignValidator.validateName(newAsset.getAssetsUrl());
 		AssetExists.checkAssetUrlExists(newAsset.getAssetsUrl());
 		AssetDAO assetDao = new AssetDAO();
@@ -18,6 +21,8 @@ public class AssetService {
 	public void update(int id, Asset updateAsset) throws ValidationException, PersistenceException {
 		DesignValidator.validateName(updateAsset.getAssetsUrl());
 		AssetExists.checkAssetUrlExists(updateAsset.getAssetsUrl());
+		DesignValidator.validateId(id);
+	    AssetExists.checkIdExists(id);
 		AssetDAO assetDao = new AssetDAO();
 		assetDao.update(id, updateAsset);
 	}

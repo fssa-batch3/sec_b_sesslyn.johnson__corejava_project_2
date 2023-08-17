@@ -20,8 +20,10 @@ public class StyleService {
 	}
 	
 	public void update(int id, Style updateStyle) throws ValidationException, PersistenceException {
-		DesignValidator.validateName(updateStyle.getName());
+		DesignValidator.validateId(id);
 		StyleExists.checkIdExists(id);
+		DesignValidator.validateName(updateStyle.getName());
+		StyleExists.nameExists(updateStyle.getName());
 		StyleDAO styleDao = new StyleDAO();
 		styleDao.update(id, updateStyle);
 	}

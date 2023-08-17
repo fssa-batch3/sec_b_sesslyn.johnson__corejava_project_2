@@ -15,6 +15,9 @@ import in.fssa.minimal.validator.DesignValidator;
 
 public class DesignAssetService {
 	public void create(DesignAsset newDesignAsset) throws ValidationException, PersistenceException {
+		if(newDesignAsset == null) {
+			throw new ValidationException("Design Asset Object can't be null");
+		}
 		DesignValidator.validateId(newDesignAsset.getDesignId());
 		DesignValidator.validateId(newDesignAsset.getAssetsId());
 		DesignExists.checkIdExists(newDesignAsset.getDesignId());
@@ -25,7 +28,7 @@ public class DesignAssetService {
 
 	public void update(int id, DesignAsset updatedDesignAsset) throws ValidationException, PersistenceException {
 		DesignValidator.validateId(id);
-
+		
 		if (updatedDesignAsset.getDesignId() != 0) {
 			DesignValidator.validateId(updatedDesignAsset.getDesignId());
 			DesignExists.checkIdExists(updatedDesignAsset.getDesignId());

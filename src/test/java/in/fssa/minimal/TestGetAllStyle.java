@@ -14,7 +14,7 @@ public class TestGetAllStyle {
 	public void testCreateStyleWithValidInput() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Minimalism");
+		newStyle.setName("Art Deco Style");
 
 		assertDoesNotThrow(() -> {
 			styleService.create(newStyle);
@@ -87,9 +87,9 @@ public class TestGetAllStyle {
 	public void testUpdateStyleWithNonExistingId() throws ValidationException, PersistenceException {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Minimalism");
+		newStyle.setName("Art Deco Style");
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			styleService.update(4, newStyle);
+			styleService.update(5, newStyle);
 		});
 		String expectedMessage = "Style Id doesn't exist";
 		String actualMessage = exception.getMessage();

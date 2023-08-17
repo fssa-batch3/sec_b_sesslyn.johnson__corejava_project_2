@@ -25,7 +25,7 @@ public class DesignValidator {
 	public static void validateDescription(String description) throws ValidationException {
 		StringUtil.rejectIfInvalidString(description, "Description");
 		int l = description.length();
-		if(l <= 10 ) {
+		if(l <= 30 ) {
 			throw new ValidationException("Description doesn't match the length");
 		}
 	}

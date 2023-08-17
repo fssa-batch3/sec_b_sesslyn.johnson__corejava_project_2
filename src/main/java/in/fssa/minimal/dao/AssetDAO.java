@@ -14,7 +14,7 @@ public class AssetDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
-			String query = "INSERT INTO styles ( name ) VALUES (?)";
+			String query = "INSERT INTO assets ( asset_url ) VALUES (?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, newAsset.getAssetsUrl());

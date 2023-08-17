@@ -38,7 +38,7 @@ public class DesignService {
         }
         if (updatedDesign.getCreatedBy() != 0) {
         	DesignValidator.validateId(updatedDesign.getCreatedBy());
-        	  DesignExists.checkCreatedByExists(updatedDesign.getCreatedBy());
+        	UserExists.checkDesignerIdExists(updatedDesign.getCreatedBy());
         }
         
         DesignExists.checkIdExists(id);
@@ -55,18 +55,22 @@ public class DesignService {
 		return designList;
 	}
 	
-	public static Design findAllDesignsByDesignerId(int id) throws ValidationException, PersistenceException {
-		DesignValidator.validateId(id);
-		UserExists.checkDesignerIdExists(id);
-		DesignExists.checkCreatedByExists(id);
-		DesignDAO designDao = new DesignDAO();
-		return designDao.findAllDesignsByDesignerId(id);
-	}
-	
 	public static Design findByDesignId(int id) throws ValidationException, PersistenceException {
 		DesignValidator.validateId(id);
 	    DesignExists.checkIdExists(id);
 		DesignDAO designDao = new DesignDAO();
 		return designDao.findByDesignId(id);
+	}
+	
+	public static Set<Design> findAllDesignsByDesignerId(int id) throws ValidationException, PersistenceException {
+		DesignValidator.validateId(id);
+		UserExists.checkDesignerIdExists(id);
+		DesignExists.checkCreatedByExists(id);
+		DesignDAO designDao = new DesignDAO();
+		Set<Design>  designList = designDao.findAllDesignsByDesignerId(id);
+		for (Design design : designList) {
+			System.out.println(design);
+		}
+		return designList;
 	}
 }

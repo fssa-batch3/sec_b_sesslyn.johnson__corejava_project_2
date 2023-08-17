@@ -150,6 +150,7 @@ public class DesignAssetDAO {
 			String query = "SELECT * FROM design_assets WHERE is_active = 1 AND id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
+			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			Design design_obj = null;
 			Asset asset_obj = null;
