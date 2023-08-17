@@ -23,7 +23,7 @@ public class TestGetAllUser {
 	@Test
 	public void getUserById() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
-		User arr = userService.findById(4);
+		User arr = userService.findById(1);
 		System.out.println(arr);
 	}
 
@@ -44,7 +44,7 @@ public class TestGetAllUser {
 	public void testWitNonExistingId() {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			User arr = userService.findById(10);
+			User arr = userService.findById(20);
 		});
 		String expectedMessage = "Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -55,7 +55,7 @@ public class TestGetAllUser {
 	@Test
 	public void getUserByEmailId() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
-		User arr = userService.findByEmail("sesslyn@gmail.com");
+		User arr = userService.findByEmail("john@gmail.com");
 		System.out.println(arr);
 	}
 
@@ -98,7 +98,7 @@ public class TestGetAllUser {
 			User newUser = new User();
 			newUser.setPassword("Sess@2608");
 			newUser.setDesigner(false);
-			userService.update(10, newUser);
+			userService.update(20, newUser);
 		});
 		String expectedMessage = "Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -109,14 +109,14 @@ public class TestGetAllUser {
 	@Test
 	public void testDeleteUser() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
-		userService.delete(4);
+		userService.delete(1);
 	}
 
 	@Test
 	public void testDeleteWithNonExistingId() throws ValidationException {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			userService.delete(7);
+			userService.delete(20);
 		});
 		String expectedMessage = "Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -135,7 +135,7 @@ public class TestGetAllUser {
 	@Test
 	public void getDesignerById() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
-		User arr = userService.findDesignerById(4);
+		User arr = userService.findDesignerById(2);
 		System.out.println(arr);
 	}
 	

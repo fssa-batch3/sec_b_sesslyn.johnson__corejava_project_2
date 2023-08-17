@@ -81,7 +81,6 @@ public class AppointmentValidator {
 	    }
 
 	    String formattedDate = dueDate.format(inputFormatter);
-	    System.out.println("Formatted Date: " + formattedDate);
 	    LocalDate currentDate = LocalDate.now();
 
 	    if (dueDate.isBefore(currentDate) || dueDate.equals(currentDate) || dueDate.isAfter(currentDate.plusDays(90))) {

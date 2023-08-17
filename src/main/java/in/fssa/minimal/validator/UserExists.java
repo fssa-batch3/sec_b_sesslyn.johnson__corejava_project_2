@@ -39,7 +39,7 @@ public class UserExists {
 		ResultSet rs = null;
 
 		try {
-			String query = "Select * From users Where is_active = 1 AND id = ?";
+			String query = "Select * From users Where id = ?";
 			conn = ConnectionUtil.getConnection();
 			pre = conn.prepareStatement(query);
 			pre.setInt(1, id);

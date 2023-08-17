@@ -15,7 +15,7 @@ public class TestGetAllAsset {
 	public void testCreateAssetWithValidInput() {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/ZpQjOTbhGRk");
+		newAsset.setAssetsUrl("https://youtu.be/_j8BvTVSBrY");
 
 		assertDoesNotThrow(() -> {
 			assetService.create(newAsset);
@@ -79,7 +79,7 @@ public class TestGetAllAsset {
 	public void testUpdateAsset() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/DrnzCBQ23IU");
+		newAsset.setAssetsUrl("https://youtu.be/DFgL3URDOr4");
 		assetService.update(1, newAsset);
 	}
 	
@@ -101,9 +101,9 @@ public class TestGetAllAsset {
 	public void testUpdateAssetWithNonExistingId() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/DrnzCBQ23IU");
+		newAsset.setAssetsUrl("https://youtu.be/6uV24JdbUUI");
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			assetService.update(4, newAsset);
+			assetService.update(10, newAsset);
 		});
 		String expectedMessage = "Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();

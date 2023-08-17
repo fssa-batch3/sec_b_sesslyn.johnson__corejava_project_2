@@ -1,6 +1,7 @@
 package in.fssa.minimal;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ public class TestGetAllStyle {
 	public void testCreateStyleWithValidInput() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Art Deco Style");
+		newStyle.setName("Industrial Style");
 
 		assertDoesNotThrow(() -> {
 			styleService.create(newStyle);
@@ -65,21 +66,21 @@ public class TestGetAllStyle {
 	public void testCreateStyleWithNameExists() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Minimalism");
+		newStyle.setName("Shabby Chic");
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			styleService.create(newStyle);
 		});
 		String expectedMessage = "Style Name already exists";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
 	public void testUpdateStyle() throws ValidationException, PersistenceException {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Rustic Architecture");
+		newStyle.setName("Boho – Bohemian Architecture");
 		styleService.update(1, newStyle);
 	}
 
@@ -87,9 +88,9 @@ public class TestGetAllStyle {
 	public void testUpdateStyleWithNonExistingId() throws ValidationException, PersistenceException {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Art Deco Style");
+		newStyle.setName("Mid-Century Style");
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			styleService.update(5, newStyle);
+			styleService.update(10, newStyle);
 		});
 		String expectedMessage = "Style Id doesn't exist";
 		String actualMessage = exception.getMessage();

@@ -1,5 +1,6 @@
 
 USE sesslyn_johnson_corejava_project;
+
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -47,13 +48,13 @@ WHERE is_active = 1;
 
 -- Update user
 UPDATE users
-SET password = 'Sesslyn@15'
-WHERE id = 1 AND is_active = 1;
+SET is_designer = true
+WHERE id = 6;
 
 -- DELETE user
 UPDATE users
-SET is_active = false
-WHERE id = 1 AND is_active = 1;
+SET is_active = true
+WHERE id = 4;
 
 -- List all designer profile
 SELECT * 
@@ -67,6 +68,8 @@ WHERE is_active = 1 AND is_designer = 1 AND id = 2;
 
 SELECT *
 FROM users;
+
+
 
 -- Booked appointment
 INSERT INTO appointment (from_user, to_user, email, phone_number, status, date, time)
@@ -108,6 +111,8 @@ WHERE u.is_designer = 1 AND a.status = 'waiting_list';
 SELECT *
 FROM appointment;
 
+
+
 CREATE TABLE IF NOT EXISTS styles (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL
@@ -124,6 +129,11 @@ CREATE TABLE IF NOT EXISTS assets (
   id INT AUTO_INCREMENT PRIMARY KEY,
   asset_url VARCHAR(500) NOT NULL
 );
+INSERT INTO assets ( asset_url ) 
+VALUES ("https://youtu.be/OzUkvzyBttA");
+
+SELECT *
+FROM assets;
 
 CREATE TABLE IF NOT EXISTS designs (
   id INT AUTO_INCREMENT PRIMARY KEY,

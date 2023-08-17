@@ -218,7 +218,7 @@ public class UserDAO implements UserInterface{
 		 Connection conn = null;
 		    PreparedStatement ps = null;
 		    try {
-		    	String query = "UPDATE users SET is_active = false WHERE is_active = 1 AND id = ?";
+		    	String query = "UPDATE users SET is_active = false WHERE id = ?";
 		        conn = ConnectionUtil.getConnection();
 		        ps = conn.prepareStatement(query);    
 		        ps.setInt(1, userId);

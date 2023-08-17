@@ -15,11 +15,11 @@ public class TestGetAllDesign {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 3.5 Bhk Home");
-		newDesign.setDescription("Customer Name: Mr. Karan Kunjur & Mrs. Ramya Kiran\r\n"
-				+ "Apartment Size: 3.5 BHK, 2800 Sq Ft\r\n"
-				+ "Project Value:  33-35 Lakhs\r\n"
-				+ "Project Manager: Muzammil\r\n"
-				+ "Enveloped in the grace of contemporary bliss, this modern 3BHK home interiors of Kiran and Ramya offers some major design goals. The house is the true epitome of elegance and warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms, making them look regal. The accessories scattered throughout the space club everything together, radiating charm and opulence.");
+		newDesign.setDescription("Customer Name: Madhu & Naveen\r\n"
+				+ "Apartment Size: 2 BHK\r\n"
+				+ "Project Value: 9.02 lacs\r\n"
+				+ "Project Manager: Nanda Kumar\r\n"
+				+ "Welcome to Bonito Designs! Today, we will take you on a tour of Madhu & Naveen’s Contemporary 2bhk interior design, which is a world of zen and whimsy, where tranquillity meets playfulness.  Are you also looking for a home that embodies the comfort and beauty that you need in your home? Look no further than Bonito Designs!");
 		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(1);
 		newDesign.setCreatedBy(2);
@@ -100,7 +100,7 @@ public class TestGetAllDesign {
 	public void testGetAllDesignWithNonExistingId() throws PersistenceException, ValidationException {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<Design>  designList = designService.findAllDesignsByDesignerId(2);
+			Set<Design>  designList = designService.findAllDesignsByDesignerId(4);
 		});
 		String expectedMessage = "Designers doesn't have any design yet";
 		String actualMessage = exception.getMessage();

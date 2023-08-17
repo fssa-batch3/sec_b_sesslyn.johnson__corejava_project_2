@@ -17,8 +17,8 @@ public class TestGetAllDesignAsset {
 	public void testCreateUserWithValidInput() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
-		newDesign.setAssetsId(1);
-		newDesign.setDesignId(1);
+		newDesign.setAssetsId(4);
+		newDesign.setDesignId(2);
 		assertDoesNotThrow(() -> {
 			designAssetService.create(newDesign);
 		});
@@ -40,7 +40,7 @@ public class TestGetAllDesignAsset {
 	public void testCreateDesignWithNonExistingAssetId() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
-		newDesign.setAssetsId(3);
+		newDesign.setAssetsId(20);
 		newDesign.setDesignId(1);
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			designAssetService.create(newDesign);
@@ -79,8 +79,8 @@ public class TestGetAllDesignAsset {
 	public void testUpdateSpecificFields() throws ValidationException, PersistenceException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
-		newDesign.setDesignId(1);
-		designAssetService.update(1, newDesign);
+		newDesign.setDesignId(2);
+		designAssetService.update(2, newDesign);
 	}
 
 	@Test
@@ -102,7 +102,7 @@ public class TestGetAllDesignAsset {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAsset newDesign = new DesignAsset();
-			newDesign.setAssetsId(3);
+			newDesign.setAssetsId(20);
 			designAssetService.update(1, newDesign);
 		});
 		String expectedMessage = "Asset Id doesn't exist";

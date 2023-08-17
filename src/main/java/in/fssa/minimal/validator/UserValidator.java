@@ -9,7 +9,8 @@ import in.fssa.minimal.util.StringUtil;
 public class UserValidator {
 	private static final String NAME_PATTERN = "^[A-Za-z][A-Za-z\\\\s]*$";
 	private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+([a-zA-Z0-9_+\\-\\. ]*[a-zA-Z0-9]+)?@[a-zA-Z0-9]+([a-zA-Z0-9\\-\\.]*[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$";
-	private static final String PASSWORD_PATTERN = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}";
+	private static final String PASSWORD_PATTERN = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}";
+
 
 	public static void Validate(User user) throws ValidationException {
 		if (user == null) {
@@ -37,7 +38,7 @@ public class UserValidator {
 
 	public static void validatePassword(String password) throws ValidationException {
 		StringUtil.rejectIfInvalidString(password, "Password");
-		 if (password.length() != 8) {
+		 if (password.length() < 8) {
 		        throw new ValidationException("Password doesn't match the length");
 		    }
 

@@ -14,13 +14,13 @@ public class TestCreateAppointment {
     public void testCreateAppointmentWithValidInput() {
         AppointmentService  appointmentService = new  AppointmentService();
         Appointment newAppointment = new  Appointment();
-        newAppointment.setFromUser(1);
-        newAppointment.setToUser(2);
-        newAppointment.setEmail("sesslyn2004@gmail.com");
+        newAppointment.setFromUser(6);
+        newAppointment.setToUser(7);
+        newAppointment.setEmail("john@gmail.com");
         newAppointment.setPhoneNumber(6381040916l);
         newAppointment.setStatus("waiting_list");
-        newAppointment.setDate("2023-09-30");
-        newAppointment.setTime("15:30:00");
+        newAppointment.setDate("2023-09-18");
+        newAppointment.setTime("11:00:00");
         newAppointment.setAddress(null);
         assertDoesNotThrow(() -> {
         	appointmentService.create(newAppointment);
@@ -82,9 +82,9 @@ public class TestCreateAppointment {
     public void testCreateAppointmentWithInvalidFromUserId() {
         AppointmentService  appointmentService = new  AppointmentService();
         Appointment newAppointment = new  Appointment();
-        newAppointment.setFromUser(7);
+        newAppointment.setFromUser(20);
         newAppointment.setToUser(2);
-        newAppointment.setEmail("sess@gmail.com");
+        newAppointment.setEmail("sesslyn@gmail.com");
         newAppointment.setPhoneNumber(6381040916l);
         newAppointment.setStatus("waiting_list");
         newAppointment.setDate("2023-09-30");
@@ -122,13 +122,13 @@ public class TestCreateAppointment {
     public void testCreateAppointmentDesignerHasAppointment() {
         AppointmentService  appointmentService = new  AppointmentService();
         Appointment newAppointment = new  Appointment();
-        newAppointment.setFromUser(8);
+        newAppointment.setFromUser(9);
         newAppointment.setToUser(2);
         newAppointment.setEmail("sess@gmail.com");
         newAppointment.setPhoneNumber(6381040916l);
         newAppointment.setStatus("waiting_list");
-        newAppointment.setDate("2023-08-26");
-        newAppointment.setTime("10:00:00");
+        newAppointment.setDate("2023-09-16");
+        newAppointment.setTime("13:30:00");
         newAppointment.setAddress(null);
         Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
@@ -478,18 +478,18 @@ public class TestCreateAppointment {
     public void testCreateAppointmentWithPassedTime() {
         AppointmentService  appointmentService = new  AppointmentService();
         Appointment newAppointment = new  Appointment();
-        newAppointment.setFromUser(1);
-        newAppointment.setToUser(2);
-        newAppointment.setEmail("sam@gmail.com");
+        newAppointment.setFromUser(8);
+        newAppointment.setToUser(6);
+        newAppointment.setEmail("joe@gmail.com");
         newAppointment.setPhoneNumber(6381040916l);
         newAppointment.setStatus("approved");
-        newAppointment.setDate("2023-09-10");
+        newAppointment.setDate("2023-09-12");
         newAppointment.setTime("22:30:00");
         newAppointment.setAddress(null);
         Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
 		});
-		String expectedMessage = "Invalid time or Invalid time format ( HH-mm-ss)";
+		String expectedMessage = "Invalid time or Invalid time format ( HH:mm:ss)";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));

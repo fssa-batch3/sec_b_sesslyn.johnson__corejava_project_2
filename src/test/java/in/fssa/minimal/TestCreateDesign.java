@@ -16,11 +16,11 @@ public class TestCreateDesign {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 2Bhk Home");
-		newDesign.setDescription("Customer Name: Sonam & Ashish Gupta \r\n"
-				+ "Apartment Size: 1200 sqft.\r\n"
-				+ "Project Value: 10.8 lac\r\n"
-				+ "Project Manager: Irfan Khan\r\n"
-				+ "Discover the aesthetics of this unique home interior which is filled with vibrancy and all splendors. Dipped in the essence of Art Déco style, the space speaks a lot about class and comfort. Art Deco style has a fluidity that translates opulence into reality. This abode is a perfect example of the style. The color palette in the entire space is a combination of subtlety and warmth. Grooved wall paneling, biophilic upholstery, abstract artwork, buddha statue- we just cannot miss these elements!");
+		newDesign.setDescription("Customer Name: Mr. Kiran Kunjur & Mrs. Ramya Kiran\r\n"
+				+ "Apartment Size: 3.5 BHK, 2800 Sq Ft\r\n"
+				+ "Project Value:  33-35 Lakhs\r\n"
+				+ "Project Manager: Muzammil\r\n"
+				+ "Enveloped in the grace of contemporary bliss, this modern 3BHK home interiors of Kiran and Ramya offers some major design goals. The house is the true epitome of elegance and warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms, making them look regal. The accessories scattered throughout the space club everything together, radiating charm and opulence.\r\n");
 		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(1);
 		newDesign.setCreatedBy(4);
@@ -220,7 +220,7 @@ public class TestCreateDesign {
 		newDesign.setName("Modern 3Bhk Home");
 		newDesign.setDescription("Customer Name: Mr. Kiran Kunjur & Mrs. Ramya Kiran");
 		newDesign.setLocation("Chennai");
-		newDesign.setStyleId(6);
+		newDesign.setStyleId(20);
 		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
