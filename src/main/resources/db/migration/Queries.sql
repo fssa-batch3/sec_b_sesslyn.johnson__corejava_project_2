@@ -1,6 +1,5 @@
-create database if not exists minimal_java;
 
-USE minimal_java;
+USE sesslyn_johnson_corejava_project;
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -32,7 +31,6 @@ CREATE TABLE appointment (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 -- Create User
 INSERT INTO users (name, email, password, is_designer, phone_number)
 VALUES
@@ -115,12 +113,17 @@ CREATE TABLE IF NOT EXISTS styles (
   name VARCHAR(50) NOT NULL
 );
 
+-- Create style
+INSERT INTO styles ( name ) 
+VALUES ("Shabby Chic");
+
+SELECT *
+FROM styles;
 
 CREATE TABLE IF NOT EXISTS assets (
   id INT AUTO_INCREMENT PRIMARY KEY,
   asset_url VARCHAR(500) NOT NULL
 );
-
 
 CREATE TABLE IF NOT EXISTS designs (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -135,7 +138,6 @@ CREATE TABLE IF NOT EXISTS designs (
   modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-
 CREATE TABLE IF NOT EXISTS design_assets (
    id INT AUTO_INCREMENT PRIMARY KEY,
    design_id INT NOT NULL,
@@ -144,3 +146,15 @@ CREATE TABLE IF NOT EXISTS design_assets (
    FOREIGN KEY (design_id) REFERENCES designs (id),
    FOREIGN KEY (assets_id) REFERENCES assets (id)
 );
+
+
+SELECT *
+FROM assets;
+
+SELECT *
+FROM designs;
+
+SELECT *
+FROM design_assets;
+
+
