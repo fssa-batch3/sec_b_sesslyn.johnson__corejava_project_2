@@ -1,6 +1,6 @@
 
 USE sesslyn_johnson_corejava_project;
-
+DROP TABLE users;
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- Add indexes to the referenced columns in the 'users' table
 ALTER TABLE users ADD INDEX idx_users_id (id);
 
-
+DROP TABLE appointment;
 CREATE TABLE appointment (
     id INT AUTO_INCREMENT PRIMARY KEY,
     from_user INT NOT NULL,
@@ -39,8 +39,9 @@ VALUES
        ('Jerusheya', 'jerusheya@gmail.com', 'Jerusheya@12', 1, '9323255969'),
          ('Ruby', 'ruby@gmail.com', 'Ruby@27', 0, '8778061351'),
        ('Johnson', 'johnson@gmail.com', 'Johnson@23', 1, '8754797667'),
-       ('Ashely', 'ash@gmail.com', 'Ash@06', 0, '9854678989');
-
+       ('Ashely', 'ash@gmail.com', 'Ash@06', 0, '9854678989'),
+       ('Sam', 'sam@gmail.com', 'Sam@2312', 0, '6381040916');
+       
 -- User details
 SELECT * 
 FROM users
@@ -75,8 +76,7 @@ FROM users;
 INSERT INTO appointment (from_user, to_user, email, phone_number, status, date, time)
 VALUES
        (3, 2, 'ruby@gmail.com', '8778061351' , 'waiting_list', '2023-08-26', '10:00:00'),
-       (5, 4, 'ash@gmail.com', '9854678989' ,'approved', '2023-08-30', '16:00:00'),
-       (3, 4, 'ruby@gmail.com', '8778061351' ,'rejected', '2023-08-15', '13:00:00');
+       (5, 4, 'ash@gmail.com', '9854678989' ,'approved', '2023-08-30', '16:00:00');
        
 -- list all designer appointment request
 SELECT u.id, u.name, u.email, u.phone_number, a.email,a.phone_number,a.status, a.date, a.time, a.address
@@ -112,7 +112,7 @@ SELECT *
 FROM appointment;
 
 
-
+DROP TABLE styles;
 CREATE TABLE IF NOT EXISTS styles (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL
@@ -120,21 +120,22 @@ CREATE TABLE IF NOT EXISTS styles (
 
 -- Create style
 INSERT INTO styles ( name ) 
-VALUES ("Shabby Chic");
+VALUES ("Shabby Chic"),("Minimalism");
 
 SELECT *
 FROM styles;
 
+DROP TABLE assets;
 CREATE TABLE IF NOT EXISTS assets (
   id INT AUTO_INCREMENT PRIMARY KEY,
   asset_url VARCHAR(500) NOT NULL
 );
 INSERT INTO assets ( asset_url ) 
-VALUES ("https://youtu.be/OzUkvzyBttA");
+VALUES ("https://youtu.be/DFgL3URDOr4");
 
 SELECT *
 FROM assets;
-
+DROP TABLE designs;
 CREATE TABLE IF NOT EXISTS designs (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
@@ -148,6 +149,15 @@ CREATE TABLE IF NOT EXISTS designs (
   modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+INSERT INTO designs (name, description, location, style_id, created_by)
+VALUES (
+    'Modern 3.5 Bhk Home',
+   'Welcome to Bonito Designs! Today, we will take you on a tour of Madhu & Naveen’s ',
+    'Chennai',
+    1,
+    2
+);
+
 CREATE TABLE IF NOT EXISTS design_assets (
    id INT AUTO_INCREMENT PRIMARY KEY,
    design_id INT NOT NULL,
@@ -157,7 +167,6 @@ CREATE TABLE IF NOT EXISTS design_assets (
    FOREIGN KEY (assets_id) REFERENCES assets (id)
 );
 
-
 SELECT *
 FROM assets;
 
@@ -166,5 +175,8 @@ FROM designs;
 
 SELECT *
 FROM design_assets;
+
+INSERT INTO design_assets (design_id, assets_id)
+VALUES (1, 1);
 
 
