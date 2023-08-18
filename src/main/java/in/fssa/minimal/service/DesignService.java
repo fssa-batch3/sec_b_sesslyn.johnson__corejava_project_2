@@ -13,6 +13,12 @@ import in.fssa.minimal.validator.UserExists;
 
 
 public class DesignService {
+	/**
+	 * 
+	 * @param newDesign
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public void create(Design newDesign) throws ValidationException, PersistenceException {
 		DesignValidator.Validate(newDesign);
 		StyleExists.checkIdExists(newDesign.getStyleId());
@@ -20,7 +26,13 @@ public class DesignService {
 		DesignDAO designDao = new DesignDAO();
 		designDao.create(newDesign);
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 * @param updatedDesign
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public void update(int id, Design updatedDesign) throws ValidationException, PersistenceException {
 		DesignValidator.validateId(id);
 		if (updatedDesign.getName() != null) {
@@ -45,7 +57,11 @@ public class DesignService {
         DesignDAO designDao = new DesignDAO();
 		designDao.update(id, updatedDesign);
 	}
-	
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public Set<Design> getAllDesign() throws PersistenceException {
 		DesignDAO designDao = new DesignDAO();
 		Set<Design>  designList = designDao.findAllDesign();
@@ -54,14 +70,26 @@ public class DesignService {
 		}
 		return designList;
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public static Design findByDesignId(int id) throws ValidationException, PersistenceException {
 		DesignValidator.validateId(id);
 	    DesignExists.checkIdExists(id);
 		DesignDAO designDao = new DesignDAO();
 		return designDao.findByDesignId(id);
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public static Set<Design> findAllDesignsByDesignerId(int id) throws ValidationException, PersistenceException {
 		DesignValidator.validateId(id);
 		UserExists.checkDesignerIdExists(id);

@@ -9,7 +9,11 @@ import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class UserExists {
-
+/**
+ * 
+ * @param email
+ * @throws ValidationException
+ */
 	public static void emailExists(String email) throws ValidationException {
 		Connection conn = null;
 		PreparedStatement pre = null;
@@ -33,6 +37,11 @@ public class UserExists {
 		}
 	}
    
+	/**
+	 * 
+	 * @param id
+	 * @throws ValidationException
+	 */
 	public static void checkIdExists(int id) throws ValidationException {
 		Connection conn = null;
 		PreparedStatement pre = null;
@@ -55,7 +64,11 @@ public class UserExists {
 			ConnectionUtil.close(conn, pre, rs);
 		}
 	}
-	
+	/**
+	 * 
+	 * @param email
+	 * @throws ValidationException
+	 */
 	public static void checkEmailExists(String email) throws ValidationException {
 		Connection conn = null;
 		PreparedStatement pre = null;
@@ -78,7 +91,11 @@ public class UserExists {
 			ConnectionUtil.close(conn, pre, rs);
 		}
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 * @throws ValidationException
+	 */
 	public static void checkDesignerIdExists(int id) throws ValidationException {
 		Connection conn = null;
 		PreparedStatement pre = null;

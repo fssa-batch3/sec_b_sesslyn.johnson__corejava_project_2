@@ -9,6 +9,11 @@ import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class AppointmentExists {
+	/**
+	 * 
+	 * @param fromUser
+	 * @throws ValidationException
+	 */
 	public static void checkFromUserHasUpcomingAppointments(int fromUser) throws ValidationException {
 	    Connection conn = null;
 	    PreparedStatement pre = null;
@@ -31,7 +36,13 @@ public class AppointmentExists {
 	        ConnectionUtil.close(conn, pre, rs);
 	    }
 	}
-
+/**
+ * 
+ * @param toUser
+ * @param date
+ * @param time
+ * @throws ValidationException
+ */
 	public static void checkToUserHasAppointmentAtSameDateTime(int toUser, String date, String time) throws ValidationException {
 	    Connection conn = null;
 	    PreparedStatement pre = null;
@@ -60,7 +71,11 @@ public class AppointmentExists {
 	        ConnectionUtil.close(conn, pre, rs);
 	    }
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 * @throws ValidationException
+	 */
 	public static void checkIdExists(int id) throws ValidationException {
 		Connection conn = null;
 		PreparedStatement pre = null;

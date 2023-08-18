@@ -15,7 +15,11 @@ import in.fssa.minimal.model.User;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class DesignDAO {
-	
+	/**
+	 * 
+	 * @param newDesign
+	 * @throws PersistenceException
+	 */
 	public void create(Design newDesign) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -39,7 +43,12 @@ public class DesignDAO {
 			ConnectionUtil.close(conn, ps);
 		}
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 * @param updatedDesign
+	 * @throws PersistenceException
+	 */
 	public void update(int id, Design updatedDesign) throws PersistenceException {
 	    Connection conn = null;
 	    PreparedStatement ps = null;
@@ -90,7 +99,12 @@ public class DesignDAO {
 	        ConnectionUtil.close(conn, ps, null);
 	    }
 	}
-	
+	/**
+	 * 
+	 * @return
+	 * @throws RuntimeException
+	 * @throws PersistenceException
+	 */
 	public Set<Design> findAllDesign() throws RuntimeException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -121,7 +135,12 @@ public class DesignDAO {
 		return designList;
 	}
 	
-
+/**
+ * 
+ * @param id
+ * @return
+ * @throws PersistenceException
+ */
 	public Design findByDesignId(int id) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -151,7 +170,12 @@ public class DesignDAO {
 		}
 		return design;
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public Set<Design> findAllDesignsByDesignerId(int id) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;

@@ -9,6 +9,12 @@ import in.fssa.minimal.validator.StyleExists;
 import in.fssa.minimal.validator.UserValidator;
 
 public class StyleService {
+	/**
+	 * 
+	 * @param newStyle
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public void create(Style newStyle) throws ValidationException, PersistenceException {
 		if(newStyle == null) {
 			throw new ValidationException("Style object can not be null");
@@ -18,7 +24,13 @@ public class StyleService {
 		StyleDAO styleDao = new StyleDAO();
 		styleDao.create(newStyle);
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 * @param updateStyle
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public void update(int id, Style updateStyle) throws ValidationException, PersistenceException {
 		DesignValidator.validateId(id);
 		StyleExists.checkIdExists(id);

@@ -15,6 +15,12 @@ import in.fssa.minimal.model.User;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class UserDAO implements UserInterface{
+	/**
+	 * 
+	 *
+	 * @param 
+	 * @throws 
+	 */
 	@Override
 	public Set<User> findAll() throws PersistenceException {
 		Connection conn = null;
@@ -47,6 +53,12 @@ public class UserDAO implements UserInterface{
 		return userList;
 	}
 
+	/**
+	 * 
+	 *
+	 * @param 
+	 * @throws 
+	 */
 	@Override
 	public User findById(int userId) throws PersistenceException {
 		Connection conn = null;
@@ -79,6 +91,12 @@ public class UserDAO implements UserInterface{
 		return user;
 	}
 
+	/**
+	 * 
+	 *
+	 * @param 
+	 * @throws 
+	 */
 	@Override
 	public User findByEmail(String email) throws PersistenceException {
 		Connection conn = null;
@@ -110,7 +128,12 @@ public class UserDAO implements UserInterface{
 		}
 		return user;
 	}
-	
+	/**
+	 * 
+	 *
+	 * @param 
+	 * @throws 
+	 */
 	@Override
 	public void create(User newUser) throws PersistenceException {
 		    Connection conn = null;
@@ -135,7 +158,12 @@ public class UserDAO implements UserInterface{
 		        ConnectionUtil.close(conn, ps);
 		    }
 	}
-
+	/**
+	 * 
+	 *
+	 * @param 
+	 * @throws 
+	 */
 	@Override
 	public void update(int id, User updatedUser) throws PersistenceException {
 	    Connection conn = null;
@@ -188,6 +216,12 @@ public class UserDAO implements UserInterface{
 	    }
 	}
 
+	/**
+	 * 
+	 *
+	 * @param 
+	 * @throws 
+	 */
 	private Boolean getDesignerValueFromDatabase(int userId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -212,13 +246,18 @@ public class UserDAO implements UserInterface{
 		return r;
 	
 	}
-
+	/**
+	 * 
+	 *
+	 * @param 
+	 * @throws 
+	 */
 	@Override
 	public void delete(int userId) throws PersistenceException {
 		 Connection conn = null;
 		    PreparedStatement ps = null;
 		    try {
-		    	String query = "UPDATE users SET is_active = false WHERE id = ?";
+		    	String query = "UPDATE users SET is_active = false WHERE is_active = 1 AND id = ?";
 		        conn = ConnectionUtil.getConnection();
 		        ps = conn.prepareStatement(query);    
 		        ps.setInt(1, userId);
@@ -233,7 +272,12 @@ public class UserDAO implements UserInterface{
 		    }
 	}
 
-	
+	/**
+	 * 
+	 *
+	 * @param 
+	 * @throws 
+	 */
 
 	@Override
     public Set<User> findAllDesigner() throws PersistenceException {
@@ -266,7 +310,12 @@ public class UserDAO implements UserInterface{
 		}
 		return userList;
 	}
-	
+	/**
+	 * 
+	 *
+	 * @param 
+	 * @throws 
+	 */
 	@Override
 	public User findDesignerById(int userId) throws PersistenceException {
 		Connection conn = null;

@@ -26,6 +26,12 @@ import in.fssa.minimal.service.UserService;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class DesignAssetDAO {
+	/**
+	 * 
+	 * @param id
+	 * @param status
+	 * @throws PersistenceException
+	 */
 	public void create(DesignAsset newDesignAsset) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -46,7 +52,12 @@ public class DesignAssetDAO {
 			ConnectionUtil.close(conn, ps);
 		}
 	}
-
+	/**
+	 * 
+	 * @param id
+	 * @param status
+	 * @throws PersistenceException
+	 */
 	public void update(int id, DesignAsset updatedDesignAsset) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -84,7 +95,12 @@ public class DesignAssetDAO {
 			ConnectionUtil.close(conn, ps, null);
 		}
 	}
-
+	/**
+	 * 
+	 * @param id
+	 * @param status
+	 * @throws PersistenceException
+	 */
 	public void delete(int id) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -103,7 +119,12 @@ public class DesignAssetDAO {
 			ConnectionUtil.close(conn, ps, null);
 		}
 	}
-
+	/**
+	 * 
+	 * @param id
+	 * @param status
+	 * @throws PersistenceException
+	 */
 	public Set<DesignAssetRespondDto> findAllDesignAsset() throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -140,7 +161,13 @@ public class DesignAssetDAO {
 		}
 		return designAssetList;
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public DesignAssetRespondDto findAllDesignAssetById(int id) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;

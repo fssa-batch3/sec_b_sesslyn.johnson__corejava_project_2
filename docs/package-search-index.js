@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"in.fssa.minimal.dao"},{"l":"in.fssa.minimal.dto"},{"l":"in.fssa.minimal.exception"},{"l":"in.fssa.minimal.interfaces"},{"l":"in.fssa.minimal.model"},{"l":"in.fssa.minimal.service"},{"l":"in.fssa.minimal.util"},{"l":"in.fssa.minimal.validator"}];updateSearchResults();

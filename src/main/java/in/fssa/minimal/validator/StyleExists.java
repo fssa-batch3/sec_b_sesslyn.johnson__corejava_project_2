@@ -9,6 +9,11 @@ import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class StyleExists {
+	/**
+	 * 
+	 * @param name
+	 * @throws ValidationException
+	 */
 	public static void nameExists(String name) throws ValidationException {
 		Connection conn = null;
 		PreparedStatement pre = null;
@@ -32,6 +37,11 @@ public class StyleExists {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @throws ValidationException
+	 */
 	public static void checkIdExists(int id) throws ValidationException {
 		Connection conn = null;
 		PreparedStatement pre = null;

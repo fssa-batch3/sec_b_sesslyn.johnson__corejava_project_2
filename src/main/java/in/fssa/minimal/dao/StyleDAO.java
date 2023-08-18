@@ -9,7 +9,11 @@ import in.fssa.minimal.model.Style;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class StyleDAO {
-	
+	/**
+	 * 
+	 * @param newStyle
+	 * @throws PersistenceException
+	 */
 	public void create(Style newStyle) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -30,6 +34,12 @@ public class StyleDAO {
 		}
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param updatedStyle
+	 * @throws PersistenceException
+	 */
 	public void update(int id, Style updatedStyle) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;

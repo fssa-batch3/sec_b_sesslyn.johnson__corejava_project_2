@@ -48,7 +48,7 @@ public class TestGetAllDesign {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Design newDesign = new Design();
 			newDesign.setLocation("Bangalore");
-			designService.update(20, newDesign);
+			designService.update(5000, newDesign);
 		});
 		String expectedMessage = "Design Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -90,7 +90,7 @@ public class TestGetAllDesign {
 	public void testWitNonExistingId() {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Design arr = designService.findByDesignId(20);
+			Design arr = designService.findByDesignId(5000);
 		});
 		String expectedMessage = "Design Id doesn't exist";
 		String actualMessage = exception.getMessage();

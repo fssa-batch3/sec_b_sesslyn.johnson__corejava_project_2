@@ -10,6 +10,12 @@ import in.fssa.minimal.model.Asset;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class AssetDAO {
+	/**
+	 * 
+	 * @param id
+	 * @param status
+	 * @throws PersistenceException
+	 */
 	public void create(Asset newAsset) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -29,7 +35,12 @@ public class AssetDAO {
 			ConnectionUtil.close(conn, ps);
 		}
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 * @param status
+	 * @throws PersistenceException
+	 */
 	public void update(int id, Asset updatedAsset) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -49,7 +60,12 @@ public class AssetDAO {
 			ConnectionUtil.close(conn, ps, null);
 		}
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 * @param status
+	 * @throws PersistenceException
+	 */
 	public Asset findById(int id) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;

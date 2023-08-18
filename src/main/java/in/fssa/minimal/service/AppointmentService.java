@@ -12,7 +12,12 @@ import in.fssa.minimal.validator.UserExists;
 
 
 public class AppointmentService {
-	
+	/**
+	 * 
+	 * @param newAppointment
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public void create(Appointment newAppointment) throws ValidationException, PersistenceException {
 		AppointmentValidator.Validate(newAppointment);
 		UserExists.checkIdExists(newAppointment.getFromUser());
@@ -23,7 +28,12 @@ public class AppointmentService {
 		AppointmentDAO appointmentDao = new AppointmentDAO();
 		appointmentDao.create(newAppointment);
 	}
-	
+	/**
+	 * 
+	 * @return
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public Set<AppointmentRespondDto> getAll() throws ValidationException, PersistenceException {
 		AppointmentDAO appDto = new AppointmentDAO();
 		Set<AppointmentRespondDto> appList = appDto.findAll();
@@ -32,7 +42,13 @@ public class AppointmentService {
 		}
 		return appList;
 	}
-	
+	/**
+	 * 
+	 * @param status
+	 * @return
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public Set<AppointmentRespondDto> getAllByStatus(String status) throws ValidationException, PersistenceException {
 		AppointmentValidator.validateStatus(status);
 		AppointmentDAO appDto = new AppointmentDAO();
@@ -42,14 +58,26 @@ public class AppointmentService {
 		}
 		return appList;
 	}
-	
+	/**
+	 * 
+	 * @param appId
+	 * @return
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public AppointmentRespondDto findById(int appId) throws ValidationException, PersistenceException {
 		AppointmentValidator.validateId(appId);
 		AppointmentExists.checkIdExists(appId);
 		AppointmentDAO appDao = new AppointmentDAO();
 		return appDao.findById(appId);
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 * @param status
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public void updateRequestStatus(int id, String status) throws ValidationException, PersistenceException {
 		AppointmentValidator.validateId(id);
 		AppointmentValidator.validateUpdateStatus(status);

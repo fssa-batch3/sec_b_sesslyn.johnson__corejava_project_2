@@ -63,7 +63,7 @@ public class TestGetAllAppointment {
 	@Test
 	public void getAppointmentById() throws ValidationException, PersistenceException {
 		AppointmentService appService = new AppointmentService();
-		AppointmentRespondDto arr = appService.findById(2);
+		AppointmentRespondDto arr = appService.findById(1);
 		System.out.println(arr);
 	}
 

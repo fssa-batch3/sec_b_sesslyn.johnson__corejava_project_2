@@ -44,7 +44,7 @@ public class TestGetAllUser {
 	public void testWitNonExistingId() {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			User arr = userService.findById(20);
+			User arr = userService.findById(5000);
 		});
 		String expectedMessage = "Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -97,7 +97,7 @@ public class TestGetAllUser {
 			User newUser = new User();
 			newUser.setPassword("Sess@2608");
 			newUser.setDesigner(false);
-			userService.update(20, newUser);
+			userService.update(5000, newUser);
 		});
 		String expectedMessage = "Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -115,7 +115,7 @@ public class TestGetAllUser {
 	public void testDeleteWithNonExistingId() throws ValidationException {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			userService.delete(20);
+			userService.delete(5000);
 		});
 		String expectedMessage = "Id doesn't exist";
 		String actualMessage = exception.getMessage();

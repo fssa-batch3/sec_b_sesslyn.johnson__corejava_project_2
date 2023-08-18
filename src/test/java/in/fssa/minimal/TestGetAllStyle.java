@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -23,12 +25,14 @@ public class TestGetAllStyle {
 	public void testCreateStyleWithValidInput() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Modern Architecture");
+		String generate = generateRandomString(8);
+		newStyle.setName(generate);
 
 		assertDoesNotThrow(() -> {
 			styleService.create(newStyle);
 		});
 	}
+	
 
 	@Test
 	@Order(2)
@@ -93,7 +97,8 @@ public class TestGetAllStyle {
 	public void testUpdateStyle() throws ValidationException, PersistenceException {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Rustic Architecture");
+		String generate = generateRandomString(8);
+		newStyle.setName(generate);
 		styleService.update(1, newStyle);
 	}
 
@@ -104,13 +109,26 @@ public class TestGetAllStyle {
 		Style newStyle = new Style();
 		newStyle.setName("Bohemianism");
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			styleService.update(20, newStyle);
+			styleService.update(5000, newStyle);
 		});
 		String expectedMessage = "Style Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage,actualMessage);
 
+	}
+	
+	private String generateRandomString(int length) {
+	    String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	    StringBuilder randomString = new StringBuilder();
+	    Random random = new Random();
+
+	    for (int i = 0; i < length; i++) {
+	        int index = random.nextInt(characters.length());
+	        randomString.append(characters.charAt(index));
+	    }
+
+	    return randomString.toString();
 	}
 	
 }

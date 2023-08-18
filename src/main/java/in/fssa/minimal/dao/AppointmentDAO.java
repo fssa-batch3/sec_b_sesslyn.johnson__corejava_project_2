@@ -24,7 +24,11 @@ import in.fssa.minimal.service.UserService;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class AppointmentDAO {
-	
+/**
+ * 
+ * @param newAppointment
+ * @throws PersistenceException
+ */
 	public void create(Appointment newAppointment) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -61,7 +65,12 @@ public class AppointmentDAO {
 			ConnectionUtil.close(conn, ps);
 		}
 	}
-
+/**
+ * 
+ * @return
+ * @throws ValidationException
+ * @throws PersistenceException
+ */
 	public Set<AppointmentRespondDto> findAll() throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -107,7 +116,13 @@ public class AppointmentDAO {
 		}
 		return appointmentList;
 	}
-
+/**
+ * 
+ * @param status
+ * @return
+ * @throws ValidationException
+ * @throws PersistenceException
+ */
 	public Set<AppointmentRespondDto> findAllByStatus(String status) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -155,7 +170,13 @@ public class AppointmentDAO {
 		return appointmentList;
 	}
 
-	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public AppointmentRespondDto findById(int id) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -202,7 +223,12 @@ public class AppointmentDAO {
 		return app;
 	}
 	
-
+/**
+ * 
+ * @param id
+ * @param status
+ * @throws PersistenceException
+ */
 	public void updateRequestStatus(int id, String status) throws PersistenceException {
 	    Connection conn = null;
 	    PreparedStatement ps = null;

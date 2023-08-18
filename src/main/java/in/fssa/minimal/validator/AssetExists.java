@@ -9,6 +9,11 @@ import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class AssetExists {
+	/**
+	 * 
+	 * @param id
+	 * @throws ValidationException
+	 */
 	public static void checkIdExists(int id) throws ValidationException {
 		Connection conn = null;
 		PreparedStatement pre = null;
@@ -31,6 +36,11 @@ public class AssetExists {
 			ConnectionUtil.close(conn, pre, rs);
 		}
 	}
+	/**
+	 * 
+	 * @param assetUrl
+	 * @throws ValidationException
+	 */
 	public static void checkAssetUrlExists(String assetUrl) throws ValidationException {
 		Connection conn = null;
 		PreparedStatement pre = null;

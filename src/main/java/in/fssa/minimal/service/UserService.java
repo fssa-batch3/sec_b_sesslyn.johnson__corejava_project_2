@@ -9,6 +9,11 @@ import in.fssa.minimal.validator.UserExists;
 import in.fssa.minimal.validator.UserValidator;
 
 public class UserService {
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public Set<User> getAll() throws PersistenceException {
 		UserDAO userDao = new UserDAO();
 		Set<User> userList = userDao.findAll();
@@ -18,6 +23,13 @@ public class UserService {
 		return userList;
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public static User findById(int userId) throws ValidationException, PersistenceException {
 		UserValidator.validateId(userId);
 		UserExists.checkIdExists(userId);
@@ -25,6 +37,13 @@ public class UserService {
 		return userDao.findById(userId);
 	}
 
+	/**
+	 * 
+	 * @param email
+	 * @return
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public User findByEmail(String email) throws ValidationException, PersistenceException {
 		UserValidator.validateEmail(email);
 		UserExists.checkEmailExists(email);
@@ -32,6 +51,12 @@ public class UserService {
 		return userDao.findByEmail(email);
 	}
 
+	/**
+	 * 
+	 * @param newUser
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public void create(User newUser) throws ValidationException, PersistenceException {
 		UserValidator.Validate(newUser);
 		UserExists.emailExists(newUser.getEmail());
@@ -39,6 +64,13 @@ public class UserService {
 		userDao.create(newUser);
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param updatedUser
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public void update(int id, User updatedUser) throws ValidationException, PersistenceException {
 		UserValidator.validateId(id);
 		UserExists.checkIdExists(id);
@@ -55,6 +87,12 @@ public class UserService {
 		userDao.update(id, updatedUser);
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public void delete(int userId) throws ValidationException, PersistenceException {
 		UserValidator.validateId(userId);
 		UserExists.checkIdExists(userId);
@@ -62,7 +100,11 @@ public class UserService {
 		userDao.delete(userId);
 	}
 
-	
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public Set<User> getAllDesigner() throws PersistenceException {
 		UserDAO userDao = new UserDAO();
 		Set<User> userList = userDao.findAllDesigner();
@@ -72,6 +114,13 @@ public class UserService {
 		return userList;
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws ValidationException
+	 * @throws PersistenceException
+	 */
 	public User findDesignerById(int userId) throws ValidationException, PersistenceException {
 		UserValidator.validateId(userId);
 		UserExists.checkDesignerIdExists(userId);

@@ -1,0 +1,8 @@
+in.fssa.minimal.dao
+in.fssa.minimal.dto
+in.fssa.minimal.exception
+in.fssa.minimal.interfaces
+in.fssa.minimal.model
+in.fssa.minimal.service
+in.fssa.minimal.util
+in.fssa.minimal.validator

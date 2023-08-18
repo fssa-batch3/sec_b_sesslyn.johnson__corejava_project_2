@@ -9,6 +9,11 @@ import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class DesignExists {
+	/**
+	 * 
+	 * @param id
+	 * @throws ValidationException
+	 */
 	public static void checkIdExists(int id) throws ValidationException {
 		Connection conn = null;
 		PreparedStatement pre = null;
@@ -31,7 +36,11 @@ public class DesignExists {
 			ConnectionUtil.close(conn, pre, rs);
 		}
 	}
-	
+	/**
+	 * 
+	 * @param createdBy
+	 * @throws ValidationException
+	 */
 	public static void checkCreatedByExists(int createdBy) throws ValidationException {
 		Connection conn = null;
 		PreparedStatement pre = null;

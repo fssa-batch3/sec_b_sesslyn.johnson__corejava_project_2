@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.User;
@@ -13,17 +15,31 @@ public class TestCreateUser {
 
 	@Test
 	public void testCreateUserWithValidInput() {
-		UserService userService = new UserService();
-		User newUser = new User();
-		newUser.setName("Jenusha");
-		newUser.setEmail("jenusha@gmail.com");
-		newUser.setPassword("Jenusha@2303");
-		newUser.setPhoneNumber(9863456787L);
-		newUser.setDesigner(false);
+	    UserService userService = new UserService();
+	    User newUser = new User();
+	    String randomString = generateRandomString(8); 
+	    newUser.setName("Sesslyn");
+	    newUser.setEmail(randomString + "@" + "google.com");
+	    newUser.setPassword("Jenusha@2303");
+	    newUser.setPhoneNumber(9863456787L);
+	    newUser.setDesigner(false);
 
-		assertDoesNotThrow(() -> {
-			userService.create(newUser);
-		});
+	    assertDoesNotThrow(() -> {
+	        userService.create(newUser);
+	    });
+	}
+
+	private String generateRandomString(int length) {
+	    String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	    StringBuilder randomString = new StringBuilder();
+	    Random random = new Random();
+
+	    for (int i = 0; i < length; i++) {
+	        int index = random.nextInt(characters.length());
+	        randomString.append(characters.charAt(index));
+	    }
+
+	    return randomString.toString();
 	}
 
 	@Test
