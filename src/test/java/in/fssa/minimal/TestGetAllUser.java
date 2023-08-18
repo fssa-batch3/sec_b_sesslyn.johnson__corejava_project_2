@@ -75,10 +75,9 @@ public class TestGetAllUser {
 	public void testUpdateUser() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
 		User newUser = new User();
-		newUser.setName("Sess");
-		newUser.setPassword("Pappu@2608");
-		newUser.setDesigner(true);
-		newUser.setPhoneNumber(6381040928L);
+		newUser.setName("Sesslyn");
+		newUser.setPassword("Sess@2608");
+		newUser.setPhoneNumber(6381040926L);
 		userService.update(1, newUser);
 	}
 	

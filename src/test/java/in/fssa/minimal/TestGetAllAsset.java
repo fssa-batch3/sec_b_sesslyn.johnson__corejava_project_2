@@ -15,7 +15,7 @@ public class TestGetAllAsset {
 	public void testCreateAssetWithValidInput() {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/_j8BvTVSBrY");
+		newAsset.setAssetsUrl("https://youtu.be/PNWqf5YyCS8");
 
 		assertDoesNotThrow(() -> {
 			assetService.create(newAsset);
@@ -79,7 +79,7 @@ public class TestGetAllAsset {
 	public void testUpdateAsset() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/DFgL3URDOr4");
+		newAsset.setAssetsUrl("https://youtu.be/43YpEDYUSI0");
 		assetService.update(1, newAsset);
 	}
 	
@@ -87,7 +87,7 @@ public class TestGetAllAsset {
 	public void testUpdateAssetWithExistingUrl() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/DrnzCBQ23IU");
+		newAsset.setAssetsUrl("https://youtu.be/jFucGiiDU64");
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			assetService.update(1, newAsset);
 		});

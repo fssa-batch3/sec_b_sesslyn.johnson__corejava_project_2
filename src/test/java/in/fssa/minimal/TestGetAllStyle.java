@@ -15,7 +15,7 @@ public class TestGetAllStyle {
 	public void testCreateStyleWithValidInput() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Industrial Style");
+		newStyle.setName("Modern Architecture");
 
 		assertDoesNotThrow(() -> {
 			styleService.create(newStyle);
@@ -80,7 +80,7 @@ public class TestGetAllStyle {
 	public void testUpdateStyle() throws ValidationException, PersistenceException {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Boho – Bohemian Architecture");
+		newStyle.setName("Minimal Architecture");
 		styleService.update(1, newStyle);
 	}
 

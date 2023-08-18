@@ -17,8 +17,8 @@ public class TestGetAllDesignAsset {
 	public void testCreateUserWithValidInput() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
-		newDesign.setAssetsId(4);
-		newDesign.setDesignId(2);
+		newDesign.setAssetsId(3);
+		newDesign.setDesignId(1);
 		assertDoesNotThrow(() -> {
 			designAssetService.create(newDesign);
 		});
@@ -56,7 +56,7 @@ public class TestGetAllDesignAsset {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
 		newDesign.setAssetsId(1);
-		newDesign.setDesignId(3);
+		newDesign.setDesignId(20);
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			designAssetService.create(newDesign);
 		});
@@ -88,7 +88,7 @@ public class TestGetAllDesignAsset {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAsset newDesign = new DesignAsset();
-			newDesign.setDesignId(3);
+			newDesign.setDesignId(20);
 			designAssetService.update(1, newDesign);
 		});
 		String expectedMessage = "Design Id doesn't exist";
@@ -117,7 +117,7 @@ public class TestGetAllDesignAsset {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAsset newDesign = new DesignAsset();
 			newDesign.setAssetsId(1);
-			designAssetService.update(3, newDesign);
+			designAssetService.update(20, newDesign);
 		});
 		String expectedMessage = "Design Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -135,7 +135,7 @@ public class TestGetAllDesignAsset {
 	public void testDeleteWithNonExistingId() throws ValidationException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			designAssetService.delete(4);
+			designAssetService.delete(20);
 		});
 		String expectedMessage = "Design Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -173,7 +173,7 @@ public class TestGetAllDesignAsset {
 	public void testWitNonExistingId() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			DesignAssetRespondDto arr = designAssetService.findAllDesignAssetById(3);
+			DesignAssetRespondDto arr = designAssetService.findAllDesignAssetById(20);
 		});
 		String expectedMessage = "Design Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();

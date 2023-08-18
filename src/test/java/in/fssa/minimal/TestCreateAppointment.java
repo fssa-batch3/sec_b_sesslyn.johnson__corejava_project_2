@@ -14,8 +14,8 @@ public class TestCreateAppointment {
     public void testCreateAppointmentWithValidInput() {
         AppointmentService  appointmentService = new  AppointmentService();
         Appointment newAppointment = new  Appointment();
-        newAppointment.setFromUser(6);
-        newAppointment.setToUser(7);
+        newAppointment.setFromUser(7);
+        newAppointment.setToUser(6);
         newAppointment.setEmail("john@gmail.com");
         newAppointment.setPhoneNumber(6381040916l);
         newAppointment.setStatus("waiting_list");
