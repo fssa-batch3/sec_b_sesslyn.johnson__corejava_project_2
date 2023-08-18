@@ -3,15 +3,22 @@ package in.fssa.minimal;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
 import in.fssa.minimal.service.AssetService;
 
-
+@TestMethodOrder(OrderAnnotation.class)
 public class TestGetAllAsset {
+	
 	@Test
+	@Order(1)
 	public void testCreateAssetWithValidInput() {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
@@ -21,7 +28,9 @@ public class TestGetAllAsset {
 			assetService.create(newAsset);
 		});
 	}
+	
 	@Test
+	@Order(2)
 	public void testCreateAssetWithInValidInput() {
 		AssetService assetService = new AssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -34,6 +43,7 @@ public class TestGetAllAsset {
 	}
 	
 	@Test
+	@Order(3)
 	public void testCreateAssetUrlWithNull() {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
@@ -48,6 +58,7 @@ public class TestGetAllAsset {
 	}
 	
 	@Test
+	@Order(4)
 	public void testCreateAssetUrlWithEmpty() {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
@@ -62,6 +73,7 @@ public class TestGetAllAsset {
 	}
 	
 	@Test
+	@Order(5)
 	public void testCreateAssetUrlAlreadyExists() {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
@@ -76,6 +88,7 @@ public class TestGetAllAsset {
 	}
 	
 	@Test
+	@Order(6)
 	public void testUpdateAsset() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
@@ -84,6 +97,7 @@ public class TestGetAllAsset {
 	}
 	
 	@Test
+	@Order(7)
 	public void testUpdateAssetWithExistingUrl() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
@@ -98,6 +112,7 @@ public class TestGetAllAsset {
 	}
 	
 	@Test
+	@Order(8)
 	public void testUpdateAssetWithNonExistingId() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
@@ -113,6 +128,7 @@ public class TestGetAllAsset {
 	}
 	
 	@Test
+	@Order(9)
 	public void getAssetById() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset arr = assetService.findByAssetId(1);
@@ -120,6 +136,7 @@ public class TestGetAllAsset {
 	}
 	
 	@Test
+	@Order(10)
 	public void testWitNonExistingId() {
 		AssetService assetService = new AssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {

@@ -4,13 +4,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
+
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Design;
 import in.fssa.minimal.service.DesignService;
 
+@TestMethodOrder(OrderAnnotation.class)
 public class TestGetAllDesign {
 	@Test
+	@Order(1)
 	public void testUpdateDesign() throws ValidationException, PersistenceException {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
@@ -27,6 +33,7 @@ public class TestGetAllDesign {
 	}
 	
 	@Test
+	@Order(2)
 	public void testUpdateSpecificFields() throws ValidationException, PersistenceException {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
@@ -35,6 +42,7 @@ public class TestGetAllDesign {
 	}
 	
 	@Test
+	@Order(3)
 	public void testUpdateNonExistingId() throws ValidationException, PersistenceException {	
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -49,12 +57,14 @@ public class TestGetAllDesign {
 	}
 	
 	@Test
+	@Order(4)
 	public void getAllDesign() throws PersistenceException {
 		DesignService designService = new DesignService();
 		Set<Design> arr = designService.getAllDesign();
 	}
 	
 	@Test
+	@Order(5)
 	public void getDesignById() throws ValidationException, PersistenceException {
 		DesignService designService = new DesignService();
 		Design arr = designService.findByDesignId(1);
@@ -63,6 +73,7 @@ public class TestGetAllDesign {
 
 	
 	@Test
+	@Order(6)
 	public void testWithIdLessThanZero() {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -75,6 +86,7 @@ public class TestGetAllDesign {
 	}
 	
 	@Test
+	@Order(7)
 	public void testWitNonExistingId() {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -87,12 +99,14 @@ public class TestGetAllDesign {
 	}
 	
 	@Test
+	@Order(8)
 	public void getAllDesignByDesignerId() throws PersistenceException, ValidationException {
 		DesignService designService = new DesignService();
 		Set<Design>  designList = designService.findAllDesignsByDesignerId(2);
 	}
 	
 	@Test
+	@Order(9)
 	public void testGetAllDesignWithNonExistingId() throws PersistenceException, ValidationException {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -105,6 +119,7 @@ public class TestGetAllDesign {
 	}
 	
 	@Test
+	@Order(10)
 	public void testGetAllDesignWithNonExistingDesigner() throws PersistenceException, ValidationException {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
