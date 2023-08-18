@@ -17,7 +17,7 @@ public class TestGetAllDesignAsset {
 	public void testCreateUserWithValidInput() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
-		newDesign.setAssetsId(3);
+		newDesign.setAssetsId(2);
 		newDesign.setDesignId(1);
 		assertDoesNotThrow(() -> {
 			designAssetService.create(newDesign);
@@ -71,7 +71,7 @@ public class TestGetAllDesignAsset {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
 		newDesign.setAssetsId(1);
-		newDesign.setDesignId(2);
+		newDesign.setDesignId(1);
 		designAssetService.update(1, newDesign);
 	}
 
@@ -79,8 +79,8 @@ public class TestGetAllDesignAsset {
 	public void testUpdateSpecificFields() throws ValidationException, PersistenceException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
-		newDesign.setDesignId(2);
-		designAssetService.update(2, newDesign);
+		newDesign.setDesignId(1);
+		designAssetService.update(1, newDesign);
 	}
 
 	@Test

@@ -31,8 +31,6 @@ public class TestGetAllDesign {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setLocation("Bangalore");
-		newDesign.setStyleId(1);
-		newDesign.setCreatedBy(4);
 		designService.update(1, newDesign);
 	}
 	
@@ -42,8 +40,6 @@ public class TestGetAllDesign {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Design newDesign = new Design();
 			newDesign.setLocation("Bangalore");
-			newDesign.setStyleId(1);
-			newDesign.setCreatedBy(4);
 			designService.update(20, newDesign);
 		});
 		String expectedMessage = "Design Id doesn't exist";
@@ -93,14 +89,14 @@ public class TestGetAllDesign {
 	@Test
 	public void getAllDesignByDesignerId() throws PersistenceException, ValidationException {
 		DesignService designService = new DesignService();
-		Set<Design>  designList = designService.findAllDesignsByDesignerId(4);
+		Set<Design>  designList = designService.findAllDesignsByDesignerId(2);
 	}
 	
 	@Test
 	public void testGetAllDesignWithNonExistingId() throws PersistenceException, ValidationException {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<Design>  designList = designService.findAllDesignsByDesignerId(11);
+			Set<Design>  designList = designService.findAllDesignsByDesignerId(4);
 		});
 		String expectedMessage = "Designers doesn't have any design yet";
 		String actualMessage = exception.getMessage();

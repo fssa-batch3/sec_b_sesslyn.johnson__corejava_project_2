@@ -15,7 +15,7 @@ public class TestGetAllAsset {
 	public void testCreateAssetWithValidInput() {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/PNWqf5YyCS8");
+		newAsset.setAssetsUrl("https://youtu.be/9xkxT2hY634");
 
 		assertDoesNotThrow(() -> {
 			assetService.create(newAsset);
@@ -65,7 +65,7 @@ public class TestGetAllAsset {
 	public void testCreateAssetUrlAlreadyExists() {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/ZpQjOTbhGRk");
+		newAsset.setAssetsUrl("https://youtu.be/DFgL3URDOr4");
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			assetService.create(newAsset);
 		});
@@ -79,7 +79,7 @@ public class TestGetAllAsset {
 	public void testUpdateAsset() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/43YpEDYUSI0");
+		newAsset.setAssetsUrl("https://youtu.be/cqAGTQgoDl4");
 		assetService.update(1, newAsset);
 	}
 	
@@ -87,7 +87,7 @@ public class TestGetAllAsset {
 	public void testUpdateAssetWithExistingUrl() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/jFucGiiDU64");
+		newAsset.setAssetsUrl("https://youtu.be/DFgL3URDOr4");
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			assetService.update(1, newAsset);
 		});

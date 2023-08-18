@@ -80,7 +80,7 @@ public class TestGetAllStyle {
 	public void testUpdateStyle() throws ValidationException, PersistenceException {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Minimal Architecture");
+		newStyle.setName("Rustic Architecture");
 		styleService.update(1, newStyle);
 	}
 
@@ -88,14 +88,14 @@ public class TestGetAllStyle {
 	public void testUpdateStyleWithNonExistingId() throws ValidationException, PersistenceException {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Mid-Century Style");
+		newStyle.setName("Bohemianism");
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			styleService.update(10, newStyle);
+			styleService.update(20, newStyle);
 		});
 		String expectedMessage = "Style Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 
 	}
 	

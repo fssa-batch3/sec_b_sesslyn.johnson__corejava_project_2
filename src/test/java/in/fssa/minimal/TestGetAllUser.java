@@ -55,7 +55,7 @@ public class TestGetAllUser {
 	@Test
 	public void getUserByEmailId() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
-		User arr = userService.findByEmail("john@gmail.com");
+		User arr = userService.findByEmail("ruby@gmail.com");
 		System.out.println(arr);
 	}
 
@@ -75,7 +75,7 @@ public class TestGetAllUser {
 	public void testUpdateUser() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
 		User newUser = new User();
-		newUser.setName("Sesslyn");
+		newUser.setName("Pappu");
 		newUser.setPassword("Sess@2608");
 		newUser.setPhoneNumber(6381040926L);
 		userService.update(1, newUser);
@@ -108,7 +108,7 @@ public class TestGetAllUser {
 	@Test
 	public void testDeleteUser() throws ValidationException, PersistenceException {
 		UserService userService = new UserService();
-		userService.delete(1);
+		userService.delete(5);
 	}
 
 	@Test
@@ -142,7 +142,7 @@ public class TestGetAllUser {
 	public void testDesignerWitNonExistingId() {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			User arr = userService.findDesignerById(5);
+			User arr = userService.findDesignerById(3);
 		});
 		String expectedMessage = "Designer Id doesn't exist";
 		String actualMessage = exception.getMessage();

@@ -12,7 +12,7 @@ import in.fssa.minimal.service.DesignService;
 
 public class TestCreateDesign {
 	@Test
-	public void testCreateUserWithValidInput() {
+	public void testCreateDesignWithValidInput() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 4 Bhk Home");
@@ -22,8 +22,8 @@ public class TestCreateDesign {
 				+ "Project Manager: Muzammil\r\n"
 				+ "Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of Johnson and Ruby offers some major design goals. The house is the true epitome of elegance and warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms, making them look regal. The accessories scattered throughout the space club everything together, radiating charm and opulence.\r\n");
 		newDesign.setLocation("Chennai");
-		newDesign.setStyleId(4);
-		newDesign.setCreatedBy(4);
+		newDesign.setStyleId(2);
+		newDesign.setCreatedBy(2);
 
 		assertDoesNotThrow(() -> {
 			designService.create(newDesign);

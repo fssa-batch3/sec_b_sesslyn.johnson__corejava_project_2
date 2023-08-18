@@ -14,9 +14,9 @@ public class TestCreateAppointment {
     public void testCreateAppointmentWithValidInput() {
         AppointmentService  appointmentService = new  AppointmentService();
         Appointment newAppointment = new  Appointment();
-        newAppointment.setFromUser(7);
-        newAppointment.setToUser(6);
-        newAppointment.setEmail("john@gmail.com");
+        newAppointment.setFromUser(1);
+        newAppointment.setToUser(2);
+        newAppointment.setEmail("sesslyn@gmail.com");
         newAppointment.setPhoneNumber(6381040916l);
         newAppointment.setStatus("waiting_list");
         newAppointment.setDate("2023-09-18");
@@ -42,7 +42,7 @@ public class TestCreateAppointment {
     public void testCreateAppointmentWithInvalidUserId() {
         AppointmentService  appointmentService = new  AppointmentService();
         Appointment newAppointment = new  Appointment();
-        newAppointment.setFromUser(0);
+        newAppointment.setFromUser(-2);
         newAppointment.setToUser(2);
         newAppointment.setEmail("sess@gmail.com");
         newAppointment.setPhoneNumber(6381040916l);
@@ -63,7 +63,7 @@ public class TestCreateAppointment {
         AppointmentService  appointmentService = new  AppointmentService();
         Appointment newAppointment = new  Appointment();
         newAppointment.setFromUser(2);
-        newAppointment.setToUser(0);
+        newAppointment.setToUser(-2);
         newAppointment.setEmail("sess@gmail.com");
         newAppointment.setPhoneNumber(6381040916l);
         newAppointment.setStatus("waiting_list");
@@ -122,13 +122,13 @@ public class TestCreateAppointment {
     public void testCreateAppointmentDesignerHasAppointment() {
         AppointmentService  appointmentService = new  AppointmentService();
         Appointment newAppointment = new  Appointment();
-        newAppointment.setFromUser(9);
+        newAppointment.setFromUser(6);
         newAppointment.setToUser(2);
         newAppointment.setEmail("sess@gmail.com");
         newAppointment.setPhoneNumber(6381040916l);
         newAppointment.setStatus("waiting_list");
-        newAppointment.setDate("2023-09-16");
-        newAppointment.setTime("13:30:00");
+        newAppointment.setDate("2023-08-26");
+        newAppointment.setTime("10:00:00");
         newAppointment.setAddress(null);
         Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
@@ -142,7 +142,7 @@ public class TestCreateAppointment {
     public void testCreateAppointmentWithInvalidToUserId() {
         AppointmentService  appointmentService = new  AppointmentService();
         Appointment newAppointment = new  Appointment();
-        newAppointment.setFromUser(1);
+        newAppointment.setFromUser(3);
         newAppointment.setToUser(5);
         newAppointment.setEmail("sess@gmail.com");
         newAppointment.setPhoneNumber(6381040916l);
