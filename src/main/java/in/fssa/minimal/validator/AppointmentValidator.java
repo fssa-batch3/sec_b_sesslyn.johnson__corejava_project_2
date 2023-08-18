@@ -113,7 +113,7 @@ public class AppointmentValidator {
 	    String formattedDate = dueDate.format(inputFormatter);
 	    LocalDate currentDate = LocalDate.now();
 
-	    if (dueDate.isBefore(currentDate) || dueDate.equals(currentDate) || dueDate.isAfter(currentDate.plusDays(90))) {
+	    if (dueDate.isBefore(currentDate) || dueDate.isAfter(currentDate.plusDays(90))) {
 	        throw new ValidationException("Invalid date or Invalid date format ( yyyy-MM-dd)");
 	    }
 	}

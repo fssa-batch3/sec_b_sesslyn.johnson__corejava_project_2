@@ -82,7 +82,7 @@ public class TestGetAllStyle {
 	public void testCreateStyleWithNameExists() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		newStyle.setName("Shabby Chic");
+		newStyle.setName("Minimalism");
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			styleService.create(newStyle);
 		});
@@ -114,7 +114,7 @@ public class TestGetAllStyle {
 		String expectedMessage = "Style Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertEquals(expectedMessage,actualMessage);
+		assertTrue(expectedMessage.equals(actualMessage));
 
 	}
 	

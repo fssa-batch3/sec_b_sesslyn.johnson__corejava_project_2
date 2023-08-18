@@ -6,14 +6,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.User;
 import in.fssa.minimal.service.UserService;
-
+@TestMethodOrder(OrderAnnotation.class)
 public class TestCreateUser {
 
 	@Test
+	@Order(1)
 	public void testCreateUserWithValidInput() {
 	    UserService userService = new UserService();
 	    User newUser = new User();
@@ -28,7 +33,24 @@ public class TestCreateUser {
 	        userService.create(newUser);
 	    });
 	}
+	
+	@Test
+	@Order(2)
+	public void testCreateDesignerWithValidInput() {
+	    UserService userService = new UserService();
+	    User newUser = new User();
+	    String randomString = generateRandomString(8); 
+	    newUser.setName("Sesslyn");
+	    newUser.setEmail(randomString + "@" + "google.com");
+	    newUser.setPassword("Jenusha@2303");
+	    newUser.setPhoneNumber(9863456787L);
+	    newUser.setDesigner(true);
 
+	    assertDoesNotThrow(() -> {
+	        userService.create(newUser);
+	    });
+	}
+	
 	private String generateRandomString(int length) {
 	    String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	    StringBuilder randomString = new StringBuilder();
@@ -43,6 +65,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(3)
 	public void testCreateUserWithInvalidInput() {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -55,6 +78,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(4)
 	public void testCreateUserWithNameNull() {
 		UserService userService = new UserService();
 		User newUser = new User();
@@ -74,6 +98,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(5)
 	public void testCreateUserWithNameEmpty() {
 		UserService userService = new UserService();
 		User newUser = new User();
@@ -93,6 +118,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(6)
 	public void testCreateUserWithNamePattern() {
 		UserService userService = new UserService();
 		User newUser = new User();
@@ -112,6 +138,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(7)
 	public void testCreateUserWithEmailNull() {
 		UserService userService = new UserService();
 
@@ -132,6 +159,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(8)
 	public void testCreateUserWithEmailEmpty() {
 		UserService userService = new UserService();
 
@@ -152,6 +180,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(9)
 	public void testCreateUserWithEmailPattern() {
 		UserService userService = new UserService();
 
@@ -172,6 +201,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(10)
 	public void testCreateUserWithEmailExists() {
 		UserService userService = new UserService();
 
@@ -192,6 +222,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(11)
 	public void testCreateUserWithPasswordNull() {
 		UserService userService = new UserService();
 		User newUser = new User();
@@ -211,6 +242,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(12)
 	public void testCreateUserWithPasswordEmpty() {
 		UserService userService = new UserService();
 		User newUser = new User();
@@ -230,6 +262,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(13)
 	public void testCreateUserWithInvalidPasswordPattern() {
 	    UserService userService = new UserService();
 	    User newUser = new User();
@@ -251,6 +284,7 @@ public class TestCreateUser {
 
 
 	@Test
+	@Order(14)
 	public void testCreateUserWithPasswordLength() {
 		UserService userService = new UserService();
 		User newUser = new User();
@@ -269,6 +303,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(15)
 	public void testCreateUserWithAllZeroPhoneNumber() {
 		UserService userService = new UserService();
 		User newUser = new User();
@@ -289,6 +324,7 @@ public class TestCreateUser {
 	}
 
 	@Test
+	@Order(16)
 	public void testCreateUserWithInvalidPhoneNumber() {
 		UserService userService = new UserService();
 		User newUser = new User();

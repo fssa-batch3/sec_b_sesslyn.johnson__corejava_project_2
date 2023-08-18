@@ -123,7 +123,7 @@ public class TestGetAllDesign {
 	public void testGetAllDesignWithNonExistingDesigner() throws PersistenceException, ValidationException {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<Design>  designList = designService.findAllDesignsByDesignerId(7);
+			Set<Design>  designList = designService.findAllDesignsByDesignerId(5000);
 		});
 		String expectedMessage = "Designer Id doesn't exist";
 		String actualMessage = exception.getMessage();

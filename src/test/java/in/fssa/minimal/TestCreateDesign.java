@@ -220,7 +220,7 @@ public class TestCreateDesign {
 		newDesign.setName("Modern 3Bhk Home");
 		newDesign.setDescription("Customer Name: Mr. Kiran Kunjur & Mrs. Ramya Kiran");
 		newDesign.setLocation("Chennai");
-		newDesign.setStyleId(20);
+		newDesign.setStyleId(5000);
 		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {

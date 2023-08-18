@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.util.ConnectionUtil;
 
@@ -13,8 +14,9 @@ public class StyleExists {
 	 * 
 	 * @param name
 	 * @throws ValidationException
+	 * @throws PersistenceException 
 	 */
-	public static void nameExists(String name) throws ValidationException {
+	public static void nameExists(String name) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
 		ResultSet rs = null;
@@ -31,7 +33,7 @@ public class StyleExists {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
 		}
@@ -41,8 +43,9 @@ public class StyleExists {
 	 * 
 	 * @param id
 	 * @throws ValidationException
+	 * @throws PersistenceException 
 	 */
-	public static void checkIdExists(int id) throws ValidationException {
+	public static void checkIdExists(int id) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
 		ResultSet rs = null;
@@ -59,7 +62,7 @@ public class StyleExists {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
 		}
