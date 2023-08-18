@@ -4,14 +4,22 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Style;
 import in.fssa.minimal.service.StyleService;
 
+@TestMethodOrder(OrderAnnotation.class)
 public class TestGetAllStyle {
+
 	@Test
+	@Order(1)
 	public void testCreateStyleWithValidInput() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
@@ -23,6 +31,7 @@ public class TestGetAllStyle {
 	}
 
 	@Test
+	@Order(2)
 	public void testCreateStyleWithInValidInput() {
 		StyleService styleService = new StyleService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -35,6 +44,7 @@ public class TestGetAllStyle {
 	}
 
 	@Test
+	@Order(3)
 	public void testCreateStyleWithNameNull() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
@@ -49,6 +59,7 @@ public class TestGetAllStyle {
 	}
 
 	@Test
+	@Order(4)
 	public void testCreateStyleWithNameEmpty() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
@@ -63,6 +74,7 @@ public class TestGetAllStyle {
 	}
 
 	@Test
+	@Order(5)
 	public void testCreateStyleWithNameExists() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
@@ -77,6 +89,7 @@ public class TestGetAllStyle {
 	}
 
 	@Test
+	@Order(6)
 	public void testUpdateStyle() throws ValidationException, PersistenceException {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
@@ -85,6 +98,7 @@ public class TestGetAllStyle {
 	}
 
 	@Test
+	@Order(7)
 	public void testUpdateStyleWithNonExistingId() throws ValidationException, PersistenceException {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
