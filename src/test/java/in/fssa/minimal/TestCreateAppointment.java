@@ -13,11 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
+import in.fssa.minimal.dao.UserDAO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Appointment;
 import in.fssa.minimal.service.AppointmentService;
-import in.fssa.minimal.validator.UserId;
+
 
 @TestMethodOrder(OrderAnnotation.class)
 public class TestCreateAppointment {
@@ -27,7 +28,7 @@ public class TestCreateAppointment {
 	public void testCreateAppointmentWithValidInput() throws PersistenceException {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
-		UserId app = new UserId();
+		UserDAO app = new UserDAO();
 		int user = app.getLastUpdatedUserId();
 		newAppointment.setFromUser(user);
 		int designer = app.getLastUpdatedDesignerId();
@@ -75,7 +76,7 @@ public class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
 		});
-		String expectedMessage = "Id can't be less than or equal to zero";
+		String expectedMessage = "ID cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -97,7 +98,7 @@ public class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
 		});
-		String expectedMessage = "Id can't be less than or equal to zero";
+		String expectedMessage = "ID cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -234,16 +235,15 @@ public class TestCreateAppointment {
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
-
 	@Test
 	@Order(11)
-	public void testCreateAppointmentWithAllZeroPhoneNumber() {
+	public void testCreateAppointmentWithEmailPattern() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
 		newAppointment.setFromUser(1);
 		newAppointment.setToUser(2);
-		newAppointment.setEmail("sam@gmail.com");
-		newAppointment.setPhoneNumber(0l);
+		newAppointment.setEmail("sess@com");
+		newAppointment.setPhoneNumber(6381040916l);
 		newAppointment.setStatus("waiting_list");
 		newAppointment.setDate("2023-09-30");
 		newAppointment.setTime("15:30:00");
@@ -251,14 +251,58 @@ public class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
 		});
-		String expectedMessage = "PhoneNumber doesn't match the length";
+		String expectedMessage = "Invalid email format. Please provide a valid email address";
+		String actualMessage = exception.getMessage();
+
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	
+	@Test
+	@Order(12)
+	public void testCreateAppointmentWithNegativePhoneNumber() {
+		AppointmentService appointmentService = new AppointmentService();
+		Appointment newAppointment = new Appointment();
+		newAppointment.setFromUser(1);
+		newAppointment.setToUser(2);
+		newAppointment.setEmail("sam@gmail.com");
+		newAppointment.setPhoneNumber(-10);
+		newAppointment.setStatus("waiting_list");
+		newAppointment.setDate("2023-09-30");
+		newAppointment.setTime("15:30:00");
+		newAppointment.setAddress(null);
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			appointmentService.create(newAppointment);
+		});
+		String expectedMessage = "Phone number cannot be zero or negative";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
 	@Test
-	@Order(12)
+	@Order(13)
+	public void testCreateAppointmentWithAllZeroPhoneNumber() {
+		AppointmentService appointmentService = new AppointmentService();
+		Appointment newAppointment = new Appointment();
+		newAppointment.setFromUser(1);
+		newAppointment.setToUser(2);
+		newAppointment.setEmail("sam@gmail.com");
+		newAppointment.setPhoneNumber(987645678l);
+		newAppointment.setStatus("waiting_list");
+		newAppointment.setDate("2023-09-30");
+		newAppointment.setTime("15:30:00");
+		newAppointment.setAddress(null);
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			appointmentService.create(newAppointment);
+		});
+		String expectedMessage = "Phone number should be exactly 10 digits long";
+		String actualMessage = exception.getMessage();
+
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+
+	@Test
+	@Order(14)
 	public void testCreateAppointmentWithInvalidPhoneNumber() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -273,14 +317,14 @@ public class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
 		});
-		String expectedMessage = "PhoneNumber doesn't match the pattern";
+		String expectedMessage = "Invalid phone number format. Make sure not to include +91";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
 	@Test
-	@Order(13)
+	@Order(15)
 	public void testCreateAppointmentWithStatusNull() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -302,7 +346,7 @@ public class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(14)
+	@Order(16)
 	public void testCreateAppointmentWithStatusEmpty() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -324,7 +368,7 @@ public class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(15)
+	@Order(17)
 	public void testCreateAppointmentWithStatusPattern() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -339,14 +383,14 @@ public class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
 		});
-		String expectedMessage = "Status doesn't match the expected values";
+		String expectedMessage = "Invalid status value. The status can only be one of: waiting_list, approved, rejected";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
 	@Test
-	@Order(16)
+	@Order(18)
 	public void testCreateAppointmentWithDateNUll() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -368,7 +412,7 @@ public class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(17)
+	@Order(19)
 	public void testCreateAppointmentWithDateEmpty() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -390,7 +434,7 @@ public class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(18)
+	@Order(20)
 	public void testCreateAppointmentWithInvalidDateFormat() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -405,14 +449,14 @@ public class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
 		});
-		String expectedMessage = "Invalid date or Invalid date format ( yyyy-MM-dd)";
+		String expectedMessage = "Invalid date or Invalid date format (yyyy-MM-dd)";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
 	@Test
-	@Order(19)
+	@Order(21)
 	public void testCreateAppointmentWithPassedDate() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -427,14 +471,14 @@ public class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
 		});
-		String expectedMessage = "Invalid date or Invalid date format ( yyyy-MM-dd)";
+		String expectedMessage = "Invalid date. The date should be within the next 90 days";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
 	@Test
-	@Order(20)
+	@Order(22)
 	public void testCreateAppointmentWithFutureDate() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -449,14 +493,14 @@ public class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
 		});
-		String expectedMessage = "Invalid date or Invalid date format ( yyyy-MM-dd)";
+		String expectedMessage = "Invalid date. The date should be within the next 90 days";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
 	@Test
-	@Order(21)
+	@Order(23)
 	public void testCreateAppointmentWithTimeNUll() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -478,7 +522,7 @@ public class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(22)
+	@Order(24)
 	public void testCreateAppointmentWithTimeEmpty() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -500,7 +544,7 @@ public class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(23)
+	@Order(25)
 	public void testCreateAppointmentWithParsedTime() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -515,14 +559,14 @@ public class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
 		});
-		String expectedMessage = "Invalid time or Invalid time format ( HH:mm:ss)";
+		String expectedMessage = "Invalid time or Invalid time format (HH:mm:ss)";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
 	@Test
-	@Order(24)
+	@Order(26)
 	public void testCreateAppointmentWithPassedTime() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -537,7 +581,7 @@ public class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(newAppointment);
 		});
-		String expectedMessage = "Invalid time or Invalid time format ( HH:mm:ss)";
+		String expectedMessage = "Invalid time. The time should be between 08:00:00 and 20:00:00";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));

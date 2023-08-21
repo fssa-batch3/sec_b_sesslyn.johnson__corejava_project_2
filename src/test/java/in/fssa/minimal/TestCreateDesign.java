@@ -131,7 +131,7 @@ public class TestCreateDesign {
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.create(newDesign);
 		});
-		String expectedMessage = "Description doesn't match the length";
+		String expectedMessage = "Description should be at least 30 characters long";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -188,7 +188,7 @@ public class TestCreateDesign {
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.create(newDesign);
 		});
-		String expectedMessage = "City name doesn't match the pattern";
+		String expectedMessage = "City Name should only contain alphabetic characters";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -207,7 +207,7 @@ public class TestCreateDesign {
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.create(newDesign);
 		});
-		String expectedMessage = "Id can't be less than or equal to zero";
+		String expectedMessage = "ID cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));

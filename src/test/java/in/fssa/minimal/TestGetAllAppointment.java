@@ -64,7 +64,8 @@ public class TestGetAllAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Set<AppointmentRespondDto> arr = appService.getAllByStatus("completed");
 		});
-		String expectedMessage = "Status doesn't match the expected values";
+		String expectedMessage = "Invalid status value. The status can only be one of:"
+				+ " waiting_list, approved, rejected";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -116,7 +117,7 @@ public class TestGetAllAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appService.updateRequestStatus(1, "rejected");
 		});
-		String expectedMessage = "Status doesn't match the expected values";
+		String expectedMessage = "Approved appointment cannot be re update";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));

@@ -7,13 +7,14 @@ import in.fssa.minimal.model.Design;
 import in.fssa.minimal.util.StringUtil;
 
 public class DesignValidator {
-	
+
 	private static final String NAME_PATTERN = "^[A-Za-z][A-Za-z\\\\s]*$";
 
 	/**
-	 * 
-	 * @param design
-	 * @throws ValidationException
+	 * Validates the provided design object.
+	 *
+	 * @param design The design object to be validated.
+	 * @throws ValidationException If the design object is invalid.
 	 */
 	public static void Validate(Design design) throws ValidationException {
 		if (design == null) {
@@ -25,46 +26,54 @@ public class DesignValidator {
 		validateId(design.getStyleId());
 		validateId(design.getCreatedBy());
 	}
+
 	/**
-	 * 
-	 * @param name
-	 * @throws ValidationException
+	 * Validates the name of a design.
+	 *
+	 * @param name The name to be validated.
+	 * @throws ValidationException If the name is invalid.
 	 */
 	public static void validateName(String name) throws ValidationException {
 		StringUtil.rejectIfInvalidString(name, "Name");
 	}
+
 	/**
-	 * 
-	 * @param description
-	 * @throws ValidationException
+	 * Validates the description of a design.
+	 *
+	 * @param description The description to be validated.
+	 * @throws ValidationException If the description is invalid.
 	 */
 	public static void validateDescription(String description) throws ValidationException {
 		StringUtil.rejectIfInvalidString(description, "Description");
 		int l = description.length();
-		if(l <= 30 ) {
-			throw new ValidationException("Description doesn't match the length");
+		if (l <= 30) {
+			throw new ValidationException("Description should be at least 30 characters long");
 		}
 	}
+
 	/**
-	 * 
-	 * @param location
-	 * @throws ValidationException
+	 * Validates the location of a design.
+	 *
+	 * @param location The location to be validated.
+	 * @throws ValidationException If the location is invalid.
 	 */
 	public static void validateLocation(String location) throws ValidationException {
 		StringUtil.rejectIfInvalidString(location, "City name");
 		if (!Pattern.matches(NAME_PATTERN, location)) {
-			throw new ValidationException("City name doesn't match the pattern");
+			throw new ValidationException("City Name should only contain alphabetic characters");
 		}
 	}
+
 	/**
-	 * 
-	 * @param id
-	 * @throws ValidationException
+	 * Validates an ID value.
+	 *
+	 * @param id The ID value to be validated.
+	 * @throws ValidationException If the ID is invalid.
 	 */
-	public static void validateId(int id) throws ValidationException{
-		if(id <= 0) {
-			throw new ValidationException("Id can't be less than or equal to zero");
+	public static void validateId(int id) throws ValidationException {
+		if (id <= 0) {
+			throw new ValidationException("ID cannot be less than or equal to zero");
 		}
 	}
-	
+
 }

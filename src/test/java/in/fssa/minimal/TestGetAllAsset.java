@@ -71,7 +71,7 @@ public class TestGetAllAsset {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			assetService.create(newAsset);
 		});
-		String expectedMessage = "Name cannot be null or empty";
+		String expectedMessage = "Asset Url Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -86,7 +86,7 @@ public class TestGetAllAsset {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			assetService.create(newAsset);
 		});
-		String expectedMessage = "Name cannot be null or empty";
+		String expectedMessage = "Asset Url Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));

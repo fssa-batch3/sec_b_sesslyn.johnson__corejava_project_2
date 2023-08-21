@@ -9,10 +9,12 @@ import java.sql.SQLException;
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class ConnectionUtil {
-	/**
-	 * 
-	 * @return
-	 */
+
+    /**
+     * Establishes a database connection using environment variables or a local configuration.
+     *
+     * @return A database connection instance.
+     */
 	public static Connection getConnection() {
 
 		String url;
@@ -42,11 +44,12 @@ public class ConnectionUtil {
 		}
 		return connection;
 	}
-/**
- * 
- * @param connection
- * @param ps
- */
+	   /**
+     * Closes a database connection and a prepared statement.
+     *
+     * @param connection The database connection to be closed.
+     * @param ps The prepared statement to be closed.
+     */
 	public static void close(Connection connection, PreparedStatement ps) {
 		try {
 			if (ps != null) {
@@ -59,12 +62,13 @@ public class ConnectionUtil {
 			e.printStackTrace();
 		}
 	}
-/**
- * 
- * @param connection
- * @param ps
- * @param rs
- */
+	/**
+     * Closes a database connection, a prepared statement, and a result set.
+     *
+     * @param connection The database connection to be closed.
+     * @param ps The prepared statement to be closed.
+     * @param rs The result set to be closed.
+     */
 	public static void close(Connection connection, PreparedStatement ps, ResultSet rs) {
 		try {
 			if (rs != null) {

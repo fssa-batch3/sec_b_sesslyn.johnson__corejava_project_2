@@ -2,76 +2,82 @@ package in.fssa.minimal.service;
 
 import java.util.Set;
 
+import in.fssa.minimal.dao.AssetDAO;
 import in.fssa.minimal.dao.DesignAssetDAO;
+import in.fssa.minimal.dao.DesignDAO;
 import in.fssa.minimal.dto.DesignAssetRespondDto;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.DesignAsset;
-import in.fssa.minimal.validator.AssetExists;
-import in.fssa.minimal.validator.DesignAssetExists;
-import in.fssa.minimal.validator.DesignExists;
 import in.fssa.minimal.validator.DesignValidator;
-
 
 public class DesignAssetService {
 	/**
-	 * 
-	 * @param newDesignAsset
-	 * @throws ValidationException
-	 * @throws PersistenceException
+	 * Creates a new design asset.
+	 *
+	 * @param newDesignAsset The DesignAsset object to be created.
+	 * @throws ValidationException  If there's an issue with data validation.
+	 * @throws PersistenceException If there's an issue with database interaction.
 	 */
 	public void create(DesignAsset newDesignAsset) throws ValidationException, PersistenceException {
-		if(newDesignAsset == null) {
+		if (newDesignAsset == null) {
 			throw new ValidationException("Design Asset Object can't be null");
 		}
 		DesignValidator.validateId(newDesignAsset.getDesignId());
 		DesignValidator.validateId(newDesignAsset.getAssetsId());
-		DesignExists.checkIdExists(newDesignAsset.getDesignId());
-		AssetExists.checkIdExists(newDesignAsset.getAssetsId());
+		DesignDAO.checkIdExists(newDesignAsset.getDesignId());
+		AssetDAO.checkIdExists(newDesignAsset.getAssetsId());
 		DesignAssetDAO designAssetDao = new DesignAssetDAO();
 		designAssetDao.create(newDesignAsset);
 	}
-/**
- * 
- * @param id
- * @param updatedDesignAsset
- * @throws ValidationException
- * @throws PersistenceException
- */
+
+	/**
+	 * Updates an existing design asset.
+	 *
+	 * @param id                 The ID of the design asset to be updated.
+	 * @param updatedDesignAsset The updated DesignAsset object.
+	 * @throws ValidationException  If there's an issue with data validation.
+	 * @throws PersistenceException If there's an issue with database interaction.
+	 */
 	public void update(int id, DesignAsset updatedDesignAsset) throws ValidationException, PersistenceException {
 		DesignValidator.validateId(id);
-		
+
 		if (updatedDesignAsset.getDesignId() != 0) {
 			DesignValidator.validateId(updatedDesignAsset.getDesignId());
-			DesignExists.checkIdExists(updatedDesignAsset.getDesignId());
+			DesignDAO.checkIdExists(updatedDesignAsset.getDesignId());
 		}
 		if (updatedDesignAsset.getAssetsId() != 0) {
 			DesignValidator.validateId(updatedDesignAsset.getAssetsId());
-			AssetExists.checkIdExists(updatedDesignAsset.getAssetsId());
+			AssetDAO.checkIdExists(updatedDesignAsset.getAssetsId());
 		}
 
-		DesignAssetExists.checkIdExists(id);
+		DesignAssetDAO.checkIdExists(id);
 		DesignAssetDAO designAssetDao = new DesignAssetDAO();
 		designAssetDao.update(id, updatedDesignAsset);
 	}
-/**
- * 
- * @param id
- * @throws ValidationException
- * @throws PersistenceException
- */
+
+	/**
+	 * Deletes a design asset by ID.
+	 *
+	 * @param id The ID of the design asset to be deleted.
+	 * @throws ValidationException  If there's an issue with data validation.
+	 * @throws PersistenceException If there's an issue with database interaction.
+	 */
 	public void delete(int id) throws ValidationException, PersistenceException {
 		DesignValidator.validateId(id);
-		DesignAssetExists.checkIdExists(id);
+		DesignAssetDAO.checkIdExists(id);
 		DesignAssetDAO designAssetDao = new DesignAssetDAO();
 		designAssetDao.delete(id);
 	}
-/**
- * 
- * @return
- * @throws ValidationException
- * @throws PersistenceException
- */
+
+	/**
+	 * Retrieves all active design assets.
+	 *
+	 * @return A set of DesignAssetRespondDto objects representing all active design
+	 *         assets.
+	 * @throws ValidationException  If there's an issue with data validation.
+	 * @throws PersistenceException If there's an issue with database interaction.
+	 */
 	public Set<DesignAssetRespondDto> getAllByDesignAsset() throws ValidationException, PersistenceException {
 		DesignAssetDAO designAssetDao = new DesignAssetDAO();
 		Set<DesignAssetRespondDto> appList = designAssetDao.findAllDesignAsset();
@@ -80,16 +86,18 @@ public class DesignAssetService {
 		}
 		return appList;
 	}
+
 	/**
-	 * 
-	 * @param id
-	 * @return
-	 * @throws ValidationException
-	 * @throws PersistenceException
+	 * Retrieves a specific design asset by ID.
+	 *
+	 * @param id The ID of the design asset to be retrieved.
+	 * @return The DesignAssetRespondDto object representing the design asset.
+	 * @throws ValidationException  If there's an issue with data validation.
+	 * @throws PersistenceException If there's an issue with database interaction.
 	 */
 	public DesignAssetRespondDto findAllDesignAssetById(int id) throws ValidationException, PersistenceException {
 		DesignValidator.validateId(id);
-		DesignAssetExists.checkIdExists(id);
+		DesignAssetDAO.checkIdExists(id);
 		DesignAssetDAO designAssetDao = new DesignAssetDAO();
 		return designAssetDao.findAllDesignAssetById(id);
 	}

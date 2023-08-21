@@ -6,15 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import in.fssa.minimal.exception.PersistenceException;
+import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class AssetDAO {
 	/**
-	 * 
-	 * @param id
-	 * @param status
-	 * @throws PersistenceException
+	 * Creates a new asset with the provided URL.
+	 *
+	 * @param newAsset The Asset object containing the URL of the new asset.
+	 * @throws PersistenceException If a database error occurs while creating the
+	 *                              asset.
 	 */
 	public void create(Asset newAsset) throws PersistenceException {
 		Connection conn = null;
@@ -35,11 +37,14 @@ public class AssetDAO {
 			ConnectionUtil.close(conn, ps);
 		}
 	}
+
 	/**
-	 * 
-	 * @param id
-	 * @param status
-	 * @throws PersistenceException
+	 * Updates the URL of an existing asset.
+	 *
+	 * @param id           The ID of the asset to update.
+	 * @param updatedAsset The Asset object containing the updated URL.
+	 * @throws PersistenceException If a database error occurs while updating the
+	 *                              asset.
 	 */
 	public void update(int id, Asset updatedAsset) throws PersistenceException {
 		Connection conn = null;
@@ -60,11 +65,14 @@ public class AssetDAO {
 			ConnectionUtil.close(conn, ps, null);
 		}
 	}
+
 	/**
-	 * 
-	 * @param id
-	 * @param status
-	 * @throws PersistenceException
+	 * Retrieves detailed information about an asset by its ID.
+	 *
+	 * @param id The ID of the asset to retrieve.
+	 * @return An Asset object representing the requested asset.
+	 * @throws PersistenceException If a database error occurs while retrieving the
+	 *                              asset.
 	 */
 	public Asset findById(int id) throws PersistenceException {
 		Connection conn = null;
@@ -90,5 +98,64 @@ public class AssetDAO {
 			ConnectionUtil.close(conn, ps, rs);
 		}
 		return asset;
+	}
+
+	/**
+	 * Checks if an asset with the given ID exists in the database.
+	 *
+	 * @param id The ID of the asset to check.
+	 * @throws ValidationException If the asset with the specified ID doesn't exist.
+	 */
+	public static void checkIdExists(int id) throws ValidationException {
+		Connection conn = null;
+		PreparedStatement pre = null;
+		ResultSet rs = null;
+
+		try {
+			String query = "SELECT id FROM assets WHERE id = ?";
+			conn = ConnectionUtil.getConnection();
+			pre = conn.prepareStatement(query);
+			pre.setInt(1, id);
+			rs = pre.executeQuery();
+			if (!rs.next()) {
+				throw new ValidationException("Asset Id doesn't exist");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new RuntimeException();
+		} finally {
+			ConnectionUtil.close(conn, pre, rs);
+		}
+	}
+
+	/**
+	 * Checks if an asset with the given URL exists in the database.
+	 *
+	 * @param assetUrl The URL of the asset to check.
+	 * @throws ValidationException If an asset with the specified URL already
+	 *                             exists.
+	 */
+	public static void checkAssetUrlExists(String assetUrl) throws ValidationException {
+		Connection conn = null;
+		PreparedStatement pre = null;
+		ResultSet rs = null;
+
+		try {
+			String query = "SELECT asset_url FROM assets WHERE asset_url = ?";
+			conn = ConnectionUtil.getConnection();
+			pre = conn.prepareStatement(query);
+			pre.setString(1, assetUrl);
+			rs = pre.executeQuery();
+			if (rs.next()) {
+				throw new ValidationException("Asset Url already exists");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new RuntimeException();
+		} finally {
+			ConnectionUtil.close(conn, pre, rs);
+		}
 	}
 }

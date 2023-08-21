@@ -56,7 +56,7 @@ public class TestGetAllStyle {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			styleService.create(newStyle);
 		});
-		String expectedMessage = "Name cannot be null or empty";
+		String expectedMessage = "Style Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -71,7 +71,7 @@ public class TestGetAllStyle {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			styleService.create(newStyle);
 		});
-		String expectedMessage = "Name cannot be null or empty";
+		String expectedMessage = "Style Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));

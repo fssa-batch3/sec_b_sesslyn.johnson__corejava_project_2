@@ -34,7 +34,7 @@ public class TestGetAllUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			User arr = userService.findById(-5);
 		});
-		String expectedMessage = "Id can't be less than or equal to zero";
+		String expectedMessage = "ID cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));

@@ -5,15 +5,15 @@ import in.fssa.minimal.dao.UserDAO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.User;
-import in.fssa.minimal.validator.UserExists;
 import in.fssa.minimal.validator.UserValidator;
 
 public class UserService {
-	/**
-	 * 
-	 * @return
-	 * @throws PersistenceException
-	 */
+	 /**
+     * Retrieves a set of all users from the database.
+     *
+     * @return A set containing all User objects in the database.
+     * @throws PersistenceException If a database-related error occurs during retrieval.
+     */
 	public Set<User> getAll() throws PersistenceException {
 		UserDAO userDao = new UserDAO();
 		Set<User> userList = userDao.findAll();
@@ -24,56 +24,60 @@ public class UserService {
 	}
 
 	/**
-	 * 
-	 * @param userId
-	 * @return
-	 * @throws ValidationException
-	 * @throws PersistenceException
-	 */
+     * Retrieves a user by their ID.
+     *
+     * @param userId The ID of the user to retrieve.
+     * @return The User object corresponding to the given ID.
+     * @throws ValidationException If the provided ID is invalid.
+     * @throws PersistenceException If a database-related error occurs during retrieval.
+     */
 	public static User findById(int userId) throws ValidationException, PersistenceException {
 		UserValidator.validateId(userId);
-		UserExists.checkIdExists(userId);
+		UserDAO.checkIdExists(userId);
 		UserDAO userDao = new UserDAO();
 		return userDao.findById(userId);
 	}
 
-	/**
-	 * 
-	 * @param email
-	 * @return
-	 * @throws ValidationException
-	 * @throws PersistenceException
-	 */
+	 /**
+     * Retrieves a user by their email.
+     *
+     * @param email The email address of the user to retrieve.
+     * @return The User object corresponding to the given email address.
+     * @throws ValidationException If the provided email address is invalid.
+     * @throws PersistenceException If a database-related error occurs during retrieval.
+     */
 	public User findByEmail(String email) throws ValidationException, PersistenceException {
 		UserValidator.validateEmail(email);
-		UserExists.checkEmailExists(email);
+		UserDAO.checkEmailExists(email);
 		UserDAO userDao = new UserDAO();
 		return userDao.findByEmail(email);
 	}
 
-	/**
-	 * 
-	 * @param newUser
-	 * @throws ValidationException
-	 * @throws PersistenceException
-	 */
+	 /**
+     * Creates a new user.
+     *
+     * @param newUser The User object representing the new user.
+     * @throws ValidationException If the provided user data is invalid.
+     * @throws PersistenceException If a database-related error occurs during creation.
+     */
 	public void create(User newUser) throws ValidationException, PersistenceException {
-		UserValidator.Validate(newUser);
-		UserExists.emailExists(newUser.getEmail());
+		UserValidator.validate(newUser);
+		UserDAO.emailExists(newUser.getEmail());
 		UserDAO userDao = new UserDAO();
 		userDao.create(newUser);
 	}
 
-	/**
-	 * 
-	 * @param id
-	 * @param updatedUser
-	 * @throws ValidationException
-	 * @throws PersistenceException
-	 */
+	  /**
+     * Updates a user's information.
+     *
+     * @param id The ID of the user to update.
+     * @param updatedUser The User object containing updated information.
+     * @throws ValidationException If the provided data is invalid.
+     * @throws PersistenceException If a database-related error occurs during update.
+     */
 	public void update(int id, User updatedUser) throws ValidationException, PersistenceException {
 		UserValidator.validateId(id);
-		UserExists.checkIdExists(id);
+		UserDAO.checkIdExists(id);
 		if (updatedUser.getName() != null) {
 			UserValidator.validateName(updatedUser.getName());
 		}
@@ -87,24 +91,27 @@ public class UserService {
 		userDao.update(id, updatedUser);
 	}
 
-	/**
-	 * 
-	 * @param userId
-	 * @throws ValidationException
-	 * @throws PersistenceException
-	 */
+
+    /**
+     * Deletes a user.
+     *
+     * @param userId The ID of the user to delete.
+     * @throws ValidationException If the provided ID is invalid.
+     * @throws PersistenceException If a database-related error occurs during deletion.
+     */
 	public void delete(int userId) throws ValidationException, PersistenceException {
 		UserValidator.validateId(userId);
-		UserExists.checkIdExists(userId);
+		UserDAO.checkIdExists(userId);
 		UserDAO userDao = new UserDAO();
 		userDao.delete(userId);
 	}
 
 	/**
-	 * 
-	 * @return
-	 * @throws PersistenceException
-	 */
+     * Retrieves a set of all designer users from the database.
+     *
+     * @return A set containing all designer User objects in the database.
+     * @throws PersistenceException If a database-related error occurs during retrieval.
+     */
 	public Set<User> getAllDesigner() throws PersistenceException {
 		UserDAO userDao = new UserDAO();
 		Set<User> userList = userDao.findAllDesigner();
@@ -114,16 +121,17 @@ public class UserService {
 		return userList;
 	}
 
-	/**
-	 * 
-	 * @param userId
-	 * @return
-	 * @throws ValidationException
-	 * @throws PersistenceException
-	 */
+	 /**
+     * Retrieves a designer user by their ID.
+     *
+     * @param userId The ID of the designer user to retrieve.
+     * @return The User object corresponding to the given designer ID.
+     * @throws ValidationException If the provided ID is invalid.
+     * @throws PersistenceException If a database-related error occurs during retrieval.
+     */
 	public User findDesignerById(int userId) throws ValidationException, PersistenceException {
 		UserValidator.validateId(userId);
-		UserExists.checkDesignerIdExists(userId);
+		UserDAO.checkDesignerIdExists(userId);
 		UserDAO userDao = new UserDAO();
 		return userDao.findDesignerById(userId);
 	}

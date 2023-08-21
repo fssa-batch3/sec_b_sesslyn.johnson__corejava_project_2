@@ -13,12 +13,15 @@ import in.fssa.minimal.util.StringUtil;
 
 public class AppointmentValidator {
 	private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+([a-zA-Z0-9_+\\-\\. ]*[a-zA-Z0-9]+)?@[a-zA-Z0-9]+([a-zA-Z0-9\\-\\.]*[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$";
-/**
- * 
- * @param appointment
- * @throws ValidationException
- */
-	public static void Validate(Appointment appointment) throws ValidationException {
+
+	/**
+	 * Validates an Appointment object's properties.
+	 *
+	 * @param appointment The Appointment object to be validated.
+	 * @throws ValidationException If any property of the Appointment object fails
+	 *                             validation.
+	 */
+	public static void validate(Appointment appointment) throws ValidationException {
 		if (appointment == null) {
 			throw new ValidationException("Appointment object can not be null");
 		}
@@ -30,110 +33,135 @@ public class AppointmentValidator {
 		validateDate(appointment.getDate());
 		validateTime(appointment.getTime());
 	}
-/**
- * 
- * @param id
- * @throws ValidationException
- */
+
+	/**
+	 * Validates an ID value.
+	 *
+	 * @param id The ID to be validated.
+	 * @throws ValidationException If the ID is not valid (less than or equal to
+	 *                             zero).
+	 */
 	public static void validateId(int id) throws ValidationException {
 		if (id <= 0) {
-			throw new ValidationException("Id can't be less than or equal to zero");
+			throw new ValidationException("ID cannot be less than or equal to zero");
 		}
 	}
-/**
- * 
- * @param email
- * @throws ValidationException
- */
+
+	/**
+	 * Validates an email address using a regular expression pattern.
+	 *
+	 * @param email The email address to validate.
+	 * @throws ValidationException If the email address does not match the required
+	 *                             format.
+	 */
 	public static void validateEmail(String email) throws ValidationException {
 		StringUtil.rejectIfInvalidString(email, "Email");
 		if (!Pattern.matches(EMAIL_PATTERN, email)) {
-			throw new ValidationException("Email doesn't match the pattern");
+			throw new ValidationException("Invalid email format. Please provide a valid email address");
 		}
 	}
-/**
- * 
- * @param phoneNumber
- * @throws ValidationException
- */
+
+	/**
+	 * Validates a phone number for length and format constraints.
+	 *
+	 * @param phoneNumber The phone number to validate.
+	 * @throws ValidationException If the phone number does not meet the required
+	 *                             criteria.
+	 */
 	public static void validatePhoneNumber(long phoneNumber) throws ValidationException {
 		String phoneNumberStr = String.valueOf(phoneNumber);
-
-		if (phoneNumberStr.length() != 10) {
-			throw new ValidationException("PhoneNumber doesn't match the length");
+		if (phoneNumber <= 0) {
+			throw new ValidationException("Phone number cannot be zero or negative");
 		}
-
+		if (phoneNumberStr.length() != 10) {
+			throw new ValidationException("Phone number should be exactly 10 digits long");
+		}
 		if (phoneNumber < 6000000000L || phoneNumber >= 10000000000L) {
-			throw new ValidationException("PhoneNumber doesn't match the pattern");
+			throw new ValidationException("Invalid phone number format. Make sure not to include +91");
 		}
 	}
-/**
- * 
- * @param status
- * @throws ValidationException
- */
+
+	/**
+	 * Validates the status parameter against expected values.
+	 *
+	 * @param status The status to be validated.
+	 * @throws ValidationException If the status doesn't match the expected values.
+	 */
 	public static void validateStatus(String status) throws ValidationException {
 		StringUtil.rejectIfInvalidString(status, "Status");
 		if ("approved".equalsIgnoreCase(status) || "rejected".equalsIgnoreCase(status)
 				|| "waiting_list".equalsIgnoreCase(status)) {
 			return;
 		} else {
-			throw new ValidationException("Status doesn't match the expected values");
+			throw new ValidationException(
+					"Invalid status value. The status can only be one of:"
+					+ " waiting_list, approved, rejected");
 		}
 	}
+
 	/**
-	 * 
-	 * @param status
-	 * @throws ValidationException
+	 * Validates the status parameter for updating an appointment's status.
+	 *
+	 * @param status The status to be validated.
+	 * @throws ValidationException If the status is not valid for updating.
 	 */
 	public static void validateUpdateStatus(String status) throws ValidationException {
 		StringUtil.rejectIfInvalidString(status, "Status");
 		if ("approved".equalsIgnoreCase(status)) {
 			return;
 		} else {
-			throw new ValidationException("Status doesn't match the expected values");
+			throw new ValidationException("Approved appointment cannot be re update");
 		}
 	}
+
 	/**
-	 * 
-	 * @param date
-	 * @throws ValidationException
+	 * Validates a date for format and range constraints.
+	 *
+	 * @param date The date to be validated in the "yyyy-MM-dd" format.
+	 * @throws ValidationException If the date is not valid (format or range).
 	 */
 	public static void validateDate(String date) throws ValidationException {
-	    StringUtil.rejectIfInvalidString(date, "Date");
-	    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	    LocalDate dueDate;
+		StringUtil.rejectIfInvalidString(date, "Date");
+		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate dueDate;
 
-	    try {
-	        dueDate = LocalDate.parse(date, inputFormatter);
-	    } catch (DateTimeParseException e) {
-	        throw new ValidationException("Invalid date or Invalid date format ( yyyy-MM-dd)");
-	    }
+		try {
+			dueDate = LocalDate.parse(date, inputFormatter);
+		} catch (DateTimeParseException e) {
+			throw new ValidationException("Invalid date or Invalid date format (yyyy-MM-dd)");
+		}
 
-	    String formattedDate = dueDate.format(inputFormatter);
-	    LocalDate currentDate = LocalDate.now();
+		LocalDate currentDate = LocalDate.now();
+		LocalDate maxAllowedDate = currentDate.plusDays(90);
 
-	    if (dueDate.isBefore(currentDate) || dueDate.isAfter(currentDate.plusDays(90))) {
-	        throw new ValidationException("Invalid date or Invalid date format ( yyyy-MM-dd)");
-	    }
+		if (dueDate.isBefore(currentDate) || dueDate.isAfter(maxAllowedDate)) {
+			throw new ValidationException("Invalid date. The date should be within the next 90 days");
+		}
 	}
 
-
+	/**
+	 * Validates a time for format and range constraints.
+	 *
+	 * @param time The time to be validated in the "HH:mm:ss" format.
+	 * @throws ValidationException If the time is not valid (format or range).
+	 */
 	public static void validateTime(String time) throws ValidationException {
-	    StringUtil.rejectIfInvalidString(time, "Time");
-	    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-	    try {
-	        LocalTime dueTime = LocalTime.parse(time, inputFormatter);
+		StringUtil.rejectIfInvalidString(time, "Time");
+		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		LocalTime dueTime;
+		try {
+			dueTime = LocalTime.parse(time, inputFormatter);
+		} catch (DateTimeParseException e) {
+			throw new ValidationException("Invalid time or Invalid time format (HH:mm:ss)");
+		}
+		
+		LocalTime minTime = LocalTime.parse("08:00:00");
+		LocalTime maxTime = LocalTime.parse("20:00:00");
 
-	        LocalTime minTime = LocalTime.parse("08:00:00");
-	        LocalTime maxTime = LocalTime.parse("20:00:00");
+		if (dueTime.isBefore(minTime) || dueTime.isAfter(maxTime)) {
+			throw new ValidationException("Invalid time. The time should be between 08:00:00 and 20:00:00");
+		}
 
-	        if (dueTime.isBefore(minTime) || dueTime.isAfter(maxTime)) {
-	            throw new ValidationException("Invalid time or Invalid time format ( HH:mm:ss)");
-	        }
-	    } catch (DateTimeParseException e) {
-	        throw new ValidationException("Invalid time or Invalid time format ( HH:mm:ss)");
-	    }
 	}
 
 }

@@ -71,7 +71,7 @@ public class TestCreateUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.create(null);
 		});
-		String expectedMessage = "User object can not be null";
+		String expectedMessage = "User object cannot be null";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -88,7 +88,7 @@ public class TestCreateUser {
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
-		Exception exception = assertThrows(Exception.class, () -> {
+		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.create(newUser);
 		});
 		String expectedMessage = "Name cannot be null or empty";
@@ -108,7 +108,7 @@ public class TestCreateUser {
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
-		Exception exception = assertThrows(Exception.class, () -> {
+		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.create(newUser);
 		});
 		String expectedMessage = "Name cannot be null or empty";
@@ -119,6 +119,26 @@ public class TestCreateUser {
 
 	@Test
 	@Order(6)
+	public void testCreateUserWithLessCharacters() {
+		UserService userService = new UserService();
+		User newUser = new User();
+		newUser.setName("Se");
+		newUser.setEmail("sam@gmail.com");
+		newUser.setPassword("Sam@2303");
+		newUser.setPhoneNumber(9923456787L);
+		newUser.setDesigner(false);
+
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			userService.create(newUser);
+		});
+		String expectedMessage = "Name should be at least 3 characters long";
+		String actualMessage = exception.getMessage();
+
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	
+	@Test
+	@Order(7)
 	public void testCreateUserWithNamePattern() {
 		UserService userService = new UserService();
 		User newUser = new User();
@@ -128,17 +148,17 @@ public class TestCreateUser {
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
-		Exception exception = assertThrows(Exception.class, () -> {
+		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.create(newUser);
 		});
-		String expectedMessage = "Name doesn't match the pattern";
+		String expectedMessage = "Name should only contain alphabetic characters";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
 	@Test
-	@Order(7)
+	@Order(8)
 	public void testCreateUserWithEmailNull() {
 		UserService userService = new UserService();
 
@@ -159,7 +179,7 @@ public class TestCreateUser {
 	}
 
 	@Test
-	@Order(8)
+	@Order(9)
 	public void testCreateUserWithEmailEmpty() {
 		UserService userService = new UserService();
 
@@ -180,7 +200,7 @@ public class TestCreateUser {
 	}
 
 	@Test
-	@Order(9)
+	@Order(10)
 	public void testCreateUserWithEmailPattern() {
 		UserService userService = new UserService();
 
@@ -194,14 +214,14 @@ public class TestCreateUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.create(newUser);
 		});
-		String expectedMessage = "Email doesn't match the pattern";
+		String expectedMessage = "Invalid email format. Please provide a valid email address";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
 	@Test
-	@Order(10)
+	@Order(11)
 	public void testCreateUserWithEmailExists() {
 		UserService userService = new UserService();
 
@@ -215,14 +235,14 @@ public class TestCreateUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.create(newUser);
 		});
-		String expectedMessage = "Email already exists";
+		String expectedMessage = "Email already exists.Try with a new email id";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
 	@Test
-	@Order(11)
+	@Order(12)
 	public void testCreateUserWithPasswordNull() {
 		UserService userService = new UserService();
 		User newUser = new User();
@@ -232,27 +252,7 @@ public class TestCreateUser {
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
-		Exception exception = assertThrows(Exception.class, () -> {
-			userService.create(newUser);
-		});
-		String expectedMessage = "Password cannot be null or empty";
-		String actualMessage = exception.getMessage();
-
-		assertTrue(expectedMessage.equals(actualMessage));
-	}
-
-	@Test
-	@Order(12)
-	public void testCreateUserWithPasswordEmpty() {
-		UserService userService = new UserService();
-		User newUser = new User();
-		newUser.setName("Sam");
-		newUser.setEmail("sam@gmail.com");
-		newUser.setPassword("");
-		newUser.setPhoneNumber(9923456787L);
-		newUser.setDesigner(false);
-
-		Exception exception = assertThrows(Exception.class, () -> {
+		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.create(newUser);
 		});
 		String expectedMessage = "Password cannot be null or empty";
@@ -263,6 +263,26 @@ public class TestCreateUser {
 
 	@Test
 	@Order(13)
+	public void testCreateUserWithPasswordEmpty() {
+		UserService userService = new UserService();
+		User newUser = new User();
+		newUser.setName("Sam");
+		newUser.setEmail("sam@gmail.com");
+		newUser.setPassword("");
+		newUser.setPhoneNumber(9923456787L);
+		newUser.setDesigner(false);
+
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			userService.create(newUser);
+		});
+		String expectedMessage = "Password cannot be null or empty";
+		String actualMessage = exception.getMessage();
+
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+
+	@Test
+	@Order(14)
 	public void testCreateUserWithInvalidPasswordPattern() {
 	    UserService userService = new UserService();
 	    User newUser = new User();
@@ -276,7 +296,9 @@ public class TestCreateUser {
 	        userService.create(newUser);
 	    });
 	    
-	    String expectedMessage = "Password doesn't match the pattern";
+	    String expectedMessage = "Password must have at least 8 characters and "
+	    		+ "contain at least one uppercase letter, one lowercase letter, "
+	    		+ "and one special character";
 	    String actualMessage = exception.getMessage();
 	    
 	    assertTrue(expectedMessage.equals(actualMessage));
@@ -284,7 +306,7 @@ public class TestCreateUser {
 
 
 	@Test
-	@Order(14)
+	@Order(15)
 	public void testCreateUserWithPasswordLength() {
 		UserService userService = new UserService();
 		User newUser = new User();
@@ -294,37 +316,56 @@ public class TestCreateUser {
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
-		Exception exception = assertThrows(Exception.class, () -> {
+		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.create(newUser);
 		});
-		String expectedMessage = "Password doesn't match the length";
+		String expectedMessage = "Password should be at least 8 characters long";
 		String actualMessage = exception.getMessage();
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
-
 	@Test
-	@Order(15)
-	public void testCreateUserWithAllZeroPhoneNumber() {
+	@Order(16)
+	public void testCreateUserWithNegativePhoneNumber() {
 		UserService userService = new UserService();
 		User newUser = new User();
 		newUser.setName("Sam");
 		newUser.setEmail("sam@gmail.com");
 		newUser.setPassword("Sam@2303");
-		newUser.setPhoneNumber(0L);
+		newUser.setPhoneNumber(-2);
 		newUser.setDesigner(false);
 
 		ValidationException exception = assertThrows(ValidationException.class, () -> {
 			userService.create(newUser);
 		});
 
-		String expectedMessage = "PhoneNumber doesn't match the length";
+		String expectedMessage = "Phone number cannot be zero or negative";
+		String actualMessage = exception.getMessage();
+
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	@Test
+	@Order(17)
+	public void testCreateUserWithAllZeroPhoneNumber() {
+		UserService userService = new UserService();
+		User newUser = new User();
+		newUser.setName("Sam");
+		newUser.setEmail("sam@gmail.com");
+		newUser.setPassword("Sam@2303");
+		newUser.setPhoneNumber(98760567890L);
+		newUser.setDesigner(false);
+
+		ValidationException exception = assertThrows(ValidationException.class, () -> {
+			userService.create(newUser);
+		});
+
+		String expectedMessage = "Phone number should be exactly 10 digits long";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
 	@Test
-	@Order(16)
+	@Order(18)
 	public void testCreateUserWithInvalidPhoneNumber() {
 		UserService userService = new UserService();
 		User newUser = new User();
@@ -338,7 +379,7 @@ public class TestCreateUser {
 			userService.create(newUser);
 		});
 
-		String expectedMessage = "PhoneNumber doesn't match the pattern";
+		String expectedMessage = "Invalid phone number format. Make sure not to include +91";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));

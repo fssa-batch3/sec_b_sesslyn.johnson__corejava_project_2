@@ -3,36 +3,37 @@
 import java.util.Set;
 
 import in.fssa.minimal.dao.DesignDAO;
+import in.fssa.minimal.dao.StyleDAO;
+import in.fssa.minimal.dao.UserDAO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Design;
-import in.fssa.minimal.validator.DesignExists;
 import in.fssa.minimal.validator.DesignValidator;
-import in.fssa.minimal.validator.StyleExists;
-import in.fssa.minimal.validator.UserExists;
 
 
 public class DesignService {
-	/**
-	 * 
-	 * @param newDesign
-	 * @throws ValidationException
-	 * @throws PersistenceException
-	 */
+	 /**
+     * Creates a new design entity in the system.
+     *
+     * @param newDesign The design to be created.
+     * @throws ValidationException If the input design is invalid.
+     * @throws PersistenceException If a database error occurs during creation.
+     */
 	public void create(Design newDesign) throws ValidationException, PersistenceException {
 		DesignValidator.Validate(newDesign);
-		StyleExists.checkIdExists(newDesign.getStyleId());
-		UserExists.checkDesignerIdExists(newDesign.getCreatedBy());
+		StyleDAO.checkIdExists(newDesign.getStyleId());
+		UserDAO.checkDesignerIdExists(newDesign.getCreatedBy());
 		DesignDAO designDao = new DesignDAO();
 		designDao.create(newDesign);
 	}
 	/**
-	 * 
-	 * @param id
-	 * @param updatedDesign
-	 * @throws ValidationException
-	 * @throws PersistenceException
-	 */
+     * Updates an existing design entity in the system.
+     *
+     * @param id            The ID of the design to be updated.
+     * @param updatedDesign The updated design data.
+     * @throws ValidationException If the input data is invalid.
+     * @throws PersistenceException If a database error occurs during update.
+     */
 	public void update(int id, Design updatedDesign) throws ValidationException, PersistenceException {
 		DesignValidator.validateId(id);
 		if (updatedDesign.getName() != null) {
@@ -46,22 +47,23 @@ public class DesignService {
         }
         if (updatedDesign.getStyleId() != 0) {
         	DesignValidator.validateId(updatedDesign.getStyleId());
-        	StyleExists.checkIdExists(updatedDesign.getStyleId());
+        	StyleDAO.checkIdExists(updatedDesign.getStyleId());
         }
         if (updatedDesign.getCreatedBy() != 0) {
         	DesignValidator.validateId(updatedDesign.getCreatedBy());
-        	UserExists.checkDesignerIdExists(updatedDesign.getCreatedBy());
+        	UserDAO.checkDesignerIdExists(updatedDesign.getCreatedBy());
         }
         
-        DesignExists.checkIdExists(id);
+        DesignDAO.checkIdExists(id);
         DesignDAO designDao = new DesignDAO();
 		designDao.update(id, updatedDesign);
 	}
-	/**
-	 * 
-	 * @return
-	 * @throws PersistenceException
-	 */
+	 /**
+     * Retrieves all design entities in the system.
+     *
+     * @return A set of all designs.
+     * @throws PersistenceException If a database error occurs during retrieval.
+     */
 	public Set<Design> getAllDesign() throws PersistenceException {
 		DesignDAO designDao = new DesignDAO();
 		Set<Design>  designList = designDao.findAllDesign();
@@ -70,30 +72,33 @@ public class DesignService {
 		}
 		return designList;
 	}
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 * @throws ValidationException
-	 * @throws PersistenceException
-	 */
+	 /**
+     * Retrieves a design entity by its ID.
+     *
+     * @param id The ID of the design to retrieve.
+     * @return The retrieved design entity.
+     * @throws ValidationException If the input ID is invalid.
+     * @throws PersistenceException If a database error occurs during retrieval.
+     */
 	public static Design findByDesignId(int id) throws ValidationException, PersistenceException {
 		DesignValidator.validateId(id);
-	    DesignExists.checkIdExists(id);
+	    DesignDAO.checkIdExists(id);
 		DesignDAO designDao = new DesignDAO();
 		return designDao.findByDesignId(id);
 	}
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 * @throws ValidationException
-	 * @throws PersistenceException
-	 */
+
+    /**
+     * Retrieves all design entities created by a specific designer.
+     *
+     * @param id The ID of the designer.
+     * @return A set of designs created by the specified designer.
+     * @throws ValidationException If the input ID is invalid.
+     * @throws PersistenceException If a database error occurs during retrieval.
+     */
 	public static Set<Design> findAllDesignsByDesignerId(int id) throws ValidationException, PersistenceException {
 		DesignValidator.validateId(id);
-		UserExists.checkDesignerIdExists(id);
-		DesignExists.checkCreatedByExists(id);
+		UserDAO.checkDesignerIdExists(id);
+		DesignDAO.checkCreatedByExists(id);
 		DesignDAO designDao = new DesignDAO();
 		Set<Design>  designList = designDao.findAllDesignsByDesignerId(id);
 		for (Design design : designList) {
