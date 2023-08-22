@@ -87,7 +87,7 @@ public class AppointmentEntity {
 	
 	@Override
 	public String toString() {
-		return " [id=" + id + ", fromUser=" + fromUser + ", toUser=" + toUser + ", email=" + email
+		return "AppointmentEntity [id=" + id + ", fromUser=" + fromUser + ", toUser=" + toUser + ", email=" + email
 				+ ", phoneNumber=" + phoneNumber + ", status=" + status + ", date=" + date + ", time=" + time
 				+ ", address=" + address + "]";
 	}
