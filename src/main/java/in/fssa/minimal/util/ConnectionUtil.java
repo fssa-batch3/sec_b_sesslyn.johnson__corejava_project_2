@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import in.fssa.minimal.exception.PersistenceException;
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class ConnectionUtil {
@@ -39,7 +40,6 @@ public class ConnectionUtil {
 			connection = DriverManager.getConnection(url, userName, passWord);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 		return connection;
@@ -49,8 +49,9 @@ public class ConnectionUtil {
      *
      * @param connection The database connection to be closed.
      * @param ps The prepared statement to be closed.
+	 * @throws PersistenceException 
      */
-	public static void close(Connection connection, PreparedStatement ps) {
+	public static void close(Connection connection, PreparedStatement ps) throws PersistenceException {
 		try {
 			if (ps != null) {
 				ps.close();
@@ -59,7 +60,7 @@ public class ConnectionUtil {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new PersistenceException(e);
 		}
 	}
 	/**
@@ -68,8 +69,9 @@ public class ConnectionUtil {
      * @param connection The database connection to be closed.
      * @param ps The prepared statement to be closed.
      * @param rs The result set to be closed.
+	 * @throws PersistenceException 
      */
-	public static void close(Connection connection, PreparedStatement ps, ResultSet rs) {
+	public static void close(Connection connection, PreparedStatement ps, ResultSet rs) throws PersistenceException {
 		try {
 			if (rs != null) {
 				rs.close();
@@ -81,7 +83,7 @@ public class ConnectionUtil {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new PersistenceException(e);
 		}
 	}
 }

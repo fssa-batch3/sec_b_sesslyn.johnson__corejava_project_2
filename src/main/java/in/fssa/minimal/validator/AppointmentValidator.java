@@ -4,14 +4,18 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import in.fssa.minimal.dao.AppointmentDAO;
+import in.fssa.minimal.dao.UserDAO;
+import in.fssa.minimal.exception.PersistenceException;
+import in.fssa.minimal.exception.ServiceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Appointment;
 import in.fssa.minimal.util.StringUtil;
 
 public class AppointmentValidator {
-	private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+(?:[_+\\-. ][a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:[\\-\\.][a-zA-Z0-9]+)*\\.[a-zA-Z]{2,}$";
-
-	
+	private static final String EMAIL_PATTERN =
+		    "^[a-zA-Z0-9]+(?:[_+\\-.][a-zA-Z0-9]+)*@[a-zA-Z0-9]++(?:[\\-.][a-zA-Z0-9]++)*\\.[a-zA-Z]{2,}$";
 
 	/**
 	 * Validates an Appointment object's properties.
@@ -19,18 +23,30 @@ public class AppointmentValidator {
 	 * @param appointment The Appointment object to be validated.
 	 * @throws ValidationException If any property of the Appointment object fails
 	 *                             validation.
+	 * @throws ServiceException   If a service-related error occurs during the operation.
 	 */
-	public static void validate(Appointment appointment) throws ValidationException {
-		if (appointment == null) {
-			throw new ValidationException("Appointment object can not be null");
-		}
-		validateId(appointment.getFromUser());
-		validateId(appointment.getToUser());
-		validateEmail(appointment.getEmail());
-		validatePhoneNumber(appointment.getPhoneNumber());
-		validateStatus(appointment.getStatus());
-		validateDate(appointment.getDate());
-		validateTime(appointment.getTime());
+	public static void validate(Appointment appointment) throws ValidationException, ServiceException {
+	    try {
+	        if (appointment == null) {
+	            throw new ValidationException("Appointment object cannot be null");
+	        }
+	        
+	        validateId(appointment.getFromUser());
+	        validateId(appointment.getToUser());
+	        validateEmail(appointment.getEmail());
+	        validatePhoneNumber(appointment.getPhoneNumber());
+	        validateStatus(appointment.getStatus());
+	        validateDate(appointment.getDate());
+	        validateTime(appointment.getTime());
+
+	        UserDAO.checkIdExists(appointment.getFromUser());
+	        UserDAO.checkDesignerIdExists(appointment.getToUser());
+	        AppointmentDAO.checkFromUserHasUpcomingAppointments(appointment.getFromUser());
+	        AppointmentDAO.checkToUserHasAppointmentAtSameDateTime(appointment.getToUser(), appointment.getDate(),
+	                appointment.getTime());
+	    } catch (PersistenceException e) {
+	        throw new ServiceException("Error occurred during validation.", e);
+	    }
 	}
 
 	/**
@@ -41,9 +57,28 @@ public class AppointmentValidator {
 	 *                             zero).
 	 */
 	public static void validateId(int id) throws ValidationException {
-		if (id <= 0) {
-			throw new ValidationException("ID cannot be less than or equal to zero");
-		}
+	    if (id <= 0) {
+	        throw new ValidationException("ID cannot be less than or equal to zero");
+	    }
+	}
+
+	/**
+	 * Validates an ID value's existence.
+	 *
+	 * @param id The ID to be validated.
+	 * @throws ValidationException If the ID is not valid (less than or equal to
+	 *                             zero) or if it doesn't exist in the database.
+	 * @throws ServiceException   If a service-related error occurs during the operation.
+	 */
+	public static void validateIdExists(int id) throws ValidationException, ServiceException {
+	    try {
+	        if (id <= 0) {
+	            throw new ValidationException("ID cannot be less than or equal to zero");
+	        }
+	        AppointmentDAO.checkIdExists(id);
+	    } catch (PersistenceException e) {
+	        throw new ServiceException("Error occurred during validation.", e);
+	    }
 	}
 
 	/**

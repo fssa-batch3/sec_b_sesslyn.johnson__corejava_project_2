@@ -520,7 +520,6 @@ public class UserDAO implements UserInterface {
 	            userId = rs.getInt("id");   
 	        }
 	    } catch (SQLException e) {
-	        e.printStackTrace();
 	        System.out.println(e.getMessage());
 	        throw new PersistenceException(e);
 	    } finally {

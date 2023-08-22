@@ -40,7 +40,7 @@ class TestCreateDesign {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			designService.create(null);
 		});
-		String expectedMessage = "Design object can not be null";
+		String expectedMessage = "Design object cannot be null";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);

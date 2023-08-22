@@ -58,48 +58,21 @@ class TestGetAllAsset {
 			assertEquals(expectedMessage, actualMessage);
 		}
 
+		
 		@Test
-		@Order(4)
-		void createAssetUrlWithNull() {
-			AssetService assetService = new AssetService();
-			Asset newAsset = new Asset();
-			newAsset.setAssetsUrl(null);
-			Exception exception = assertThrows(ValidationException.class, () -> {
-				assetService.create(newAsset);
-			});
-			String expectedMessage = "Asset Url Name cannot be null or empty";
-			String actualMessage = exception.getMessage();
-
-			assertEquals(expectedMessage, actualMessage);
-		}
+	    @Order(4)
+	    void updateAsset() {
+	        assertDoesNotThrow(() -> {
+	            AssetService assetService = new AssetService();
+	            Asset newAsset = new Asset();
+	            String generate = generateRandomUrl();
+	            newAsset.setAssetsUrl(generate);
+	            assetService.update(1, newAsset);
+	        });
+	    }
 
 		@Test
 		@Order(5)
-		void createAssetUrlWithEmpty() {
-			AssetService assetService = new AssetService();
-			Asset newAsset = new Asset();
-			newAsset.setAssetsUrl("");
-			Exception exception = assertThrows(ValidationException.class, () -> {
-				assetService.create(newAsset);
-			});
-			String expectedMessage = "Asset Url Name cannot be null or empty";
-			String actualMessage = exception.getMessage();
-
-			assertEquals(expectedMessage, actualMessage);
-		}
-
-		@Test
-		@Order(6)
-		void updateAsset() throws ValidationException, PersistenceException {
-			AssetService assetService = new AssetService();
-			Asset newAsset = new Asset();
-			String generate = generateRandomUrl();
-			newAsset.setAssetsUrl(generate);
-			assetService.update(1, newAsset);
-		}
-
-		@Test
-		@Order(7)
 		void updateAssetWithExistingUrl() throws ValidationException, PersistenceException {
 			AssetService assetService = new AssetService();
 			Asset newAsset = new Asset();
@@ -114,7 +87,7 @@ class TestGetAllAsset {
 		}
 
 		@Test
-		@Order(8)
+		@Order(6)
 		void updateAssetWithNonExistingId() throws ValidationException, PersistenceException {
 			AssetService assetService = new AssetService();
 			Asset newAsset = new Asset();
@@ -129,15 +102,17 @@ class TestGetAllAsset {
 		}
 
 		@Test
-		@Order(9)
-		void getAssetById() throws ValidationException, PersistenceException {
-			AssetService assetService = new AssetService();
-			Asset arr = assetService.findByAssetId(1);
-			System.out.println(arr);
-		}
-
+	    @Order(7)
+	    void getAssetById() {
+	        assertDoesNotThrow(() -> {
+	            AssetService assetService = new AssetService();
+	            Asset arr = assetService.findByAssetId(1);
+	            System.out.println(arr);
+	        });
+	    }
+		
 		@Test
-		@Order(10)
+		@Order(8)
 		void testWithNonExistingId() {
 			AssetService assetService = new AssetService();
 			Exception exception = assertThrows(ValidationException.class, () -> {

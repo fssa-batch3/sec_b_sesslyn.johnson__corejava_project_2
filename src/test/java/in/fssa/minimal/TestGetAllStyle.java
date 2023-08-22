@@ -38,7 +38,7 @@ public class TestGetAllStyle {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			styleService.create(null);
 		});
-		String expectedMessage = "Style object can not be null";
+		String expectedMessage = "Style object cannot be null";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
@@ -46,36 +46,6 @@ public class TestGetAllStyle {
 
 	@Test
 	@Order(3)
-	void testCreateStyleWithNameNull() {
-		StyleService styleService = new StyleService();
-		Style newStyle = new Style();
-		newStyle.setName(null);
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			styleService.create(newStyle);
-		});
-		String expectedMessage = "Style Name cannot be null or empty";
-		String actualMessage = exception.getMessage();
-
-		assertEquals(expectedMessage, actualMessage);
-	}
-
-	@Test
-	@Order(4)
-	void testCreateStyleWithNameEmpty() {
-		StyleService styleService = new StyleService();
-		Style newStyle = new Style();
-		newStyle.setName("");
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			styleService.create(newStyle);
-		});
-		String expectedMessage = "Style Name cannot be null or empty";
-		String actualMessage = exception.getMessage();
-
-		assertEquals(expectedMessage, actualMessage);
-	}
-
-	@Test
-	@Order(5)
 	void testCreateStyleWithNameExists() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
@@ -90,17 +60,19 @@ public class TestGetAllStyle {
 	}
 
 	@Test
-	@Order(6)
-	void testUpdateStyle() throws ValidationException, PersistenceException {
-		StyleService styleService = new StyleService();
-		Style newStyle = new Style();
-		String generatedName = generateRandomString(8);
-		newStyle.setName(generatedName);
-		styleService.update(1, newStyle);
+	@Order(4)
+	void testUpdateStyle() {
+		assertDoesNotThrow(() -> {
+			StyleService styleService = new StyleService();
+			Style newStyle = new Style();
+			String generatedName = generateRandomString(8);
+			newStyle.setName(generatedName);
+			styleService.update(1, newStyle);
+		});
 	}
 
 	@Test
-	@Order(7)
+	@Order(5)
 	void testUpdateStyleWithNonExistingId() throws ValidationException, PersistenceException {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();

@@ -1,5 +1,6 @@
 package in.fssa.minimal;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Set;
@@ -15,20 +16,24 @@ import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.service.AppointmentService;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class TestGetAllAppointment {
+class TestGetAllAppointment {
 
 	@Test
 	@Order(1)
 	void testGetAllAppointment() throws ValidationException, PersistenceException {
 		AppointmentService appService = new AppointmentService();
-		Set<AppointmentRespondDto> arr = appService.getAll();
+		assertDoesNotThrow(() -> {
+			Set<AppointmentRespondDto> arr = appService.getAll();
+		});
 	}
 
 	@Test
 	@Order(2)
 	void testGetAllByStatus() throws ValidationException, PersistenceException {
 		AppointmentService appService = new AppointmentService();
-		Set<AppointmentRespondDto> arr = appService.getAllByStatus("approved");
+		assertDoesNotThrow(() -> {
+			Set<AppointmentRespondDto> arr = appService.getAllByStatus("approved");
+		});
 	}
 
 	@Test
@@ -73,17 +78,21 @@ public class TestGetAllAppointment {
 
 	@Test
 	@Order(6)
-	void testGetAppointmentById() throws ValidationException, PersistenceException {
+	void testGetAppointmentById() {
 		AppointmentService appService = new AppointmentService();
-		AppointmentRespondDto arr = appService.findById(1);
-		System.out.println(arr);
+		assertDoesNotThrow(() -> {
+			AppointmentRespondDto arr = appService.findById(1);
+			System.out.println(arr);
+		});
 	}
 
 	@Test
 	@Order(7)
-	void testUpdateRequestStatus() throws ValidationException, PersistenceException {
+	void testUpdateRequestStatus() {
 		AppointmentService appService = new AppointmentService();
-		appService.updateRequestStatus(1, "approved");
+		assertDoesNotThrow(() -> {
+			appService.updateRequestStatus(1, "approved");
+		});
 	}
 
 	@Test

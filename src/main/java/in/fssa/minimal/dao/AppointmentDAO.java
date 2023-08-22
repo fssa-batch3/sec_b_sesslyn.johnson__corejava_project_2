@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 import in.fssa.minimal.dto.AppointmentRespondDto;
 import in.fssa.minimal.exception.PersistenceException;
+import in.fssa.minimal.exception.ServiceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Appointment;
 import in.fssa.minimal.model.User;
@@ -74,10 +75,11 @@ public class AppointmentDAO {
 	 * Retrieves all appointments from the database.
 	 *
 	 * @return A set of AppointmentRespondDto objects representing all appointments.
-	 * @throws ValidationException If validation of appointment data fails.
+	 * @throws ValidationException  If validation of appointment data fails.
 	 * @throws PersistenceException If a database error occurs while retrieving appointments.
+	 * @throws ServiceException    If a service-related error occurs during the operation.
 	 */
-	public Set<AppointmentRespondDto> findAll() throws ValidationException, PersistenceException {
+	public Set<AppointmentRespondDto> findAll() throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -114,7 +116,6 @@ public class AppointmentDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -128,10 +129,11 @@ public class AppointmentDAO {
 	 *
 	 * @param status The status of appointments to retrieve.
 	 * @return A set of AppointmentRespondDto objects representing appointments with the specified status.
-	 * @throws ValidationException If validation of status data fails.
+	 * @throws ValidationException  If validation of status data fails.
 	 * @throws PersistenceException If a database error occurs while retrieving appointments.
+	 * @throws ServiceException    If a service-related error occurs during the operation.
 	 */
-	public Set<AppointmentRespondDto> findAllByStatus(String status) throws ValidationException, PersistenceException {
+	public Set<AppointmentRespondDto> findAllByStatus(String status) throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -169,7 +171,6 @@ public class AppointmentDAO {
 			}
 
 		} catch (SQLException e) {
-		
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -183,10 +184,11 @@ public class AppointmentDAO {
 	 *
 	 * @param id The ID of the appointment to retrieve.
 	 * @return An AppointmentRespondDto object representing the requested appointment.
-	 * @throws ValidationException If validation of ID data fails.
+	 * @throws ValidationException  If validation of ID data fails.
 	 * @throws PersistenceException If a database error occurs while retrieving the appointment.
+	 * @throws ServiceException    If a service-related error occurs during the operation.
 	 */
-	public AppointmentRespondDto findById(int id) throws ValidationException, PersistenceException {
+	public AppointmentRespondDto findById(int id) throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -222,7 +224,6 @@ public class AppointmentDAO {
 
 			}
 		} catch (SQLException e) {
-			
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -250,8 +251,7 @@ public class AppointmentDAO {
 			ps.executeUpdate();
 			System.out.println("Appointment Status has been updated successfully");
 		} catch (SQLException e) {
-			
-			System.out.println(e.getMessage());
+		    System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, null);
@@ -281,7 +281,6 @@ public class AppointmentDAO {
 				throw new ValidationException("The appointment you have is yet to be completed. Please be patient");
 			}
 		} catch (SQLException e) {
-		
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -322,7 +321,6 @@ public class AppointmentDAO {
 						"The designer has an appointment at that specific time. Please reschedule the appointment for a different time slot");
 			}
 		} catch (SQLException e) {
-		
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -353,7 +351,6 @@ public class AppointmentDAO {
 				throw new ValidationException("Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {

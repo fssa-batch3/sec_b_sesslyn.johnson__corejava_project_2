@@ -63,7 +63,7 @@ class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.create(null);
 		});
-		String expectedMessage = "Appointment object can not be null";
+		String expectedMessage = "Appointment object cannot be null";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage,actualMessage);
@@ -289,7 +289,7 @@ class TestCreateAppointment {
 
 	@Test
 	@Order(13)
-	public void testCreateAppointmentWithAllZeroPhoneNumber() {
+	 void testCreateAppointmentWithAllZeroPhoneNumber() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
 		newAppointment.setFromUser(1);

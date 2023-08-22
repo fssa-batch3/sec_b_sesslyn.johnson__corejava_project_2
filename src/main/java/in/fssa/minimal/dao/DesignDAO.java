@@ -248,7 +248,6 @@ public class DesignDAO {
 				throw new ValidationException("Design Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {

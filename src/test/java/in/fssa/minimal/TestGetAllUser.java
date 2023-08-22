@@ -1,5 +1,6 @@
 package in.fssa.minimal;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -8,7 +9,6 @@ import java.util.Set;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.User;
 import in.fssa.minimal.service.UserService;
@@ -16,20 +16,24 @@ import in.fssa.minimal.service.UserService;
 class TestGetAllUser {
 
 	@Test
-	@Order(1)
-	void testGetAllUser() throws PersistenceException{
-		UserService userService = new UserService();
-		Set<User> arr = userService.getAll();
-		System.out.println(arr);
-	}
-
-	@Test
-	@Order(2)
-	void testGetUserById() throws ValidationException, PersistenceException {
-		UserService userService = new UserService();
-		User arr = userService.findById(1);
-		System.out.println(arr);
-	}
+    @Order(1)
+    void testGetAllUser() {
+        assertDoesNotThrow(() -> {
+            UserService userService = new UserService();
+            Set<User> arr = userService.getAll();
+            System.out.println(arr);
+        });
+    }
+    
+    @Test
+    @Order(2)
+    void testGetUserById() {
+        assertDoesNotThrow(() -> {
+            UserService userService = new UserService();
+            User arr = userService.findById(1);
+            System.out.println(arr);
+        });
+    }
 
 	@Test
 	@Order(3)
@@ -57,13 +61,15 @@ class TestGetAllUser {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	@Test
-	@Order(5)
-	void testGetUserByEmailId() throws ValidationException, PersistenceException {
-		UserService userService = new UserService();
-		User arr = userService.findByEmail("ruby@gmail.com");
-		System.out.println(arr);
-	}
+	 @Test
+	    @Order(5)
+	    void testGetUserByEmailId() {
+	        assertDoesNotThrow(() -> {
+	            UserService userService = new UserService();
+	            User arr = userService.findByEmail("ruby@gmail.com");
+	            System.out.println(arr);
+	        });
+	    }
 
 	@Test
 	@Order(6)
@@ -78,26 +84,30 @@ class TestGetAllUser {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	@Test
-	@Order(7)
-	void testUpdateUser() throws ValidationException, PersistenceException {
-		UserService userService = new UserService();
-		User newUser = new User();
-		newUser.setName("Pappu");
-		newUser.setPassword("Sess@2608");
-		newUser.setPhoneNumber(6381040926L);
-		userService.update(1, newUser);
-	}
+	 @Test
+	    @Order(7)
+	    void testUpdateUser() {
+	        assertDoesNotThrow(() -> {
+	            UserService userService = new UserService();
+	            User newUser = new User();
+	            newUser.setName("Pappu");
+	            newUser.setPassword("Sess@2608");
+	            newUser.setPhoneNumber(6381040926L);
+	            userService.update(1, newUser);
+	        });
+	    }
 
-	@Test
-	@Order(8)
-	void testUpdateSpecificFields() throws ValidationException, PersistenceException {
-		UserService userService = new UserService();
-		User newUser = new User();
-		newUser.setPassword("Sess@2608");
-		newUser.setDesigner(false);
-		userService.update(1, newUser);
-	}
+	    @Test
+	    @Order(8)
+	    void testUpdateSpecificFields() {
+	        assertDoesNotThrow(() -> {
+	            UserService userService = new UserService();
+	            User newUser = new User();
+	            newUser.setPassword("Sess@2608");
+	            newUser.setDesigner(false);
+	            userService.update(1, newUser);
+	        });
+	    }
 
 	@Test
 	@Order(9)
@@ -115,12 +125,15 @@ class TestGetAllUser {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	@Test
-	@Order(10)
-	void testDeleteUser() throws ValidationException, PersistenceException {
-		UserService userService = new UserService();
-		userService.delete(5);
-	}
+	 @Test
+	    @Order(10)
+	    void testDeleteUser() {
+	        assertDoesNotThrow(() -> {
+	            UserService userService = new UserService();
+	            userService.delete(5);
+	        });
+	    }
+
 
 	@Test
 	@Order(11)
@@ -136,20 +149,25 @@ class TestGetAllUser {
 	}
 
 	@Test
-	@Order(12)
-	void testGetAllDesigner() throws PersistenceException {
-		UserService userService = new UserService();
-		Set<User> arr = userService.getAllDesigner();
-		System.out.println(arr);
-	}
+    @Order(12)
+    void testGetAllDesigner() {
+        assertDoesNotThrow(() -> {
+            UserService userService = new UserService();
+            Set<User> arr = userService.getAllDesigner();
+            System.out.println(arr);
+        });
+    }
 
-	@Test
-	@Order(13)
-	void testGetDesignerById() throws ValidationException, PersistenceException {
-		UserService userService = new UserService();
-		User arr = userService.findDesignerById(2);
-		System.out.println(arr);
-	}
+    @Test
+    @Order(13)
+    void testGetDesignerById() {
+        assertDoesNotThrow(() -> {
+            UserService userService = new UserService();
+            User arr = userService.findDesignerById(2);
+            System.out.println(arr);
+        });
+    }
+
 
 	@Test
 	@Order(14)

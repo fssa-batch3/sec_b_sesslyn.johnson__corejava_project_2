@@ -105,8 +105,10 @@ public class AssetDAO {
 	 *
 	 * @param id The ID of the asset to check.
 	 * @throws ValidationException If the asset with the specified ID doesn't exist.
+	 *  @throws PersistenceException If a database error occurs while retrieving the
+	 *                              asset id.
 	 */
-	public static void checkIdExists(int id) throws ValidationException {
+	public static void checkIdExists(int id) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
 		ResultSet rs = null;
@@ -123,7 +125,7 @@ public class AssetDAO {
 		} catch (SQLException e) {
 			
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
 		}
@@ -135,8 +137,10 @@ public class AssetDAO {
 	 * @param assetUrl The URL of the asset to check.
 	 * @throws ValidationException If an asset with the specified URL already
 	 *                             exists.
+	 *  @throws PersistenceException If a database error occurs while retrieving the
+	 *                              asset.
 	 */
-	public static void checkAssetUrlExists(String assetUrl) throws ValidationException {
+	public static void checkAssetUrlExists(String assetUrl) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
 		ResultSet rs = null;
@@ -153,7 +157,7 @@ public class AssetDAO {
 		} catch (SQLException e) {
 		
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
 		}

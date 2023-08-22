@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 import in.fssa.minimal.dto.DesignAssetRespondDto;
 import in.fssa.minimal.exception.PersistenceException;
+import in.fssa.minimal.exception.ServiceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
 import in.fssa.minimal.model.Design;
@@ -123,8 +124,9 @@ public class DesignAssetDAO {
 	 *         assets.
 	 * @throws ValidationException  If there's an issue with data validation.
 	 * @throws PersistenceException If there's an issue with database interaction.
+	 * @throws ServiceException 
 	 */
-	public Set<DesignAssetRespondDto> findAllDesignAsset() throws ValidationException, PersistenceException {
+	public Set<DesignAssetRespondDto> findAllDesignAsset() throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -168,8 +170,9 @@ public class DesignAssetDAO {
 	 * @return The DesignAssetRespondDto object representing the design asset.
 	 * @throws ValidationException  If there's an issue with data validation.
 	 * @throws PersistenceException If there's an issue with database interaction.
+	 * @throws ServiceException 
 	 */
-	public DesignAssetRespondDto findAllDesignAssetById(int id) throws ValidationException, PersistenceException {
+	public DesignAssetRespondDto findAllDesignAssetById(int id) throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

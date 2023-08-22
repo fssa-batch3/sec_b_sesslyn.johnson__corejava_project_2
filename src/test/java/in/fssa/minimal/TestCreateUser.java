@@ -18,7 +18,7 @@ class TestCreateUser {
 
 	@Test
 	@Order(1)
-	public void testCreateUserWithValidInput() {
+	 void testCreateUserWithValidInput() {
 	    UserService userService = new UserService();
 	    User newUser = new User();
 	    String randomString = generateRandomString(8); 
@@ -35,7 +35,7 @@ class TestCreateUser {
 	
 	@Test
 	@Order(2)
-	public void testCreateDesignerWithValidInput() {
+	 void testCreateDesignerWithValidInput() {
 	    UserService userService = new UserService();
 	    User newUser = new User();
 	    String randomString = generateRandomString(8); 
@@ -246,7 +246,7 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		User newUser = new User();
 		newUser.setName("Sam");
-		newUser.setEmail("sam@gmail.com");
+		newUser.setEmail("bcde@gmail.com");
 		newUser.setPassword(null);
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
@@ -266,7 +266,7 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		User newUser = new User();
 		newUser.setName("Sam");
-		newUser.setEmail("sam@gmail.com");
+		newUser.setEmail("bcde@gmail.com");
 		newUser.setPassword("");
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
@@ -310,7 +310,7 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		User newUser = new User();
 		newUser.setName("Sam");
-		newUser.setEmail("sam@gmail.com");
+		newUser.setEmail("bcde@gmail.com");
 		newUser.setPassword("Sam23");
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
@@ -329,7 +329,7 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		User newUser = new User();
 		newUser.setName("Sam");
-		newUser.setEmail("sam@gmail.com");
+		newUser.setEmail("bcde@gmail.com");
 		newUser.setPassword("Sam@2303");
 		newUser.setPhoneNumber(-2);
 		newUser.setDesigner(false);
@@ -350,7 +350,7 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		User newUser = new User();
 		newUser.setName("Sam");
-		newUser.setEmail("sam@gmail.com");
+		newUser.setEmail("bcde@gmail.com");
 		newUser.setPassword("Sam@2303");
 		newUser.setPhoneNumber(98760567890L);
 		newUser.setDesigner(false);
@@ -371,7 +371,7 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		User newUser = new User();
 		newUser.setName("Sam");
-		newUser.setEmail("sam@gmail.com");
+		newUser.setEmail("bcde@gmail.com");
 		newUser.setPassword("Sam@2303");
 		newUser.setPhoneNumber(3895673456L);
 		newUser.setDesigner(false);
