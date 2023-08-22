@@ -12,10 +12,15 @@ import java.util.Set;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Design;
-import in.fssa.minimal.model.User;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class DesignDAO {
+	private static final String COLUMN_ID = "id";
+	private static final String COLUMN_NAME = "NAME";
+	private static final String COLUMN_DESCRIPTION = "description";
+	private static final String COLUMN_LOCATION = "location";
+	private static final String COLUMN_STYLEID = "style_id";
+	private static final String COLUMN_CREATEDBY = "created_by";
 
 	/**
 	 * Creates a new design entity in the database.
@@ -23,6 +28,7 @@ public class DesignDAO {
 	 * @param newDesign The design to be created.
 	 * @throws PersistenceException If a database error occurs during creation.
 	 */
+	
 	public void create(Design newDesign) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -39,7 +45,7 @@ public class DesignDAO {
 			System.out.println("Design has been created successfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -96,7 +102,7 @@ public class DesignDAO {
 			ps.executeUpdate();
 			System.out.println("Design has been updated successfully");
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -110,6 +116,8 @@ public class DesignDAO {
 	 * @return A set of all designs in the database.
 	 * @throws PersistenceException If a database error occurs during retrieval.
 	 */
+	
+	
 	public Set<Design> findAllDesign() throws RuntimeException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -122,16 +130,16 @@ public class DesignDAO {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Design design = new Design();
-				design.setId(rs.getInt("id"));
-				design.setName(rs.getString("name"));
-				design.setDescription(rs.getString("description"));
-				design.setLocation(rs.getString("location"));
-				design.setStyleId(rs.getInt("style_id"));
-				design.setCreatedBy(rs.getInt("created_by"));
+				design.setId(rs.getInt(COLUMN_ID));
+				design.setName(rs.getString(COLUMN_NAME));
+				design.setDescription(rs.getString(COLUMN_DESCRIPTION));
+				design.setLocation(rs.getString(COLUMN_LOCATION));
+				design.setStyleId(rs.getInt(COLUMN_STYLEID));
+				design.setCreatedBy(rs.getInt(COLUMN_CREATEDBY));
 				designList.add(design);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -160,15 +168,15 @@ public class DesignDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				design = new Design();
-				design.setId(rs.getInt("id"));
-				design.setName(rs.getString("name"));
-				design.setDescription(rs.getString("description"));
-				design.setLocation(rs.getString("location"));
-				design.setStyleId(rs.getInt("style_id"));
-				design.setCreatedBy(rs.getInt("created_by"));
+				design.setId(rs.getInt(COLUMN_ID));
+				design.setName(rs.getString(COLUMN_NAME));
+				design.setDescription(rs.getString(COLUMN_DESCRIPTION));
+				design.setLocation(rs.getString(COLUMN_LOCATION));
+				design.setStyleId(rs.getInt(COLUMN_STYLEID));
+				design.setCreatedBy(rs.getInt(COLUMN_CREATEDBY));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -199,17 +207,17 @@ public class DesignDAO {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				design = new Design();
-				design.setId(rs.getInt("id"));
-				design.setName(rs.getString("name"));
-				design.setDescription(rs.getString("description"));
-				design.setLocation(rs.getString("location"));
-				design.setStyleId(rs.getInt("style_id"));
-				design.setCreatedBy(rs.getInt("created_by"));
+				design.setId(rs.getInt(COLUMN_ID));
+				design.setName(rs.getString(COLUMN_NAME));
+				design.setDescription(rs.getString(COLUMN_DESCRIPTION));
+				design.setLocation(rs.getString(COLUMN_LOCATION));
+				design.setStyleId(rs.getInt(COLUMN_STYLEID));
+				design.setCreatedBy(rs.getInt(COLUMN_CREATEDBY));
 				designList.add(design);
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -223,8 +231,9 @@ public class DesignDAO {
 	 *
 	 * @param id The ID to check for existence.
 	 * @throws ValidationException If the design ID doesn't exist.
+	 * @throws PersistenceException 
 	 */
-	public static void checkIdExists(int id) throws ValidationException {
+	public static void checkIdExists(int id) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
 		ResultSet rs = null;
@@ -241,7 +250,7 @@ public class DesignDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
 		}
@@ -252,8 +261,9 @@ public class DesignDAO {
 	 *
 	 * @param createdBy The designer's ID to check.
 	 * @throws ValidationException If the designer has no designs.
+	 * @throws PersistenceException 
 	 */
-	public static void checkCreatedByExists(int createdBy) throws ValidationException {
+	public static void checkCreatedByExists(int createdBy) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
 		ResultSet rs = null;
@@ -268,9 +278,9 @@ public class DesignDAO {
 				throw new ValidationException("Designers doesn't have any design yet");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
 		}

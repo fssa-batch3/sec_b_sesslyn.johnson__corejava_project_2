@@ -1,7 +1,7 @@
 package in.fssa.minimal.model;
 
 
-public abstract class UserEntity implements Comparable<UserEntity> {
+public abstract class UserEntity {
 	private String name;
 	private int id;
 	private String email;
@@ -66,11 +66,7 @@ public abstract class UserEntity implements Comparable<UserEntity> {
 		this.isActive = isActive;
 	}
 
-	@Override
-	public int compareTo(UserEntity other) {
-		return Integer.compare(this.id, other.getId());
-	}
-
+	
 	@Override
 	public String toString() {
 		return "UserEntity [name=" + name + ", id=" + id + ", email=" + email + ", password=" + password

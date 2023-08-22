@@ -29,7 +29,6 @@ public class StyleDAO {
 			System.out.println("Style has been created successfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -56,7 +55,7 @@ public class StyleDAO {
 			ps.executeUpdate();
 			System.out.println("Style has been updated successfully");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -86,7 +85,7 @@ public class StyleDAO {
 				throw new ValidationException("Style Name already exists");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -116,7 +115,7 @@ public class StyleDAO {
 				throw new ValidationException("Style Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {

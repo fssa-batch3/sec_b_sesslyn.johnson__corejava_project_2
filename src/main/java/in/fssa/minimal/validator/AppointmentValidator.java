@@ -4,15 +4,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.format.ResolverStyle;
-import java.util.regex.Pattern;
-
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Appointment;
 import in.fssa.minimal.util.StringUtil;
 
 public class AppointmentValidator {
-	private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+([a-zA-Z0-9_+\\-\\. ]*[a-zA-Z0-9]+)?@[a-zA-Z0-9]+([a-zA-Z0-9\\-\\.]*[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$";
+	private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+(?:[_+\\-. ][a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:[\\-\\.][a-zA-Z0-9]+)*\\.[a-zA-Z]{2,}$";
+
+	
 
 	/**
 	 * Validates an Appointment object's properties.
@@ -55,10 +54,10 @@ public class AppointmentValidator {
 	 *                             format.
 	 */
 	public static void validateEmail(String email) throws ValidationException {
-		StringUtil.rejectIfInvalidString(email, "Email");
-		if (!Pattern.matches(EMAIL_PATTERN, email)) {
-			throw new ValidationException("Invalid email format. Please provide a valid email address");
-		}
+	    StringUtil.rejectIfInvalidString(email, "Email");
+	    if (!email.matches(EMAIL_PATTERN)) {
+	        throw new ValidationException("Invalid email format. Please provide a valid email address");
+	    }
 	}
 
 	/**
@@ -88,16 +87,14 @@ public class AppointmentValidator {
 	 * @throws ValidationException If the status doesn't match the expected values.
 	 */
 	public static void validateStatus(String status) throws ValidationException {
-		StringUtil.rejectIfInvalidString(status, "Status");
-		if ("approved".equalsIgnoreCase(status) || "rejected".equalsIgnoreCase(status)
-				|| "waiting_list".equalsIgnoreCase(status)) {
-			return;
-		} else {
-			throw new ValidationException(
-					"Invalid status value. The status can only be one of:"
-					+ " waiting_list, approved, rejected");
-		}
+	    StringUtil.rejectIfInvalidString(status, "Status");
+	    if (!("approved".equalsIgnoreCase(status) || "rejected".equalsIgnoreCase(status)
+	            || "waiting_list".equalsIgnoreCase(status))) {
+	        throw new ValidationException(
+	                "Invalid status value. The status can only be one of: waiting_list, approved, rejected");
+	    }
 	}
+
 
 	/**
 	 * Validates the status parameter for updating an appointment's status.
@@ -106,12 +103,10 @@ public class AppointmentValidator {
 	 * @throws ValidationException If the status is not valid for updating.
 	 */
 	public static void validateUpdateStatus(String status) throws ValidationException {
-		StringUtil.rejectIfInvalidString(status, "Status");
-		if ("approved".equalsIgnoreCase(status)) {
-			return;
-		} else {
-			throw new ValidationException("Approved appointment cannot be re update");
-		}
+	    StringUtil.rejectIfInvalidString(status, "Status");
+	    if (!"approved".equalsIgnoreCase(status)) {
+	        throw new ValidationException("Approved appointment cannot be re update");
+	    }
 	}
 
 	/**

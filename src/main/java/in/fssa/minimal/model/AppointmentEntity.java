@@ -1,6 +1,6 @@
 package in.fssa.minimal.model;
 
-public class AppointmentEntity implements Comparable<AppointmentEntity> {
+public class AppointmentEntity {
 
 	private int id;
 	private int fromUser;
@@ -84,10 +84,6 @@ public class AppointmentEntity implements Comparable<AppointmentEntity> {
 		this.address = address;
 	}
 
-	@Override
-	public int compareTo(AppointmentEntity o) {
-		return Integer.compare(this.id, o.getId());
-	}
 	
 	@Override
 	public String toString() {

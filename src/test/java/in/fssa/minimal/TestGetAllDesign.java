@@ -1,7 +1,7 @@
 package in.fssa.minimal;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -14,10 +14,10 @@ import in.fssa.minimal.model.Design;
 import in.fssa.minimal.service.DesignService;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class TestGetAllDesign {
+class TestGetAllDesign {
 	@Test
 	@Order(1)
-	public void testUpdateDesign() throws ValidationException, PersistenceException {
+	void updateDesign() throws ValidationException, PersistenceException {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 3.5 Bhk Home");
@@ -34,7 +34,7 @@ public class TestGetAllDesign {
 	
 	@Test
 	@Order(2)
-	public void testUpdateSpecificFields() throws ValidationException, PersistenceException {
+	void updateSpecificFields() throws ValidationException, PersistenceException {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setLocation("Bangalore");
@@ -43,7 +43,7 @@ public class TestGetAllDesign {
 	
 	@Test
 	@Order(3)
-	public void testUpdateNonExistingId() throws ValidationException, PersistenceException {	
+	void updateNonExistingId() throws ValidationException, PersistenceException {	
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Design newDesign = new Design();
@@ -53,28 +53,27 @@ public class TestGetAllDesign {
 		String expectedMessage = "Design Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));	
+		assertEquals(expectedMessage, actualMessage);	
 	}
 	
 	@Test
 	@Order(4)
-	public void getAllDesign() throws PersistenceException {
+	void getAllDesign() throws PersistenceException {
 		DesignService designService = new DesignService();
 		Set<Design> arr = designService.getAllDesign();
 	}
 	
 	@Test
 	@Order(5)
-	public void getDesignById() throws ValidationException, PersistenceException {
+	void getDesignById() throws ValidationException, PersistenceException {
 		DesignService designService = new DesignService();
 		Design arr = designService.findByDesignId(1);
 		System.out.println(arr);
 	}
 
-	
 	@Test
 	@Order(6)
-	public void testWithIdLessThanZero() {
+	void testWithIdLessThanZero() {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Design arr = designService.findByDesignId(-4);
@@ -82,12 +81,12 @@ public class TestGetAllDesign {
 		String expectedMessage = "ID cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
 	
 	@Test
 	@Order(7)
-	public void testWitNonExistingId() {
+	void testWitNonExistingId() {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Design arr = designService.findByDesignId(5000);
@@ -95,19 +94,19 @@ public class TestGetAllDesign {
 		String expectedMessage = "Design Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
 	
 	@Test
 	@Order(8)
-	public void getAllDesignByDesignerId() throws PersistenceException, ValidationException {
+	void getAllDesignByDesignerId() throws PersistenceException, ValidationException {
 		DesignService designService = new DesignService();
 		Set<Design>  designList = designService.findAllDesignsByDesignerId(2);
 	}
 	
 	@Test
 	@Order(9)
-	public void testGetAllDesignWithNonExistingId() throws PersistenceException, ValidationException {
+	void testGetAllDesignWithNonExistingId() throws PersistenceException, ValidationException {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Set<Design>  designList = designService.findAllDesignsByDesignerId(4);
@@ -115,12 +114,12 @@ public class TestGetAllDesign {
 		String expectedMessage = "Designers doesn't have any design yet";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));	
+		assertEquals(expectedMessage, actualMessage);	
 	}
 	
 	@Test
 	@Order(10)
-	public void testGetAllDesignWithNonExistingDesigner() throws PersistenceException, ValidationException {
+	void testGetAllDesignWithNonExistingDesigner() throws PersistenceException, ValidationException {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Set<Design>  designList = designService.findAllDesignsByDesignerId(5000);
@@ -128,7 +127,6 @@ public class TestGetAllDesign {
 		String expectedMessage = "Designer Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));	
+		assertEquals(expectedMessage, actualMessage);	
 	}
-	
 }

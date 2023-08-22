@@ -16,7 +16,7 @@ public class DesignValidator {
 	 * @param design The design object to be validated.
 	 * @throws ValidationException If the design object is invalid.
 	 */
-	public static void Validate(Design design) throws ValidationException {
+	public static void validate(Design design) throws ValidationException {
 		if (design == null) {
 			throw new ValidationException("Design object can not be null");
 		}

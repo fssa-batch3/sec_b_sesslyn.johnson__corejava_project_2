@@ -30,7 +30,7 @@ public class AssetDAO {
 			System.out.println("Asset has been created successfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -58,7 +58,7 @@ public class AssetDAO {
 			ps.executeUpdate();
 			System.out.println("Asset has been updated successfully");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -91,7 +91,7 @@ public class AssetDAO {
 				asset.setAssetsUrl(rs.getString("asset_url"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -121,7 +121,7 @@ public class AssetDAO {
 				throw new ValidationException("Asset Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			System.out.println(e.getMessage());
 			throw new RuntimeException();
 		} finally {
@@ -151,7 +151,7 @@ public class AssetDAO {
 				throw new ValidationException("Asset Url already exists");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+		
 			System.out.println(e.getMessage());
 			throw new RuntimeException();
 		} finally {

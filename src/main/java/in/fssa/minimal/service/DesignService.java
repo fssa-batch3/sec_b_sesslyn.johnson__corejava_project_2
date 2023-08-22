@@ -20,7 +20,7 @@ public class DesignService {
      * @throws PersistenceException If a database error occurs during creation.
      */
 	public void create(Design newDesign) throws ValidationException, PersistenceException {
-		DesignValidator.Validate(newDesign);
+		DesignValidator.validate(newDesign);
 		StyleDAO.checkIdExists(newDesign.getStyleId());
 		UserDAO.checkDesignerIdExists(newDesign.getCreatedBy());
 		DesignDAO designDao = new DesignDAO();

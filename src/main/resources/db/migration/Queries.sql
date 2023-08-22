@@ -1,37 +1,39 @@
 
 USE sesslyn_johnson_corejava_project;
-DROP TABLE users;
+
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(50) NOT NULL,
-    is_designer BOOLEAN DEFAULT TRUE,
+    is_designer BOOLEAN DEFAULT false,
     phone_number VARCHAR(50) NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT chk_phone_number_length CHECK (LENGTH(phone_number) = 10)
 );
 
 -- Add indexes to the referenced columns in the 'users' table
 ALTER TABLE users ADD INDEX idx_users_id (id);
 
-DROP TABLE appointment;
-CREATE TABLE appointment (
+DROP TABLE appointments;
+CREATE TABLE appointments(
     id INT AUTO_INCREMENT PRIMARY KEY,
     from_user INT NOT NULL,
     to_user INT NOT NULL,
     email VARCHAR(50) NOT NULL,
-    phone_number VARCHAR(50) NOT NULL,
+    phone_number VARCHAR(10) NOT NULL,
     status VARCHAR(255) NOT NULL,
     date DATE NOT NULL,
     time TIME NOT NULL,
     address VARCHAR(255),
     FOREIGN KEY (from_user) REFERENCES users (id),
     FOREIGN KEY (to_user) REFERENCES users (id),
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
 -- Create User
 INSERT INTO users (name, email, password, is_designer, phone_number)
 VALUES
@@ -73,7 +75,7 @@ FROM users;
 
 
 -- Booked appointment
-INSERT INTO appointment (from_user, to_user, email, phone_number, status, date, time)
+INSERT INTO appointments (from_user, to_user, email, phone_number, status, date, time)
 VALUES
        (3, 2, 'ruby@gmail.com', '8778061351' , 'waiting_list', '2023-08-26', '10:00:00'),
        (5, 4, 'ash@gmail.com', '9854678989' ,'approved', '2023-08-30', '16:00:00');
@@ -109,7 +111,7 @@ JOIN appointment a ON u.id = a.to_user
 WHERE u.is_designer = 1 AND a.status = 'waiting_list';
 
 SELECT *
-FROM appointment;
+FROM appointments;
 
 
 DROP TABLE styles;
@@ -131,11 +133,12 @@ CREATE TABLE IF NOT EXISTS assets (
   asset_url VARCHAR(500) NOT NULL
 );
 INSERT INTO assets ( asset_url ) 
-VALUES ("https://youtu.be/DFgL3URDOr4");
+VALUES ("https://youtu.be/OzUkvzyBttA"),
+("https://youtu.be/DFgL3URDOr4");
 
 SELECT *
 FROM assets;
-DROP TABLE designs;
+
 CREATE TABLE IF NOT EXISTS designs (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
@@ -164,7 +167,9 @@ CREATE TABLE IF NOT EXISTS design_assets (
    assets_id INT NOT NULL,
     is_active boolean DEFAULT true,
    FOREIGN KEY (design_id) REFERENCES designs (id),
-   FOREIGN KEY (assets_id) REFERENCES assets (id)
+   FOREIGN KEY (assets_id) REFERENCES assets (id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 SELECT *
@@ -172,6 +177,7 @@ FROM assets;
 
 SELECT *
 FROM designs;
+
 
 SELECT *
 FROM design_assets;

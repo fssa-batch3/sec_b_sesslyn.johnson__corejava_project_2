@@ -1,25 +1,28 @@
 package in.fssa.minimal;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Design;
 import in.fssa.minimal.service.DesignService;
 
-public class TestCreateDesign {
+@TestMethodOrder(OrderAnnotation.class)
+class TestCreateDesign {
+	@Order(1)
 	@Test
-	public void testCreateDesignWithValidInput() {
+	void testCreateDesignWithValidInput() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 4 Bhk Home");
-		newDesign.setDescription("Customer Name: Mr. Johnson & Mrs. Ruby \r\n"
-				+ "Apartment Size: 4 BHK, 3200 Sq Ft\r\n"
-				+ "Project Value:  35-38 Lakhs\r\n"
-				+ "Project Manager: Muzammil\r\n"
+		newDesign.setDescription("Customer Name: Mr. Johnson & Mrs. Ruby \r\n" + "Apartment Size: 4 BHK, 3200 Sq Ft\r\n"
+				+ "Project Value:  35-38 Lakhs\r\n" + "Project Manager: Muzammil\r\n"
 				+ "Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of Johnson and Ruby offers some major design goals. The house is the true epitome of elegance and warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms, making them look regal. The accessories scattered throughout the space club everything together, radiating charm and opulence.\r\n");
 		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(2);
@@ -30,8 +33,9 @@ public class TestCreateDesign {
 		});
 	}
 
+	@Order(2)
 	@Test
-	public void testCreateDesignWithInvalidInput() {
+	void testCreateDesignWithInvalidInput() {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			designService.create(null);
@@ -39,11 +43,12 @@ public class TestCreateDesign {
 		String expectedMessage = "Design object can not be null";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
 
+	@Order(3)
 	@Test
-	public void testCreateDesignWithNameNull() {
+	void testCreateDesignWithNameNull() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName(null);
@@ -58,16 +63,17 @@ public class TestCreateDesign {
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
+
+	@Order(4)
 	@Test
-	public void testCreateDesignWithNameEmpty() {
+	void testCreateDesignWithNameEmpty() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("");
 		newDesign.setDescription("Customer Name: Mr. Kiran Kunjur & Mrs. Ramya Kiran\r\n");
-        newDesign.setLocation("Chennai");
+		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(2);
 		newDesign.setCreatedBy(2);
 
@@ -77,11 +83,12 @@ public class TestCreateDesign {
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
+
+	@Order(5)
 	@Test
-	public void testCreateDesignWithDescriptionNull() {
+	void testCreateDesignWithDescriptionNull() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 3BHK Home");
@@ -96,11 +103,12 @@ public class TestCreateDesign {
 		String expectedMessage = "Description cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
+
+	@Order(6)
 	@Test
-	public void testCreateDesignWithDescriptionEmpty() {
+	void testCreateDesignWithDescriptionEmpty() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 3BHK Home");
@@ -115,11 +123,12 @@ public class TestCreateDesign {
 		String expectedMessage = "Description cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
+
+	@Order(7)
 	@Test
-	public void testCreateDesignWithDescriptionLessCharacters() {
+	void testCreateDesignWithDescriptionLessCharacters() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 3BHK Home");
@@ -134,11 +143,12 @@ public class TestCreateDesign {
 		String expectedMessage = "Description should be at least 30 characters long";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
+
+	@Order(8)
 	@Test
-	public void testCreateDesignWithLocationNull() {
+	void testCreateDesignWithLocationNull() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 3BHK Home");
@@ -153,11 +163,12 @@ public class TestCreateDesign {
 		String expectedMessage = "City name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
+
+	@Order(9)
 	@Test
-	public void testCreateDesignWithLocationEmpty() {
+	void testCreateDesignWithLocationEmpty() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 3BHK Home");
@@ -172,11 +183,12 @@ public class TestCreateDesign {
 		String expectedMessage = "City name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
+
+	@Order(10)
 	@Test
-	public void testCreateDesignWithLocationPattern() {
+	void testCreateDesignWithLocationPattern() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 3BHK Home");
@@ -191,11 +203,12 @@ public class TestCreateDesign {
 		String expectedMessage = "City Name should only contain alphabetic characters";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
+
+	@Order(11)
 	@Test
-	public void testCreateUserWithIdLessThanZero() {
+	void testCreateDesignWithStyleIdLessThanZero() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 3Bhk Home");
@@ -210,11 +223,12 @@ public class TestCreateDesign {
 		String expectedMessage = "ID cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
+
+	@Order(12)
 	@Test
-	public void testCreateUserWithNonExistingStyleId() {
+	void testCreateDesignWithNonExistingStyleId() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 3Bhk Home");
@@ -229,11 +243,12 @@ public class TestCreateDesign {
 		String expectedMessage = "Style Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
+
+	@Order(13)
 	@Test
-	public void testCreateUserWithNonExistingDesigner() {
+	void testCreateDesignWithNonExistingDesigner() {
 		DesignService designService = new DesignService();
 		Design newDesign = new Design();
 		newDesign.setName("Modern 3Bhk Home");
@@ -248,7 +263,6 @@ public class TestCreateDesign {
 		String expectedMessage = "Designer Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-
 }

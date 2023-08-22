@@ -55,10 +55,10 @@ public class UserValidator {
 	 *                             format.
 	 */
 	public static void validateEmail(String email) throws ValidationException {
-		StringUtil.rejectIfInvalidString(email, "Email");
-		if (!Pattern.matches(EMAIL_PATTERN, email)) {
-			throw new ValidationException("Invalid email format. Please provide a valid email address");
-		}
+	    StringUtil.rejectIfInvalidString(email, "Email");
+	    if (!email.matches(EMAIL_PATTERN)) {
+	        throw new ValidationException("Invalid email format. Please provide a valid email address");
+	    }
 	}
 
 	/**

@@ -1,8 +1,8 @@
 package in.fssa.minimal;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -16,10 +16,10 @@ import in.fssa.minimal.model.DesignAsset;
 import in.fssa.minimal.service.DesignAssetService;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class TestGetAllDesignAsset {
+class TestGetAllDesignAsset {
 	@Test
 	@Order(1)
-	public void testCreateUserWithValidInput() {
+	void createUserWithValidInput() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
 		newDesign.setAssetsId(2);
@@ -31,7 +31,7 @@ public class TestGetAllDesignAsset {
 
 	@Test
 	@Order(2)
-	public void testCreateDesignWithInvalidInput() {
+	void createDesignWithInvalidInput() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			designAssetService.create(null);
@@ -39,12 +39,12 @@ public class TestGetAllDesignAsset {
 		String expectedMessage = "Design Asset Object can't be null";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
 
 	@Test
 	@Order(3)
-	public void testCreateDesignWithNonExistingAssetId() {
+	void createDesignWithNonExistingAssetId() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
 		newDesign.setAssetsId(5000);
@@ -55,12 +55,11 @@ public class TestGetAllDesignAsset {
 		String expectedMessage = "Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-
 	@Test
 	@Order(4)
-	public void testCreateDesignWithNonExistingDesignId() {
+	void createDesignWithNonExistingDesignId() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
 		newDesign.setAssetsId(1);
@@ -71,12 +70,12 @@ public class TestGetAllDesignAsset {
 		String expectedMessage = "Design Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
 
 	@Test
 	@Order(5)
-	public void testUpdateDesignAsset() throws ValidationException, PersistenceException {
+	void updateDesignAsset() throws ValidationException, PersistenceException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
 		newDesign.setAssetsId(1);
@@ -86,7 +85,7 @@ public class TestGetAllDesignAsset {
 
 	@Test
 	@Order(6)
-	public void testUpdateSpecificFields() throws ValidationException, PersistenceException {
+	void updateSpecificFields() throws ValidationException, PersistenceException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
 		newDesign.setDesignId(1);
@@ -95,7 +94,7 @@ public class TestGetAllDesignAsset {
 
 	@Test
 	@Order(7)
-	public void testUpdateNonExistingDesignId() throws ValidationException, PersistenceException {
+	void updateNonExistingDesignId() throws ValidationException, PersistenceException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAsset newDesign = new DesignAsset();
@@ -105,12 +104,12 @@ public class TestGetAllDesignAsset {
 		String expectedMessage = "Design Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
 
 	@Test
 	@Order(8)
-	public void testUpdateNonExistingAssetId() throws ValidationException, PersistenceException {
+	void updateNonExistingAssetId() throws ValidationException, PersistenceException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAsset newDesign = new DesignAsset();
@@ -120,12 +119,12 @@ public class TestGetAllDesignAsset {
 		String expectedMessage = "Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
 
 	@Test
 	@Order(9)
-	public void testUpdateNonExistingId() throws ValidationException, PersistenceException {
+	void updateNonExistingId() throws ValidationException, PersistenceException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAsset newDesign = new DesignAsset();
@@ -135,14 +134,12 @@ public class TestGetAllDesignAsset {
 		String expectedMessage = "Design Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-
-	
 
 	@Test
 	@Order(10)
-	public void testDeleteWithNonExistingId() throws ValidationException {
+	void deleteWithNonExistingId() throws ValidationException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			designAssetService.delete(5000);
@@ -150,28 +147,27 @@ public class TestGetAllDesignAsset {
 		String expectedMessage = "Design Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
 
 	@Test
 	@Order(11)
-	public void getAllDesignAndAsset() throws PersistenceException, ValidationException {
+	void getAllDesignAndAsset() throws PersistenceException, ValidationException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Set<DesignAssetRespondDto> arr = designAssetService.getAllByDesignAsset();
 	}
 	
 	@Test
 	@Order(12)
-	public void getDesignById() throws ValidationException, PersistenceException {
+	void getDesignById() throws ValidationException, PersistenceException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAssetRespondDto arr = designAssetService.findAllDesignAssetById(1);
 		System.out.println(arr);
 	}
 
-	
 	@Test
 	@Order(13)
-	public void testWithIdLessThanZero() {
+	void testWithIdLessThanZero() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAssetRespondDto arr = designAssetService.findAllDesignAssetById(0);
@@ -179,12 +175,11 @@ public class TestGetAllDesignAsset {
 		String expectedMessage = "ID cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
 	@Test
 	@Order(14)
-	public void testWitNonExistingId() {
+	void testWithNonExistingId() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAssetRespondDto arr = designAssetService.findAllDesignAssetById(20);
@@ -192,12 +187,12 @@ public class TestGetAllDesignAsset {
 		String expectedMessage = "Design Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
+
 	@Test
 	@Order(15)
-	public void testDeleteDesignAsset() throws ValidationException, PersistenceException {
+	void testDeleteDesignAsset() throws ValidationException, PersistenceException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		designAssetService.delete(1);
 	}

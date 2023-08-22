@@ -3,8 +3,6 @@ package in.fssa.minimal;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.Random;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -22,21 +20,20 @@ public class TestGetAllStyle {
 
 	@Test
 	@Order(1)
-	public void testCreateStyleWithValidInput() {
+	void testCreateStyleWithValidInput() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		String generate = generateRandomString(8);
-		newStyle.setName(generate);
+		String generatedName = generateRandomString(8);
+		newStyle.setName(generatedName);
 
 		assertDoesNotThrow(() -> {
 			styleService.create(newStyle);
 		});
 	}
-	
 
 	@Test
 	@Order(2)
-	public void testCreateStyleWithInValidInput() {
+	void testCreateStyleWithInvalidInput() {
 		StyleService styleService = new StyleService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			styleService.create(null);
@@ -44,12 +41,12 @@ public class TestGetAllStyle {
 		String expectedMessage = "Style object can not be null";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
 
 	@Test
 	@Order(3)
-	public void testCreateStyleWithNameNull() {
+	void testCreateStyleWithNameNull() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
 		newStyle.setName(null);
@@ -59,12 +56,12 @@ public class TestGetAllStyle {
 		String expectedMessage = "Style Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
 
 	@Test
 	@Order(4)
-	public void testCreateStyleWithNameEmpty() {
+	void testCreateStyleWithNameEmpty() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
 		newStyle.setName("");
@@ -74,12 +71,12 @@ public class TestGetAllStyle {
 		String expectedMessage = "Style Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage, actualMessage);
 	}
 
 	@Test
 	@Order(5)
-	public void testCreateStyleWithNameExists() {
+	void testCreateStyleWithNameExists() {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
 		newStyle.setName("Minimalism");
@@ -89,22 +86,22 @@ public class TestGetAllStyle {
 		String expectedMessage = "Style Name already exists";
 		String actualMessage = exception.getMessage();
 
-		assertEquals(expectedMessage,actualMessage);
+		assertEquals(expectedMessage, actualMessage);
 	}
 
 	@Test
 	@Order(6)
-	public void testUpdateStyle() throws ValidationException, PersistenceException {
+	void testUpdateStyle() throws ValidationException, PersistenceException {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
-		String generate = generateRandomString(8);
-		newStyle.setName(generate);
+		String generatedName = generateRandomString(8);
+		newStyle.setName(generatedName);
 		styleService.update(1, newStyle);
 	}
 
 	@Test
 	@Order(7)
-	public void testUpdateStyleWithNonExistingId() throws ValidationException, PersistenceException {
+	void testUpdateStyleWithNonExistingId() throws ValidationException, PersistenceException {
 		StyleService styleService = new StyleService();
 		Style newStyle = new Style();
 		newStyle.setName("Bohemianism");
@@ -114,21 +111,19 @@ public class TestGetAllStyle {
 		String expectedMessage = "Style Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
-
+		assertEquals(expectedMessage, actualMessage);
 	}
-	
+
 	private String generateRandomString(int length) {
-	    String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	    StringBuilder randomString = new StringBuilder();
-	    Random random = new Random();
+		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		StringBuilder randomString = new StringBuilder();
+		Random random = new Random();
 
-	    for (int i = 0; i < length; i++) {
-	        int index = random.nextInt(characters.length());
-	        randomString.append(characters.charAt(index));
-	    }
+		for (int i = 0; i < length; i++) {
+			int index = random.nextInt(characters.length());
+			randomString.append(characters.charAt(index));
+		}
 
-	    return randomString.toString();
+		return randomString.toString();
 	}
-	
 }
