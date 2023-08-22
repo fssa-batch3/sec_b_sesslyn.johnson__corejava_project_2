@@ -2,7 +2,6 @@ package in.fssa.minimal.service;
 
 import java.util.Set;
 import in.fssa.minimal.dao.AppointmentDAO;
-import in.fssa.minimal.dao.UserDAO;
 import in.fssa.minimal.dto.AppointmentRespondDto;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;

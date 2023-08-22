@@ -26,7 +26,7 @@ public class DesignAssetService {
 	        DesignAssetDAO designAssetDao = new DesignAssetDAO();
 	        designAssetDao.create(newDesignAsset);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred during database interaction.", e);
+	        throw new ServiceException("Error occurred during connecting design and thier assets.", e);
 	    }
 	}
 
@@ -53,7 +53,7 @@ public class DesignAssetService {
 	        DesignAssetDAO designAssetDao = new DesignAssetDAO();
 	        designAssetDao.update(id, updatedDesignAsset);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred during database interaction.", e);
+	        throw new ServiceException("Error occurred during updating design and thier assets.", e);
 	    }
 	}
 
@@ -71,7 +71,7 @@ public class DesignAssetService {
 	        DesignAssetDAO designAssetDao = new DesignAssetDAO();
 	        designAssetDao.delete(id);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred during database interaction.", e);
+	        throw new ServiceException("Error occurred during deleting design and thier assets.", e);
 	    }
 	}
 
@@ -92,7 +92,7 @@ public class DesignAssetService {
 	        }
 	        return assetList;
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred during database interaction.", e);
+	        throw new ServiceException("Error occurred while retrieveing all designs and thier assets.", e);
 	    }
 	}
 
@@ -111,7 +111,7 @@ public class DesignAssetService {
 	        DesignAssetDAO designAssetDao = new DesignAssetDAO();
 	        return designAssetDao.findAllDesignAssetById(id);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred during database interaction.", e);
+	        throw new ServiceException("Error occurred while retrieving design and thier assets by id.", e);
 	    }
 	}
 

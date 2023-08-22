@@ -9,6 +9,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 
+import in.fssa.minimal.dao.DesignAssetDAO;
+import in.fssa.minimal.dao.UserDAO;
 import in.fssa.minimal.dto.DesignAssetRespondDto;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
@@ -57,6 +59,7 @@ class TestGetAllDesignAsset {
 
 		assertEquals(expectedMessage, actualMessage);
 	}
+
 	@Test
 	@Order(4)
 	void createDesignWithNonExistingDesignId() {
@@ -73,28 +76,28 @@ class TestGetAllDesignAsset {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	 @Test
-	    @Order(5)
-	    void updateDesignAsset() {
-	        assertDoesNotThrow(() -> {
-	            DesignAssetService designAssetService = new DesignAssetService();
-	            DesignAsset newDesign = new DesignAsset();
-	            newDesign.setAssetsId(1);
-	            newDesign.setDesignId(1);
-	            designAssetService.update(1, newDesign);
-	        });
-	    }
-	    
-	    @Test
-	    @Order(6)
-	    void updateSpecificFields() {
-	        assertDoesNotThrow(() -> {
-	            DesignAssetService designAssetService = new DesignAssetService();
-	            DesignAsset newDesign = new DesignAsset();
-	            newDesign.setDesignId(1);
-	            designAssetService.update(1, newDesign);
-	        });
-	    }
+	@Test
+	@Order(5)
+	void updateDesignAsset() {
+		assertDoesNotThrow(() -> {
+			DesignAssetService designAssetService = new DesignAssetService();
+			DesignAsset newDesign = new DesignAsset();
+			newDesign.setAssetsId(1);
+			newDesign.setDesignId(1);
+			designAssetService.update(1, newDesign);
+		});
+	}
+
+	@Test
+	@Order(6)
+	void updateSpecificFields() {
+		assertDoesNotThrow(() -> {
+			DesignAssetService designAssetService = new DesignAssetService();
+			DesignAsset newDesign = new DesignAsset();
+			newDesign.setDesignId(1);
+			designAssetService.update(1, newDesign);
+		});
+	}
 
 	@Test
 	@Order(7)
@@ -154,24 +157,24 @@ class TestGetAllDesignAsset {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	 @Test
-	    @Order(11)
-	    void getAllDesignAndAsset() {
-	        assertDoesNotThrow(() -> {
-	            DesignAssetService designAssetService = new DesignAssetService();
-	            Set<DesignAssetRespondDto> arr = designAssetService.getAllByDesignAsset();
-	        });
-	    }
-	    
-	    @Test
-	    @Order(12)
-	    void getDesignById() {
-	        assertDoesNotThrow(() -> {
-	            DesignAssetService designAssetService = new DesignAssetService();
-	            DesignAssetRespondDto arr = designAssetService.findDesignAssetById(1);
-	            System.out.println(arr);
-	        });
-	    }
+	@Test
+	@Order(11)
+	void getAllDesignAndAsset() {
+		assertDoesNotThrow(() -> {
+			DesignAssetService designAssetService = new DesignAssetService();
+			Set<DesignAssetRespondDto> arr = designAssetService.getAllByDesignAsset();
+		});
+	}
+
+	@Test
+	@Order(12)
+	void getDesignById() {
+		assertDoesNotThrow(() -> {
+			DesignAssetService designAssetService = new DesignAssetService();
+			DesignAssetRespondDto arr = designAssetService.findDesignAssetById(1);
+			System.out.println(arr);
+		});
+	}
 
 	@Test
 	@Order(13)
@@ -185,6 +188,7 @@ class TestGetAllDesignAsset {
 
 		assertEquals(expectedMessage, actualMessage);
 	}
+
 	@Test
 	@Order(14)
 	void testWithNonExistingId() {
@@ -198,13 +202,15 @@ class TestGetAllDesignAsset {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	 @Test
-	    @Order(15)
-	    void testDeleteDesignAsset() {
-	        assertDoesNotThrow(() -> {
-	            DesignAssetService designAssetService = new DesignAssetService();
-	            designAssetService.delete(1);
-	        });
-	    }
+	@Test
+	@Order(15)
+	void testDeleteDesignAsset() {
+		assertDoesNotThrow(() -> {
+			DesignAssetDAO app = new DesignAssetDAO();
+			int design = app.getLastUpdatedDesignAssetId();
+			DesignAssetService designAssetService = new DesignAssetService();
+			designAssetService.delete(design);
+		});
+	}
 
 }

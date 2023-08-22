@@ -15,8 +15,9 @@ public class ConnectionUtil {
      * Establishes a database connection using environment variables or a local configuration.
      *
      * @return A database connection instance.
+     * @throws SQLException 
      */
-	public static Connection getConnection() {
+	public static Connection getConnection() throws SQLException {
 
 		String url;
 		String userName;
@@ -39,8 +40,8 @@ public class ConnectionUtil {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection(url, userName, passWord);
 
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		} catch (ClassNotFoundException|SQLException e) {
+			throw new SQLException(e);
 		}
 		return connection;
 	}
@@ -49,9 +50,10 @@ public class ConnectionUtil {
      *
      * @param connection The database connection to be closed.
      * @param ps The prepared statement to be closed.
+	 * @throws SQLException 
 	 * @throws PersistenceException 
      */
-	public static void close(Connection connection, PreparedStatement ps) throws PersistenceException {
+	public static void close(Connection connection, PreparedStatement ps) {
 		try {
 			if (ps != null) {
 				ps.close();
@@ -60,7 +62,7 @@ public class ConnectionUtil {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			throw new PersistenceException(e);
+			System.out.println(e.getMessage());
 		}
 	}
 	/**
@@ -71,7 +73,7 @@ public class ConnectionUtil {
      * @param rs The result set to be closed.
 	 * @throws PersistenceException 
      */
-	public static void close(Connection connection, PreparedStatement ps, ResultSet rs) throws PersistenceException {
+	public static void close(Connection connection, PreparedStatement ps, ResultSet rs)  {
 		try {
 			if (rs != null) {
 				rs.close();
@@ -83,7 +85,7 @@ public class ConnectionUtil {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			throw new PersistenceException(e);
+			System.out.println(e.getMessage());
 		}
 	}
 }

@@ -5,9 +5,8 @@ import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
-import in.fssa.minimal.util.StringUtil;
 import in.fssa.minimal.validator.DesignAssetValidator;
-import in.fssa.minimal.validator.DesignValidator;
+
 
 public class AssetService {
 	/**
@@ -31,7 +30,7 @@ public class AssetService {
 			AssetDAO assetDao = new AssetDAO();
 			assetDao.create(newAsset);
 		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred while adding asset url", e);
+			throw new ServiceException("Error occurred while adding assets", e);
 		}
 	}
 
@@ -53,7 +52,7 @@ public class AssetService {
 			AssetDAO assetDao = new AssetDAO();
 			assetDao.update(id, updateAsset);
 		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred while adding asset url", e);
+			throw new ServiceException("Error occurred while updating asset url", e);
 		}
 	}
 
@@ -74,7 +73,7 @@ public class AssetService {
 			AssetDAO assetDao = new AssetDAO();
 			return assetDao.findById(id);
 		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred while adding asset url", e);
+			throw new ServiceException("Error occurred while retrieves data using asset id", e);
 		}
 	}
 

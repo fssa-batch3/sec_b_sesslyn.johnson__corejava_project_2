@@ -83,7 +83,7 @@ public class DesignValidator {
 	        }
 	        UserDAO.checkDesignerIdExists(id);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred during validation.", e);
+	        throw new ServiceException("Error occurred during created by id validation.", e);
 	    }
 	}
 
@@ -102,7 +102,7 @@ public class DesignValidator {
 	        UserDAO.checkDesignerIdExists(id);
 	        DesignDAO.checkCreatedByExists(id);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred during validation.", e);
+	        throw new ServiceException("Error occurred during designer id validation.", e);
 	    }
 	}
 
@@ -120,7 +120,7 @@ public class DesignValidator {
 	        }
 	        DesignDAO.checkIdExists(id);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred during validation.", e);
+	        throw new ServiceException("Error occurred during design id validation.", e);
 	    }
 	}
 

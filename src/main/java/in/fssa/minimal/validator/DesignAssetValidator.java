@@ -25,7 +25,7 @@ public class DesignAssetValidator {
 			}
 			DesignAssetDAO.checkIdExists(id);
 		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred during validation.", e);
+			throw new ServiceException("Error occurred during design asset id validation.", e);
 		}
 	}
 	
@@ -42,7 +42,7 @@ public class DesignAssetValidator {
 			StringUtil.rejectIfInvalidString(assetUrl, "Asset Url Name");
 			AssetDAO.checkAssetUrlExists(assetUrl);
 		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred during validation.", e);
+			throw new ServiceException("Error occurred during asset url validation.", e);
 		}
 	}
 
@@ -61,7 +61,7 @@ public class DesignAssetValidator {
 			}
 			AssetDAO.checkIdExists(id);
 		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred during validation.", e);
+			throw new ServiceException("Error occurred during asset id validation.", e);
 		}
 	}
 }

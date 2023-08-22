@@ -237,4 +237,34 @@ public class DesignAssetDAO {
 			ConnectionUtil.close(conn, pre, rs);
 		}
 	}
+	
+	/**
+	 * Retrieves the ID of the last updated non-designer user who is active.
+	 *
+	 * @return The ID of the last updated non-designer user.
+	 * @throws PersistenceException If a database error occurs while retrieving the
+	 *                              ID.
+	 */
+	public static int getLastUpdatedDesignAssetId() throws PersistenceException {
+	    Connection conn = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    int id = 0;
+	    try {
+	        String query = "SELECT id FROM design_assets WHERE is_active = 1 ORDER BY created_at DESC LIMIT 1";
+	        conn = ConnectionUtil.getConnection();
+	        ps = conn.prepareStatement(query);
+	        rs = ps.executeQuery();
+	        if (rs.next()) {
+	            id = rs.getInt("id");   
+	        }
+	    } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        throw new PersistenceException(e);
+	    } finally {
+	        ConnectionUtil.close(conn, ps, rs);
+	    }
+	    return id;
+	}
+
 }

@@ -33,7 +33,8 @@ public class AppointmentDAO {
 	 * This method is responsible for creating a new appointment record in the database.
 	 *
 	 * @param newAppointment The appointment to be created.
-	 * @throws PersistenceException If a database error occurs while creating the appointment.
+	 * @throws PersistenceException If a database error occurs while creating the appointment.  
+	 * @throws  
 	 */
 	public void create(Appointment newAppointment) throws PersistenceException {
 		Connection conn = null;

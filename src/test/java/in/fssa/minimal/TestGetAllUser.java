@@ -4,15 +4,19 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.Random;
 import java.util.Set;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
+import in.fssa.minimal.dao.UserDAO;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.User;
 import in.fssa.minimal.service.UserService;
-
+@TestMethodOrder(OrderAnnotation.class)
 class TestGetAllUser {
 
 	@Test
@@ -125,18 +129,50 @@ class TestGetAllUser {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
+	@Test
+	@Order(10)
+	 void testCreateUserWithValidInput() {
+	    UserService userService = new UserService();
+	    User newUser = new User();
+	    String randomString = generateRandomString(8); 
+	    newUser.setName("Sesslyn");
+	    newUser.setEmail(randomString + "@" + "google.com");
+	    newUser.setPassword("Jenusha@2303");
+	    newUser.setPhoneNumber(9863456787L);
+	    newUser.setDesigner(false);
+
+	    assertDoesNotThrow(() -> {
+	        userService.create(newUser);
+	    });
+	}
+	
+	private String generateRandomString(int length) {
+	    String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	    StringBuilder randomString = new StringBuilder();
+	    Random random = new Random();
+
+	    for (int i = 0; i < length; i++) {
+	        int index = random.nextInt(characters.length());
+	        randomString.append(characters.charAt(index));
+	    }
+
+	    return randomString.toString();
+	}
+
 	 @Test
-	    @Order(10)
+	    @Order(11)
 	    void testDeleteUser() {
 	        assertDoesNotThrow(() -> {
 	            UserService userService = new UserService();
-	            userService.delete(5);
+	            UserDAO app = new UserDAO();
+	    	    int user = app.getLastUpdatedUserId();
+	            userService.delete(user);
 	        });
 	    }
 
 
 	@Test
-	@Order(11)
+	@Order(12)
 	void testDeleteWithNonExistingId() throws ValidationException {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -149,7 +185,7 @@ class TestGetAllUser {
 	}
 
 	@Test
-    @Order(12)
+    @Order(13)
     void testGetAllDesigner() {
         assertDoesNotThrow(() -> {
             UserService userService = new UserService();
@@ -159,7 +195,7 @@ class TestGetAllUser {
     }
 
     @Test
-    @Order(13)
+    @Order(14)
     void testGetDesignerById() {
         assertDoesNotThrow(() -> {
             UserService userService = new UserService();
@@ -170,7 +206,7 @@ class TestGetAllUser {
 
 
 	@Test
-	@Order(14)
+	@Order(15)
 	void testGetDesignerByNonExistingId() {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {

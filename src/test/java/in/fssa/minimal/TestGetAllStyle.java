@@ -16,7 +16,7 @@ import in.fssa.minimal.model.Style;
 import in.fssa.minimal.service.StyleService;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class TestGetAllStyle {
+class TestGetAllStyle {
 
 	@Test
 	@Order(1)
