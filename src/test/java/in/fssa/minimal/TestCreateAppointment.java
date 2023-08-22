@@ -3,6 +3,7 @@ package in.fssa.minimal;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -22,28 +23,37 @@ class TestCreateAppointment {
 
 	@Test
 	@Order(1)
-	 void testCreateAppointmentWithValidInput() throws PersistenceException {
-		AppointmentService appointmentService = new AppointmentService();
-		Appointment newAppointment = new Appointment();
-		UserDAO app = new UserDAO();
-		int user = app.getLastUpdatedUserId();
-		System.out.println(user);
-		newAppointment.setFromUser(user);
-		int designer = app.getLastUpdatedDesignerId();
-		System.out.println(designer);
-		newAppointment.setToUser(designer);
-		newAppointment.setEmail("sesslyn@gmail.com");
-		newAppointment.setPhoneNumber(6381040916l);
-		newAppointment.setStatus("waiting_list");
-		LocalDate currentDate = LocalDate.now();
-		newAppointment.setDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-		LocalTime currentTime = LocalTime.now();
-		newAppointment.setTime(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+	void testCreateAppointmentWithValidInput() throws PersistenceException {
+	    AppointmentService appointmentService = new AppointmentService();
+	    Appointment newAppointment = new Appointment();
+	    UserDAO app = new UserDAO();
+	    int user = app.getLastUpdatedUserId();
+	    newAppointment.setFromUser(user);
+	    int designer = app.getLastUpdatedDesignerId();
+	    newAppointment.setToUser(designer);
+	    newAppointment.setEmail("sesslyn@gmail.com");
+	    newAppointment.setPhoneNumber(6381040916L);
+	    newAppointment.setStatus("waiting_list");
+	    LocalDate currentDate = LocalDate.now();
+	    newAppointment.setDate(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+	    LocalTime currentTime = LocalTime.now();
+	    
+	    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+	    LocalTime dueTime = currentTime;
 
-		newAppointment.setAddress(null);
-		assertDoesNotThrow(() -> {
-			appointmentService.create(newAppointment);
-		});
+	    LocalTime minTime = LocalTime.parse("08:00:00");
+	    LocalTime maxTime = LocalTime.parse("20:00:00");
+
+	    if (dueTime.isBefore(minTime) || dueTime.isAfter(maxTime)) {
+	        dueTime = LocalTime.parse("11:35:29", inputFormatter);
+	    }
+
+	    newAppointment.setTime(dueTime.format(inputFormatter));
+	    newAppointment.setAddress(null);
+	    
+	    assertDoesNotThrow(() -> {
+	        appointmentService.create(newAppointment);
+	    });
 	}
 
 	@Test
