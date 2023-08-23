@@ -3,6 +3,7 @@ package in.fssa.minimal;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Set;
 
 import org.junit.jupiter.api.Order;
@@ -14,10 +15,8 @@ import in.fssa.minimal.dto.AppointmentRespondDto;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.service.AppointmentService;
-
 @TestMethodOrder(OrderAnnotation.class)
-class TestGetAllAppointment {
-
+class TestReadAppointment {
 	@Test
 	@Order(1)
 	void testGetAllAppointment() throws ValidationException, PersistenceException {
@@ -84,27 +83,5 @@ class TestGetAllAppointment {
 			AppointmentRespondDto arr = appService.findById(1);
 			System.out.println(arr);
 		});
-	}
-
-	@Test
-	@Order(7)
-	void testUpdateRequestStatus() {
-		AppointmentService appService = new AppointmentService();
-		assertDoesNotThrow(() -> {
-			appService.updateRequestStatus(1, "approved");
-		});
-	}
-
-	@Test
-	@Order(8)
-	void testUpdateRequestStatusWithStatusPattern() throws ValidationException {
-		AppointmentService appService = new AppointmentService();
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			appService.updateRequestStatus(1, "rejected");
-		});
-		String expectedMessage = "Approved appointment cannot be re update";
-		String actualMessage = exception.getMessage();
-
-		assertEquals(expectedMessage, actualMessage);
 	}
 }

@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -11,11 +13,56 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Design;
+import in.fssa.minimal.model.Style;
 import in.fssa.minimal.service.DesignService;
+import in.fssa.minimal.service.StyleService;
 
 @TestMethodOrder(OrderAnnotation.class)
 class TestCreateDesign {
+	//Style
+	@Test
 	@Order(1)
+	void testCreateStyleWithValidInput() {
+		StyleService styleService = new StyleService();
+		Style newStyle = new Style();
+		String generatedName = generateRandomString(8);
+		newStyle.setName(generatedName);
+
+		assertDoesNotThrow(() -> {
+			styleService.create(newStyle);
+		});
+	}
+
+	@Test
+	@Order(2)
+	void testCreateStyleWithInvalidInput() {
+		StyleService styleService = new StyleService();
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			styleService.create(null);
+		});
+		String expectedMessage = "Style object cannot be null";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+
+	@Test
+	@Order(3)
+	void testCreateStyleWithNameExists() {
+		StyleService styleService = new StyleService();
+		Style newStyle = new Style();
+		newStyle.setName("Minimalism");
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			styleService.create(newStyle);
+		});
+		String expectedMessage = "Style Name already exists";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	//Design
+	@Order(4)
 	@Test
 	void testCreateDesignWithValidInput() {
 		DesignService designService = new DesignService();
@@ -33,7 +80,7 @@ class TestCreateDesign {
 		});
 	}
 
-	@Order(2)
+	@Order(5)
 	@Test
 	void testCreateDesignWithInvalidInput() {
 		DesignService designService = new DesignService();
@@ -46,7 +93,7 @@ class TestCreateDesign {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	@Order(3)
+	@Order(6)
 	@Test
 	void testCreateDesignWithNameNull() {
 		DesignService designService = new DesignService();
@@ -66,7 +113,7 @@ class TestCreateDesign {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	@Order(4)
+	@Order(7)
 	@Test
 	void testCreateDesignWithNameEmpty() {
 		DesignService designService = new DesignService();
@@ -86,7 +133,7 @@ class TestCreateDesign {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	@Order(5)
+	@Order(8)
 	@Test
 	void testCreateDesignWithDescriptionNull() {
 		DesignService designService = new DesignService();
@@ -106,7 +153,7 @@ class TestCreateDesign {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	@Order(6)
+	@Order(9)
 	@Test
 	void testCreateDesignWithDescriptionEmpty() {
 		DesignService designService = new DesignService();
@@ -126,7 +173,7 @@ class TestCreateDesign {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	@Order(7)
+	@Order(10)
 	@Test
 	void testCreateDesignWithDescriptionLessCharacters() {
 		DesignService designService = new DesignService();
@@ -265,4 +312,18 @@ class TestCreateDesign {
 
 		assertEquals(expectedMessage, actualMessage);
 	}
+	
+	private String generateRandomString(int length) {
+		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		StringBuilder randomString = new StringBuilder();
+		Random random = new Random();
+
+		for (int i = 0; i < length; i++) {
+			int index = random.nextInt(characters.length());
+			randomString.append(characters.charAt(index));
+		}
+
+		return randomString.toString();
+	}
+
 }

@@ -1,0 +1,89 @@
+package in.fssa.minimal;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.Set;
+
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+
+import in.fssa.minimal.dto.DesignAssetRespondDto;
+import in.fssa.minimal.exception.ValidationException;
+import in.fssa.minimal.model.Asset;
+import in.fssa.minimal.service.AssetService;
+import in.fssa.minimal.service.DesignAssetService;
+
+@TestMethodOrder(OrderAnnotation.class)
+public class TestReadDesignAsset {
+	@Test
+    @Order(1)
+    void getAssetById() {
+        assertDoesNotThrow(() -> {
+            AssetService assetService = new AssetService();
+            Asset arr = assetService.findByAssetId(1);
+            System.out.println(arr);
+        });
+    }
+	
+	@Test
+	@Order(2)
+	void testWithNonExistingAssetId() {
+		AssetService assetService = new AssetService();
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Asset arr = assetService.findByAssetId(5000);
+		});
+		String expectedMessage = "Asset Id doesn't exist";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	@Order(3)
+	void getAllDesignAndAsset() {
+		assertDoesNotThrow(() -> {
+			DesignAssetService designAssetService = new DesignAssetService();
+			Set<DesignAssetRespondDto> arr = designAssetService.getAllByDesignAsset();
+		});
+	}
+
+	@Test
+	@Order(4)
+	void getDesignById() {
+		assertDoesNotThrow(() -> {
+			DesignAssetService designAssetService = new DesignAssetService();
+			DesignAssetRespondDto arr = designAssetService.findDesignAssetById(1);
+			System.out.println(arr);
+		});
+	}
+
+	@Test
+	@Order(5)
+	void testWithIdLessThanZero() {
+		DesignAssetService designAssetService = new DesignAssetService();
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			DesignAssetRespondDto arr = designAssetService.findDesignAssetById(0);
+		});
+		String expectedMessage = "ID cannot be less than or equal to zero";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+
+	@Test
+	@Order(6)
+	void testWithNonExistingDesignAssetId() {
+		DesignAssetService designAssetService = new DesignAssetService();
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			DesignAssetRespondDto arr = designAssetService.findDesignAssetById(20);
+		});
+		String expectedMessage = "Design Asset Id doesn't exist";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+}

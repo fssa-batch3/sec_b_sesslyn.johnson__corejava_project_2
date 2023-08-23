@@ -1,13 +1,14 @@
 package in.fssa.minimal.util;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import in.fssa.minimal.exception.PersistenceException;
-import io.github.cdimascio.dotenv.Dotenv;
+//import io.github.cdimascio.dotenv.Dotenv;
 
 public class ConnectionUtil {
 
@@ -28,10 +29,14 @@ public class ConnectionUtil {
 			userName = System.getenv("DATABASE_USERNAME");
 			passWord = System.getenv("DATABASE_PASSWORD");
 		} else {
-			Dotenv env = Dotenv.load();
-			url = env.get("DATABASE_HOSTNAME");
-			userName = env.get("DATABASE_USERNAME");
-			passWord = env.get("DATABASE_PASSWORD");
+//			Dotenv env = Dotenv.load();
+//			url = env.get("DATABASE_HOSTNAME");
+//			userName = env.get("DATABASE_USERNAME");
+//			passWord = env.get("DATABASE_PASSWORD");
+			
+			url = "jdbc:mysql://164.52.216.41:3306/sesslyn_johnson_corejava_project";
+			userName = "ujmnfM5HRXHU";
+			passWord = "1785d0c3-f0d7-4296-b5c5-f4b0e3304085";
 		}
 
 		Connection connection = null;
