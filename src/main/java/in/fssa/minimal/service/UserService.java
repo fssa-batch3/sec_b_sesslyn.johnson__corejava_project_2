@@ -1,3 +1,5 @@
+
+
 package in.fssa.minimal.service;
 
 import java.util.Set;
@@ -15,10 +17,10 @@ public class UserService {
 	 * @return A set containing all User objects in the database.
 	 * @throws ServiceException If a service-related error occurs during retrieval.
 	 */
-	public Set<User> getAll() throws ServiceException {
+	public Set<User> getAllUser() throws ServiceException {
 	    try {
-	        UserDAO userDao = new UserDAO();
-	        return userDao.findAll();
+	        UserDAO userDAO = new UserDAO();
+	        return userDAO.findAll();
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while retrieving users.", e);
 	    }
@@ -27,16 +29,16 @@ public class UserService {
 	/**
 	 * Retrieves a user by their ID.
 	 *
-	 * @param userId The ID of the user to retrieve.
+	 * @param id The ID of the user to retrieve.
 	 * @return The User object corresponding to the given ID.
 	 * @throws ValidationException If the provided ID is invalid.
 	 * @throws ServiceException   If a service-related error occurs during retrieval.
 	 */
-	public static User findById(int userId) throws ValidationException, ServiceException {
+	public static User findById(int id) throws ValidationException, ServiceException {
 	    try {
-	        UserValidator.validateId(userId);
-	        UserDAO userDao = new UserDAO();
-	        return userDao.findById(userId);
+	        UserValidator.validateId(id);
+	        UserDAO userDAO = new UserDAO();
+	        return userDAO.findById(id);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while finding user by ID.", e);
 	    }
@@ -53,9 +55,8 @@ public class UserService {
 	public User findByEmail(String email) throws ValidationException, ServiceException {
 	    try {
 	        UserValidator.validateEmail(email);
-
-	        UserDAO userDao = new UserDAO();
-	        return userDao.findByEmail(email);
+	        UserDAO userDAO = new UserDAO();
+	        return userDAO.findByEmail(email);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while finding user by email.", e);
 	    }
@@ -68,11 +69,11 @@ public class UserService {
 	 * @throws ValidationException If the provided user data is invalid.
 	 * @throws ServiceException   If a service-related error occurs during creation.
 	 */
-	public void create(User newUser) throws ValidationException, ServiceException {
+	public void createUser(User newUser) throws ValidationException, ServiceException {
 	    try {
 	        UserValidator.validate(newUser);
-	        UserDAO userDao = new UserDAO();
-	        userDao.create(newUser);
+	        UserDAO userDAO = new UserDAO();
+	        userDAO.create(newUser);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while creating user.", e);
 	    }
@@ -86,7 +87,7 @@ public class UserService {
 	 * @throws ValidationException If the provided data is invalid.
 	 * @throws ServiceException   If a service-related error occurs during update.
 	 */
-	public void update(int id, User updatedUser) throws ValidationException, ServiceException {
+	public void updateUser(int id, User updatedUser) throws ValidationException, ServiceException {
 	    try {
 	        UserValidator.validateId(id);
 	        if (updatedUser.getName() != null) {
@@ -108,15 +109,15 @@ public class UserService {
 	/**
 	 * Deletes a user.
 	 *
-	 * @param userId The ID of the user to delete.
+	 * @param Id The ID of the user to delete.
 	 * @throws ValidationException If the provided ID is invalid.
 	 * @throws ServiceException   If a service-related error occurs during deletion.
 	 */
-	public void delete(int userId) throws ValidationException, ServiceException {
+	public void deleteUser(int id) throws ValidationException, ServiceException {
 	    try {
-	        UserValidator.validateId(userId);
-	        UserDAO userDao = new UserDAO();
-	        userDao.delete(userId);
+	        UserValidator.validateId(id);
+	        UserDAO userDAO = new UserDAO();
+	        userDAO.delete(id);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while deleting user.", e);
 	    }
@@ -130,8 +131,8 @@ public class UserService {
 	 */
 	public Set<User> getAllDesigner() throws ServiceException {
 	    try {
-	        UserDAO userDao = new UserDAO();
-	        return userDao.findAllDesigner();
+	        UserDAO userDAO = new UserDAO();
+	        return userDAO.findAllDesigner();
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while retrieving designer users.", e);
 	    }
@@ -140,16 +141,16 @@ public class UserService {
 	/**
 	 * Retrieves a designer user by their ID.
 	 *
-	 * @param userId The ID of the designer user to retrieve.
+	 * @param id The ID of the designer user to retrieve.
 	 * @return The User object corresponding to the given designer ID.
 	 * @throws ValidationException If the provided ID is invalid.
 	 * @throws ServiceException   If a service-related error occurs during retrieval.
 	 */
-	public User findDesignerById(int userId) throws ValidationException, ServiceException {
+	public User findByDesignerId(int id) throws ValidationException, ServiceException {
 	    try {
-	        UserValidator.validateDesignerId(userId);
+	        UserValidator.validateDesignerId(id);
 	        UserDAO userDao = new UserDAO();
-	        return userDao.findDesignerById(userId);
+	        return userDao.findDesignerById(id);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while finding designer user by ID.", e);
 	    }

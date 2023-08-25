@@ -16,7 +16,7 @@ import in.fssa.minimal.service.UserService;
 class TestUpdateUser {
 
 	 @Test
-	    @Order(7)
+	    @Order(1)
 	    void testUpdateUser() {
 	        assertDoesNotThrow(() -> {
 	            UserService userService = new UserService();
@@ -24,31 +24,31 @@ class TestUpdateUser {
 	            newUser.setName("Pappu");
 	            newUser.setPassword("Sess@2608");
 	            newUser.setPhoneNumber(6381040926L);
-	            userService.update(1, newUser);
+	            userService.updateUser(1, newUser);
 	        });
 	    }
 
 	    @Test
-	    @Order(8)
+	    @Order(2)
 	    void testUpdateSpecificFields() {
 	        assertDoesNotThrow(() -> {
 	            UserService userService = new UserService();
 	            User newUser = new User();
 	            newUser.setPassword("Sess@2608");
 	            newUser.setDesigner(false);
-	            userService.update(1, newUser);
+	            userService.updateUser(1, newUser);
 	        });
 	    }
 
 	@Test
-	@Order(9)
+	@Order(3)
 	void testUpdateWithNonExistingId() throws ValidationException {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			User newUser = new User();
 			newUser.setPassword("Sess@2608");
 			newUser.setDesigner(false);
-			userService.update(5000, newUser);
+			userService.updateUser(5000, newUser);
 		});
 		String expectedMessage = "Id doesn't exist";
 		String actualMessage = exception.getMessage();

@@ -28,7 +28,7 @@ class TestUpdateDesign {
 			Style newStyle = new Style();
 			String generatedName = generateRandomString(8);
 			newStyle.setName(generatedName);
-			styleService.update(1, newStyle);
+			styleService.updateStyle(1, newStyle);
 		});
 	}
 
@@ -39,7 +39,7 @@ class TestUpdateDesign {
 		Style newStyle = new Style();
 		newStyle.setName("Bohemianism");
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			styleService.update(5000, newStyle);
+			styleService.updateStyle(5000, newStyle);
 		});
 		String expectedMessage = "Style Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -73,7 +73,7 @@ class TestUpdateDesign {
 			newDesign.setLocation("Chennai");
 			newDesign.setStyleId(1);
 			newDesign.setCreatedBy(2);
-			designService.update(1, newDesign);
+			designService.updateDesign(1, newDesign);
 		});
 	}
 
@@ -84,7 +84,7 @@ class TestUpdateDesign {
 			DesignService designService = new DesignService();
 			Design newDesign = new Design();
 			newDesign.setLocation("Bangalore");
-			designService.update(1, newDesign);
+			designService.updateDesign(1, newDesign);
 		});
 	}
 
@@ -95,7 +95,7 @@ class TestUpdateDesign {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Design newDesign = new Design();
 			newDesign.setLocation("Bangalore");
-			designService.update(5000, newDesign);
+			designService.updateDesign(5000, newDesign);
 		});
 		String expectedMessage = "Design Id doesn't exist";
 		String actualMessage = exception.getMessage();

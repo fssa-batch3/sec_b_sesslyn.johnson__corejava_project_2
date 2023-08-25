@@ -27,7 +27,7 @@ public class TestUpdateDesignAsset {
             Asset newAsset = new Asset();
             String generate = generateRandomUrl();
             newAsset.setAssetsUrl(generate);
-            assetService.update(1, newAsset);
+            assetService.updateAsset(1, newAsset);
         });
     }
 
@@ -38,7 +38,7 @@ public class TestUpdateDesignAsset {
 		Asset newAsset = new Asset();
 		newAsset.setAssetsUrl("https://youtu.be/DFgL3URDOr4");
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			assetService.update(1, newAsset);
+			assetService.updateAsset(1, newAsset);
 		});
 		String expectedMessage = "Asset Url already exists";
 		String actualMessage = exception.getMessage();
@@ -53,7 +53,7 @@ public class TestUpdateDesignAsset {
 		Asset newAsset = new Asset();
 		newAsset.setAssetsUrl("https://youtu.be/e7IF-MbBkl8");
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			assetService.update(5000, newAsset);
+			assetService.updateAsset(5000, newAsset);
 		});
 		String expectedMessage = "Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -85,7 +85,7 @@ public class TestUpdateDesignAsset {
 			DesignAsset newDesign = new DesignAsset();
 			newDesign.setAssetsId(1);
 			newDesign.setDesignId(1);
-			designAssetService.update(1, newDesign);
+			designAssetService.updateDesignAsset(1, newDesign);
 		});
 	}
 
@@ -96,7 +96,7 @@ public class TestUpdateDesignAsset {
 			DesignAssetService designAssetService = new DesignAssetService();
 			DesignAsset newDesign = new DesignAsset();
 			newDesign.setDesignId(1);
-			designAssetService.update(1, newDesign);
+			designAssetService.updateDesignAsset(1, newDesign);
 		});
 	}
 
@@ -107,7 +107,7 @@ public class TestUpdateDesignAsset {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAsset newDesign = new DesignAsset();
 			newDesign.setDesignId(5000);
-			designAssetService.update(1, newDesign);
+			designAssetService.updateDesignAsset(1, newDesign);
 		});
 		String expectedMessage = "Design Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -122,7 +122,7 @@ public class TestUpdateDesignAsset {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAsset newDesign = new DesignAsset();
 			newDesign.setAssetsId(5000);
-			designAssetService.update(1, newDesign);
+			designAssetService.updateDesignAsset(1, newDesign);
 		});
 		String expectedMessage = "Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -137,7 +137,7 @@ public class TestUpdateDesignAsset {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAsset newDesign = new DesignAsset();
 			newDesign.setAssetsId(1);
-			designAssetService.update(5000, newDesign);
+			designAssetService.updateDesignAsset(5000, newDesign);
 		});
 		String expectedMessage = "Design Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();

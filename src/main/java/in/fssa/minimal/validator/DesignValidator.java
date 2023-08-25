@@ -134,7 +134,7 @@ public class DesignValidator {
 	public static void validateStyleName(String name) throws ValidationException, ServiceException {
 	    try {
 	        StringUtil.rejectIfInvalidString(name, "Style Name");
-	        StyleDAO.nameExists(name);
+	        StyleDAO.checkNameExists(name);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred during validation.", e);
 	    }

@@ -35,10 +35,10 @@ public class ConnectionUtil {
 //			passWord = "1785d0c3-f0d7-4296-b5c5-f4b0e3304085";
 //		
 
-			//Local
-			url = "jdbc:mysql://localhost:3306/minimal_java";
-			userName =	"root";
-			passWord = "12345678";
+		//	Local
+//			url = "jdbc:mysql://localhost:3306/minimal_java";
+//			userName =	"root";
+//			passWord = "12345678";
 			
 		Connection connection = null;
 

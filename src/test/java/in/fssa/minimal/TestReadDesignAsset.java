@@ -47,7 +47,7 @@ public class TestReadDesignAsset {
 	void getAllDesignAndAsset() {
 		assertDoesNotThrow(() -> {
 			DesignAssetService designAssetService = new DesignAssetService();
-			Set<DesignAssetRespondDTO> arr = designAssetService.getAllByDesignAsset();
+			Set<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAsset();
 		});
 	}
 
