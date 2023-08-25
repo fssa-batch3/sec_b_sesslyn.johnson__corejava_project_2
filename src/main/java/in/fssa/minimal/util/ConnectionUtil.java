@@ -12,7 +12,7 @@ import in.fssa.minimal.exception.PersistenceException;
 
 public class ConnectionUtil {
 
-    /**
+	/**
      * Establishes a database connection using environment variables or a local configuration.
      *
      * @return A database connection instance.
@@ -24,21 +24,22 @@ public class ConnectionUtil {
 		String userName;
 		String passWord;
 
-		if (System.getenv("CI") != null) {
+	
 			url = System.getenv("DATABASE_HOSTNAME");
 			userName = System.getenv("DATABASE_USERNAME");
 			passWord = System.getenv("DATABASE_PASSWORD");
-		} else {
-//			Dotenv env = Dotenv.load();
-//			url = env.get("DATABASE_HOSTNAME");
-//			userName = env.get("DATABASE_USERNAME");
-//			passWord = env.get("DATABASE_PASSWORD");
-			
-			url = "jdbc:mysql://164.52.216.41:3306/sesslyn_johnson_corejava_project";
-			userName = "ujmnfM5HRXHU";
-			passWord = "1785d0c3-f0d7-4296-b5c5-f4b0e3304085";
-		}
 
+			//Cloud
+//			url = "jdbc:mysql://164.52.216.41:3306/sesslyn_johnson_corejava_project";
+//			userName = "ujmnfM5HRXHU";
+//			passWord = "1785d0c3-f0d7-4296-b5c5-f4b0e3304085";
+//		
+
+			//Local
+			url = "jdbc:mysql://localhost:3306/minimal_java";
+			userName =	"root";
+			passWord = "12345678";
+			
 		Connection connection = null;
 
 		try {
@@ -50,14 +51,15 @@ public class ConnectionUtil {
 		}
 		return connection;
 	}
-	   /**
-     * Closes a database connection and a prepared statement.
-     *
-     * @param connection The database connection to be closed.
-     * @param ps The prepared statement to be closed.
-	 * @throws SQLException 
-	 * @throws PersistenceException 
-     */
+
+	/**
+	 * Closes a database connection and a prepared statement.
+	 *
+	 * @param connection The database connection to be closed.
+	 * @param ps         The prepared statement to be closed.
+	 * @throws SQLException
+	 * @throws PersistenceException
+	 */
 	public static void close(Connection connection, PreparedStatement ps) {
 		try {
 			if (ps != null) {
@@ -70,15 +72,16 @@ public class ConnectionUtil {
 			System.out.println(e.getMessage());
 		}
 	}
+
 	/**
-     * Closes a database connection, a prepared statement, and a result set.
-     *
-     * @param connection The database connection to be closed.
-     * @param ps The prepared statement to be closed.
-     * @param rs The result set to be closed.
-	 * @throws PersistenceException 
-     */
-	public static void close(Connection connection, PreparedStatement ps, ResultSet rs)  {
+	 * Closes a database connection, a prepared statement, and a result set.
+	 *
+	 * @param connection The database connection to be closed.
+	 * @param ps         The prepared statement to be closed.
+	 * @param rs         The result set to be closed.
+	 * @throws PersistenceException
+	 */
+	public static void close(Connection connection, PreparedStatement ps, ResultSet rs) {
 		try {
 			if (rs != null) {
 				rs.close();

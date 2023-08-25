@@ -13,13 +13,13 @@ import in.fssa.minimal.dao.DesignAssetDAO;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.service.DesignAssetService;
 @TestMethodOrder(OrderAnnotation.class)
-public class TestDeleteDesignAsset {
+class TestDeleteDesignAsset {
 	@Test
 	@Order(1)
 	void deleteWithNonExistingId() throws ValidationException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			designAssetService.delete(5000);
+			designAssetService.deleteDesignAsset(5000);
 		});
 		String expectedMessage = "Design Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -34,7 +34,7 @@ public class TestDeleteDesignAsset {
 			DesignAssetDAO app = new DesignAssetDAO();
 			int design = app.getLastUpdatedDesignAssetId();
 			DesignAssetService designAssetService = new DesignAssetService();
-			designAssetService.delete(design);
+			designAssetService.deleteDesignAsset(design);
 		});
 	}
 

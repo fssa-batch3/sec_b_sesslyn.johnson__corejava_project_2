@@ -65,7 +65,7 @@ class TestReadDesign {
 	
 	@Test
  @Order(5)
- void getAllDesignByDesignerId() {
+ void testGetAllDesignByDesignerId() {
      assertDoesNotThrow(() -> {
          DesignService designService = new DesignService();
          Set<Design> designList = designService.findAllDesignsByDesignerId(2);
@@ -77,7 +77,7 @@ class TestReadDesign {
  void testGetAllDesignWithNonExistingId() {
      DesignService designService = new DesignService();
      Exception exception = assertThrows(ValidationException.class, () -> {
-         Set<Design> designList = designService.findAllDesignsByDesignerId(4);
+         Set<Design> designList = designService.findAllDesignsByDesignerId(6);
      });
      String expectedMessage = "Designers doesn't have any design yet";
      String actualMessage = exception.getMessage();

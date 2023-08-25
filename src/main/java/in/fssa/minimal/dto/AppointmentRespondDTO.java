@@ -2,7 +2,7 @@ package in.fssa.minimal.dto;
 
 import in.fssa.minimal.model.User;
 
-public class AppointmentRespondDto {
+public class AppointmentRespondDTO {
 
 	private int id;
 	private User fromUser;

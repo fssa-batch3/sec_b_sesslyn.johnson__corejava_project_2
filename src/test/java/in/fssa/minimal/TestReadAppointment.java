@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
-import in.fssa.minimal.dto.AppointmentRespondDto;
+import in.fssa.minimal.dto.AppointmentRespondDTO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.service.AppointmentService;
@@ -20,27 +20,27 @@ class TestReadAppointment {
 	@Test
 	@Order(1)
 	void testGetAllAppointment() throws ValidationException, PersistenceException {
-		AppointmentService appService = new AppointmentService();
+		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {
-			Set<AppointmentRespondDto> arr = appService.getAll();
+			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointment();
 		});
 	}
 
 	@Test
 	@Order(2)
 	void testGetAllByStatus() throws ValidationException, PersistenceException {
-		AppointmentService appService = new AppointmentService();
+		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {
-			Set<AppointmentRespondDto> arr = appService.getAllByStatus("approved");
+			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("approved");
 		});
 	}
 
 	@Test
 	@Order(3)
 	void testGetAllByStatusNull() {
-		AppointmentService appService = new AppointmentService();
+		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<AppointmentRespondDto> arr = appService.getAllByStatus(null);
+			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus(null);
 		});
 		String expectedMessage = "Status cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -51,9 +51,9 @@ class TestReadAppointment {
 	@Test
 	@Order(4)
 	void testGetAllByStatusEmpty() {
-		AppointmentService appService = new AppointmentService();
+		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<AppointmentRespondDto> arr = appService.getAllByStatus("");
+			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("");
 		});
 		String expectedMessage = "Status cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -64,9 +64,9 @@ class TestReadAppointment {
 	@Test
 	@Order(5)
 	void testGetAllByStatusPattern() {
-		AppointmentService appService = new AppointmentService();
+		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<AppointmentRespondDto> arr = appService.getAllByStatus("completed");
+			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("completed");
 		});
 		String expectedMessage = "Invalid status value. The status can only be one of:"
 				+ " waiting_list, approved, rejected";
@@ -78,9 +78,9 @@ class TestReadAppointment {
 	@Test
 	@Order(6)
 	void testGetAppointmentById() {
-		AppointmentService appService = new AppointmentService();
+		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {
-			AppointmentRespondDto arr = appService.findById(1);
+			AppointmentRespondDTO arr = appointmentService.findById(1);
 			System.out.println(arr);
 		});
 	}

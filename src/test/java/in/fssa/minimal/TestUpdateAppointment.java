@@ -16,18 +16,18 @@ class TestUpdateAppointment {
 	@Test
 	@Order(1)
 	void testUpdateRequestStatus() {
-		AppointmentService appService = new AppointmentService();
+		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {
-			appService.updateRequestStatus(1, "approved");
+			appointmentService.updateRequestStatus(1, "approved");
 		});
 	}
 
 	@Test
 	@Order(2)
 	void testUpdateRequestStatusWithStatusPattern() throws ValidationException {
-		AppointmentService appService = new AppointmentService();
+		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			appService.updateRequestStatus(1, "rejected");
+			appointmentService.updateRequestStatus(1, "rejected");
 		});
 		String expectedMessage = "Approved appointment cannot be re update";
 		String actualMessage = exception.getMessage();

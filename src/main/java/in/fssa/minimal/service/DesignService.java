@@ -18,11 +18,11 @@ public class DesignService {
 	 * @throws PersistenceException If a database error occurs during creation.
 	 * @throws ServiceException    If an error occurs during validation or database operation.
 	 */
-	public void create(Design newDesign) throws ValidationException, PersistenceException, ServiceException {
+	public void createDesign(Design newDesign) throws ValidationException, PersistenceException, ServiceException {
 	    try {
 	        DesignValidator.validate(newDesign);
-	        DesignDAO designDao = new DesignDAO();
-	        designDao.create(newDesign);
+	        DesignDAO designDAO = new DesignDAO();
+	        designDAO.create(newDesign);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while creating design.", e);
 	    }
@@ -39,29 +39,30 @@ public class DesignService {
 	 *                              design.
 	 * @throws ServiceException    If an error occurs during validation or database operation.
 	 */
-	public void update(int id, Design updatedDesign)
+	public void updateDesign(int id, Design updateDesign)
 	        throws ValidationException, PersistenceException, ServiceException {
 	    try {
 	        DesignValidator.validateDesignId(id);
-
-	        if (updatedDesign.getName() != null) {
-	            DesignValidator.validateName(updatedDesign.getName());
+	        DesignValidator.validateUpdateDesignFields(id, updateDesign);
+	        
+	        if (updateDesign.getName() != null) {
+	            DesignValidator.validateName(updateDesign.getName());
 	        }
-	        if (updatedDesign.getDescription() != null) {
-	            DesignValidator.validateDescription(updatedDesign.getDescription());
+	        if (updateDesign.getDescription() != null) {
+	            DesignValidator.validateDescription(updateDesign.getDescription());
 	        }
-	        if (updatedDesign.getLocation() != null) {
-	            DesignValidator.validateLocation(updatedDesign.getLocation());
+	        if (updateDesign.getLocation() != null) {
+	            DesignValidator.validateLocation(updateDesign.getLocation());
 	        }
-	        if (updatedDesign.getStyleId() != 0) {
-	            DesignValidator.validateStyleId(updatedDesign.getStyleId());
+	        if (updateDesign.getStyleId() != 0) {
+	            DesignValidator.validateStyleId(updateDesign.getStyleId());
 	        }
-	        if (updatedDesign.getCreatedBy() != 0) {
-	            DesignValidator.validateCreatedById(updatedDesign.getCreatedBy());
+	        if (updateDesign.getCreatedBy() != 0) {
+	            DesignValidator.validateCreatedById(updateDesign.getCreatedBy());
 	        }
-
-	        DesignDAO designDao = new DesignDAO();
-	        designDao.update(id, updatedDesign);
+	        
+	        DesignDAO designDAO = new DesignDAO();
+	        designDAO.update(id, updateDesign);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while updating design.", e);
 	    }
@@ -99,8 +100,8 @@ public class DesignService {
 	public static Design findByDesignId(int id) throws ValidationException, ServiceException {
 	    try {
 	        DesignValidator.validateDesignId(id);
-	        DesignDAO designDao = new DesignDAO();
-	        return designDao.findByDesignId(id);
+	        DesignDAO designDAO = new DesignDAO();
+	        return designDAO.findByDesignId(id);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while retrieving design.", e);
 	    }
@@ -118,8 +119,8 @@ public class DesignService {
 	public static Set<Design> findAllDesignsByDesignerId(int id) throws ValidationException, ServiceException {
 	    try {
 	        DesignValidator.validateDesignerId(id);
-	        DesignDAO designDao = new DesignDAO();
-	        Set<Design> designList = designDao.findAllDesignsByDesignerId(id);
+	        DesignDAO designDAO = new DesignDAO();
+	        Set<Design> designList = designDAO.findAllDesignsByDesignerId(id);
 	        for (Design design : designList) {
 	            System.out.println(design);
 	        }

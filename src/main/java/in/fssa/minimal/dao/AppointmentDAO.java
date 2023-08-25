@@ -9,7 +9,7 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
-import in.fssa.minimal.dto.AppointmentRespondDto;
+import in.fssa.minimal.dto.AppointmentRespondDTO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
 import in.fssa.minimal.exception.ValidationException;
@@ -65,6 +65,7 @@ public class AppointmentDAO {
 			System.out.println("Appointment has been created successfully");
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -80,13 +81,14 @@ public class AppointmentDAO {
 	 * @throws PersistenceException If a database error occurs while retrieving appointments.
 	 * @throws ServiceException    If a service-related error occurs during the operation.
 	 */
-	public Set<AppointmentRespondDto> findAll() throws ValidationException, PersistenceException, ServiceException {
+	public Set<AppointmentRespondDTO> findAll() throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<AppointmentRespondDto> appointmentList = new HashSet<>();
+		Set<AppointmentRespondDTO> appointmentList = new HashSet<>();
 		try {
-			String query = "SELECT * FROM appointments";
+			String query = "SELECT id, from_user, to_user, email, phone_number, status, date, time, address"
+		             + " FROM appointments";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -99,7 +101,7 @@ public class AppointmentDAO {
 				fromUserObj = UserService.findById(fromUser);
 				toUserObj = UserService.findById(toUser);
 
-				AppointmentRespondDto app = new AppointmentRespondDto();
+				AppointmentRespondDTO app = new AppointmentRespondDTO();
 				app.setId(rs.getInt(COLUMN_ID));
 				app.setFromUser(fromUserObj);
 				app.setToUser(toUserObj);
@@ -117,6 +119,7 @@ public class AppointmentDAO {
 			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -134,13 +137,14 @@ public class AppointmentDAO {
 	 * @throws PersistenceException If a database error occurs while retrieving appointments.
 	 * @throws ServiceException    If a service-related error occurs during the operation.
 	 */
-	public Set<AppointmentRespondDto> findAllByStatus(String status) throws ValidationException, PersistenceException, ServiceException {
+	public Set<AppointmentRespondDTO> findAllAppointmentByStatus(String status) throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<AppointmentRespondDto> appointmentList = new HashSet<>();
+		Set<AppointmentRespondDTO> appointmentList = new HashSet<>();
 		try {
-			String query = "SELECT * FROM appointments WHERE status = ?";
+			String query = "SELECT id, from_user, to_user, email, phone_number, status, date, time, address"
+		             + " FROM appointments WHERE status = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, status);
@@ -154,7 +158,7 @@ public class AppointmentDAO {
 				fromUserObj = UserService.findById(fromUser);
 				toUserObj = UserService.findById(toUser);
 
-				AppointmentRespondDto app = new AppointmentRespondDto();
+				AppointmentRespondDTO app = new AppointmentRespondDTO();
 				app.setId(rs.getInt("id"));
 				app.setFromUser(fromUserObj);
 				app.setToUser(toUserObj);
@@ -172,6 +176,7 @@ public class AppointmentDAO {
 			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -189,48 +194,50 @@ public class AppointmentDAO {
 	 * @throws PersistenceException If a database error occurs while retrieving the appointment.
 	 * @throws ServiceException    If a service-related error occurs during the operation.
 	 */
-	public AppointmentRespondDto findById(int id) throws ValidationException, PersistenceException, ServiceException {
+	public AppointmentRespondDTO findById(int id) throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		AppointmentRespondDto app = null;
+		AppointmentRespondDTO appointmentObj = null;
 		User fromUserObj = null;
 		User toUserObj = null;
 		try {
-			String query = "SELECT * FROM appointments WHERE id = ?";
+			String query = "SELECT id, from_user, to_user, email, phone_number, status, date, time, address"
+		             + " FROM appointments WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				app = new AppointmentRespondDto();
+				appointmentObj = new AppointmentRespondDTO();
 				int fromUser = rs.getInt(COLUMN_FROM_USER);
 				int toUser = rs.getInt(COLUMN_TO_USER);
 				fromUserObj = UserService.findById(fromUser);
 				toUserObj = UserService.findById(toUser);
 
-				app.setId(rs.getInt(COLUMN_ID));
-				app.setFromUser(fromUserObj);
-				app.setToUser(toUserObj);
-				app.setStatus(rs.getString(COLUMN_STATUS));
+				appointmentObj.setId(rs.getInt(COLUMN_ID));
+				appointmentObj.setFromUser(fromUserObj);
+				appointmentObj.setToUser(toUserObj);
+				appointmentObj.setStatus(rs.getString(COLUMN_STATUS));
 				Date date = rs.getDate(COLUMN_DATE);
 				SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
-				app.setDate(dateFormat.format(date));
+				appointmentObj.setDate(dateFormat.format(date));
 
 				Time time = rs.getTime(COLUMN_TIME);
 				SimpleDateFormat timeFormat = new SimpleDateFormat(TIME_PATTERN);
-				app.setTime(timeFormat.format(time));
+				appointmentObj.setTime(timeFormat.format(time));
 
-				app.setAddress(rs.getString(COLUMN_ADDRESS));
+				appointmentObj.setAddress(rs.getString(COLUMN_ADDRESS));
 
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e) {	
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
 		}
-		return app;
+		return appointmentObj;
 	}
 
 	/**
@@ -252,10 +259,11 @@ public class AppointmentDAO {
 			ps.executeUpdate();
 			System.out.println("Appointment Status has been updated successfully");
 		} catch (SQLException e) {
+			e.printStackTrace();
 		    System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
-			ConnectionUtil.close(conn, ps, null);
+			ConnectionUtil.close(conn, ps);
 		}
 	}
 
@@ -273,7 +281,7 @@ public class AppointmentDAO {
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT * FROM appointments WHERE from_user = ? AND date >= CURRENT_DATE";
+			String query = "SELECT id FROM appointments WHERE from_user = ? AND date >= CURRENT_DATE";
 			conn = ConnectionUtil.getConnection();
 			pre = conn.prepareStatement(query);
 			pre.setInt(1, fromUser);
@@ -282,6 +290,7 @@ public class AppointmentDAO {
 				throw new ValidationException("The appointment you have is yet to be completed. Please be patient");
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -306,7 +315,7 @@ public class AppointmentDAO {
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT * FROM appointments WHERE to_user = ? AND date = ? AND time = ?";
+			String query = "SELECT id FROM appointments WHERE to_user = ? AND date = ? AND time = ?";
 			conn = ConnectionUtil.getConnection();
 			pre = conn.prepareStatement(query);
 			pre.setInt(1, toUser);
@@ -322,6 +331,7 @@ public class AppointmentDAO {
 						"The designer has an appointment at that specific time. Please reschedule the appointment for a different time slot");
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -343,7 +353,7 @@ public class AppointmentDAO {
 		ResultSet rs = null;
 
 		try {
-			String query = "Select * From appointments Where id = ?";
+			String query = "Select id From appointments Where id = ?";
 			conn = ConnectionUtil.getConnection();
 			pre = conn.prepareStatement(query);
 			pre.setInt(1, id);
@@ -352,6 +362,7 @@ public class AppointmentDAO {
 				throw new ValidationException("Id doesn't exist");
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {

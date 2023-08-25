@@ -29,7 +29,7 @@ class TestCreateDesign {
 		newStyle.setName(generatedName);
 
 		assertDoesNotThrow(() -> {
-			styleService.create(newStyle);
+			styleService.createStyle(newStyle);
 		});
 	}
 
@@ -38,7 +38,7 @@ class TestCreateDesign {
 	void testCreateStyleWithInvalidInput() {
 		StyleService styleService = new StyleService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			styleService.create(null);
+			styleService.createStyle(null);
 		});
 		String expectedMessage = "Style object cannot be null";
 		String actualMessage = exception.getMessage();
@@ -53,7 +53,7 @@ class TestCreateDesign {
 		Style newStyle = new Style();
 		newStyle.setName("Minimalism");
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			styleService.create(newStyle);
+			styleService.createStyle(newStyle);
 		});
 		String expectedMessage = "Style Name already exists";
 		String actualMessage = exception.getMessage();
@@ -76,7 +76,7 @@ class TestCreateDesign {
 		newDesign.setCreatedBy(2);
 
 		assertDoesNotThrow(() -> {
-			designService.create(newDesign);
+			designService.createDesign(newDesign);
 		});
 	}
 
@@ -85,7 +85,7 @@ class TestCreateDesign {
 	void testCreateDesignWithInvalidInput() {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			designService.create(null);
+			designService.createDesign(null);
 		});
 		String expectedMessage = "Design object cannot be null";
 		String actualMessage = exception.getMessage();
@@ -105,7 +105,7 @@ class TestCreateDesign {
 		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
-			designService.create(newDesign);
+			designService.createDesign(newDesign);
 		});
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -125,7 +125,7 @@ class TestCreateDesign {
 		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
-			designService.create(newDesign);
+			designService.createDesign(newDesign);
 		});
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -145,7 +145,7 @@ class TestCreateDesign {
 		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
-			designService.create(newDesign);
+			designService.createDesign(newDesign);
 		});
 		String expectedMessage = "Description cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -165,7 +165,7 @@ class TestCreateDesign {
 		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
-			designService.create(newDesign);
+			designService.createDesign(newDesign);
 		});
 		String expectedMessage = "Description cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -185,7 +185,7 @@ class TestCreateDesign {
 		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
-			designService.create(newDesign);
+			designService.createDesign(newDesign);
 		});
 		String expectedMessage = "Description should be at least 30 characters long";
 		String actualMessage = exception.getMessage();
@@ -205,7 +205,7 @@ class TestCreateDesign {
 		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
-			designService.create(newDesign);
+			designService.createDesign(newDesign);
 		});
 		String expectedMessage = "City name cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -225,7 +225,7 @@ class TestCreateDesign {
 		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
-			designService.create(newDesign);
+			designService.createDesign(newDesign);
 		});
 		String expectedMessage = "City name cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -245,7 +245,7 @@ class TestCreateDesign {
 		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
-			designService.create(newDesign);
+			designService.createDesign(newDesign);
 		});
 		String expectedMessage = "City Name should only contain alphabetic characters";
 		String actualMessage = exception.getMessage();
@@ -265,7 +265,7 @@ class TestCreateDesign {
 		newDesign.setCreatedBy(3);
 
 		Exception exception = assertThrows(Exception.class, () -> {
-			designService.create(newDesign);
+			designService.createDesign(newDesign);
 		});
 		String expectedMessage = "ID cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -285,7 +285,7 @@ class TestCreateDesign {
 		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
-			designService.create(newDesign);
+			designService.createDesign(newDesign);
 		});
 		String expectedMessage = "Style Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -305,7 +305,7 @@ class TestCreateDesign {
 		newDesign.setCreatedBy(3);
 
 		Exception exception = assertThrows(Exception.class, () -> {
-			designService.create(newDesign);
+			designService.createDesign(newDesign);
 		});
 		String expectedMessage = "Designer Id doesn't exist";
 		String actualMessage = exception.getMessage();

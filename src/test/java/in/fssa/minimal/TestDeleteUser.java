@@ -24,7 +24,7 @@ class TestDeleteUser {
 		UserService userService = new UserService();
         UserDAO app = new UserDAO();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-	            userService.delete(-5);
+	            userService.deleteUser(-5);
 		});
 		String expectedMessage = "ID cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -39,7 +39,7 @@ class TestDeleteUser {
 	            UserService userService = new UserService();
 	            UserDAO app = new UserDAO();
 	    	    int user = app.getLastUpdatedUserId();
-	            userService.delete(user);
+	            userService.deleteUser(user);
 	        });
 	    }
 
@@ -49,7 +49,7 @@ class TestDeleteUser {
 	void testDeleteWithNonExistingId() throws ValidationException {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			userService.delete(5000);
+			userService.deleteUser(5000);
 		});
 		String expectedMessage = "Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -70,7 +70,7 @@ class TestDeleteUser {
 	    newUser.setDesigner(false);
 
 	    assertDoesNotThrow(() -> {
-	        userService.create(newUser);
+	        userService.createUser(newUser);
 	    });
 	}
 	

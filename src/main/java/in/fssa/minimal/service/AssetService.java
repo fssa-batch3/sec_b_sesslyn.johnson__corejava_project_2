@@ -20,15 +20,15 @@ public class AssetService {
 	 * @throws PersistenceException If a database error occurs while creating the
 	 *                              asset.
 	 */
-	public void create(Asset newAsset) throws ValidationException, ServiceException {
+	public void createAsset(Asset newAsset) throws ValidationException, ServiceException {
 		try {
 			if (newAsset == null) {
 				throw new ValidationException("Asset object can not be null");
 			}
 			DesignAssetValidator.validateAssetUrl(newAsset.getAssetsUrl());
 
-			AssetDAO assetDao = new AssetDAO();
-			assetDao.create(newAsset);
+			AssetDAO assetDAO = new AssetDAO();
+			assetDAO.create(newAsset);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while adding assets", e);
 		}
@@ -45,12 +45,12 @@ public class AssetService {
 	 * @throws PersistenceException If a database error occurs while updating the
 	 *                              asset.
 	 */
-	public void update(int id, Asset updateAsset) throws ValidationException, ServiceException {
+	public void updateAsset(int id, Asset updateAsset) throws ValidationException, ServiceException {
 		try {
 			DesignAssetValidator.validateAssetUrl(updateAsset.getAssetsUrl());
 			DesignAssetValidator.validateAssetId(id);
-			AssetDAO assetDao = new AssetDAO();
-			assetDao.update(id, updateAsset);
+			AssetDAO assetDAO = new AssetDAO();
+			assetDAO.update(id, updateAsset);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while updating asset url", e);
 		}
@@ -70,8 +70,8 @@ public class AssetService {
 	public static Asset findByAssetId(int id) throws ValidationException, ServiceException {
 		try {
 			DesignAssetValidator.validateAssetId(id);
-			AssetDAO assetDao = new AssetDAO();
-			return assetDao.findById(id);
+			AssetDAO assetDAO = new AssetDAO();
+			return assetDAO.findById(id);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while retrieves data using asset id", e);
 		}

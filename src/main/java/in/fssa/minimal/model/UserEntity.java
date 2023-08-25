@@ -70,6 +70,6 @@ public abstract class UserEntity {
 	@Override
 	public String toString() {
 		return "UserEntity [name=" + name + ", id=" + id + ", email=" + email + ", password=" + password
-				+ ", phoneNumer=" + phoneNumber + ", isDesigner=" + isDesigner + ", isActive=" + isActive + "]";
+				+ ", phoneNumber=" + phoneNumber + ", isDesigner=" + isDesigner + ", isActive=" + isActive + "]";
 	}
 }

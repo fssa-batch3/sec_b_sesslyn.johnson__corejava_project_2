@@ -11,17 +11,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
-import in.fssa.minimal.dto.DesignAssetRespondDto;
+import in.fssa.minimal.dto.DesignAssetRespondDTO;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
+import in.fssa.minimal.model.DesignAsset;
 import in.fssa.minimal.service.AssetService;
 import in.fssa.minimal.service.DesignAssetService;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class TestReadDesignAsset {
+class TestReadDesignAsset {
 	@Test
     @Order(1)
-    void getAssetById() {
+    void testGetAssetById() {
         assertDoesNotThrow(() -> {
             AssetService assetService = new AssetService();
             Asset arr = assetService.findByAssetId(1);
@@ -44,19 +45,19 @@ public class TestReadDesignAsset {
 	
 	@Test
 	@Order(3)
-	void getAllDesignAndAsset() {
+	void testGetAllDesignAndAsset() {
 		assertDoesNotThrow(() -> {
 			DesignAssetService designAssetService = new DesignAssetService();
-			Set<DesignAssetRespondDto> arr = designAssetService.getAllByDesignAsset();
+			Set<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAsset();
 		});
 	}
 
 	@Test
 	@Order(4)
-	void getDesignById() {
+	void testGetDesignById() {
 		assertDoesNotThrow(() -> {
 			DesignAssetService designAssetService = new DesignAssetService();
-			DesignAssetRespondDto arr = designAssetService.findDesignAssetById(1);
+			DesignAssetRespondDTO arr = designAssetService.findDesignAssetById(1);
 			System.out.println(arr);
 		});
 	}
@@ -66,7 +67,7 @@ public class TestReadDesignAsset {
 	void testWithIdLessThanZero() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			DesignAssetRespondDto arr = designAssetService.findDesignAssetById(0);
+			DesignAssetRespondDTO arr = designAssetService.findDesignAssetById(0);
 		});
 		String expectedMessage = "ID cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -79,11 +80,21 @@ public class TestReadDesignAsset {
 	void testWithNonExistingDesignAssetId() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			DesignAssetRespondDto arr = designAssetService.findDesignAssetById(20);
+			DesignAssetRespondDTO arr = designAssetService.findDesignAssetById(20);
 		});
 		String expectedMessage = "Design Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	@Order(4)
+	void getDesignByDesignAssetId() {
+		assertDoesNotThrow(() -> {
+			DesignAssetService designAssetService = new DesignAssetService();
+			DesignAsset arr = designAssetService.findDesignIdByDesignAssetId(1);
+			System.out.println(arr);
+		});
 	}
 }

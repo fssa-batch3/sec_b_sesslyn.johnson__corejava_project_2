@@ -3,7 +3,7 @@ package in.fssa.minimal.dto;
 import in.fssa.minimal.model.Asset;
 import in.fssa.minimal.model.Design;
 
-public class DesignAssetRespondDto {
+public class DesignAssetRespondDTO {
 
 	private int id;
 
