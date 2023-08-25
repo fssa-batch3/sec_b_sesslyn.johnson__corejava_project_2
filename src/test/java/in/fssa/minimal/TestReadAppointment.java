@@ -80,7 +80,7 @@ class TestReadAppointment {
 	void testGetAppointmentById() {
 		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {
-			AppointmentRespondDTO arr = appointmentService.findById(1);
+			AppointmentRespondDTO arr = appointmentService.findByAppointmentId(1);
 			System.out.println(arr);
 		});
 	}

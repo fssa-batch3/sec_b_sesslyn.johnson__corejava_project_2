@@ -22,7 +22,7 @@ public class UserValidator {
 	 * @throws ValidationException If any of the attributes do not meet the required validation criteria.
 	 * @throws PersistenceException If an error occurs during data persistence checks.
 	 */
-	public static void validate(User user) throws ValidationException, PersistenceException {
+	public static void validateUser(User user) throws ValidationException, PersistenceException {
 	    if (user == null) {
 	        throw new ValidationException("User object cannot be null");
 	    }
@@ -38,13 +38,13 @@ public class UserValidator {
 	 * @param name The name to validate.
 	 * @throws ValidationException If the name does not match the required format.
 	 */
-	public static void validateName(String name) throws ValidationException {
-	    StringUtil.rejectIfInvalidString(name, "Name");
-	    if (name.length() < 3) {
-	        throw new ValidationException("Name should be at least 3 characters long");
+	public static void validateName(String userName) throws ValidationException {
+	    StringUtil.rejectIfInvalidString(userName, "User Name");
+	    if (userName.length() < 3) {
+	        throw new ValidationException("User Name should be at least 3 characters long");
 	    }
-	    if (!Pattern.matches(NAME_PATTERN, name)) {
-	        throw new ValidationException("Name should only contain alphabetic characters");
+	    if (!Pattern.matches(NAME_PATTERN, userName)) {
+	        throw new ValidationException("User Name should only contain alphabetic characters");
 	    }
 	}
 
@@ -71,10 +71,10 @@ public class UserValidator {
 	 * @throws PersistenceException If an error occurs during data persistence checks.
 	 */
 	public static void validateEmailCreate(String email) throws ValidationException, PersistenceException {
-	    StringUtil.rejectIfInvalidString(email, "Email");
-	    if (!email.matches(EMAIL_PATTERN)) {
-	        throw new ValidationException("Invalid email format. Please provide a valid email address");
-	    }
+		  StringUtil.rejectIfInvalidString(email, "Email");
+		    if (!email.matches(EMAIL_PATTERN)) {
+		        throw new ValidationException("Invalid email format. Please provide a valid email address");
+		    }
 	    UserDAO.emailExists(email);
 	}
 
@@ -120,11 +120,11 @@ public class UserValidator {
 	 * @throws ValidationException If the ID is invalid or does not exist.
 	 * @throws PersistenceException If an error occurs during data persistence checks.
 	 */
-	public static void validateId(int id) throws ValidationException, PersistenceException {
-	    if (id <= 0) {
+	public static void validateId(int userId) throws ValidationException, PersistenceException {
+	    if (userId <= 0) {
 	        throw new ValidationException("ID cannot be less than or equal to zero");
 	    }
-	    UserDAO.checkIdExists(id);
+	    UserDAO.checkIdExists(userId);
 	}
 
 	/**
@@ -134,11 +134,11 @@ public class UserValidator {
 	 * @throws ValidationException If the ID is invalid or does not exist.
 	 * @throws PersistenceException If an error occurs during data persistence checks.
 	 */
-	public static void validateDesignerId(int id) throws ValidationException, PersistenceException {
-	    if (id <= 0) {
+	public static void validateDesignerId(int designerId) throws ValidationException, PersistenceException {
+	    if (designerId <= 0) {
 	        throw new ValidationException("ID cannot be less than or equal to zero");
 	    }
-	    UserDAO.checkDesignerIdExists(id);
+	    UserDAO.checkDesignerIdExists(designerId);
 	}
 
 }

@@ -21,7 +21,7 @@ public class AppointmentService {
 	 */
 	public void createAppointment(Appointment newAppointment) throws ValidationException, ServiceException {
 	    try {
-	        AppointmentValidator.validate(newAppointment);
+	        AppointmentValidator.validateAppointment(newAppointment);
 	        AppointmentDAO appointmentDAO = new AppointmentDAO();
 	        appointmentDAO.create(newAppointment);
 	    } catch (PersistenceException e) {
@@ -83,7 +83,7 @@ public class AppointmentService {
 	 * @throws ValidationException  If validation of ID data fails.
 	 * @throws ServiceException    If a service-related error occurs during the operation.
 	 */
-	public AppointmentRespondDTO findById(int appointmentId) throws ValidationException, ServiceException {
+	public AppointmentRespondDTO findByAppointmentId(int appointmentId) throws ValidationException, ServiceException {
 	    try {
 	        AppointmentValidator.validateIdExists(appointmentId);
 	        AppointmentDAO appointmentDAO = new AppointmentDAO();
@@ -101,12 +101,12 @@ public class AppointmentService {
 	 * @throws ValidationException  If validation of ID or status data fails.
 	 * @throws ServiceException    If a service-related error occurs during the operation.
 	 */
-	public void updateRequestStatus(int id, String status) throws ValidationException, ServiceException {
+	public void updateAppointmentRequestStatus(int appointmentId, String status) throws ValidationException, ServiceException {
 	    try {
-	        AppointmentValidator.validateIdExists(id);
+	        AppointmentValidator.validateIdExists(appointmentId);
 	        AppointmentValidator.validateUpdateStatus(status);
 	        AppointmentDAO appointmentDAO = new AppointmentDAO();
-	        appointmentDAO.updateRequestStatus(id, status);
+	        appointmentDAO.updateRequestStatus(appointmentId, status);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while updating appointment status.", e);
 	    }

@@ -20,7 +20,7 @@ public class DesignService {
 	 */
 	public void createDesign(Design newDesign) throws ValidationException, PersistenceException, ServiceException {
 	    try {
-	        DesignValidator.validate(newDesign);
+	        DesignValidator.validateDesign(newDesign);
 	        DesignDAO designDAO = new DesignDAO();
 	        designDAO.create(newDesign);
 	    } catch (PersistenceException e) {
@@ -39,10 +39,10 @@ public class DesignService {
 	 *                              design.
 	 * @throws ServiceException    If an error occurs during validation or database operation.
 	 */
-	public void updateDesign(int id, Design updatedDesign)
+	public void updateDesign(int designId, Design updatedDesign)
 	        throws ValidationException, PersistenceException, ServiceException {
 	    try {
-	        DesignValidator.validateDesignId(id);
+	        DesignValidator.validateDesignId(designId);
 
 	        if (updatedDesign.getName() != null) {
 	            DesignValidator.validateName(updatedDesign.getName());
@@ -61,7 +61,7 @@ public class DesignService {
 	        }
 
 	        DesignDAO designDao = new DesignDAO();
-	        designDao.update(id, updatedDesign);
+	        designDao.update(designId, updatedDesign);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while updating design.", e);
 	    }
@@ -96,11 +96,11 @@ public class DesignService {
 	 * @throws PersistenceException If a database error occurs during retrieval.
 	 * @throws ServiceException    If an error occurs during database operation.
 	 */
-	public static Design findByDesignId(int id) throws ValidationException, ServiceException {
+	public static Design findByDesignId(int designId) throws ValidationException, ServiceException {
 	    try {
-	        DesignValidator.validateDesignId(id);
+	        DesignValidator.validateDesignId(designId);
 	        DesignDAO designDAO = new DesignDAO();
-	        return designDAO.findByDesignId(id);
+	        return designDAO.findByDesignId(designId);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while retrieving design.", e);
 	    }
@@ -115,11 +115,11 @@ public class DesignService {
 	 * @throws ServiceException    If an error occurs during database operation.
 	 * @throws PersistenceException If a database error occurs during retrieval.
 	 */
-	public static Set<Design> findAllDesignsByDesignerId(int id) throws ValidationException, ServiceException {
+	public static Set<Design> findAllDesignsByDesignerId(int designId) throws ValidationException, ServiceException {
 	    try {
-	        DesignValidator.validateDesignerId(id);
+	        DesignValidator.validateDesignerId(designId);
 	        DesignDAO designDAO = new DesignDAO();
-	        Set<Design> designList = designDAO.findAllDesignsByDesignerId(id);
+	        Set<Design> designList = designDAO.findAllDesignsByDesignerId(designId);
 	        for (Design design : designList) {
 	            System.out.println(design);
 	        }

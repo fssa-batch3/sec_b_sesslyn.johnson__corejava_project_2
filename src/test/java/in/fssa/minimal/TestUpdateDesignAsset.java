@@ -21,7 +21,7 @@ import in.fssa.minimal.service.DesignAssetService;
 public class TestUpdateDesignAsset {
 	@Test
     @Order(1)
-    void updateAsset() {
+    void testUpdateAsset() {
         assertDoesNotThrow(() -> {
             AssetService assetService = new AssetService();
             Asset newAsset = new Asset();
@@ -33,7 +33,7 @@ public class TestUpdateDesignAsset {
 
 	@Test
 	@Order(2)
-	void updateAssetWithExistingUrl() throws ValidationException, PersistenceException {
+	void testUpdateAssetWithExistingUrl() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
 		newAsset.setAssetsUrl("https://youtu.be/DFgL3URDOr4");
@@ -48,7 +48,7 @@ public class TestUpdateDesignAsset {
 
 	@Test
 	@Order(3)
-	void updateAssetWithNonExistingId() throws ValidationException, PersistenceException {
+	void testUpdateAssetWithNonExistingId() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
 		newAsset.setAssetsUrl("https://youtu.be/e7IF-MbBkl8");
@@ -79,7 +79,7 @@ public class TestUpdateDesignAsset {
 	
 	@Test
 	@Order(4)
-	void updateDesignAsset() {
+	void testUpdateDesignAsset() {
 		assertDoesNotThrow(() -> {
 			DesignAssetService designAssetService = new DesignAssetService();
 			DesignAsset newDesign = new DesignAsset();
@@ -91,7 +91,7 @@ public class TestUpdateDesignAsset {
 
 	@Test
 	@Order(5)
-	void updateSpecificFields() {
+	void testUpdateSpecificFields() {
 		assertDoesNotThrow(() -> {
 			DesignAssetService designAssetService = new DesignAssetService();
 			DesignAsset newDesign = new DesignAsset();
@@ -102,7 +102,7 @@ public class TestUpdateDesignAsset {
 
 	@Test
 	@Order(6)
-	void updateNonExistingDesignId() throws ValidationException, PersistenceException {
+	void testUpdateNonExistingDesignId() throws ValidationException, PersistenceException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAsset newDesign = new DesignAsset();
@@ -117,7 +117,7 @@ public class TestUpdateDesignAsset {
 
 	@Test
 	@Order(7)
-	void updateNonExistingAssetId() throws ValidationException, PersistenceException {
+	void testUpdateNonExistingAssetId() throws ValidationException, PersistenceException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAsset newDesign = new DesignAsset();
@@ -132,7 +132,7 @@ public class TestUpdateDesignAsset {
 
 	@Test
 	@Order(8)
-	void updateNonExistingId() throws ValidationException, PersistenceException {
+	void testUpdateNonExistingId() throws ValidationException, PersistenceException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAsset newDesign = new DesignAsset();

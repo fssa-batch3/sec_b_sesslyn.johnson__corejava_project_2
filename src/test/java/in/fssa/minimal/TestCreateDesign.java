@@ -107,7 +107,7 @@ class TestCreateDesign {
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
 		});
-		String expectedMessage = "Name cannot be null or empty";
+		String expectedMessage = "Design Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
@@ -127,7 +127,7 @@ class TestCreateDesign {
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
 		});
-		String expectedMessage = "Name cannot be null or empty";
+		String expectedMessage = "Design Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);

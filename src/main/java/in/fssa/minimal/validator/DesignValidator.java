@@ -21,7 +21,7 @@ public class DesignValidator {
 	 * @throws ValidationException If the design object is invalid.
 	 * @throws ServiceException   If a service-related error occurs during validation.
 	 */
-	public static void validate(Design design) throws ValidationException, ServiceException {
+	public static void validateDesign(Design design) throws ValidationException, ServiceException {
 	    if (design == null) {
 	        throw new ValidationException("Design object cannot be null");
 	    }
@@ -38,8 +38,8 @@ public class DesignValidator {
 	 * @param name The name to be validated.
 	 * @throws ValidationException If the name is invalid or empty.
 	 */
-	public static void validateName(String name) throws ValidationException {
-	    StringUtil.rejectIfInvalidString(name, "Name");
+	public static void validateName(String designName) throws ValidationException {
+	    StringUtil.rejectIfInvalidString(designName, "Design Name");
 	}
 
 	/**
@@ -131,10 +131,10 @@ public class DesignValidator {
 	 * @throws ValidationException If the style name is invalid or empty.
 	 * @throws ServiceException   If a service-related error occurs during validation.
 	 */
-	public static void validateStyleName(String name) throws ValidationException, ServiceException {
+	public static void validateStyleName(String styleName) throws ValidationException, ServiceException {
 	    try {
-	        StringUtil.rejectIfInvalidString(name, "Style Name");
-	        StyleDAO.checkNameExists(name);
+	        StringUtil.rejectIfInvalidString(styleName, "Style Name");
+	        StyleDAO.checkNameExists(styleName);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred during validation.", e);
 	    }
@@ -147,12 +147,12 @@ public class DesignValidator {
 	 * @throws ValidationException If the style ID is invalid (less than or equal to zero).
 	 * @throws ServiceException   If a service-related error occurs during validation.
 	 */
-	public static void validateStyleId(int id) throws ValidationException, ServiceException {
+	public static void validateStyleId(int styleId) throws ValidationException, ServiceException {
 	    try {
-	        if (id <= 0) {
+	        if (styleId <= 0) {
 	            throw new ValidationException("ID cannot be less than or equal to zero");
 	        }
-	        StyleDAO.checkIdExists(id);
+	        StyleDAO.checkIdExists(styleId);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred during validation.", e);
 	    }

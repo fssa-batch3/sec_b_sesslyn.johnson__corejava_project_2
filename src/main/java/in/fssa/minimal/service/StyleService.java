@@ -44,12 +44,12 @@ public class StyleService {
 	 * @throws ServiceException    If a service-related error occurs while updating the
 	 *                              style.
 	 */
-	public void updateStyle(int id, Style updateStyle) throws ValidationException, ServiceException {
+	public void updateStyle(int styleId, Style updateStyle) throws ValidationException, ServiceException {
 	    try {
-	        DesignValidator.validateStyleId(id);
+	        DesignValidator.validateStyleId(styleId);
 	        DesignValidator.validateStyleName(updateStyle.getName());
 	        StyleDAO styleDAO = new StyleDAO();
-	        styleDAO.update(id, updateStyle);
+	        styleDAO.update(styleId, updateStyle);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while updating style.", e);
 	    }

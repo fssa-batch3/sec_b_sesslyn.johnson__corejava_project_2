@@ -21,7 +21,7 @@ import in.fssa.minimal.service.DesignAssetService;
 public class TestReadDesignAsset {
 	@Test
     @Order(1)
-    void getAssetById() {
+    void testGetAssetById() {
         assertDoesNotThrow(() -> {
             AssetService assetService = new AssetService();
             Asset arr = assetService.findByAssetId(1);
@@ -44,7 +44,7 @@ public class TestReadDesignAsset {
 	
 	@Test
 	@Order(3)
-	void getAllDesignAndAsset() {
+	void testGetAllDesignAndAsset() {
 		assertDoesNotThrow(() -> {
 			DesignAssetService designAssetService = new DesignAssetService();
 			Set<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAsset();
@@ -53,7 +53,7 @@ public class TestReadDesignAsset {
 
 	@Test
 	@Order(4)
-	void getDesignById() {
+	void testGetDesignById() {
 		assertDoesNotThrow(() -> {
 			DesignAssetService designAssetService = new DesignAssetService();
 			DesignAssetRespondDTO arr = designAssetService.findDesignAssetById(1);

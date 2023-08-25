@@ -18,7 +18,7 @@ import in.fssa.minimal.service.DesignAssetService;
 public class TestCreateDesignAsset {
 	@Test
 	@Order(1)
-	void createAssetWithValidInput() {
+	void testCreateAssetWithValidInput() {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
 		String generatedUrl = generateRandomUrl();
@@ -44,7 +44,7 @@ public class TestCreateDesignAsset {
 
 	@Test
 	@Order(2)
-	void createAssetUrlAlreadyExists() {
+	void testCreateAssetUrlAlreadyExists() {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
 		newAsset.setAssetsUrl("https://youtu.be/DFgL3URDOr4");
@@ -59,7 +59,7 @@ public class TestCreateDesignAsset {
 
 	@Test
 	@Order(3)
-	void createAssetWithInValidInput() {
+	void testCreateAssetWithInValidInput() {
 		AssetService assetService = new AssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			assetService.createAsset(null);
@@ -72,7 +72,7 @@ public class TestCreateDesignAsset {
 
 	@Test
 	@Order(4)
-	void createUserWithValidInput() {
+	void testCreateUserWithValidInput() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
 		newDesign.setAssetsId(2);
@@ -84,7 +84,7 @@ public class TestCreateDesignAsset {
 
 	@Test
 	@Order(5)
-	void createDesignWithInvalidInput() {
+	void testCreateDesignWithInvalidInput() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			designAssetService.createDesignAsset(null);
@@ -97,7 +97,7 @@ public class TestCreateDesignAsset {
 
 	@Test
 	@Order(6)
-	void createDesignWithNonExistingAssetId() {
+	void testCreateDesignWithNonExistingAssetId() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
 		newDesign.setAssetsId(5000);
@@ -113,7 +113,7 @@ public class TestCreateDesignAsset {
 
 	@Test
 	@Order(7)
-	void createDesignWithNonExistingDesignId() {
+	void testCreateDesignWithNonExistingDesignId() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		DesignAsset newDesign = new DesignAsset();
 		newDesign.setAssetsId(1);

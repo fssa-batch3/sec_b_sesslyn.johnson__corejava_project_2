@@ -46,7 +46,7 @@ public class AssetDAO {
 	 * @throws PersistenceException If a database error occurs while updating the
 	 *                              asset.
 	 */
-	public void update(int id, Asset updateAsset) throws PersistenceException {
+	public void update(int assetId, Asset updateAsset) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
@@ -54,7 +54,7 @@ public class AssetDAO {
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, updateAsset.getAssetsUrl());
-			ps.setInt(2, id);
+			ps.setInt(2, assetId);
 			ps.executeUpdate();
 			System.out.println("Asset has been updated successfully");
 		} catch (SQLException e) {
@@ -74,7 +74,7 @@ public class AssetDAO {
 	 * @throws PersistenceException If a database error occurs while retrieving the
 	 *                              asset.
 	 */
-	public Asset findById(int id) throws PersistenceException {
+	public Asset findById(int assetId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -83,7 +83,7 @@ public class AssetDAO {
 			String query = "SELECT asset_url,id FROM assets WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, id);
+			ps.setInt(1, assetId);
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				asset = new Asset();
@@ -108,7 +108,7 @@ public class AssetDAO {
 	 *  @throws PersistenceException If a database error occurs while retrieving the
 	 *                              asset id.
 	 */
-	public static void checkIdExists(int id) throws ValidationException, PersistenceException {
+	public static void checkIdExists(int assetId) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
 		ResultSet rs = null;
@@ -117,7 +117,7 @@ public class AssetDAO {
 			String query = "SELECT id FROM assets WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			pre = conn.prepareStatement(query);
-			pre.setInt(1, id);
+			pre.setInt(1, assetId);
 			rs = pre.executeQuery();
 			if (!rs.next()) {
 				throw new ValidationException("Asset Id doesn't exist");

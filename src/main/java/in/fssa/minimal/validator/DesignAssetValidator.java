@@ -10,7 +10,7 @@ import in.fssa.minimal.util.StringUtil;
 
 public class DesignAssetValidator {
 
-	public static void validate(DesignAsset newDesignAsset) throws ValidationException, ServiceException {
+	public static void validateDesignAsset(DesignAsset newDesignAsset) throws ValidationException, ServiceException {
 		if (newDesignAsset == null) {
 			throw new ValidationException("Design Asset Object cannot be null");
 		}
@@ -18,12 +18,12 @@ public class DesignAssetValidator {
 		validateAssetId(newDesignAsset.getAssetsId());
 	}
 
-	public static void validateDesignAssetId(int id) throws ValidationException, ServiceException {
+	public static void validateDesignAssetId(int designAssetId) throws ValidationException, ServiceException {
 		try {
-			if (id <= 0) {
+			if (designAssetId <= 0) {
 				throw new ValidationException("ID cannot be less than or equal to zero");
 			}
-			DesignAssetDAO.checkIdExists(id);
+			DesignAssetDAO.checkIdExists(designAssetId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during design asset id validation.", e);
 		}
@@ -54,12 +54,12 @@ public class DesignAssetValidator {
 	 * @throws ServiceException    If a service-related error occurs during
 	 *                             validation.
 	 */
-	public static void validateAssetId(int id) throws ValidationException, ServiceException {
+	public static void validateAssetId(int assetId) throws ValidationException, ServiceException {
 		try {
-			if (id <= 0) {
+			if (assetId <= 0) {
 				throw new ValidationException("ID cannot be less than or equal to zero");
 			}
-			AssetDAO.checkIdExists(id);
+			AssetDAO.checkIdExists(assetId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during asset id validation.", e);
 		}

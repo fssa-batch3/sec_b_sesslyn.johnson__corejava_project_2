@@ -25,7 +25,7 @@ public class AppointmentValidator {
 	 *                             validation.
 	 * @throws ServiceException   If a service-related error occurs during the operation.
 	 */
-	public static void validate(Appointment appointment) throws ValidationException, ServiceException {
+	public static void validateAppointment(Appointment appointment) throws ValidationException, ServiceException {
 	    try {
 	        if (appointment == null) {
 	            throw new ValidationException("Appointment object cannot be null");
@@ -56,8 +56,8 @@ public class AppointmentValidator {
 	 * @throws ValidationException If the ID is not valid (less than or equal to
 	 *                             zero).
 	 */
-	public static void validateId(int id) throws ValidationException {
-	    if (id <= 0) {
+	public static void validateId(int appointmentId) throws ValidationException {
+	    if (appointmentId <= 0) {
 	        throw new ValidationException("ID cannot be less than or equal to zero");
 	    }
 	}
@@ -70,12 +70,10 @@ public class AppointmentValidator {
 	 *                             zero) or if it doesn't exist in the database.
 	 * @throws ServiceException   If a service-related error occurs during the operation.
 	 */
-	public static void validateIdExists(int id) throws ValidationException, ServiceException {
+	public static void validateIdExists(int appointmentId) throws ValidationException, ServiceException {
 	    try {
-	        if (id <= 0) {
-	            throw new ValidationException("ID cannot be less than or equal to zero");
-	        }
-	        AppointmentDAO.checkIdExists(id);
+	    	validateId(appointmentId);
+	        AppointmentDAO.checkIdExists(appointmentId);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred during validation.", e);
 	    }

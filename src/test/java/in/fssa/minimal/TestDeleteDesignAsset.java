@@ -16,7 +16,7 @@ import in.fssa.minimal.service.DesignAssetService;
 public class TestDeleteDesignAsset {
 	@Test
 	@Order(1)
-	void deleteWithNonExistingId() throws ValidationException {
+	void testDeleteWithNonExistingId() throws ValidationException {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			designAssetService.deleteDesignAsset(5000);

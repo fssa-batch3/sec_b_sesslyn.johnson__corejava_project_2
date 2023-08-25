@@ -90,7 +90,7 @@ class TestCreateUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
 		});
-		String expectedMessage = "Name cannot be null or empty";
+		String expectedMessage = "User Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage,actualMessage);
@@ -110,7 +110,7 @@ class TestCreateUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
 		});
-		String expectedMessage = "Name cannot be null or empty";
+		String expectedMessage = "User Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage,actualMessage);
@@ -130,7 +130,7 @@ class TestCreateUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
 		});
-		String expectedMessage = "Name should be at least 3 characters long";
+		String expectedMessage = "User Name should be at least 3 characters long";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage,actualMessage);
@@ -150,7 +150,7 @@ class TestCreateUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
 		});
-		String expectedMessage = "Name should only contain alphabetic characters";
+		String expectedMessage = "User Name should only contain alphabetic characters";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage,actualMessage);
@@ -310,7 +310,7 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		User newUser = new User();
 		newUser.setName("Sam");
-		newUser.setEmail("bcde@gmail.com");
+		newUser.setEmail("zxya@gmail.com");
 		newUser.setPassword("Sam23");
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);

@@ -20,7 +20,7 @@ import in.fssa.minimal.service.DesignService;
 class TestReadDesign {
 	 @Test
 	    @Order(1)
-	    void getAllDesign() {
+	    void testGetAllDesign() {
 	        assertDoesNotThrow(() -> {
 	            DesignService designService = new DesignService();
 	            Set<Design> arr = designService.getAllDesign();
@@ -29,7 +29,7 @@ class TestReadDesign {
 	    
 	    @Test
 	    @Order(2)
-	    void getDesignById() {
+	    void testGetDesignById() {
 	        assertDoesNotThrow(() -> {
 	            DesignService designService = new DesignService();
 	            Design arr = designService.findByDesignId(1);
@@ -65,7 +65,7 @@ class TestReadDesign {
 	
 	@Test
  @Order(5)
- void getAllDesignByDesignerId() {
+ void testGetAllDesignByDesignerId() {
      assertDoesNotThrow(() -> {
          DesignService designService = new DesignService();
          Set<Design> designList = designService.findAllDesignsByDesignerId(2);

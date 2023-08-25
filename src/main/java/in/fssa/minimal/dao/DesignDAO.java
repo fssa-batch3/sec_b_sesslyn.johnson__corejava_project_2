@@ -16,12 +16,7 @@ import in.fssa.minimal.model.Design;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class DesignDAO {
-	private static final String COLUMN_ID = "id";
-	private static final String COLUMN_NAME = "NAME";
-	private static final String COLUMN_DESCRIPTION = "description";
-	private static final String COLUMN_LOCATION = "location";
-	private static final String COLUMN_STYLEID = "style_id";
-	private static final String COLUMN_CREATEDBY = "created_by";
+
 
 	/**
 	 * Creates a new design entity in the database.
@@ -61,7 +56,7 @@ public class DesignDAO {
 	 * @param updatedDesign The updated design data.
 	 * @throws PersistenceException If a database error occurs during update.
 	 */
-	public void update(int id, Design updatedDesign) throws PersistenceException {
+	public void update(int designId, Design updatedDesign) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
@@ -94,7 +89,7 @@ public class DesignDAO {
 			for (int i = 0; i < values.size(); i++) {
 				ps.setObject(i + 1, values.get(i));
 			}
-			ps.setInt(values.size() + 1, id);
+			ps.setInt(values.size() + 1, designId);
 			ps.executeUpdate();
 			System.out.println("Design has been updated successfully");
 		} catch (SQLException e) {
@@ -123,12 +118,12 @@ public class DesignDAO {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Design design = new Design();
-				design.setId(rs.getInt(COLUMN_ID));
-				design.setName(rs.getString(COLUMN_NAME));
-				design.setDescription(rs.getString(COLUMN_DESCRIPTION));
-				design.setLocation(rs.getString(COLUMN_LOCATION));
-				design.setStyleId(rs.getInt(COLUMN_STYLEID));
-				design.setCreatedBy(rs.getInt(COLUMN_CREATEDBY));
+				design.setId(rs.getInt("id"));
+				design.setName(rs.getString("name"));
+				design.setDescription(rs.getString("description"));
+				design.setLocation(rs.getString("location"));
+				design.setStyleId(rs.getInt("style_id"));
+				design.setCreatedBy(rs.getInt("created_by"));
 				designList.add(design);
 			}
 		} catch (SQLException e) {
@@ -148,7 +143,7 @@ public class DesignDAO {
 	 * @return The retrieved design entity.
 	 * @throws PersistenceException If a database error occurs during retrieval.
 	 */
-	public Design findByDesignId(int id) throws PersistenceException {
+	public Design findByDesignId(int designId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -158,16 +153,16 @@ public class DesignDAO {
 					+ "FROM designs WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, id);
+			ps.setInt(1, designId);
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				design = new Design();
-				design.setId(rs.getInt(COLUMN_ID));
-				design.setName(rs.getString(COLUMN_NAME));
-				design.setDescription(rs.getString(COLUMN_DESCRIPTION));
-				design.setLocation(rs.getString(COLUMN_LOCATION));
-				design.setStyleId(rs.getInt(COLUMN_STYLEID));
-				design.setCreatedBy(rs.getInt(COLUMN_CREATEDBY));
+				design.setId(rs.getInt("id"));
+				design.setName(rs.getString("name"));
+				design.setDescription(rs.getString("description"));
+				design.setLocation(rs.getString("location"));
+				design.setStyleId(rs.getInt("style_id"));
+				design.setCreatedBy(rs.getInt("created_by"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -187,7 +182,7 @@ public class DesignDAO {
 	 * @return A set of designs created by the specified designer.
 	 * @throws PersistenceException If a database error occurs during retrieval.
 	 */
-	public Set<Design> findAllDesignsByDesignerId(int id) throws PersistenceException {
+	public Set<Design> findAllDesignsByDesignerId(int designId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -198,16 +193,16 @@ public class DesignDAO {
 					+ "FROM designs WHERE created_by = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, id);
+			ps.setInt(1, designId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				design = new Design();
-				design.setId(rs.getInt(COLUMN_ID));
-				design.setName(rs.getString(COLUMN_NAME));
-				design.setDescription(rs.getString(COLUMN_DESCRIPTION));
-				design.setLocation(rs.getString(COLUMN_LOCATION));
-				design.setStyleId(rs.getInt(COLUMN_STYLEID));
-				design.setCreatedBy(rs.getInt(COLUMN_CREATEDBY));
+				design.setId(rs.getInt("id"));
+				design.setName(rs.getString("name"));
+				design.setDescription(rs.getString("description"));
+				design.setLocation(rs.getString("location"));
+				design.setStyleId(rs.getInt("style_id"));
+				design.setCreatedBy(rs.getInt("created_by"));
 				designList.add(design);
 			}
 
@@ -228,7 +223,7 @@ public class DesignDAO {
 	 * @throws ValidationException  If the design ID doesn't exist.
 	 * @throws PersistenceException
 	 */
-	public static void checkIdExists(int id) throws ValidationException, PersistenceException {
+	public static void checkIdExists(int designId) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
 		ResultSet rs = null;
@@ -238,7 +233,7 @@ public class DesignDAO {
 					+ "FROM designs WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			pre = conn.prepareStatement(query);
-			pre.setInt(1, id);
+			pre.setInt(1, designId);
 			rs = pre.executeQuery();
 			if (!rs.next()) {
 				throw new ValidationException("Design Id doesn't exist");

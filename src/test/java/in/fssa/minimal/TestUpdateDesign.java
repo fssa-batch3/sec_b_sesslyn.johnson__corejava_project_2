@@ -62,7 +62,7 @@ class TestUpdateDesign {
 
 	@Test
 	@Order(3)
-	void updateDesign() {
+	void testUpdateDesign() {
 		assertDoesNotThrow(() -> {
 			DesignService designService = new DesignService();
 			Design newDesign = new Design();
@@ -79,7 +79,7 @@ class TestUpdateDesign {
 
 	@Test
 	@Order(4)
-	void updateSpecificFields() {
+	void testUpdateSpecificFields() {
 		assertDoesNotThrow(() -> {
 			DesignService designService = new DesignService();
 			Design newDesign = new Design();
@@ -90,7 +90,7 @@ class TestUpdateDesign {
 
 	@Test
 	@Order(5)
-	void updateNonExistingId() throws ValidationException, PersistenceException {
+	void testUpdateNonExistingId() throws ValidationException, PersistenceException {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Design newDesign = new Design();

@@ -56,7 +56,7 @@ public class DesignAssetDAO {
 	 * @throws ServiceException
 	 * @throws ValidationException
 	 */
-	public void update(int id, DesignAsset updatedDesignAsset) throws PersistenceException {
+	public void update(int designAssetId, DesignAsset updatedDesignAsset) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
@@ -81,7 +81,7 @@ public class DesignAssetDAO {
 			for (int i = 0; i < values.size(); i++) {
 				ps.setObject(i + 1, values.get(i));
 			}
-			ps.setInt(values.size() + 1, id);
+			ps.setInt(values.size() + 1, designAssetId);
 
 			ps.executeUpdate();
 			System.out.println("Design Asset has been updated successfully");
@@ -99,14 +99,14 @@ public class DesignAssetDAO {
 	 * @param id The ID of the design asset to be deleted.
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 */
-	public void delete(int id) throws PersistenceException {
+	public void delete(int designAssetId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
 			String query = "UPDATE design_assets SET is_active = false WHERE is_active = 1 AND id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, id);
+			ps.setInt(1, designAssetId);
 			ps.executeUpdate();
 			System.out.println("Design Asset has been deleted successfully");
 		} catch (SQLException e) {
@@ -173,7 +173,7 @@ public class DesignAssetDAO {
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 * @throws ServiceException
 	 */
-	public DesignAssetRespondDTO findAllDesignAssetById(int id)
+	public DesignAssetRespondDTO findAllDesignAssetById(int designAssetId)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -183,7 +183,7 @@ public class DesignAssetDAO {
 			String query = "SELECT * FROM design_assets WHERE is_active = 1 AND id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, id);
+			ps.setInt(1, designAssetId);
 			rs = ps.executeQuery();
 			Design designObj = null;
 			Asset assetObj = null;
@@ -218,7 +218,7 @@ public class DesignAssetDAO {
 	 * @throws ValidationException  If the ID does not exist.
 	 * @throws PersistenceException
 	 */
-	public static void checkIdExists(int id) throws ValidationException, PersistenceException {
+	public static void checkIdExists(int designAssetId) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
 		ResultSet rs = null;
@@ -227,7 +227,7 @@ public class DesignAssetDAO {
 			String query = "Select id From design_assets Where id = ?";
 			conn = ConnectionUtil.getConnection();
 			pre = conn.prepareStatement(query);
-			pre.setInt(1, id);
+			pre.setInt(1, designAssetId);
 			rs = pre.executeQuery();
 			if (!rs.next()) {
 				throw new ValidationException("Design Asset Id doesn't exist");
@@ -271,7 +271,7 @@ public class DesignAssetDAO {
 		return id;
 	}
 
-	public DesignAsset findDesignAssetById(int id) throws ValidationException, PersistenceException, ServiceException {
+	public DesignAsset findDesignAssetById(int designAssetId) throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -280,7 +280,7 @@ public class DesignAssetDAO {
 			String query = "SELECT * FROM design_assets WHERE is_active = 1 AND id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, id);
+			ps.setInt(1, designAssetId);
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				designAss = new DesignAsset();

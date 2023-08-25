@@ -58,7 +58,7 @@ class TestCreateAppointment {
 
 	@Test
 	@Order(2)
-	 void createAppointmentWithInvalidInput() {
+	 void testCreateAppointmentWithInvalidInput() {
 		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.createAppointment(null);
@@ -71,7 +71,7 @@ class TestCreateAppointment {
 
 	@Test
 	@Order(3)
-	 void createAppointmentWithInvalidUserId(){
+	 void testCreateAppointmentWithInvalidUserId(){
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
 		newAppointment.setFromUser(-2);

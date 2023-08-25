@@ -23,7 +23,7 @@ public class DesignAssetService {
 	public void createDesignAsset(DesignAsset newDesignAsset)
 			throws ValidationException, PersistenceException, ServiceException {
 		try {
-			DesignAssetValidator.validate(newDesignAsset);
+			DesignAssetValidator.validateDesignAsset(newDesignAsset);
 			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
 			designAssetDAO.create(newDesignAsset);
 		} catch (PersistenceException e) {
@@ -40,9 +40,9 @@ public class DesignAssetService {
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 * @throws ServiceException     If an error occurs during the service operation.
 	 */
-	public void updateDesignAsset(int id, DesignAsset updatedDesignAsset) throws ValidationException, ServiceException {
+	public void updateDesignAsset(int designAssetId, DesignAsset updatedDesignAsset) throws ValidationException, ServiceException {
 	    try {
-	        DesignAssetValidator.validateDesignAssetId(id);
+	        DesignAssetValidator.validateDesignAssetId(designAssetId);
 
 	        if (updatedDesignAsset.getDesignId() != 0) {
 	            DesignValidator.validateDesignId(updatedDesignAsset.getDesignId());
@@ -52,7 +52,7 @@ public class DesignAssetService {
 	        }
 
 	        DesignAssetDAO designAssetDao = new DesignAssetDAO();
-	        designAssetDao.update(id, updatedDesignAsset);
+	        designAssetDao.update(designAssetId, updatedDesignAsset);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred during updating design and thier assets.", e);
 	    }
@@ -66,11 +66,11 @@ public class DesignAssetService {
 	 * @throws ServiceException     If an error occurs during the service operation.
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 */
-	public void deleteDesignAsset(int id) throws ValidationException, ServiceException {
+	public void deleteDesignAsset(int designAssetId) throws ValidationException, ServiceException {
 		try {
-			DesignAssetValidator.validateDesignAssetId(id);
+			DesignAssetValidator.validateDesignAssetId(designAssetId);
 			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
-			designAssetDAO.delete(id);
+			designAssetDAO.delete(designAssetId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during deleting design and thier assets.", e);
 		}
@@ -107,21 +107,21 @@ public class DesignAssetService {
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 * @throws ServiceException     If an error occurs during the service operation.
 	 */
-	public DesignAssetRespondDTO findDesignAssetById(int id) throws ValidationException, ServiceException {
+	public DesignAssetRespondDTO findDesignAssetById(int designAssetId) throws ValidationException, ServiceException {
 		try {
-			DesignAssetValidator.validateDesignAssetId(id);
+			DesignAssetValidator.validateDesignAssetId(designAssetId);
 			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
-			return designAssetDAO.findAllDesignAssetById(id);
+			return designAssetDAO.findAllDesignAssetById(designAssetId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while retrieving design and thier assets by id.", e);
 		}
 	}
 
-	public DesignAsset findDesignIdByDesignAssetId(int id) throws ValidationException, ServiceException {
+	public DesignAsset findDesignIdByDesignAssetId(int designAssetId) throws ValidationException, ServiceException {
 		try {
-			DesignAssetValidator.validateDesignAssetId(id);
+			DesignAssetValidator.validateDesignAssetId(designAssetId);
 			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
-			return designAssetDAO.findDesignAssetById(id);
+			return designAssetDAO.findDesignAssetById(designAssetId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while retrieving design and thier assets by id.", e);
 		}

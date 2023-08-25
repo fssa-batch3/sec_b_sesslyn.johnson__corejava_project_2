@@ -31,7 +31,7 @@ class TestReadUser {
     void testGetUserById() {
         assertDoesNotThrow(() -> {
             UserService userService = new UserService();
-            User arr = userService.findById(1);
+            User arr = userService.findByUserId(1);
             System.out.println(arr);
         });
     }
@@ -41,7 +41,7 @@ class TestReadUser {
 	void testGetUserByIdLessThanZero() {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			User arr = userService.findById(-5);
+			User arr = userService.findByUserId(-5);
 		});
 		String expectedMessage = "ID cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -54,7 +54,7 @@ class TestReadUser {
 	void testGetUserByNonExistingId() {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			User arr = userService.findById(5000);
+			User arr = userService.findByUserId(5000);
 		});
 		String expectedMessage = "Id doesn't exist";
 		String actualMessage = exception.getMessage();
