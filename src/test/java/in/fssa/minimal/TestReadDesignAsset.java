@@ -14,15 +14,14 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import in.fssa.minimal.dto.DesignAssetRespondDTO;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
-import in.fssa.minimal.model.DesignAsset;
 import in.fssa.minimal.service.AssetService;
 import in.fssa.minimal.service.DesignAssetService;
 
 @TestMethodOrder(OrderAnnotation.class)
-class TestReadDesignAsset {
+public class TestReadDesignAsset {
 	@Test
     @Order(1)
-    void testGetAssetById() {
+    void getAssetById() {
         assertDoesNotThrow(() -> {
             AssetService assetService = new AssetService();
             Asset arr = assetService.findByAssetId(1);
@@ -45,16 +44,16 @@ class TestReadDesignAsset {
 	
 	@Test
 	@Order(3)
-	void testGetAllDesignAndAsset() {
+	void getAllDesignAndAsset() {
 		assertDoesNotThrow(() -> {
 			DesignAssetService designAssetService = new DesignAssetService();
-			Set<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAsset();
+			Set<DesignAssetRespondDTO> arr = designAssetService.getAllByDesignAsset();
 		});
 	}
 
 	@Test
 	@Order(4)
-	void testGetDesignById() {
+	void getDesignById() {
 		assertDoesNotThrow(() -> {
 			DesignAssetService designAssetService = new DesignAssetService();
 			DesignAssetRespondDTO arr = designAssetService.findDesignAssetById(1);
@@ -86,15 +85,5 @@ class TestReadDesignAsset {
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
-	}
-	
-	@Test
-	@Order(4)
-	void getDesignByDesignAssetId() {
-		assertDoesNotThrow(() -> {
-			DesignAssetService designAssetService = new DesignAssetService();
-			DesignAsset arr = designAssetService.findDesignIdByDesignAssetId(1);
-			System.out.println(arr);
-		});
 	}
 }

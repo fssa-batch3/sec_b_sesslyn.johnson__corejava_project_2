@@ -6,7 +6,6 @@ import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.DesignAsset;
-import in.fssa.minimal.service.DesignAssetService;
 import in.fssa.minimal.util.StringUtil;
 
 public class DesignAssetValidator {
@@ -29,7 +28,7 @@ public class DesignAssetValidator {
 			throw new ServiceException("Error occurred during design asset id validation.", e);
 		}
 	}
-
+	
 	/**
 	 * Validates an asset URL string.
 	 *
@@ -65,26 +64,4 @@ public class DesignAssetValidator {
 			throw new ServiceException("Error occurred during asset id validation.", e);
 		}
 	}
-
-	public static void validateUpdateDesignAssetFields(int id, DesignAsset updateDesignAsset)
-	        throws ValidationException, ServiceException {
-	    DesignAssetService designAssetService = new DesignAssetService();
-		DesignAsset design = designAssetService.findDesignIdByDesignAssetId(id);
-	
-		
-		int oldDesignId = design.getDesignId();
-		System.out.println(oldDesignId);
-		int newDesignId = updateDesignAsset.getDesignId();
-		System.out.println(newDesignId);
-		int oldAssetId = design.getAssetsId();
-		System.out.println(oldAssetId);
-		int newAssetId = updateDesignAsset.getAssetsId();
-		System.out.println(oldAssetId);
-		if ((oldDesignId == newDesignId || newDesignId == 0) && (oldAssetId == newAssetId || newAssetId == 0)) {
-		    throw new ValidationException("No fields have been updated");
-		}
-
-	}
-
-
 }

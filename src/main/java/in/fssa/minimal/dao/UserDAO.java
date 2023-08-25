@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import in.fssa.minimal.exception.PersistenceException;
@@ -39,8 +38,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		Set<User> userList = new HashSet<>();
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
-					+ "FROM users WHERE is_active = 1";
+			String query = "SELECT * FROM users WHERE is_active = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -56,7 +54,6 @@ public class UserDAO implements UserInterface {
 				userList.add(user);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -80,8 +77,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		User user = null;
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
-					+ "FROM users WHERE is_active = 1 AND id = ?";
+			String query = "SELECT * FROM users WHERE is_active = 1 AND id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, userId);
@@ -97,7 +93,6 @@ public class UserDAO implements UserInterface {
 				user.setDesigner(rs.getBoolean(COLUMN_ISDESIGNER));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -121,8 +116,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		User user = null;
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
-					+ "FROM users WHERE is_active = 1 AND email = ?";
+			String query = "SELECT * FROM users WHERE is_active = 1 AND email = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, email);
@@ -138,7 +132,6 @@ public class UserDAO implements UserInterface {
 				user.setDesigner(rs.getBoolean(COLUMN_ISDESIGNER));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -173,7 +166,6 @@ public class UserDAO implements UserInterface {
 			System.out.println("User has been created successfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -194,61 +186,84 @@ public class UserDAO implements UserInterface {
 	public void update(int id, User updatedUser) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
-		UserDAO userDAO = new UserDAO();
-		User user = userDAO.findById(id);
 		try {
 			StringBuilder queryBuilder = new StringBuilder("UPDATE users SET ");
 			List<Object> values = new ArrayList<>();
-			String newName = updatedUser.getName();
-			String oldName = user.getName();
-			if (!Objects.equals(newName, oldName)) {
+
+			if (updatedUser.getName() != null) {
 				queryBuilder.append("name = ?, ");
-				values.add(newName);
+				values.add(updatedUser.getName());
 			}
-			String newPassword = updatedUser.getPassword();
-			String oldPassword = user.getPassword();
-			if (!Objects.equals(newPassword, oldPassword)) {
+			if (updatedUser.getPassword() != null) {
 				queryBuilder.append("password = ?, ");
-				values.add(newPassword);
+				values.add(updatedUser.getPassword());
 			}
-
-			long newPhoneNumber = updatedUser.getPhoneNumber();
-			long oldPhoneNumber = user.getPhoneNumber();
-			if (oldPhoneNumber != newPhoneNumber) {
+			if (updatedUser.getPhoneNumber() != 0) {
 				queryBuilder.append("phone_number = ?, ");
-				values.add(newPhoneNumber);
+				values.add(updatedUser.getPhoneNumber());
 			}
-
-			Boolean newValue = updatedUser.isDesigner();
-			Boolean oldValue = user.isDesigner();
-			if (!Objects.equals(oldValue, newValue)) {
-				queryBuilder.append("is_designer = ?, ");
-				values.add(newValue);
-			}
-			if (values.size() > 0) {
-				queryBuilder.setLength(queryBuilder.length() - 2);
-
-				queryBuilder.append(" WHERE is_active = 1 AND id = ?");
-
-				conn = ConnectionUtil.getConnection();
-				ps = conn.prepareStatement(queryBuilder.toString());
-
-				for (int i = 0; i < values.size(); i++) {
-					ps.setObject(i + 1, values.get(i));
+			if (updatedUser.isDesigner()) {
+				// Check if the field is updated, otherwise keep the existing value
+				Boolean newValue = updatedUser.isDesigner();
+				Boolean oldValue = getDesignerValueFromDatabase(id);
+				if (!newValue.equals(oldValue)) {
+					queryBuilder.append("is_designer = ?, ");
+					values.add(newValue);
 				}
-				ps.setInt(values.size() + 1, id);
-
-				ps.executeUpdate();
-
-				System.out.println("User has been updated successfully");
 			}
+
+			queryBuilder.setLength(queryBuilder.length() - 2);
+
+			queryBuilder.append(" WHERE is_active = 1 AND id = ?");
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(queryBuilder.toString());
+
+			for (int i = 0; i < values.size(); i++) {
+				ps.setObject(i + 1, values.get(i));
+			}
+			ps.setInt(values.size() + 1, id);
+
+			ps.executeUpdate();
+			System.out.println("User has been updated successfully");
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
-			ConnectionUtil.close(conn, ps);
+			ConnectionUtil.close(conn, ps, null);
 		}
+	}
+
+	/**
+	 * Retrieves the value of the "is_designer" field from the database for a given
+	 * user ID.
+	 *
+	 * @param userId The ID of the user for whom to retrieve the designer status.
+	 * @return The designer status (true/false) for the specified user.
+	 * @throws PersistenceException If a database-related error occurs during
+	 *                              retrieval.
+	 */
+	private Boolean getDesignerValueFromDatabase(int userId) throws PersistenceException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		boolean r = false;
+		try {
+			String query = "SELECT is_designer FROM users WHERE is_active = 1 AND id = ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, userId);
+			rs = ps.executeQuery();
+			if (!rs.next()) {
+				r = rs.getBoolean(COLUMN_ISDESIGNER);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e);
+		} finally {
+			ConnectionUtil.close(conn, ps, rs);
+		}
+		return r;
+
 	}
 
 	/**
@@ -259,18 +274,17 @@ public class UserDAO implements UserInterface {
 	 *                              deletion.
 	 */
 	@Override
-	public void delete(int id) throws PersistenceException {
+	public void delete(int userId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
 			String query = "UPDATE users SET is_active = 0 WHERE id = ? AND is_active = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, id);
+			ps.setInt(1, userId);
 			ps.executeUpdate();
 			System.out.println("User has been deleted successfully");
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -291,8 +305,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		Set<User> userList = new HashSet<>();
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
-					+ "FROM users WHERE is_active = 1 AND is_designer = 1";
+			String query = "SELECT * FROM users WHERE is_active = 1 AND is_designer = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -308,7 +321,7 @@ public class UserDAO implements UserInterface {
 				userList.add(user);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -325,17 +338,16 @@ public class UserDAO implements UserInterface {
 	 * @throws PersistenceException If a database-related error occurs during
 	 *                              retrieval.
 	 */
-	public User findDesignerById(int id) throws PersistenceException {
+	public User findDesignerById(int userId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User user = null;
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
-					+ "FROM users WHERE is_active = 1 AND is_designer = 1 AND id = ?";
+			String query = "SELECT * FROM users WHERE is_active = 1 AND is_designer = 1 AND id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, id);
+			ps.setInt(1, userId);
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				user = new User();
@@ -348,7 +360,7 @@ public class UserDAO implements UserInterface {
 				user.setDesigner(rs.getBoolean(COLUMN_ISDESIGNER));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -382,7 +394,7 @@ public class UserDAO implements UserInterface {
 				throw new ValidationException("Email already exists.Try with a new email id");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println("Email already exists.Try with a new email id");
 			throw new PersistenceException(e);
 		} finally {
@@ -415,7 +427,7 @@ public class UserDAO implements UserInterface {
 				throw new ValidationException("Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println("Id doesn't exist");
 			throw new PersistenceException(e);
 		} finally {
@@ -447,7 +459,7 @@ public class UserDAO implements UserInterface {
 				throw new ValidationException("Email doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println("Email doesn't exist");
 			throw new PersistenceException(e);
 		} finally {
@@ -480,7 +492,6 @@ public class UserDAO implements UserInterface {
 				throw new ValidationException("Designer Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.out.println("Designer Id doesn't exist");
 			throw new PersistenceException(e);
 		} finally {
@@ -496,27 +507,27 @@ public class UserDAO implements UserInterface {
 	 *                              ID.
 	 */
 	public static int getLastUpdatedUserId() throws PersistenceException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		int userId = 0;
-		try {
-			String query = "SELECT id FROM users WHERE is_active = 1 AND is_designer = 0 ORDER BY created_at DESC LIMIT 1";
-			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(query);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				userId = rs.getInt("id");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, ps, rs);
-		}
-		return userId;
+	    Connection conn = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    int userId = 0;
+	    try {
+	        String query = "SELECT id FROM users WHERE is_active = 1 AND is_designer = 0 ORDER BY created_at DESC LIMIT 1";
+	        conn = ConnectionUtil.getConnection();
+	        ps = conn.prepareStatement(query);
+	        rs = ps.executeQuery();
+	        if (rs.next()) {
+	            userId = rs.getInt("id");   
+	        }
+	    } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        throw new PersistenceException(e);
+	    } finally {
+	        ConnectionUtil.close(conn, ps, rs);
+	    }
+	    return userId;
 	}
+
 
 	/**
 	 * Retrieves the ID of the last updated designer who is active.
@@ -531,8 +542,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		int designerId = 0;
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
-					+ "FROM users WHERE is_active = 1 AND is_designer = 1 ORDER BY created_at DESC LIMIT 1";
+			String query = "SELECT * FROM users WHERE is_active = 1 AND is_designer = 1 ORDER BY created_at DESC LIMIT 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -540,7 +550,7 @@ public class UserDAO implements UserInterface {
 				designerId = rs.getInt("id");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {

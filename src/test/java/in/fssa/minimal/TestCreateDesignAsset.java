@@ -25,7 +25,7 @@ public class TestCreateDesignAsset {
 		newAsset.setAssetsUrl(generatedUrl);
 
 		assertDoesNotThrow(() -> {
-			assetService.createAsset(newAsset);
+			assetService.create(newAsset);
 		});
 	}
 	private String generateRandomUrl() {
@@ -49,7 +49,7 @@ public class TestCreateDesignAsset {
 		Asset newAsset = new Asset();
 		newAsset.setAssetsUrl("https://youtu.be/DFgL3URDOr4");
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			assetService.createAsset(newAsset);
+			assetService.create(newAsset);
 		});
 		String expectedMessage = "Asset Url already exists";
 		String actualMessage = exception.getMessage();
@@ -62,7 +62,7 @@ public class TestCreateDesignAsset {
 	void createAssetWithInValidInput() {
 		AssetService assetService = new AssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			assetService.createAsset(null);
+			assetService.create(null);
 		});
 		String expectedMessage = "Asset object can not be null";
 		String actualMessage = exception.getMessage();
@@ -78,7 +78,7 @@ public class TestCreateDesignAsset {
 		newDesign.setAssetsId(2);
 		newDesign.setDesignId(1);
 		assertDoesNotThrow(() -> {
-			designAssetService.createDesignAsset(newDesign);
+			designAssetService.create(newDesign);
 		});
 	}
 
@@ -87,7 +87,7 @@ public class TestCreateDesignAsset {
 	void createDesignWithInvalidInput() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			designAssetService.createDesignAsset(null);
+			designAssetService.create(null);
 		});
 		String expectedMessage = "Design Asset Object cannot be null";
 		String actualMessage = exception.getMessage();
@@ -103,7 +103,7 @@ public class TestCreateDesignAsset {
 		newDesign.setAssetsId(5000);
 		newDesign.setDesignId(1);
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			designAssetService.createDesignAsset(newDesign);
+			designAssetService.create(newDesign);
 		});
 		String expectedMessage = "Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -119,7 +119,7 @@ public class TestCreateDesignAsset {
 		newDesign.setAssetsId(1);
 		newDesign.setDesignId(5000);
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			designAssetService.createDesignAsset(newDesign);
+			designAssetService.create(newDesign);
 		});
 		String expectedMessage = "Design Id doesn't exist";
 		String actualMessage = exception.getMessage();

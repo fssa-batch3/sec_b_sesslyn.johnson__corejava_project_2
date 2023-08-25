@@ -65,7 +65,7 @@ class TestReadDesign {
 	
 	@Test
  @Order(5)
- void testGetAllDesignByDesignerId() {
+ void getAllDesignByDesignerId() {
      assertDoesNotThrow(() -> {
          DesignService designService = new DesignService();
          Set<Design> designList = designService.findAllDesignsByDesignerId(2);

@@ -19,14 +19,14 @@ public class StyleService {
 	 * @throws ServiceException    If a service-related error occurs while creating the
 	 *                              style.
 	 */
-	public void createStyle(Style newStyle) throws ValidationException, PersistenceException, ServiceException {
+	public void create(Style newStyle) throws ValidationException, PersistenceException, ServiceException {
 	    try {
 	        if (newStyle == null) {
 	            throw new ValidationException("Style object cannot be null");
 	        }
 	        DesignValidator.validateStyleName(newStyle.getName());
-	        StyleDAO styleDAO = new StyleDAO();
-	        styleDAO.create(newStyle);
+	        StyleDAO styleDao = new StyleDAO();
+	        styleDao.create(newStyle);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while creating style.", e);
 	    }
@@ -44,12 +44,12 @@ public class StyleService {
 	 * @throws ServiceException    If a service-related error occurs while updating the
 	 *                              style.
 	 */
-	public void updateStyle(int id, Style updateStyle) throws ValidationException, ServiceException {
+	public void update(int id, Style updateStyle) throws ValidationException, ServiceException {
 	    try {
 	        DesignValidator.validateStyleId(id);
 	        DesignValidator.validateStyleName(updateStyle.getName());
-	        StyleDAO styleDAO = new StyleDAO();
-	        styleDAO.update(id, updateStyle);
+	        StyleDAO styleDao = new StyleDAO();
+	        styleDao.update(id, updateStyle);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while updating style.", e);
 	    }

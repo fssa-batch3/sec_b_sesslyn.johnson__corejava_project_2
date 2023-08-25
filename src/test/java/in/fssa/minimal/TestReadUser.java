@@ -21,7 +21,7 @@ class TestReadUser {
     void testGetAllUser() {
         assertDoesNotThrow(() -> {
             UserService userService = new UserService();
-            Set<User> arr = userService.getAllUser();
+            Set<User> arr = userService.getAll();
             System.out.println(arr);
         });
     }
@@ -100,7 +100,7 @@ class TestReadUser {
     void testGetDesignerById() {
         assertDoesNotThrow(() -> {
             UserService userService = new UserService();
-            User arr = userService.findByDesignerId(2);
+            User arr = userService.findDesignerById(2);
             System.out.println(arr);
         });
     }
@@ -111,7 +111,7 @@ class TestReadUser {
 	void testGetDesignerByNonExistingId() {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			User arr = userService.findByDesignerId(3);
+			User arr = userService.findDesignerById(3);
 		});
 		String expectedMessage = "Designer Id doesn't exist";
 		String actualMessage = exception.getMessage();

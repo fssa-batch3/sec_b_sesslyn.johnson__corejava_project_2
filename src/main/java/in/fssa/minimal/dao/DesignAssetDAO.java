@@ -39,7 +39,7 @@ public class DesignAssetDAO {
 			System.out.println("Design Asset has been created successfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -53,58 +53,44 @@ public class DesignAssetDAO {
 	 * @param id                 The ID of the design asset to be updated.
 	 * @param updatedDesignAsset The updated DesignAsset object.
 	 * @throws PersistenceException If there's an issue with database interaction.
-	 * @throws ServiceException
-	 * @throws ValidationException
 	 */
-	public void update(int id, DesignAsset updateDesignAsset)
-            throws PersistenceException, ValidationException, ServiceException {
-    Connection conn = null;
-    PreparedStatement ps = null;
-    DesignAssetDAO designAsset = new DesignAssetDAO();
-    DesignAsset design = designAsset.findDesignAssetById(id);
-    try {
-        StringBuilder queryBuilder = new StringBuilder("UPDATE design_assets SET ");
-        List<Object> values = new ArrayList<>();
+	public void update(int id, DesignAsset updatedDesignAsset) throws PersistenceException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			StringBuilder queryBuilder = new StringBuilder("UPDATE design_assets SET ");
+			List<Object> values = new ArrayList<>();
 
-        int oldDesignId = design.getDesignId();
-        int newDesignId = updateDesignAsset.getDesignId();
+			if (updatedDesignAsset.getDesignId() != 0) {
+				queryBuilder.append("design_id = ?, ");
+				values.add(updatedDesignAsset.getDesignId());
+			}
+			if (updatedDesignAsset.getAssetsId() != 0) {
+				queryBuilder.append("assets_id = ?, ");
+				values.add(updatedDesignAsset.getAssetsId());
+			}
 
-        int oldAssetId = design.getAssetsId();
-        int newAssetId = updateDesignAsset.getAssetsId();
+			queryBuilder.setLength(queryBuilder.length() - 2);
 
-        if (newDesignId != 0 && oldDesignId != newDesignId) {
-            queryBuilder.append("design_id = ?, ");
-            values.add(newDesignId);
-        }
+			queryBuilder.append(" WHERE id = ?");
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(queryBuilder.toString());
 
-        if (newAssetId != 0 && oldAssetId != newAssetId) {
-            queryBuilder.append("assets_id = ?, ");
-            values.add(newAssetId);
-        }
-        if (values.size() > 0) {
-            queryBuilder.setLength(queryBuilder.length() - 2);
-            queryBuilder.append(" WHERE id = ?");
-            
-            conn = ConnectionUtil.getConnection();
-            ps = conn.prepareStatement(queryBuilder.toString());
+			for (int i = 0; i < values.size(); i++) {
+				ps.setObject(i + 1, values.get(i));
+			}
+			ps.setInt(values.size() + 1, id);
 
-            for (int i = 0; i < values.size(); i++) {
-                ps.setObject(i + 1, values.get(i));
-            }
+			ps.executeUpdate();
+			System.out.println("Design Asset has been updated successfully");
+		} catch (SQLException e) {
 
-            ps.setInt(values.size() + 1, id);
-
-            ps.executeUpdate();
-            System.out.println("Design Asset has been updated successfully");
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        System.out.println(e.getMessage());
-        throw new PersistenceException(e);
-    } finally {
-        ConnectionUtil.close(conn, ps);
-    }
-}
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e);
+		} finally {
+			ConnectionUtil.close(conn, ps, null);
+		}
+	}
 
 	/**
 	 * Deletes a design asset.
@@ -130,6 +116,7 @@ public class DesignAssetDAO {
 			ConnectionUtil.close(conn, ps, null);
 		}
 	}
+
 	/**
 	 * Retrieves all active design assets.
 	 *
@@ -137,10 +124,9 @@ public class DesignAssetDAO {
 	 *         assets.
 	 * @throws ValidationException  If there's an issue with data validation.
 	 * @throws PersistenceException If there's an issue with database interaction.
-	 * @throws ServiceException
+	 * @throws ServiceException 
 	 */
-	public Set<DesignAssetRespondDTO> findAllDesignAsset()
-			throws ValidationException, PersistenceException, ServiceException {
+	public Set<DesignAssetRespondDTO> findAllDesignAsset() throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -168,7 +154,7 @@ public class DesignAssetDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -184,10 +170,9 @@ public class DesignAssetDAO {
 	 * @return The DesignAssetRespondDto object representing the design asset.
 	 * @throws ValidationException  If there's an issue with data validation.
 	 * @throws PersistenceException If there's an issue with database interaction.
-	 * @throws ServiceException
+	 * @throws ServiceException 
 	 */
-	public DesignAssetRespondDTO findAllDesignAssetById(int id)
-			throws ValidationException, PersistenceException, ServiceException {
+	public DesignAssetRespondDTO findAllDesignAssetById(int id) throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -215,7 +200,7 @@ public class DesignAssetDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
@@ -228,8 +213,8 @@ public class DesignAssetDAO {
 	 * Checks if a design asset with the given ID exists.
 	 *
 	 * @param id The ID to be checked.
-	 * @throws ValidationException  If the ID does not exist.
-	 * @throws PersistenceException
+	 * @throws ValidationException If the ID does not exist.
+	 * @throws PersistenceException 
 	 */
 	public static void checkIdExists(int id) throws ValidationException, PersistenceException {
 		Connection conn = null;
@@ -237,7 +222,7 @@ public class DesignAssetDAO {
 		ResultSet rs = null;
 
 		try {
-			String query = "Select id From design_assets Where id = ?";
+			String query = "Select * From design_assets Where id = ?";
 			conn = ConnectionUtil.getConnection();
 			pre = conn.prepareStatement(query);
 			pre.setInt(1, id);
@@ -246,14 +231,13 @@ public class DesignAssetDAO {
 				throw new ValidationException("Design Asset Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
 		}
 	}
-
+	
 	/**
 	 * Retrieves the ID of the last updated non-designer user who is active.
 	 *
@@ -262,101 +246,25 @@ public class DesignAssetDAO {
 	 *                              ID.
 	 */
 	public static int getLastUpdatedDesignAssetId() throws PersistenceException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		int id = 0;
-		try {
-			String query = "SELECT id FROM design_assets WHERE is_active = 1 ORDER BY created_at DESC LIMIT 1";
-			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(query);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				id = rs.getInt("id");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, ps, rs);
-		}
-		return id;
-	}
-
-	public DesignAsset findDesignAssetById(int id) throws ValidationException, PersistenceException, ServiceException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		DesignAsset designAss = null;
-		try {
-			String query = "SELECT * FROM design_assets WHERE is_active = 1 AND id = ?";
-			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(query);
-			ps.setInt(1, id);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				designAss = new DesignAsset();
-				designAss.setId(rs.getInt("id"));
-				designAss.setDesignId(rs.getInt("design_id"));
-				designAss.setAssetsId(rs.getInt("assets_id"));
-				designAss.setActive(rs.getBoolean("is_active"));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, ps, rs);
-		}
-		return designAss;
-	}
-
-	public static int getLastUpdatedDesignId() throws PersistenceException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		int designerId = 0;
-		try {
-			String query = "SELECT id FROM designs ORDER BY created_at DESC LIMIT 1";
-			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(query);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				designerId = rs.getInt("id");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, ps, rs);
-		}
-		return designerId;
-	}
-
-	public static int getLastUpdatedAssetId() throws PersistenceException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		int assetId = 0;
-		try {
-			String query = "SELECT id FROM assets ORDER BY id DESC LIMIT 1";
-			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(query);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				assetId = rs.getInt("id");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, ps, rs);
-		}
-		return assetId;
+	    Connection conn = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    int id = 0;
+	    try {
+	        String query = "SELECT id FROM design_assets WHERE is_active = 1 ORDER BY created_at DESC LIMIT 1";
+	        conn = ConnectionUtil.getConnection();
+	        ps = conn.prepareStatement(query);
+	        rs = ps.executeQuery();
+	        if (rs.next()) {
+	            id = rs.getInt("id");   
+	        }
+	    } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        throw new PersistenceException(e);
+	    } finally {
+	        ConnectionUtil.close(conn, ps, rs);
+	    }
+	    return id;
 	}
 
 }
