@@ -27,7 +27,7 @@ public class DesignAssetService {
 			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
 			designAssetDAO.create(newDesignAsset);
 		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred during connecting design and thier assets.", e);
+			throw new ServiceException("Error occurred during connecting design and thier assets", e);
 		}
 	}
 
@@ -54,7 +54,7 @@ public class DesignAssetService {
 	        DesignAssetDAO designAssetDao = new DesignAssetDAO();
 	        designAssetDao.update(designAssetId, updatedDesignAsset);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred during updating design and thier assets.", e);
+	        throw new ServiceException("Error occurred during updating design and thier assets", e);
 	    }
 	}
 
@@ -72,7 +72,7 @@ public class DesignAssetService {
 			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
 			designAssetDAO.delete(designAssetId);
 		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred during deleting design and thier assets.", e);
+			throw new ServiceException("Error occurred during deleting design and thier assets", e);
 		}
 	}
 
@@ -94,7 +94,7 @@ public class DesignAssetService {
 			}
 			return assetList;
 		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred while retrieveing all designs and thier assets.", e);
+			throw new ServiceException("Error occurred while retrieveing all designs and thier assets", e);
 		}
 	}
 
@@ -113,7 +113,7 @@ public class DesignAssetService {
 			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
 			return designAssetDAO.findAllDesignAssetById(designAssetId);
 		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred while retrieving design and thier assets by id.", e);
+			throw new ServiceException("Error occurred while retrieving design and thier assets by id", e);
 		}
 	}
 
@@ -123,7 +123,7 @@ public class DesignAssetService {
 			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
 			return designAssetDAO.findDesignAssetById(designAssetId);
 		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred while retrieving design and thier assets by id.", e);
+			throw new ServiceException("Error occurred while retrieving design id and assets id by designAsset id", e);
 		}
 	}
 

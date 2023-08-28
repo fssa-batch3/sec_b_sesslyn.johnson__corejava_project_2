@@ -28,7 +28,7 @@ public class StyleService {
 	        StyleDAO styleDAO = new StyleDAO();
 	        styleDAO.create(newStyle);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while creating style.", e);
+	        throw new ServiceException("Error occurred while creating style", e);
 	    }
 	}
 
@@ -51,7 +51,7 @@ public class StyleService {
 	        StyleDAO styleDAO = new StyleDAO();
 	        styleDAO.update(styleId, updateStyle);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while updating style.", e);
+	        throw new ServiceException("Error occurred while updating style", e);
 	    }
 	}
 

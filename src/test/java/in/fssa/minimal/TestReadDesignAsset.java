@@ -68,7 +68,7 @@ public class TestReadDesignAsset {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			DesignAssetRespondDTO arr = designAssetService.findDesignAssetById(0);
 		});
-		String expectedMessage = "ID cannot be less than or equal to zero";
+		String expectedMessage = "Design Asset Id cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
@@ -79,7 +79,7 @@ public class TestReadDesignAsset {
 	void testWithNonExistingDesignAssetId() {
 		DesignAssetService designAssetService = new DesignAssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			DesignAssetRespondDTO arr = designAssetService.findDesignAssetById(20);
+			DesignAssetRespondDTO arr = designAssetService.findDesignAssetById(2000);
 		});
 		String expectedMessage = "Design Asset Id doesn't exist";
 		String actualMessage = exception.getMessage();

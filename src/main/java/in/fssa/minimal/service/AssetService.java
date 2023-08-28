@@ -73,7 +73,7 @@ public class AssetService {
 			AssetDAO assetDAO = new AssetDAO();
 			return assetDAO.findById(assetId);
 		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred while retrieves data using asset id", e);
+			throw new ServiceException("Error occurred while retrieves asset using asset id", e);
 		}
 	}
 

@@ -14,8 +14,7 @@ import in.fssa.minimal.model.Appointment;
 import in.fssa.minimal.util.StringUtil;
 
 public class AppointmentValidator {
-	private static final String EMAIL_PATTERN =
-		    "^[a-zA-Z0-9]+(?:[_+\\-.][a-zA-Z0-9]+)*@[a-zA-Z0-9]++(?:[\\-.][a-zA-Z0-9]++)*\\.[a-zA-Z]{2,}$";
+	private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+(?:[_+\\-.][a-zA-Z0-9]+)*@[a-zA-Z0-9]++(?:[\\-.][a-zA-Z0-9]++)*\\.[a-zA-Z]{2,}$";
 
 	/**
 	 * Validates an Appointment object's properties.
@@ -23,30 +22,31 @@ public class AppointmentValidator {
 	 * @param appointment The Appointment object to be validated.
 	 * @throws ValidationException If any property of the Appointment object fails
 	 *                             validation.
-	 * @throws ServiceException   If a service-related error occurs during the operation.
+	 * @throws ServiceException    If a service-related error occurs during the
+	 *                             operation.
 	 */
 	public static void validateAppointment(Appointment appointment) throws ValidationException, ServiceException {
-	    try {
-	        if (appointment == null) {
-	            throw new ValidationException("Appointment object cannot be null");
-	        }
-	        
-	        validateId(appointment.getFromUser());
-	        validateId(appointment.getToUser());
-	        validateEmail(appointment.getEmail());
-	        validatePhoneNumber(appointment.getPhoneNumber());
-	        validateStatus(appointment.getStatus());
-	        validateDate(appointment.getDate());
-	        validateTime(appointment.getTime());
+		try {
+			if (appointment == null) {
+				throw new ValidationException("Appointment object cannot be null");
+			}
 
-	        UserDAO.checkIdExists(appointment.getFromUser());
-	        UserDAO.checkDesignerIdExists(appointment.getToUser());
-	        AppointmentDAO.checkFromUserHasUpcomingAppointments(appointment.getFromUser());
-	        AppointmentDAO.checkToUserHasAppointmentAtSameDateTime(appointment.getToUser(), appointment.getDate(),
-	                appointment.getTime());
-	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred during validation.", e);
-	    }
+			validateId("From user Id", appointment.getFromUser());
+			validateId("To user Id", appointment.getToUser());
+			validateEmail(appointment.getEmail());
+			validatePhoneNumber(appointment.getPhoneNumber());
+			validateStatus(appointment.getStatus());
+			validateDate(appointment.getDate());
+			validateTime(appointment.getTime());
+
+			UserDAO.checkIdExists(appointment.getFromUser());
+			UserDAO.checkDesignerIdExists(appointment.getToUser());
+			AppointmentDAO.checkFromUserHasUpcomingAppointments(appointment.getFromUser());
+			AppointmentDAO.checkToUserHasAppointmentAtSameDateTime(appointment.getToUser(), appointment.getDate(),
+					appointment.getTime());
+		} catch (PersistenceException e) {
+			throw new ServiceException("Error occurred during validation.", e);
+		}
 	}
 
 	/**
@@ -56,10 +56,10 @@ public class AppointmentValidator {
 	 * @throws ValidationException If the ID is not valid (less than or equal to
 	 *                             zero).
 	 */
-	public static void validateId(int appointmentId) throws ValidationException {
-	    if (appointmentId <= 0) {
-	        throw new ValidationException("ID cannot be less than or equal to zero");
-	    }
+	public static void validateId(String name, int appointmentId) throws ValidationException {
+		if (appointmentId <= 0) {
+			throw new ValidationException(name + " cannot be less than or equal to zero");
+		}
 	}
 
 	/**
@@ -68,15 +68,16 @@ public class AppointmentValidator {
 	 * @param id The ID to be validated.
 	 * @throws ValidationException If the ID is not valid (less than or equal to
 	 *                             zero) or if it doesn't exist in the database.
-	 * @throws ServiceException   If a service-related error occurs during the operation.
+	 * @throws ServiceException    If a service-related error occurs during the
+	 *                             operation.
 	 */
 	public static void validateIdExists(int appointmentId) throws ValidationException, ServiceException {
-	    try {
-	    	validateId(appointmentId);
-	        AppointmentDAO.checkIdExists(appointmentId);
-	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred during validation.", e);
-	    }
+		try {
+			validateId("Appointment Id", appointmentId);
+			AppointmentDAO.checkIdExists(appointmentId);
+		} catch (PersistenceException e) {
+			throw new ServiceException("Error occurred during validation.", e);
+		}
 	}
 
 	/**
@@ -87,10 +88,10 @@ public class AppointmentValidator {
 	 *                             format.
 	 */
 	public static void validateEmail(String email) throws ValidationException {
-	    StringUtil.rejectIfInvalidString(email, "Email");
-	    if (!email.matches(EMAIL_PATTERN)) {
-	        throw new ValidationException("Invalid email format. Please provide a valid email address");
-	    }
+		StringUtil.rejectIfInvalidString(email, "Email");
+		if (!email.matches(EMAIL_PATTERN)) {
+			throw new ValidationException("Invalid email format. Please provide a valid email address");
+		}
 	}
 
 	/**
@@ -120,14 +121,13 @@ public class AppointmentValidator {
 	 * @throws ValidationException If the status doesn't match the expected values.
 	 */
 	public static void validateStatus(String status) throws ValidationException {
-	    StringUtil.rejectIfInvalidString(status, "Status");
-	    if (!("approved".equalsIgnoreCase(status) || "rejected".equalsIgnoreCase(status)
-	            || "waiting_list".equalsIgnoreCase(status))) {
-	        throw new ValidationException(
-	                "Invalid status value. The status can only be one of: waiting_list, approved, rejected");
-	    }
+		StringUtil.rejectIfInvalidString(status, "Status");
+		if (!("approved".equalsIgnoreCase(status) || "rejected".equalsIgnoreCase(status)
+				|| "waiting_list".equalsIgnoreCase(status))) {
+			throw new ValidationException(
+					"Invalid status value. The status can only be one of: waiting_list, approved, rejected");
+		}
 	}
-
 
 	/**
 	 * Validates the status parameter for updating an appointment's status.
@@ -136,10 +136,10 @@ public class AppointmentValidator {
 	 * @throws ValidationException If the status is not valid for updating.
 	 */
 	public static void validateUpdateStatus(String status) throws ValidationException {
-	    StringUtil.rejectIfInvalidString(status, "Status");
-	    if (!"approved".equalsIgnoreCase(status)) {
-	        throw new ValidationException("Approved appointment cannot be re update");
-	    }
+		StringUtil.rejectIfInvalidString(status, "Status");
+		if (!"approved".equalsIgnoreCase(status)) {
+			throw new ValidationException("Approved appointment cannot be re update");
+		}
 	}
 
 	/**
@@ -156,12 +156,14 @@ public class AppointmentValidator {
 		try {
 			dueDate = LocalDate.parse(date, inputFormatter);
 		} catch (DateTimeParseException e) {
-			throw new ValidationException("Invalid date or Invalid date format (yyyy-MM-dd)");
+			throw new ValidationException("Invalid date format (yyyy-MM-dd)");
 		}
 
 		LocalDate currentDate = LocalDate.now();
 		LocalDate maxAllowedDate = currentDate.plusDays(90);
-
+		if (dueDate.equals(currentDate)) {
+			throw new ValidationException("Invalid date. The date can't be today");
+		}
 		if (dueDate.isBefore(currentDate) || dueDate.isAfter(maxAllowedDate)) {
 			throw new ValidationException("Invalid date. The date should be within the next 90 days");
 		}
@@ -180,9 +182,9 @@ public class AppointmentValidator {
 		try {
 			dueTime = LocalTime.parse(time, inputFormatter);
 		} catch (DateTimeParseException e) {
-			throw new ValidationException("Invalid time or Invalid time format (HH:mm:ss)");
+			throw new ValidationException("Invalid time format (HH:mm:ss)");
 		}
-		
+
 		LocalTime minTime = LocalTime.parse("08:00:00");
 		LocalTime maxTime = LocalTime.parse("20:00:00");
 

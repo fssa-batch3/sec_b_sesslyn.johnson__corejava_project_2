@@ -421,7 +421,7 @@ public class UserDAO implements UserInterface {
 			rs = pre.executeQuery();
 
 			if (!rs.next()) {
-				throw new ValidationException("Id doesn't exist");
+				throw new ValidationException("User Id doesn't exist");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

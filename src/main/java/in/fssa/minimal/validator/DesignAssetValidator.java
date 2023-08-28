@@ -18,11 +18,22 @@ public class DesignAssetValidator {
 		validateAssetId(newDesignAsset.getAssetsId());
 	}
 
+	/**
+	 * Validates an ID value.
+	 *
+	 * @param id The ID to be validated.
+	 * @throws ValidationException If the ID is not valid (less than or equal to
+	 *                             zero).
+	 */
+	public static void validateId(String name,int id) throws ValidationException {
+	    if (id <= 0) {
+	        throw new ValidationException(name + " cannot be less than or equal to zero");
+	    }
+	}
+	
 	public static void validateDesignAssetId(int designAssetId) throws ValidationException, ServiceException {
 		try {
-			if (designAssetId <= 0) {
-				throw new ValidationException("ID cannot be less than or equal to zero");
-			}
+			validateId("Design Asset Id",designAssetId);
 			DesignAssetDAO.checkIdExists(designAssetId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during design asset id validation.", e);
@@ -56,9 +67,7 @@ public class DesignAssetValidator {
 	 */
 	public static void validateAssetId(int assetId) throws ValidationException, ServiceException {
 		try {
-			if (assetId <= 0) {
-				throw new ValidationException("ID cannot be less than or equal to zero");
-			}
+			validateId("Asset Id",assetId);
 			AssetDAO.checkIdExists(assetId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during asset id validation.", e);

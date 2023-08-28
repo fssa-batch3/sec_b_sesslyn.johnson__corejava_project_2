@@ -44,7 +44,7 @@ class TestReadDesign {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Design arr = designService.findByDesignId(-4);
 		});
-		String expectedMessage = "ID cannot be less than or equal to zero";
+		String expectedMessage = "Design Id cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);

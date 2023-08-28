@@ -24,7 +24,7 @@ public class DesignService {
 	        DesignDAO designDAO = new DesignDAO();
 	        designDAO.create(newDesign);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while creating design.", e);
+	        throw new ServiceException("Error occurred while creating design", e);
 	    }
 	}
 
@@ -63,7 +63,7 @@ public class DesignService {
 	        DesignDAO designDao = new DesignDAO();
 	        designDao.update(designId, updatedDesign);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while updating design.", e);
+	        throw new ServiceException("Error occurred while updating design", e);
 	    }
 	}
 
@@ -83,7 +83,7 @@ public class DesignService {
 	        }
 	        return designList;
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while retrieving designs.", e);
+	        throw new ServiceException("Error occurred while retrieving designs", e);
 	    }
 	}
 
@@ -102,7 +102,7 @@ public class DesignService {
 	        DesignDAO designDAO = new DesignDAO();
 	        return designDAO.findByDesignId(designId);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while retrieving design.", e);
+	        throw new ServiceException("Error occurred while retrieving design be design id", e);
 	    }
 	}
 
@@ -125,7 +125,7 @@ public class DesignService {
 	        }
 	        return designList;
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while retrieving designs.", e);
+	        throw new ServiceException("Error occurred while retrieving designs by the designer id", e);
 	    }
 	}
 

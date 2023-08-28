@@ -25,7 +25,7 @@ public class AppointmentService {
 	        AppointmentDAO appointmentDAO = new AppointmentDAO();
 	        appointmentDAO.create(newAppointment);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while creating appointment.", e);
+	        throw new ServiceException("Error occurred while creating appointment", e);
 	    }
 	}
 
@@ -46,7 +46,7 @@ public class AppointmentService {
 	        }
 	        return appointmentList;
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while retrieving appointments.", e);
+	        throw new ServiceException("Error occurred while retrieving all appointments", e);
 	    }
 	}
 
@@ -70,7 +70,7 @@ public class AppointmentService {
 	        }
 	        return appointmentList;
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while retrieving appointments.", e);
+	        throw new ServiceException("Error occurred while retrieving appointments by their status", e);
 	    }
 	}
 
@@ -89,7 +89,7 @@ public class AppointmentService {
 	        AppointmentDAO appointmentDAO = new AppointmentDAO();
 	        return appointmentDAO.findById(appointmentId);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while retrieving appointment details.", e);
+	        throw new ServiceException("Error occurred while retrieving appointment by appointment id", e);
 	    }
 	}
 
@@ -108,7 +108,7 @@ public class AppointmentService {
 	        AppointmentDAO appointmentDAO = new AppointmentDAO();
 	        appointmentDAO.updateRequestStatus(appointmentId, status);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while updating appointment status.", e);
+	        throw new ServiceException("Error occurred while updating appointment status", e);
 	    }
 	}
 

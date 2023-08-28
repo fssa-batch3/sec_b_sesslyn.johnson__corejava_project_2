@@ -50,7 +50,7 @@ class TestUpdateUser {
 			newUser.setDesigner(false);
 			userService.updateUser(5000, newUser);
 		});
-		String expectedMessage = "Id doesn't exist";
+		String expectedMessage = "User Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);

@@ -36,11 +36,11 @@ public class UserService {
 	 */
 	public static User findByUserId(int userId) throws ValidationException, ServiceException {
 	    try {
-	        UserValidator.validateId(userId);
+	        UserValidator.validateUserId(userId);
 	        UserDAO userDAO = new UserDAO();
 	        return userDAO.findById(userId);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while finding user by ID.", e);
+	        throw new ServiceException("Error occurred while finding user by their id.", e);
 	    }
 	}
 
@@ -58,7 +58,7 @@ public class UserService {
 	        UserDAO userDAO = new UserDAO();
 	        return userDAO.findByEmail(email);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while finding user by email.", e);
+	        throw new ServiceException("Error occurred while finding user by their email.", e);
 	    }
 	}
 
@@ -89,7 +89,7 @@ public class UserService {
 	 */
 	public void updateUser(int userId, User updatedUser) throws ValidationException, ServiceException {
 	    try {
-	        UserValidator.validateId(userId);
+	        UserValidator.validateUserId(userId);
 	        if (updatedUser.getName() != null) {
 	            UserValidator.validateName(updatedUser.getName());
 	        }
@@ -115,7 +115,7 @@ public class UserService {
 	 */
 	public void deleteUser(int userId) throws ValidationException, ServiceException {
 	    try {
-	        UserValidator.validateId(userId);
+	        UserValidator.validateUserId(userId);
 	        UserDAO userDAO = new UserDAO();
 	        userDAO.delete(userId);
 	    } catch (PersistenceException e) {
@@ -134,7 +134,7 @@ public class UserService {
 	        UserDAO userDAO = new UserDAO();
 	        return userDAO.findAllDesigner();
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while retrieving designer users.", e);
+	        throw new ServiceException("Error occurred while retrieving designers.", e);
 	    }
 	}
 
@@ -152,7 +152,7 @@ public class UserService {
 	        UserDAO userDao = new UserDAO();
 	        return userDao.findDesignerById(designerId);
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while finding designer user by ID.", e);
+	        throw new ServiceException("Error occurred while finding designer by their id.", e);
 	    }
 	}
 

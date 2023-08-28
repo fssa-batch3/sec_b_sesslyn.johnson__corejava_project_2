@@ -43,7 +43,7 @@ class TestReadUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			User arr = userService.findByUserId(-5);
 		});
-		String expectedMessage = "ID cannot be less than or equal to zero";
+		String expectedMessage = "User Id cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
@@ -56,7 +56,7 @@ class TestReadUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			User arr = userService.findByUserId(5000);
 		});
-		String expectedMessage = "Id doesn't exist";
+		String expectedMessage = "User Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);

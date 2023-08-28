@@ -267,7 +267,7 @@ class TestCreateDesign {
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
 		});
-		String expectedMessage = "ID cannot be less than or equal to zero";
+		String expectedMessage = "Style Id cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);

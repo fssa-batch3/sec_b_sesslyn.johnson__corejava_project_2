@@ -33,6 +33,19 @@ public class DesignValidator {
 	}
 
 	/**
+	 * Validates an ID value.
+	 *
+	 * @param id The ID to be validated.
+	 * @throws ValidationException If the ID is not valid (less than or equal to
+	 *                             zero).
+	 */
+	public static void validateId(String name,int id) throws ValidationException {
+	    if (id <= 0) {
+	        throw new ValidationException(name + " cannot be less than or equal to zero");
+	    }
+	}
+	
+	/**
 	 * Validates the name of a design.
 	 *
 	 * @param name The name to be validated.
@@ -76,12 +89,10 @@ public class DesignValidator {
 	 * @throws ValidationException If the ID is invalid or not associated with a designer.
 	 * @throws ServiceException   If a service-related error occurs during validation.
 	 */
-	public static void validateCreatedById(int id) throws ValidationException, ServiceException {
+	public static void validateCreatedById(int createdBy) throws ValidationException, ServiceException {
 	    try {
-	        if (id <= 0) {
-	            throw new ValidationException("User ID cannot be less than or equal to zero");
-	        }
-	        UserDAO.checkDesignerIdExists(id);
+	    	validateId("Designer Id",createdBy);
+	        UserDAO.checkDesignerIdExists(createdBy);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred during created by id validation.", e);
 	    }
@@ -94,13 +105,11 @@ public class DesignValidator {
 	 * @throws ValidationException If the ID is invalid or not associated with a designer.
 	 * @throws ServiceException   If a service-related error occurs during validation.
 	 */
-	public static void validateDesignerId(int id) throws ValidationException, ServiceException {
+	public static void validateDesignerId(int designerId) throws ValidationException, ServiceException {
 	    try {
-	        if (id <= 0) {
-	            throw new ValidationException("Designer ID cannot be less than or equal to zero");
-	        }
-	        UserDAO.checkDesignerIdExists(id);
-	        DesignDAO.checkCreatedByExists(id);
+	    	validateId("Designer Id",designerId);
+	        UserDAO.checkDesignerIdExists(designerId);
+	        DesignDAO.checkCreatedByExists(designerId);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred during designer id validation.", e);
 	    }
@@ -113,12 +122,10 @@ public class DesignValidator {
 	 * @throws ValidationException If the ID is invalid (less than or equal to zero).
 	 * @throws ServiceException   If a service-related error occurs during validation.
 	 */
-	public static void validateDesignId(int id) throws ValidationException, ServiceException {
+	public static void validateDesignId(int designId) throws ValidationException, ServiceException {
 	    try {
-	        if (id <= 0) {
-	            throw new ValidationException("ID cannot be less than or equal to zero");
-	        }
-	        DesignDAO.checkIdExists(id);
+	    	validateId("Design Id",designId);
+	        DesignDAO.checkIdExists(designId);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred during design id validation.", e);
 	    }
@@ -149,9 +156,7 @@ public class DesignValidator {
 	 */
 	public static void validateStyleId(int styleId) throws ValidationException, ServiceException {
 	    try {
-	        if (styleId <= 0) {
-	            throw new ValidationException("ID cannot be less than or equal to zero");
-	        }
+	    	validateId("Style Id",styleId);
 	        StyleDAO.checkIdExists(styleId);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred during validation.", e);
