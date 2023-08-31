@@ -7,54 +7,73 @@ import in.fssa.minimal.dto.DesignAssetRespondDTO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
 import in.fssa.minimal.exception.ValidationException;
+import in.fssa.minimal.model.Asset;
+import in.fssa.minimal.model.Design;
 import in.fssa.minimal.model.DesignAsset;
 import in.fssa.minimal.validator.DesignAssetValidator;
-import in.fssa.minimal.validator.DesignValidator;
 
 public class DesignAssetService {
 	/**
 	 * Creates a new design asset.
 	 *
-	 * @param newDesignAsset The DesignAsset object to be created.
+	 * @param newDesign The Design object to be associated with the new design asset.
+	 * @param newAsset  The Asset object to be associated with the new design asset.
 	 * @throws ValidationException  If there's an issue with data validation.
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 * @throws ServiceException     If an error occurs during the service operation.
 	 */
-	public void createDesignAsset(DesignAsset newDesignAsset)
-			throws ValidationException, PersistenceException, ServiceException {
-		try {
-			DesignAssetValidator.validateDesignAsset(newDesignAsset);
-			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
-			designAssetDAO.create(newDesignAsset);
-		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred during connecting design and thier assets", e);
-		}
+	public void createDesignAsset(Design newDesign, Asset newAsset)
+	        throws ValidationException, PersistenceException, ServiceException {
+	    try {
+	        DesignAssetValidator.validateDesignAsset(newDesign, newAsset);
+	        DesignService designService = new DesignService();
+	        AssetService assetService = new AssetService();
+	        DesignAssetDAO designAssetDAO = new DesignAssetDAO();
+
+	        int designId = designService.createDesign(newDesign);
+	        int assetId = assetService.createAsset(newAsset);
+
+	        DesignAsset newDesignAsset = new DesignAsset();
+	        newDesignAsset.setDesignId(designId);
+	        newDesignAsset.setAssetsId(assetId);
+
+	        designAssetDAO.create(newDesignAsset);
+	    } catch (PersistenceException e) {
+	        throw new ServiceException("Error occurred during connecting design and their assets", e);
+	    }
 	}
 
 	/**
 	 * Updates an existing design asset.
 	 *
-	 * @param id                 The ID of the design asset to be updated.
-	 * @param updatedDesignAsset The updated DesignAsset object.
+	 * @param designAssetId      The ID of the design asset to be updated.
+	 * @param updateDesign       The updated Design object.
+	 * @param updateAsset        The updated Asset object.
 	 * @throws ValidationException  If there's an issue with data validation.
-	 * @throws PersistenceException If there's an issue with database interaction.
 	 * @throws ServiceException     If an error occurs during the service operation.
 	 */
-	public void updateDesignAsset(int designAssetId, DesignAsset updatedDesignAsset) throws ValidationException, ServiceException {
+	public void updateDesignAsset(int designAssetId, Design updateDesign, Asset updateAsset)
+	        throws ValidationException, ServiceException {
 	    try {
+	        DesignAssetValidator.validateUpdateDesignAsset(updateDesign, updateAsset);
 	        DesignAssetValidator.validateDesignAssetId(designAssetId);
+	        DesignAssetService designAssetService = new DesignAssetService();
+	        DesignAsset designAsset = designAssetService.findDesignIdByDesignAssetId(designAssetId);
+	        int designId = designAsset.getDesignId();
+	        int assetId = designAsset.getDesignId();
 
-	        if (updatedDesignAsset.getDesignId() != 0) {
-	            DesignValidator.validateDesignId(updatedDesignAsset.getDesignId());
-	        }
-	        if (updatedDesignAsset.getAssetsId() != 0) {
-	            DesignAssetValidator.validateAssetId(updatedDesignAsset.getAssetsId());
+	        if (updateDesign != null) {
+	            DesignService designService = new DesignService();
+	            designService.updateDesign(designId, updateDesign);
 	        }
 
-	        DesignAssetDAO designAssetDao = new DesignAssetDAO();
-	        designAssetDao.update(designAssetId, updatedDesignAsset);
+	        if (updateAsset != null) {
+	            AssetService assetService = new AssetService();
+	            assetService.updateAsset(assetId, updateAsset);
+	        }
+
 	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred during updating design and thier assets", e);
+	        throw new ServiceException("Error occurred during updating design and their assets", e);
 	    }
 	}
 
@@ -117,16 +136,23 @@ public class DesignAssetService {
 		}
 	}
 
+	/**
+	 * Retrieves the associated Design ID from a given Design Asset ID.
+	 *
+	 * @param designAssetId The Design Asset ID for which to retrieve the associated Design ID.
+	 * @return The associated DesignAsset object containing the Design ID.
+	 * @throws ValidationException If the provided Design Asset ID is invalid.
+	 * @throws ServiceException    If an error occurs while retrieving the Design ID by the given Design Asset ID.
+	 */
 	public DesignAsset findDesignIdByDesignAssetId(int designAssetId) throws ValidationException, ServiceException {
-		try {
-			DesignAssetValidator.validateDesignAssetId(designAssetId);
-			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
-			return designAssetDAO.findDesignAssetById(designAssetId);
-		} catch (PersistenceException e) {
-			throw new ServiceException("Error occurred while retrieving design id and assets id by designAsset id", e);
-		}
+	    try {
+	        DesignAssetValidator.validateDesignAssetId(designAssetId);
+	        DesignAssetDAO designAssetDAO = new DesignAssetDAO();
+	        return designAssetDAO.findDesignAssetById(designAssetId);
+	    } catch (PersistenceException e) {
+	        throw new ServiceException("Error occurred while retrieving design id and assets id by designAsset id", e);
+	    }
 	}
 
 
-	
 }

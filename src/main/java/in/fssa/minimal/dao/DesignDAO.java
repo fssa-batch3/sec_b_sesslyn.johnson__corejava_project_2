@@ -4,11 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.sql.Statement;
+import java.util.*;
 
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
@@ -25,28 +22,36 @@ public class DesignDAO {
 	 * @throws PersistenceException If a database error occurs during creation.
 	 */
 
-	public void create(Design newDesign) throws PersistenceException {
+	public int create(Design newDesign) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int designId = -1;
 		try {
 			String query = "INSERT INTO designs ( name, description,location,style_id,created_by ) VALUES (?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, newDesign.getName());
 			ps.setString(2, newDesign.getDescription());
 			ps.setString(3, newDesign.getLocation());
 			ps.setInt(4, newDesign.getStyleId());
 			ps.setInt(5, newDesign.getCreatedBy());
 			ps.executeUpdate();
+			rs = ps.getGeneratedKeys();
+			if(rs.next()) {
+				designId = rs.getInt(1);
+			}
 			System.out.println("Design has been created successfully");
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw new PersistenceException(e);
 		} finally {
-			ConnectionUtil.close(conn, ps);
+			ConnectionUtil.close(conn, ps,rs);
 		}
+		return designId;
 	}
 
 	/**

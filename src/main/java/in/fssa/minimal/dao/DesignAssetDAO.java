@@ -47,52 +47,7 @@ public class DesignAssetDAO {
 		}
 	}
 
-	/**
-	 * Updates an existing design asset.
-	 *
-	 * @param id                 The ID of the design asset to be updated.
-	 * @param updatedDesignAsset The updated DesignAsset object.
-	 * @throws PersistenceException If there's an issue with database interaction.
-	 * @throws ServiceException
-	 * @throws ValidationException
-	 */
-	public void update(int designAssetId, DesignAsset updatedDesignAsset) throws PersistenceException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		try {
-			StringBuilder queryBuilder = new StringBuilder("UPDATE design_assets SET ");
-			List<Object> values = new ArrayList<>();
-
-			if (updatedDesignAsset.getDesignId() != 0) {
-				queryBuilder.append("design_id = ?, ");
-				values.add(updatedDesignAsset.getDesignId());
-			}
-			if (updatedDesignAsset.getAssetsId() != 0) {
-				queryBuilder.append("assets_id = ?, ");
-				values.add(updatedDesignAsset.getAssetsId());
-			}
-
-			queryBuilder.setLength(queryBuilder.length() - 2);
-
-			queryBuilder.append(" WHERE id = ?");
-			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(queryBuilder.toString());
-
-			for (int i = 0; i < values.size(); i++) {
-				ps.setObject(i + 1, values.get(i));
-			}
-			ps.setInt(values.size() + 1, designAssetId);
-
-			ps.executeUpdate();
-			System.out.println("Design Asset has been updated successfully");
-		} catch (SQLException e) {
-
-			System.out.println(e.getMessage());
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, ps, null);
-		}
-	}
+	
 	/**
 	 * Deletes a design asset.
 	 *

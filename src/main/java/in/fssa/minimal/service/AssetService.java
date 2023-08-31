@@ -20,7 +20,8 @@ public class AssetService {
 	 * @throws PersistenceException If a database error occurs while creating the
 	 *                              asset.
 	 */
-	public void createAsset(Asset newAsset) throws ValidationException, ServiceException {
+	public int createAsset(Asset newAsset) throws ValidationException, ServiceException {
+		int assetId = -1;
 		try {
 			if (newAsset == null) {
 				throw new ValidationException("Asset object can not be null");
@@ -28,10 +29,11 @@ public class AssetService {
 			DesignAssetValidator.validateAssetUrl(newAsset.getAssetsUrl());
 
 			AssetDAO assetDAO = new AssetDAO();
-			assetDAO.create(newAsset);
+			assetId = assetDAO.create(newAsset);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while adding assets", e);
 		}
+		return assetId;
 	}
 
 	/**

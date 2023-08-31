@@ -14,18 +14,21 @@ public class DesignService {
 	 * Creates a new design entity in the system.
 	 *
 	 * @param newDesign The design to be created.
+	 * @return 
 	 * @throws ValidationException  If the input design is invalid.
 	 * @throws PersistenceException If a database error occurs during creation.
 	 * @throws ServiceException    If an error occurs during validation or database operation.
 	 */
-	public void createDesign(Design newDesign) throws ValidationException, PersistenceException, ServiceException {
-	    try {
+	public int createDesign(Design newDesign) throws ValidationException, PersistenceException, ServiceException {
+		 int designId = -1;
+		try {
 	        DesignValidator.validateDesign(newDesign);
 	        DesignDAO designDAO = new DesignDAO();
-	        designDAO.create(newDesign);
+	        designId =  designDAO.create(newDesign);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while creating design", e);
 	    }
+		return designId;
 	}
 
 	/**

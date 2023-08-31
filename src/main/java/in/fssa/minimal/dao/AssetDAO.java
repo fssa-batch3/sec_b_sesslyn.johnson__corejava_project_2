@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
@@ -18,15 +19,21 @@ public class AssetDAO {
 	 * @throws PersistenceException If a database error occurs while creating the
 	 *                              asset.
 	 */
-	public void create(Asset newAsset) throws PersistenceException {
+	public int create(Asset newAsset) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int assetId = -1;
 		try {
 			String query = "INSERT INTO assets ( asset_url ) VALUES (?)";
 			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, newAsset.getAssetsUrl());
 			ps.executeUpdate();
+			rs = ps.getGeneratedKeys();
+			if(rs.next()) {
+				assetId = rs.getInt(1);
+			}
 			System.out.println("Asset has been created successfully");
 
 		} catch (SQLException e) {
@@ -36,6 +43,7 @@ public class AssetDAO {
 		} finally {
 			ConnectionUtil.close(conn, ps);
 		}
+		return assetId;
 	}
 
 	/**

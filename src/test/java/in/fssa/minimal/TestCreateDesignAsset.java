@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
+import in.fssa.minimal.model.Design;
 import in.fssa.minimal.model.DesignAsset;
 import in.fssa.minimal.service.AssetService;
 import in.fssa.minimal.service.DesignAssetService;
@@ -47,7 +48,7 @@ public class TestCreateDesignAsset {
 	void testCreateAssetUrlAlreadyExists() {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/DFgL3URDOr4");
+		newAsset.setAssetsUrl("https://www.youtube.com/watch?v=abcdef");
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			assetService.createAsset(newAsset);
 		});
@@ -72,59 +73,44 @@ public class TestCreateDesignAsset {
 
 	@Test
 	@Order(4)
-	void testCreateUserWithValidInput() {
-		DesignAssetService designAssetService = new DesignAssetService();
-		DesignAsset newDesign = new DesignAsset();
-		newDesign.setAssetsId(2);
-		newDesign.setDesignId(1);
-		assertDoesNotThrow(() -> {
-			designAssetService.createDesignAsset(newDesign);
-		});
+	void testCreateDesignAssetWithValidInput() {
+	    DesignAssetService designAssetService = new DesignAssetService();
+	    DesignAsset newDesignAsset = new DesignAsset();
+	    Design newDesign = new Design();
+	    newDesign.setName("Modern 4 Bhk Home");
+	    newDesign.setDescription("Customer Name: Mr. Johnson & Mrs. Ruby \r\n" + "Apartment Size: 4 BHK, 3200 Sq Ft\r\n"
+	            + "Project Value:  35-38 Lakhs\r\n" + "Project Manager: Muzammil\r\n"
+	            + "Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of Johnson and Ruby offers some major design goals. The house is the true epitome of elegance and warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms, making them look regal. The accessories scattered throughout the space club everything together, radiating charm and opulence.\r\n");
+	    newDesign.setLocation("Chennai");
+	    newDesign.setStyleId(2);
+	    newDesign.setCreatedBy(2);
+	    
+	    Asset newAsset = new Asset();
+	    String generatedUrl = generateRandomUrl();
+	    newAsset.setAssetsUrl(generatedUrl);
+	   
+	 
+	    assertDoesNotThrow(() -> {
+	        designAssetService.createDesignAsset(newDesign, newAsset);
+	    });
 	}
-
+	
 	@Test
-	@Order(5)
-	void testCreateDesignWithInvalidInput() {
-		DesignAssetService designAssetService = new DesignAssetService();
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			designAssetService.createDesignAsset(null);
+	@Order(4)
+	void testCreateDesignAssetWithInValidInput() {
+	    DesignAssetService designAssetService = new DesignAssetService();
+	    Exception exception = assertThrows(ValidationException.class, () -> {
+	    	 designAssetService.createDesignAsset(null, null);
 		});
-		String expectedMessage = "Design Asset Object cannot be null";
+		String expectedMessage = "Design object and Asset Object cannot be null";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	@Test
-	@Order(6)
-	void testCreateDesignWithNonExistingAssetId() {
-		DesignAssetService designAssetService = new DesignAssetService();
-		DesignAsset newDesign = new DesignAsset();
-		newDesign.setAssetsId(5000);
-		newDesign.setDesignId(1);
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			designAssetService.createDesignAsset(newDesign);
-		});
-		String expectedMessage = "Asset Id doesn't exist";
-		String actualMessage = exception.getMessage();
 
-		assertEquals(expectedMessage, actualMessage);
-	}
+	
 
-	@Test
-	@Order(7)
-	void testCreateDesignWithNonExistingDesignId() {
-		DesignAssetService designAssetService = new DesignAssetService();
-		DesignAsset newDesign = new DesignAsset();
-		newDesign.setAssetsId(1);
-		newDesign.setDesignId(5000);
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			designAssetService.createDesignAsset(newDesign);
-		});
-		String expectedMessage = "Design Id doesn't exist";
-		String actualMessage = exception.getMessage();
-
-		assertEquals(expectedMessage, actualMessage);
-	}
+	
 
 }

@@ -23,7 +23,7 @@ class TestCreateUser {
 	    User newUser = new User();
 	    String randomString = generateRandomString(8); 
 	    newUser.setName("Sesslyn");
-	    newUser.setEmail(randomString + "@" + "google.com");
+	    newUser.setEmail(randomString + "@" + "gmail.com");
 	    newUser.setPassword("Jenusha@2303");
 	    newUser.setPhoneNumber(9863456787L);
 	    newUser.setDesigner(false);
@@ -40,7 +40,7 @@ class TestCreateUser {
 	    User newUser = new User();
 	    String randomString = generateRandomString(8); 
 	    newUser.setName("Sesslyn");
-	    newUser.setEmail(randomString + "@" + "google.com");
+	    newUser.setEmail(randomString + "@" + "gmail.com");
 	    newUser.setPassword("Jenusha@2303");
 	    newUser.setPhoneNumber(9863456787L);
 	    newUser.setDesigner(true);

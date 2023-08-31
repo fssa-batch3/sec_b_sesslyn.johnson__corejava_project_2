@@ -203,14 +203,12 @@ public class UserDAO implements UserInterface {
 				queryBuilder.append("phone_number = ?, ");
 				values.add(updatedUser.getPhoneNumber());
 			}
-			if (updatedUser.isDesigner()) {
-				// Check if the field is updated, otherwise keep the existing value
-				Boolean newValue = updatedUser.isDesigner();
-				Boolean oldValue = getDesignerValueFromDatabase(userId);
-				if (!newValue.equals(oldValue)) {
-					queryBuilder.append("is_designer = ?, ");
-					values.add(newValue);
-				}
+
+			Boolean newValue = updatedUser.isDesigner();
+			Boolean oldValue = getDesignerValueFromDatabase(userId);
+			if (!newValue.equals(oldValue)) {
+				queryBuilder.append("is_designer = ?, ");
+				values.add(newValue);
 			}
 
 			queryBuilder.setLength(queryBuilder.length() - 2);
@@ -234,7 +232,6 @@ public class UserDAO implements UserInterface {
 		}
 	}
 
-
 	private Boolean getDesignerValueFromDatabase(int userId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -246,7 +243,7 @@ public class UserDAO implements UserInterface {
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, userId);
 			rs = ps.executeQuery();
-			if(!rs.next()) {
+			if (rs.next()) {
 				r = rs.getBoolean("is_designer");
 			}
 		} catch (SQLException e) {
@@ -257,7 +254,6 @@ public class UserDAO implements UserInterface {
 			ConnectionUtil.close(conn, ps, rs);
 		}
 		return r;
-	
 	}
 
 	/**
@@ -557,7 +553,5 @@ public class UserDAO implements UserInterface {
 		}
 		return designerId;
 	}
-	
-	
-	
+
 }

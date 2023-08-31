@@ -70,7 +70,11 @@ class TestCreateDesign {
 		newDesign.setName("Modern 4 Bhk Home");
 		newDesign.setDescription("Customer Name: Mr. Johnson & Mrs. Ruby \r\n" + "Apartment Size: 4 BHK, 3200 Sq Ft\r\n"
 				+ "Project Value:  35-38 Lakhs\r\n" + "Project Manager: Muzammil\r\n"
-				+ "Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of Johnson and Ruby offers some major design goals. The house is the true epitome of elegance and warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms, making them look regal. The accessories scattered throughout the space club everything together, radiating charm and opulence.\r\n");
+				+ "Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of "
+				+ "Johnson and Ruby offers some major design goals. The house is the true epitome of elegance and"
+				+ " warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms,"
+				+ " making them look regal. The accessories scattered throughout the space club everything together, "
+				+ "radiating charm and opulence.\r\n");
 		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(2);
 		newDesign.setCreatedBy(2);

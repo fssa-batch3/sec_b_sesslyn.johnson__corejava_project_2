@@ -12,33 +12,33 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.User;
 import in.fssa.minimal.service.UserService;
+
 @TestMethodOrder(OrderAnnotation.class)
 class TestUpdateUser {
 
-	 @Test
-	    @Order(1)
-	    void testUpdateUser() {
-	        assertDoesNotThrow(() -> {
-	            UserService userService = new UserService();
-	            User newUser = new User();
-	            newUser.setName("Pappu");
-	            newUser.setPassword("Sess@2608");
-	            newUser.setPhoneNumber(6381040926L);
-	            userService.updateUser(1, newUser);
-	        });
-	    }
+	@Test
+	@Order(1)
+	void testUpdateUser() {
+		assertDoesNotThrow(() -> {
+			UserService userService = new UserService();
+			User newUser = new User();
+			newUser.setPhoneNumber(9952393567l);
+			newUser.setDesigner(false);
+			userService.updateUser(1, newUser);
+		});
+	}
 
-	    @Test
-	    @Order(2)
-	    void testUpdateSpecificFields() {
-	        assertDoesNotThrow(() -> {
-	            UserService userService = new UserService();
-	            User newUser = new User();
-	            newUser.setPassword("Sess@2608");
-	            newUser.setDesigner(false);
-	            userService.updateUser(1, newUser);
-	        });
-	    }
+	@Test
+	@Order(2)
+	void testUpdateSpecificFields() {
+		assertDoesNotThrow(() -> {
+			UserService userService = new UserService();
+			User newUser = new User();
+			newUser.setPassword("Sess@2608");
+			newUser.setDesigner(false);
+			userService.updateUser(1, newUser);
+		});
+	}
 
 	@Test
 	@Order(3)
