@@ -112,7 +112,7 @@ public class AppointmentDAO {
 				appointmentRespondDTO.setAddress(rs.getString("address"));
 				appointmentList.add(appointmentRespondDTO);
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -184,6 +184,118 @@ public class AppointmentDAO {
 	}
 
 	/**
+	 * Retrieves a set of appointment responses based on the provided 'fromUserId'.
+	 *
+	 * @param fromUserId The ID of the user initiating the appointments.
+	 * @return A Set of AppointmentRespondDTO objects representing the appointments.
+	 * @throws ValidationException  if the input validation fails.
+	 * @throws PersistenceException if there's an issue with data persistence.
+	 * @throws ServiceException     if a service-related error occurs.
+	 */
+	public Set<AppointmentRespondDTO> findAllAppointmentByFromUserId(int fromUserId)
+			throws ValidationException, PersistenceException, ServiceException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Set<AppointmentRespondDTO> appointmentList = new HashSet<>();
+		try {
+			String query = "SELECT id, from_user, to_user, email, phone_number, status, date, time, address"
+					+ " FROM appointments WHERE from_user = ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, fromUserId);
+			rs = ps.executeQuery();
+			User fromUserObj = null;
+			User toUserObj = null;
+			while (rs.next()) {
+				int toUser = rs.getInt("to_user");
+				fromUserObj = UserService.findByUserId(fromUserId);
+				toUserObj = UserService.findByUserId(toUser);
+
+				AppointmentRespondDTO appointmentRespondDTO = new AppointmentRespondDTO();
+				appointmentRespondDTO.setId(rs.getInt("id"));
+				appointmentRespondDTO.setFromUser(fromUserObj);
+				appointmentRespondDTO.setToUser(toUserObj);
+				appointmentRespondDTO.setStatus(rs.getString("status"));
+				Date date = rs.getDate("date");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				appointmentRespondDTO.setDate(dateFormat.format(date));
+
+				Time time = rs.getTime("time");
+				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+				appointmentRespondDTO.setTime(timeFormat.format(time));
+
+				appointmentRespondDTO.setAddress(rs.getString("address"));
+				appointmentList.add(appointmentRespondDTO);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e);
+		} finally {
+			ConnectionUtil.close(conn, ps, rs);
+		}
+		return appointmentList;
+	}
+
+	/**
+	 * Retrieves a set of appointment responses based on the provided 'toUserId'.
+	 *
+	 * @param toUserId The ID of the user initiating the appointments.
+	 * @return A Set of AppointmentRespondDTO objects representing the appointments.
+	 * @throws ValidationException  if the input validation fails.
+	 * @throws PersistenceException if there's an issue with data persistence.
+	 * @throws ServiceException     if a service-related error occurs.
+	 */
+	public Set<AppointmentRespondDTO> findAllAppointmentByToUserId(int toUserId)
+			throws ValidationException, PersistenceException, ServiceException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Set<AppointmentRespondDTO> appointmentList = new HashSet<>();
+		try {
+			String query = "SELECT id, from_user, to_user, email, phone_number, status, date, time, address"
+					+ " FROM appointments WHERE to_user = ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, toUserId);
+			rs = ps.executeQuery();
+			User fromUserObj = null;
+			User toUserObj = null;
+			while (rs.next()) {
+				int fromUser = rs.getInt("from_user");
+				fromUserObj = UserService.findByUserId(fromUser);
+				toUserObj = UserService.findByUserId(toUserId);
+
+				AppointmentRespondDTO appointmentRespondDTO = new AppointmentRespondDTO();
+				appointmentRespondDTO.setId(rs.getInt("id"));
+				appointmentRespondDTO.setFromUser(fromUserObj);
+				appointmentRespondDTO.setToUser(toUserObj);
+				appointmentRespondDTO.setStatus(rs.getString("status"));
+				Date date = rs.getDate("date");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				appointmentRespondDTO.setDate(dateFormat.format(date));
+
+				Time time = rs.getTime("time");
+				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+				appointmentRespondDTO.setTime(timeFormat.format(time));
+
+				appointmentRespondDTO.setAddress(rs.getString("address"));
+				appointmentList.add(appointmentRespondDTO);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e);
+		} finally {
+			ConnectionUtil.close(conn, ps, rs);
+		}
+		return appointmentList;
+	}
+
+	/**
 	 * Retrieves a specific appointment by its ID from the database.
 	 *
 	 * @param id The ID of the appointment to retrieve.
@@ -195,7 +307,8 @@ public class AppointmentDAO {
 	 * @throws ServiceException     If a service-related error occurs during the
 	 *                              operation.
 	 */
-	public AppointmentRespondDTO findById(int appointmentId) throws ValidationException, PersistenceException, ServiceException {
+	public AppointmentRespondDTO findById(int appointmentId)
+			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -215,7 +328,7 @@ public class AppointmentDAO {
 				fromUserObj = UserService.findByUserId(fromUser);
 				toUserObj = UserService.findByUserId(toUser);
 
-				 appointmentRespondDTO = new AppointmentRespondDTO();
+				appointmentRespondDTO = new AppointmentRespondDTO();
 				appointmentRespondDTO.setId(rs.getInt("id"));
 				appointmentRespondDTO.setFromUser(fromUserObj);
 				appointmentRespondDTO.setToUser(toUserObj);

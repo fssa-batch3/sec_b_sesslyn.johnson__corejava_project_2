@@ -150,7 +150,7 @@ class TestCreateUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
 		});
-		String expectedMessage = "User Name should only contain alphabetic characters";
+		String expectedMessage = "User Name should only contain alphabetic characters and allow only one space between words";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage,actualMessage);
@@ -204,7 +204,7 @@ class TestCreateUser {
 		UserService userService = new UserService();
 
 		User newUser = new User();
-		newUser.setName("Sam");
+		newUser.setName("Sam Victor");
 		newUser.setEmail("sess@");
 		newUser.setPassword("Sam@2303");
 		newUser.setPhoneNumber(9923456787L);
@@ -225,7 +225,7 @@ class TestCreateUser {
 		UserService userService = new UserService();
 
 		User newUser = new User();
-		newUser.setName("Pappu");
+		newUser.setName(" Pappu");
 		newUser.setEmail("sesslyn@gmail.com");
 		newUser.setPassword("Sess@1512");
 		newUser.setPhoneNumber(6381040916L);

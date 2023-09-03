@@ -74,9 +74,53 @@ class TestReadAppointment {
 
 		assertEquals(expectedMessage, actualMessage);
 	}
-
+	
 	@Test
 	@Order(6)
+	void testGetAllByFromUserId() throws ValidationException, PersistenceException {
+		AppointmentService appointmentService = new AppointmentService();
+		assertDoesNotThrow(() -> {
+			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByFromUserId(3);
+		});
+	}
+
+	@Test
+	@Order(7)
+	void testGetAllByFromUserIdNotExist() {
+		AppointmentService appointmentService = new AppointmentService();
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByFromUserId(1000);
+		});
+		String expectedMessage = "User Id doesn't exist";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	@Order(8)
+	void testGetAllByToUserId() throws ValidationException, PersistenceException {
+		AppointmentService appointmentService = new AppointmentService();
+		assertDoesNotThrow(() -> {
+			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByToUserId(2);
+		});
+	}
+
+	@Test
+	@Order(9)
+	void testGetAllByToUserIdNotExist() {
+		AppointmentService appointmentService = new AppointmentService();
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByToUserId(1);
+		});
+		String expectedMessage = "Designer Id doesn't exist";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	@Order(10)
 	void testGetAppointmentById() {
 		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {

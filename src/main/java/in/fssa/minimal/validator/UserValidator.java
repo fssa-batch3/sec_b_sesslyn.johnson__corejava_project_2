@@ -12,7 +12,7 @@ import in.fssa.minimal.util.StringUtil;
 public class UserValidator {
 
 	// Regular expression patterns for validation
-	private static final String NAME_PATTERN = "^[A-Za-z]{3,}$";
+	private static final String NAME_PATTERN = "^[A-Za-z]+(\\s[A-Za-z]+)?$";
 	private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+([a-zA-Z0-9_+\\-\\. ]*[a-zA-Z0-9]+)?@[a-zA-Z0-9]+([a-zA-Z0-9\\-\\.]*[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$";
 	private static final String PATTERN = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}";
 
@@ -44,14 +44,21 @@ public class UserValidator {
 	 * @throws ValidationException If the name does not match the required format.
 	 */
 	public static void validateName(String userName) throws ValidationException {
-		StringUtil.rejectIfInvalidString(userName, "User Name");
-		if (userName.length() < 3) {
-			throw new ValidationException("User Name should be at least 3 characters long");
-		}
-		if (!Pattern.matches(NAME_PATTERN, userName)) {
-			throw new ValidationException("User Name should only contain alphabetic characters");
-		}
+	    StringUtil.rejectIfInvalidString(userName, "User Name");
+	    
+	    // Trim leading and trailing spaces
+	    userName = userName.trim();
+	    
+	    if (userName.length() < 3) {
+	        throw new ValidationException("User Name should be at least 3 characters long");
+	    }
+	    
+	    if (!Pattern.matches(NAME_PATTERN, userName)) {
+	        throw new ValidationException("User Name should only contain alphabetic characters and allow only one space between words");
+	    }
 	}
+
+
 
 	/**
 	 * Validates an email address using a regular expression pattern.

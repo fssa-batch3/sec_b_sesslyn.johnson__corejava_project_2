@@ -31,16 +31,14 @@ public class AppointmentValidator {
 				throw new ValidationException("Appointment object cannot be null");
 			}
 
-			validateId("From user Id", appointment.getFromUser());
-			validateId("To user Id", appointment.getToUser());
+			validateFromUserId(appointment.getFromUser());
+			validateToUserId(appointment.getToUser());
 			validateEmail(appointment.getEmail());
 			validatePhoneNumber(appointment.getPhoneNumber());
 			validateStatus(appointment.getStatus());
 			validateDate(appointment.getDate());
 			validateTime(appointment.getTime());
 
-			UserDAO.checkIdExists(appointment.getFromUser());
-			UserDAO.checkDesignerIdExists(appointment.getToUser());
 			AppointmentDAO.checkFromUserHasUpcomingAppointments(appointment.getFromUser());
 			AppointmentDAO.checkToUserHasAppointmentAtSameDateTime(appointment.getToUser(), appointment.getDate(),
 					appointment.getTime());
@@ -59,6 +57,38 @@ public class AppointmentValidator {
 	public static void validateId(String name, int appointmentId) throws ValidationException {
 		if (appointmentId <= 0) {
 			throw new ValidationException(name + " cannot be less than or equal to zero");
+		}
+	}
+
+	/**
+	 * Validates the 'fromUserId' parameter to ensure it is a valid user ID.
+	 *
+	 * @param fromUserId The user ID to be validated.
+	 * @throws ValidationException If the 'fromUserId' is not valid.
+	 * @throws ServiceException    If an error occurs during the validation process.
+	 */
+	public static void validateFromUserId(int fromUserId) throws ValidationException, ServiceException {
+		validateId("User Id", fromUserId);
+		try {
+			UserDAO.checkIdExists(fromUserId);
+		} catch (PersistenceException e) {
+			throw new ServiceException("Error occurred during created by id validation.", e);
+		}
+	}
+
+	/**
+	 * Validates the 'toUserId' parameter to ensure it is a valid designer ID.
+	 *
+	 * @param toUserId The designer ID to be validated.
+	 * @throws ValidationException If the 'toUserId' is not valid.
+	 * @throws ServiceException    If an error occurs during the validation process.
+	 */
+	public static void validateToUserId(int toUserId) throws ValidationException, ServiceException {
+		validateId("Designer Id", toUserId);
+		try {
+			UserDAO.checkDesignerIdExists(toUserId);
+		} catch (PersistenceException e) {
+			throw new ServiceException("Error occurred during created by id validation.", e);
 		}
 	}
 

@@ -84,7 +84,7 @@ class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.createAppointment(newAppointment);
 		});
-		String expectedMessage = "From user Id cannot be less than or equal to zero";
+		String expectedMessage = "User Id cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
@@ -106,7 +106,7 @@ class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.createAppointment(newAppointment);
 		});
-		String expectedMessage = "To user Id cannot be less than or equal to zero";
+		String expectedMessage = "Designer Id cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
