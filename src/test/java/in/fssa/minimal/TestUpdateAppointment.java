@@ -27,9 +27,9 @@ class TestUpdateAppointment {
 	void testUpdateRequestStatusWithStatusPattern() throws ValidationException {
 		AppointmentService appService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			appService.updateAppointmentRequestStatus(1, "rejected");
+			appService.updateAppointmentRequestStatus(1, "waiting_list");
 		});
-		String expectedMessage = "Approved appointment cannot be re update";
+		String expectedMessage = "Appointment cannot be re update";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);

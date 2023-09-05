@@ -554,4 +554,44 @@ public class UserDAO implements UserInterface {
 		return designerId;
 	}
 
+	/**
+	 * Retrieves a user from the database based on their user ID.
+	 *
+	 * @param userId The ID of the user to retrieve.
+	 * @return The User object corresponding to the provided user ID.
+	 * @throws PersistenceException If a database-related error occurs during
+	 *                              retrieval.
+	 */
+	public User findByUserIdForAppointment(int userId) throws PersistenceException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		User user = null;
+		try {
+			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
+					+ "FROM users WHERE id = ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, userId);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				user = new User();
+				user.setId(rs.getInt("id"));
+				user.setName(rs.getString("name"));
+				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
+				user.setPhoneNumber(rs.getLong("phone_number"));
+				user.setActive(rs.getBoolean("is_active"));
+				user.setDesigner(rs.getBoolean("is_designer"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e);
+		} finally {
+			ConnectionUtil.close(conn, ps, rs);
+		}
+		return user;
+	}
+
 }

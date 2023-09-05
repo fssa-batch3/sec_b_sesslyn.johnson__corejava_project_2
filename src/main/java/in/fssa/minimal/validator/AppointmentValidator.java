@@ -167,8 +167,8 @@ public class AppointmentValidator {
 	 */
 	public static void validateUpdateStatus(String status) throws ValidationException {
 		StringUtil.rejectIfInvalidString(status, "Status");
-		if (!"approved".equalsIgnoreCase(status)) {
-			throw new ValidationException("Approved appointment cannot be re update");
+		if ("waiting_list".equalsIgnoreCase(status)) {
+			throw new ValidationException("Appointment cannot be re update");
 		}
 	}
 

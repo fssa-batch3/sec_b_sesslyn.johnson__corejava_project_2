@@ -156,4 +156,13 @@ public class UserService {
 	    }
 	}
 
+	public static User findByUserIdForAppointment(int userId) throws ValidationException, ServiceException {
+	    try {
+	        UserValidator.validateId("Id", userId);
+	        UserDAO userDAO = new UserDAO();
+	        return userDAO.findByUserIdForAppointment(userId);
+	    } catch (PersistenceException e) {
+	        throw new ServiceException("Error occurred while finding user by their id.", e);
+	    }
+	}
 }

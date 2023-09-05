@@ -93,8 +93,8 @@ public class AppointmentDAO {
 				int fromUser = rs.getInt("from_user");
 				int toUser = rs.getInt("to_user");
 
-				fromUserObj = UserService.findByUserId(fromUser);
-				toUserObj = UserService.findByUserId(toUser);
+				fromUserObj = UserService.findByUserIdForAppointment(fromUser);
+				toUserObj = UserService.findByUserIdForAppointment(toUser);
 
 				AppointmentRespondDTO appointmentRespondDTO = new AppointmentRespondDTO();
 				appointmentRespondDTO.setId(rs.getInt("id"));
@@ -265,8 +265,8 @@ public class AppointmentDAO {
 			User toUserObj = null;
 			while (rs.next()) {
 				int fromUser = rs.getInt("from_user");
-				fromUserObj = UserService.findByUserId(fromUser);
-				toUserObj = UserService.findByUserId(toUserId);
+				fromUserObj = UserService.findByUserIdForAppointment(fromUser);
+				toUserObj = UserService.findByUserIdForAppointment(toUserId);
 
 				AppointmentRespondDTO appointmentRespondDTO = new AppointmentRespondDTO();
 				appointmentRespondDTO.setId(rs.getInt("id"));
@@ -396,7 +396,7 @@ public class AppointmentDAO {
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT id FROM appointments WHERE from_user = ? AND date >= CURRENT_DATE";
+			String query = "SELECT id FROM appointments WHERE from_user = ? AND date >= CURRENT_DATE AND (status = 'waiting_list' OR status = 'approved')";
 			conn = ConnectionUtil.getConnection();
 			pre = conn.prepareStatement(query);
 			pre.setInt(1, fromUser);
