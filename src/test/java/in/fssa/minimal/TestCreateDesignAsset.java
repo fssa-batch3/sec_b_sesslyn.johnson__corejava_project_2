@@ -48,7 +48,7 @@ public class TestCreateDesignAsset {
 	void testCreateAssetUrlAlreadyExists() {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://www.youtube.com/watch?v=abcdef");
+		newAsset.setAssetsUrl("https://youtu.be/Hu-TLhYu1wY?si=3PDuCbvGFFNfYTDR");
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			assetService.createAsset(newAsset);
 		});

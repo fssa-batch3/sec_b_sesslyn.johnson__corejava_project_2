@@ -161,12 +161,12 @@ class TestCreateAppointment {
 	void testCreateAppointmentWithDesignerHasAppointment() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
-		newAppointment.setFromUser(6);
+		newAppointment.setFromUser(15);
 		newAppointment.setToUser(2);
-		newAppointment.setEmail("sess@gmail.com");
-		newAppointment.setPhoneNumber(6381040916l);
+		newAppointment.setEmail("jelisha@gmail.com");
+		newAppointment.setPhoneNumber(9787896543l);
 		newAppointment.setStatus("waiting_list");
-		newAppointment.setDate("2023-09-26");
+		newAppointment.setDate("2023-09-10");
 		newAppointment.setTime("10:00:00");
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {
