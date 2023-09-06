@@ -25,6 +25,7 @@ class TestCreateUser {
 	    newUser.setName("Sesslyn");
 	    newUser.setEmail(randomString + "@" + "gmail.com");
 	    newUser.setPassword("Jenusha@2303");
+	    newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 	    newUser.setPhoneNumber(9863456787L);
 	    newUser.setDesigner(false);
 
@@ -42,6 +43,7 @@ class TestCreateUser {
 	    newUser.setName("Sesslyn");
 	    newUser.setEmail(randomString + "@" + "gmail.com");
 	    newUser.setPassword("Jenusha@2303");
+	    newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 	    newUser.setPhoneNumber(9863456787L);
 	    newUser.setDesigner(true);
 
@@ -84,6 +86,7 @@ class TestCreateUser {
 		newUser.setName(null);
 		newUser.setEmail("sam@gmail.com");
 		newUser.setPassword("Sam@2303");
+		newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
@@ -104,6 +107,8 @@ class TestCreateUser {
 		newUser.setName("");
 		newUser.setEmail("sam@gmail.com");
 		newUser.setPassword("Sam@2303");
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
@@ -124,6 +129,8 @@ class TestCreateUser {
 		newUser.setName("Se");
 		newUser.setEmail("sam@gmail.com");
 		newUser.setPassword("Sam@2303");
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
@@ -144,6 +151,8 @@ class TestCreateUser {
 		newUser.setName("S78s");
 		newUser.setEmail("sam@gmail.com");
 		newUser.setPassword("Sam@2303");
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
@@ -165,6 +174,8 @@ class TestCreateUser {
 		newUser.setName("Sam");
 		newUser.setEmail(null);
 		newUser.setPassword("Sam@2303");
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
@@ -186,6 +197,8 @@ class TestCreateUser {
 		newUser.setName("Sam");
 		newUser.setEmail("");
 		newUser.setPassword("Sam@2303");
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
@@ -207,6 +220,8 @@ class TestCreateUser {
 		newUser.setName("Sam Victor");
 		newUser.setEmail("sess@");
 		newUser.setPassword("Sam@2303");
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
@@ -228,6 +243,8 @@ class TestCreateUser {
 		newUser.setName(" Pappu");
 		newUser.setEmail("sesslyn@gmail.com");
 		newUser.setPassword("Sess@1512");
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(6381040916L);
 		newUser.setDesigner(false);
 
@@ -248,6 +265,8 @@ class TestCreateUser {
 		newUser.setName("Sam");
 		newUser.setEmail("bcde@gmail.com");
 		newUser.setPassword(null);
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
@@ -268,6 +287,8 @@ class TestCreateUser {
 		newUser.setName("Sam");
 		newUser.setEmail("bcde@gmail.com");
 		newUser.setPassword("");
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
@@ -288,6 +309,8 @@ class TestCreateUser {
 	    newUser.setName("Sam");
 	    newUser.setEmail("joel@gmail.com");
 	    newUser.setPassword("Sam23890"); 
+	    newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 	    newUser.setPhoneNumber(9923456787L);
 	    newUser.setDesigner(false);
 
@@ -312,6 +335,8 @@ class TestCreateUser {
 		newUser.setName("Sam");
 		newUser.setEmail("zxya@gmail.com");
 		newUser.setPassword("Sam23");
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(9923456787L);
 		newUser.setDesigner(false);
 
@@ -331,6 +356,8 @@ class TestCreateUser {
 		newUser.setName("Sam");
 		newUser.setEmail("bcde@gmail.com");
 		newUser.setPassword("Sam@2303");
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(-2);
 		newUser.setDesigner(false);
 
@@ -352,6 +379,8 @@ class TestCreateUser {
 		newUser.setName("Sam");
 		newUser.setEmail("bcde@gmail.com");
 		newUser.setPassword("Sam@2303");
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(98760567890L);
 		newUser.setDesigner(false);
 
@@ -373,6 +402,8 @@ class TestCreateUser {
 		newUser.setName("Sam");
 		newUser.setEmail("bcde@gmail.com");
 		newUser.setPassword("Sam@2303");
+		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+		  
 		newUser.setPhoneNumber(3895673456L);
 		newUser.setDesigner(false);
 
@@ -381,6 +412,72 @@ class TestCreateUser {
 		});
 
 		String expectedMessage = "Invalid phone number format. Make sure not to include +91";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage,actualMessage);
+	}
+	
+	@Test
+	@Order(19)
+	 void testCreateUserWithImageNull() {
+		UserService userService = new UserService();
+		User newUser = new User();
+		newUser.setName("Sam");
+		newUser.setEmail("bcde@gmail.com");
+		newUser.setPassword("Sam@2303");
+		  newUser.setImage(null);
+		newUser.setPhoneNumber(3895673456L);
+		newUser.setDesigner(false);
+
+		ValidationException exception = assertThrows(ValidationException.class, () -> {
+			userService.createUser(newUser);
+		});
+
+		String expectedMessage = "Image cannot be null or empty";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage,actualMessage);
+	}
+	
+	@Test
+	@Order(20)
+	 void testCreateUserWithImageEmpty() {
+		UserService userService = new UserService();
+		User newUser = new User();
+		newUser.setName("Sam");
+		newUser.setEmail("bcde@gmail.com");
+		newUser.setPassword("Sam@2303");
+		  newUser.setImage("");
+		newUser.setPhoneNumber(3895673456L);
+		newUser.setDesigner(false);
+
+		ValidationException exception = assertThrows(ValidationException.class, () -> {
+			userService.createUser(newUser);
+		});
+
+		String expectedMessage = "Image cannot be null or empty";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage,actualMessage);
+	}
+	
+	@Test
+	@Order(21)
+	 void testCreateUserWithInvalidImageUrl() {
+		UserService userService = new UserService();
+		User newUser = new User();
+		newUser.setName("Sam");
+		newUser.setEmail("bcde@gmail.com");
+		newUser.setPassword("Sam@2303");
+		  newUser.setImage("wp-content/uploads/2021/07/headshot-for-startup.jpg");
+		newUser.setPhoneNumber(3895673456L);
+		newUser.setDesigner(false);
+
+		ValidationException exception = assertThrows(ValidationException.class, () -> {
+			userService.createUser(newUser);
+		});
+
+		String expectedMessage = "Invalid image format. Please provide a valid image url.";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage,actualMessage);

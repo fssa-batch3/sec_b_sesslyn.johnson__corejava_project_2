@@ -15,6 +15,7 @@ public class UserValidator {
 	private static final String NAME_PATTERN = "^[A-Za-z]+(\\s[A-Za-z]+)?$";
 	private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+([a-zA-Z0-9_+\\-\\. ]*[a-zA-Z0-9]+)?@[a-zA-Z0-9]+([a-zA-Z0-9\\-\\.]*[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$";
 	private static final String PATTERN = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}";
+	private static final String IMAGE_PATTERN = "^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$";
 
 	/**
 	 * Validates a User object by checking its attributes including name, email,
@@ -34,6 +35,9 @@ public class UserValidator {
 		validateName(user.getName());
 		validateEmailCreate(user.getEmail());
 		validatePassword(user.getPassword());
+		if(user.getImage() != null) {
+		validateImage(user.getImage());
+		}
 		validatePhoneNumber(user.getPhoneNumber());
 	}
 
@@ -188,5 +192,12 @@ public class UserValidator {
 			throw new ServiceException("Error occurred during validation", e);
 		}
 	}
+	
+	public static void validateImage(String image) throws ValidationException, ServiceException {
+		StringUtil.rejectIfInvalidString(image, "Image");
+		if (!image.matches(IMAGE_PATTERN)) {
+			throw new ValidationException("Invalid image format. Please provide a valid image url.");
+		}
+}
 
 }

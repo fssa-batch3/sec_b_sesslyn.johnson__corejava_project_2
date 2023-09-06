@@ -37,7 +37,7 @@ public class TestUpdateDesignAsset {
 	void testUpdateAssetWithExistingUrl() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/DFgL3URDOr4");
+		newAsset.setAssetsUrl("https://youtu.be/Hu-TLhYu1wY?si=3PDuCbvGFFNfYTDR");
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			assetService.updateAsset(1, newAsset);
 		});

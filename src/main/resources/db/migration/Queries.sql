@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(50) NOT NULL,
+    image VARCHAR(500) NOT NULL,
     is_designer BOOLEAN DEFAULT false,
     phone_number VARCHAR(50) NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
@@ -68,23 +69,23 @@ CREATE TABLE IF NOT EXISTS design_assets (
 );
 
 --  User
-INSERT INTO users (name, email, password, is_designer, phone_number)
+INSERT INTO users (name, email, password,image, is_designer, phone_number)
 VALUES
-       ('Sesslyn', 'sesslyn@gmail.com', 'Sesslyn@12', 0, '6381040916'),
-       ('Jerusheya', 'jerusheya@gmail.com', 'Jerusheya@12', 1, '9323255969'),  -- designer
-	   ('Ruby', 'ruby@gmail.com', 'Ruby@2703', 0, '8778061351'),
-       ('Johnson', 'johnson@gmail.com', 'Johnson@23', 1, '8754797667'), -- designer
-       ('Ashely', 'ash@gmail.com', 'Ashely@06', 0, '9854678989'),
-       ('Sam Victor', 'sam@gmail.com', 'Sam@2312', 1, '6789598765'), -- designer
-       ('Gauri Khan', 'gaurikhan@gmail.com', 'GauriKhan@13', 1, '9952344564'), -- designer
-       ('Sunita Kohli', 'sunitakohli@gmail.com', 'SunithaKohli@13', 1, '8778096547'), -- designer
-       ('Manit Rastogi', 'manitrastogi@gmail.com', 'ManitRastogi@13', 1, '7899872344'), -- designer
-       ('Rajiv Saini', 'rajivsaini@gmail.com', 'RajivSaini@13', 1, '8778061324'),  -- designer
-		('Anjum Jung', 'anjumjung@gmail.com', 'AnjumJung@13', 1, '9873456782'), -- designer
-       ('Sussanne Khan', 'sussannekhann@gmail.com', 'SussanneKhan@13', 1, '6787685439'), -- designer
-       ('Sarah Sham', 'sarahsham@gmail.com', 'SarahSham@13', 1, '8678543456'), -- designer
-        ('Deepika', 'deepika@gmail.com', 'Deepika@02', 0, '8678543456'),
-        ('Jelsiha', 'jelisha@gmail.com', 'Jelisha@20', 0, '9787896543'); 
+       ('Sesslyn', 'sesslyn@gmail.com', 'Sesslyn@12',"https://ca.slack-edge.com/T032648LE-U041XLL6BRS-7084b9379239-512", 0, '6381040916'),
+       ('Jerusheya', 'jerusheya@gmail.com', 'Jerusheya@12',"https://iili.io/J9YqCx9.jpg", 1, '9323255969'),  -- designer
+	   ('Ruby', 'ruby@gmail.com', 'Ruby@2703',"https://iili.io/J9YAvZx.jpg", 0, '8778061351'),
+       ('Johnson', 'johnson@gmail.com', 'Johnson@23',"https://iili.io/J9YAwve.jpg", 1, '8754797667'), -- designer
+       ('Ashely', 'ash@gmail.com', 'Ashely@06',"https://iili.io/J9YHkhJ.jpg", 0, '9854678989'),
+       ('Sam Victor', 'sam@gmail.com', 'Sam@2312',"https://iili.io/J9Yzrej.jpg", 1, '6789598765'), -- designer
+       ('Gauri Khan', 'gaurikhan@gmail.com', 'GauriKhan@13',"https://www.worldblaze.in/wp-content/uploads/2019/02/Gauri-Khan.jpg", 1, '9952344564'), -- designer
+       ('Sunita Kohli', 'sunitakohli@gmail.com', 'SunithaKohli@13', "https://upload.wikimedia.org/wikipedia/commons/3/30/Sunita_Kohli.jpg",1, '8778096547'), -- designer
+       ('Manit Rastogi', 'manitrastogi@gmail.com', 'ManitRastogi@13',"https://delightfull.eu/inspirations/wp-content/uploads/2019/06/2-4-683x1024.jpg", 1, '7899872344'), -- designer
+       ('Rajiv Saini', 'rajivsaini@gmail.com', 'RajivSaini@13',"https://www.architectandinteriorsindia.com/cloud/2021/11/15/Rajiv-Saini-2.jpg", 1, '8778061324'),  -- designer
+		('Anjum Jung', 'anjumjung@gmail.com', 'AnjumJung@13',"https://wallpapers.com/images/hd/professional-profile-pictures-1427-x-1920-txfewtw6mcg0y6hk.jpg", 1, '9873456782'), -- designer
+       ('Sussanne Khan', 'sussannekhann@gmail.com', 'SussanneKhan@13',"https://superstarsbio.com/wp-content/uploads/2018/11/Sussanne-Khan-1.jpg", 1, '6787685439'), -- designer
+       ('Sarah Sham', 'sarahsham@gmail.com', 'SarahSham@13',"https://goodhomes.wwmindia.com/content/2020/apr/sarah-sham1587387881.jpg", 1, '8678543456'), -- designer
+        ('Deepika', 'deepika@gmail.com', 'Deepika@02', "https://iili.io/J9YHgrN.jpg",0, '8678543456'),
+        ('Jelsiha', 'jelisha@gmail.com', 'Jelisha@20',"https://iili.io/J9YHeIa.jpg", 0, '9787896543'); 
        
 --  Appointment
 INSERT INTO appointments (from_user, to_user, email, phone_number, status, date, time)
@@ -151,6 +152,10 @@ VALUES ("https://youtu.be/OzUkvzyBttA"),
 -- Design Assets
 INSERT INTO design_assets (design_id, assets_id)
 VALUES (1, 3), (2, 4);
+
+UPDATE users
+SET is_active = 1
+WHERE id = 1;
 
 -- Select query
 SELECT *

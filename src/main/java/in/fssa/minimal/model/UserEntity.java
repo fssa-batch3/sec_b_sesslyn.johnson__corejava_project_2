@@ -6,6 +6,7 @@ public abstract class UserEntity {
 	private int id;
 	private String email;
 	private String password;
+	private String image;
 	private long phoneNumber;
 	private boolean isDesigner;
 	private boolean isActive = true;
@@ -41,6 +42,14 @@ public abstract class UserEntity {
 	public void setPassword(String passsword) {
 		this.password = passsword;
 	}
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	public long getPhoneNumber() {
 		return phoneNumber;
@@ -66,10 +75,11 @@ public abstract class UserEntity {
 		this.isActive = isActive;
 	}
 
-	
 	@Override
 	public String toString() {
-		return "UserEntity [name=" + name + ", id=" + id + ", email=" + email + ", password=" + password
-				+ ", phoneNumer=" + phoneNumber + ", isDesigner=" + isDesigner + ", isActive=" + isActive + "]";
+		return "UserEntity [name=" + name + ", id=" + id + ", email=" + email + ", password=" + password + ", image="
+				+ image + ", phoneNumber=" + phoneNumber + ", isDesigner=" + isDesigner + ", isActive=" + isActive
+				+ "]";
 	}
+	
 }

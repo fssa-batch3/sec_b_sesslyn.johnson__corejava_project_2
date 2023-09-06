@@ -96,6 +96,9 @@ public class UserService {
 	        if (updatedUser.getPassword() != null) {
 	            UserValidator.validatePassword(updatedUser.getPassword());
 	        }
+	        if (updatedUser.getImage() != null) {
+	            UserValidator.validateImage(updatedUser.getImage());
+	        }
 	        if (updatedUser.getPhoneNumber() != 0) {
 	            UserValidator.validatePhoneNumber(updatedUser.getPhoneNumber());
 	        }

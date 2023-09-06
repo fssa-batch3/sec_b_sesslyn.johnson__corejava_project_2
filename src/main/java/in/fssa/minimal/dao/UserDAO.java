@@ -32,7 +32,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		Set<User> userList = new HashSet<>();
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
+			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
 					+ "FROM users WHERE is_active = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
@@ -43,6 +43,7 @@ public class UserDAO implements UserInterface {
 				user.setName(rs.getString("name"));
 				user.setEmail(rs.getString("email"));
 				user.setPassword(rs.getString("password"));
+				user.setImage(rs.getString("image"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
 				user.setActive(rs.getBoolean("is_active"));
 				user.setDesigner(rs.getBoolean("is_designer"));
@@ -73,7 +74,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		User user = null;
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
+			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
 					+ "FROM users WHERE is_active = 1 AND id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
@@ -86,6 +87,7 @@ public class UserDAO implements UserInterface {
 				user.setEmail(rs.getString("email"));
 				user.setPassword(rs.getString("password"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
+				user.setImage(rs.getString("image"));
 				user.setActive(rs.getBoolean("is_active"));
 				user.setDesigner(rs.getBoolean("is_designer"));
 			}
@@ -114,7 +116,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		User user = null;
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
+			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
 					+ "FROM users WHERE is_active = 1 AND email = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
@@ -126,6 +128,7 @@ public class UserDAO implements UserInterface {
 				user.setName(rs.getString("name"));
 				user.setEmail(rs.getString("email"));
 				user.setPassword(rs.getString("password"));
+				user.setImage(rs.getString("image"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
 				user.setActive(rs.getBoolean("is_active"));
 				user.setDesigner(rs.getBoolean("is_designer"));
@@ -154,14 +157,20 @@ public class UserDAO implements UserInterface {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
-			String query = "INSERT INTO users (name, email, password, is_designer, phone_number) VALUES (?,?,?,?,?)";
+			String query = "INSERT INTO users (name, email, password, image,is_designer, phone_number) VALUES (?,?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, newUser.getName());
 			ps.setString(2, newUser.getEmail());
 			ps.setString(3, newUser.getPassword());
-			ps.setBoolean(4, newUser.isDesigner());
-			ps.setLong(5, newUser.getPhoneNumber());
+			if (newUser.getImage() != null) {
+				ps.setString(4,newUser.getImage());
+			} else {
+				ps.setNull(4, java.sql.Types.VARCHAR);
+			}
+			
+			ps.setBoolean(5, newUser.isDesigner());
+			ps.setLong(6, newUser.getPhoneNumber());
 			ps.executeUpdate();
 			System.out.println("User has been created successfully");
 
@@ -198,6 +207,10 @@ public class UserDAO implements UserInterface {
 			if (updatedUser.getPassword() != null) {
 				queryBuilder.append("password = ?, ");
 				values.add(updatedUser.getPassword());
+			}
+			if (updatedUser.getImage() != null) {
+				queryBuilder.append("image = ?, ");
+				values.add(updatedUser.getImage());
 			}
 			if (updatedUser.getPhoneNumber() != 0) {
 				queryBuilder.append("phone_number = ?, ");
@@ -296,7 +309,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		Set<User> userList = new HashSet<>();
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
+			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
 					+ "FROM users WHERE is_active = 1 AND is_designer = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
@@ -307,6 +320,7 @@ public class UserDAO implements UserInterface {
 				user.setName(rs.getString("name"));
 				user.setEmail(rs.getString("email"));
 				user.setPassword(rs.getString("password"));
+				user.setImage(rs.getString("image"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
 				user.setActive(rs.getBoolean("is_active"));
 				user.setDesigner(rs.getBoolean("is_designer"));
@@ -336,7 +350,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		User user = null;
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
+			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
 					+ "FROM users WHERE is_active = 1 AND is_designer = 1 AND id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
@@ -348,6 +362,7 @@ public class UserDAO implements UserInterface {
 				user.setName(rs.getString("name"));
 				user.setEmail(rs.getString("email"));
 				user.setPassword(rs.getString("password"));
+				user.setImage(rs.getString("image"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
 				user.setActive(rs.getBoolean("is_active"));
 				user.setDesigner(rs.getBoolean("is_designer"));
@@ -536,7 +551,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		int designerId = 0;
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
+			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
 					+ "FROM users WHERE is_active = 1 AND is_designer = 1 ORDER BY created_at DESC LIMIT 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
@@ -568,7 +583,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		User user = null;
 		try {
-			String query = "SELECT id,name,email,password,phone_number,is_active,is_designer "
+			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
 					+ "FROM users WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
@@ -580,6 +595,7 @@ public class UserDAO implements UserInterface {
 				user.setName(rs.getString("name"));
 				user.setEmail(rs.getString("email"));
 				user.setPassword(rs.getString("password"));
+				user.setImage(rs.getString("image"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
 				user.setActive(rs.getBoolean("is_active"));
 				user.setDesigner(rs.getBoolean("is_designer"));

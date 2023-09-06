@@ -296,7 +296,7 @@ class TestCreateAppointment {
 		newAppointment.setFromUser(1);
 		newAppointment.setToUser(2);
 		newAppointment.setEmail("sam@gmail.com");
-		newAppointment.setPhoneNumber(987645678l);
+		newAppointment.setPhoneNumber(0l);
 		newAppointment.setStatus("waiting_list");
 		newAppointment.setDate("2023-09-30");
 		newAppointment.setTime("15:30:00");
@@ -304,7 +304,7 @@ class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.createAppointment(newAppointment);
 		});
-		String expectedMessage = "Phone number should be exactly 10 digits long";
+		String expectedMessage = "Phone number cannot be zero or negative";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
@@ -334,6 +334,28 @@ class TestCreateAppointment {
 
 	@Test
 	@Order(15)
+	void testCreateAppointmentWithLessDigitPhoneNumber() {
+		AppointmentService appointmentService = new AppointmentService();
+		Appointment newAppointment = new Appointment();
+		newAppointment.setFromUser(1);
+		newAppointment.setToUser(2);
+		newAppointment.setEmail("sam@gmail.com");
+		newAppointment.setPhoneNumber(98789878l);
+		newAppointment.setStatus("waiting_list");
+		newAppointment.setDate("2023-09-30");
+		newAppointment.setTime("15:30:00");
+		newAppointment.setAddress(null);
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			appointmentService.createAppointment(newAppointment);
+		});
+		String expectedMessage = "Phone number should be exactly 10 digits long";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	@Order(16)
 	void testCreateAppointmentWithStatusNull() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -355,7 +377,7 @@ class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(16)
+	@Order(17)
 	void testCreateAppointmentWithStatusEmpty() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -377,7 +399,7 @@ class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(17)
+	@Order(18)
 	void testCreateAppointmentWithInvalidStatusPattern() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -399,7 +421,7 @@ class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(18)
+	@Order(19)
 	void testCreateAppointmentWithDateNull() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -421,7 +443,7 @@ class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(19)
+	@Order(20)
 	void testCreateAppointmentWithDateEmpty() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -443,7 +465,7 @@ class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(20)
+	@Order(21)
 	void testCreateAppointmentWithInvalidDateFormat() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -465,7 +487,7 @@ class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(21)
+	@Order(22)
 	void testCreateAppointmentWithPastDate() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -487,7 +509,7 @@ class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(22)
+	@Order(23)
 	void testCreateAppointmentWithFutureDate() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -509,7 +531,7 @@ class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(23)
+	@Order(24)
 	void testCreateAppointmentWithCurrentDate() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -532,7 +554,7 @@ class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(23)
+	@Order(25)
 	void testCreateAppointmentWithTimeNull() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -554,7 +576,7 @@ class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(24)
+	@Order(26)
 	void testCreateAppointmentWithTimeEmpty() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -576,7 +598,7 @@ class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(25)
+	@Order(27)
 	void testCreateAppointmentWithInvalidTimeFormat() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -598,7 +620,7 @@ class TestCreateAppointment {
 	}
 
 	@Test
-	@Order(26)
+	@Order(28)
 	void testCreateAppointmentWithInvalidTimeRange() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
@@ -619,4 +641,5 @@ class TestCreateAppointment {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
+	
 }

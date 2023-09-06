@@ -66,6 +66,7 @@ class TestDeleteUser {
 	    newUser.setName("Sesslyn");
 	    newUser.setEmail(randomString + "@" + "google.com");
 	    newUser.setPassword("Jenusha@2303");
+	    newUser.setImage("https://goodhomes.wwmindia.com/content/2020/apr/sarah-sham1587387881.jpg");
 	    newUser.setPhoneNumber(9863456787L);
 	    newUser.setDesigner(false);
 
