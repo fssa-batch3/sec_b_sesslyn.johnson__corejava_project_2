@@ -194,7 +194,6 @@ public class UserValidator {
 	}
 	
 	public static void validateImage(String image) throws ValidationException, ServiceException {
-		StringUtil.rejectIfInvalidString(image, "Image");
 		if (!image.matches(IMAGE_PATTERN)) {
 			throw new ValidationException("Invalid image format. Please provide a valid image url.");
 		}

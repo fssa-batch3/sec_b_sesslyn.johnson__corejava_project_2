@@ -416,53 +416,10 @@ class TestCreateUser {
 
 		assertEquals(expectedMessage,actualMessage);
 	}
+
 	
 	@Test
 	@Order(19)
-	 void testCreateUserWithImageNull() {
-		UserService userService = new UserService();
-		User newUser = new User();
-		newUser.setName("Sam");
-		newUser.setEmail("bcde@gmail.com");
-		newUser.setPassword("Sam@2303");
-		  newUser.setImage(null);
-		newUser.setPhoneNumber(3895673456L);
-		newUser.setDesigner(false);
-
-		ValidationException exception = assertThrows(ValidationException.class, () -> {
-			userService.createUser(newUser);
-		});
-
-		String expectedMessage = "Image cannot be null or empty";
-		String actualMessage = exception.getMessage();
-
-		assertEquals(expectedMessage,actualMessage);
-	}
-	
-	@Test
-	@Order(20)
-	 void testCreateUserWithImageEmpty() {
-		UserService userService = new UserService();
-		User newUser = new User();
-		newUser.setName("Sam");
-		newUser.setEmail("bcde@gmail.com");
-		newUser.setPassword("Sam@2303");
-		  newUser.setImage("");
-		newUser.setPhoneNumber(3895673456L);
-		newUser.setDesigner(false);
-
-		ValidationException exception = assertThrows(ValidationException.class, () -> {
-			userService.createUser(newUser);
-		});
-
-		String expectedMessage = "Image cannot be null or empty";
-		String actualMessage = exception.getMessage();
-
-		assertEquals(expectedMessage,actualMessage);
-	}
-	
-	@Test
-	@Order(21)
 	 void testCreateUserWithInvalidImageUrl() {
 		UserService userService = new UserService();
 		User newUser = new User();
