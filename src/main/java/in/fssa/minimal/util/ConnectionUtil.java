@@ -29,12 +29,6 @@ public class ConnectionUtil {
 			userName = System.getenv("DATABASE_USERNAME");
 			passWord = System.getenv("DATABASE_PASSWORD");
 
-			//Cloud
-//			url = "jdbc:mysql://164.52.216.41:3306/sesslyn_johnson_corejava_project";
-//			userName = "ujmnfM5HRXHU";
-//			passWord = "1785d0c3-f0d7-4296-b5c5-f4b0e3304085";
-//		
-
 			//Local
 //			url = "jdbc:mysql://localhost:3306/minimal_java";
 //			userName =	"root";
