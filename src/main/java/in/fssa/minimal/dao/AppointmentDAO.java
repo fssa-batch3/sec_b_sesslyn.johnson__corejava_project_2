@@ -27,7 +27,7 @@ public class AppointmentDAO {
 	 *
 	 * @param newAppointment The appointment to be created.
 	 * @throws PersistenceException If a database error occurs while creating the
-	 *                              appointment.
+	 *                              appointment. 
 	 * @throws
 	 */
 	public void create(Appointment newAppointment) throws PersistenceException {

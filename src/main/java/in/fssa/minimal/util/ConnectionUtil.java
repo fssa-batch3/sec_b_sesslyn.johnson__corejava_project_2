@@ -8,9 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import in.fssa.minimal.exception.PersistenceException;
+//import io.github.cdimascio.dotenv.Dotenv;
 
- 
-public class ConnectionUtil {  
+public class ConnectionUtil { 
 
 	/**
      * Establishes a database connection using environment variables or a local configuration.
@@ -20,23 +20,19 @@ public class ConnectionUtil {
      */
 	public static Connection getConnection() throws SQLException {
 
-		String url; 
+		String url;
 		String userName;
-		String passWord; 
+		String passWord;
 
 
-//			url = System.getenv("DATABASE_HOSTNAME");
-//			userName = System.getenv("DATABASE_USERNAME");
-//			passWord = System.getenv("DATABASE_PASSWORD");
+			url = System.getenv("DATABASE_HOSTNAME");
+			userName = System.getenv("DATABASE_USERNAME");
+			passWord = System.getenv("DATABASE_PASSWORD");
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 			//Local
-			url = "jdbc:mysql://localhost:3306/minimal_java";
-			userName =	"root";
-			passWord = "12345678"; 
+//			url = "jdbc:mysql://localhost:3306/minimal_java";
+//			userName =	"root";
+//			passWord = "12345678";
 			
 		Connection connection = null;
 
@@ -67,7 +63,7 @@ public class ConnectionUtil {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			Logger.error(e);
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -91,7 +87,7 @@ public class ConnectionUtil {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			Logger.error(e);
+			System.out.println(e.getMessage());
 		}
 	}
 }
