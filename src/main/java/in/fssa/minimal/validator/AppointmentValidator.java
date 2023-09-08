@@ -18,7 +18,7 @@ public class AppointmentValidator {
 
 	/**
 	 * Validates an Appointment object's properties.
-	 *
+	 * 
 	 * @param appointment The Appointment object to be validated.
 	 * @throws ValidationException If any property of the Appointment object fails
 	 *                             validation.
@@ -29,7 +29,7 @@ public class AppointmentValidator {
 		try {
 			if (appointment == null) {
 				throw new ValidationException("Appointment object cannot be null");
-			}
+			} 
 
 			validateFromUserId(appointment.getFromUser());
 			validateToUserId(appointment.getToUser());

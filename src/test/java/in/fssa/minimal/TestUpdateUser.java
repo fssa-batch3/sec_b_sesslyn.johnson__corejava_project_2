@@ -27,7 +27,7 @@ class TestUpdateUser {
 			userService.updateUser(1, newUser);
 		});
 	}
-
+ 
 	@Test
 	@Order(2)
 	void testUpdateSpecificFields() {

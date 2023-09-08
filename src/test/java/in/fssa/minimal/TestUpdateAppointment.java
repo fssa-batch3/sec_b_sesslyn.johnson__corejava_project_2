@@ -20,7 +20,7 @@ class TestUpdateAppointment {
 		assertDoesNotThrow(() -> {
 			appService.updateAppointmentRequestStatus(1, "approved");
 		});
-	}
+	} 
 
 	@Test
 	@Order(2)

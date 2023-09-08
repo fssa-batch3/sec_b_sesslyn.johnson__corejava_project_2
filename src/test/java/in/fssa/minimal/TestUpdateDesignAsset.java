@@ -31,7 +31,7 @@ public class TestUpdateDesignAsset {
             assetService.updateAsset(1, newAsset);
         });
     }
-
+ 
 	@Test
 	@Order(2)
 	void testUpdateAssetWithExistingUrl() throws ValidationException, PersistenceException {

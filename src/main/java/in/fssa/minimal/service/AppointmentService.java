@@ -23,12 +23,12 @@ public class AppointmentService {
 	public void createAppointment(Appointment newAppointment) throws ValidationException, ServiceException {
 		try {
 			AppointmentValidator.validateAppointment(newAppointment);
-			AppointmentDAO appointmentDAO = new AppointmentDAO();
-			appointmentDAO.create(newAppointment);
+			AppointmentDAO appointmentDAO = new AppointmentDAO();  
+			appointmentDAO.create(newAppointment); 
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while creating appointment", e);
 		}
-	}
+	} 
 
 	/**
 	 * Retrieves a set of AppointmentRespondDto objects representing all

@@ -16,8 +16,8 @@ import in.fssa.minimal.service.UserService;
 @TestMethodOrder(OrderAnnotation.class)
 class TestCreateUser {
 
-	@Test
-	@Order(1)
+	@Test 
+	@Order(1) 
 	 void testCreateUserWithValidInput() {
 	    UserService userService = new UserService();
 	    User newUser = new User();
@@ -26,11 +26,11 @@ class TestCreateUser {
 	    newUser.setEmail(randomString + "@" + "gmail.com");
 	    newUser.setPassword("Jenusha@2303");
 	    newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
-	    newUser.setPhoneNumber(9863456787L);
+	    newUser.setPhoneNumber(9863456787L); 
 	    newUser.setDesigner(false);
 
 	    assertDoesNotThrow(() -> {
-	        userService.createUser(newUser);
+	        userService.createUser(newUser); 
 	    });
 	}
 	

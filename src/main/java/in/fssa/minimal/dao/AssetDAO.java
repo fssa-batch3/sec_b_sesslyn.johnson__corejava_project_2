@@ -10,9 +10,10 @@ import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
 import in.fssa.minimal.util.ConnectionUtil;
-
+import in.fssa.minimal.util.Logger;
+ 
 public class AssetDAO {
-	/**
+	/** 
 	 * Creates a new asset with the provided URL.
 	 *
 	 * @param newAsset The Asset object containing the URL of the new asset.
@@ -34,11 +35,10 @@ public class AssetDAO {
 			if(rs.next()) {
 				assetId = rs.getInt(1);
 			}
-			System.out.println("Asset has been created successfully");
+			Logger.info("Asset has been created successfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps);
@@ -64,10 +64,9 @@ public class AssetDAO {
 			ps.setString(1, updateAsset.getAssetsUrl());
 			ps.setInt(2, assetId);
 			ps.executeUpdate();
-			System.out.println("Asset has been updated successfully");
+			Logger.info("Asset has been updated successfully");
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps);
@@ -99,8 +98,7 @@ public class AssetDAO {
 				asset.setAssetsUrl(rs.getString("asset_url"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -131,8 +129,7 @@ public class AssetDAO {
 				throw new ValidationException("Asset Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
@@ -163,8 +160,7 @@ public class AssetDAO {
 				throw new ValidationException("Asset Url already exists");
 			}
 		} catch (SQLException e) {
-		e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);

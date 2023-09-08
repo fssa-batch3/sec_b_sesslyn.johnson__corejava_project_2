@@ -26,7 +26,7 @@ class TestReadUser {
         });
     }
     
-    @Test
+    @Test 
     @Order(2)
     void testGetUserById() {
         assertDoesNotThrow(() -> {
@@ -77,7 +77,7 @@ class TestReadUser {
 	void testGetUserByNonExistingEmail() {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			User arr = userService.findByEmail("sesslyn2004@gmail.com");
+			User arr = userService.findByEmail("sesslyn2002@gmail.com");
 		});
 		String expectedMessage = "Email doesn't exist";
 		String actualMessage = exception.getMessage();

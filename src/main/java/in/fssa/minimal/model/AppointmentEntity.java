@@ -11,7 +11,7 @@ public class AppointmentEntity {
 	private String date;
 	private String time;
 	private String address;
-
+	
 	public int getId() {
 		return id;
 	}

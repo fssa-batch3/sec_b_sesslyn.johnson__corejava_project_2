@@ -2,7 +2,8 @@ package in.fssa.minimal.model;
 
 
 public abstract class UserEntity {
-	private String name;
+	
+	private String name; 
 	private int id;
 	private String email;
 	private String password;
@@ -10,6 +11,16 @@ public abstract class UserEntity {
 	private long phoneNumber;
 	private boolean isDesigner;
 	private boolean isActive = true;
+	
+//	public UserEntity(String name, String email, String password, String image, long phoneNumber, boolean isDesigner) {
+//		super();
+//		this.name = name;
+//		this.email = email;
+//		this.password = password;
+//		this.image = image;
+//		this.phoneNumber = phoneNumber;
+//		this.isDesigner = isDesigner;
+//	}
 
 	public String getName() {
 		return name;

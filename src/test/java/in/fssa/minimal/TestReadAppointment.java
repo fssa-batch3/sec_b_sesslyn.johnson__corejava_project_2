@@ -24,7 +24,7 @@ class TestReadAppointment {
 		assertDoesNotThrow(() -> {
 			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointment();
 		});
-	}
+	} 
 
 	@Test
 	@Order(2)

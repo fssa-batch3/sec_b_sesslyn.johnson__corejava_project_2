@@ -16,11 +16,11 @@ import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.User;
 import in.fssa.minimal.service.UserService;
 @TestMethodOrder(OrderAnnotation.class)
-class TestDeleteUser {
+class TestDeleteUser { 
 	
 	@Test
 	@Order(2)
-	void testGetUserByIdLessThanZero() {
+	void testGetUserByIdLessThanZero() { 
 		UserService userService = new UserService();
         UserDAO app = new UserDAO();
 		Exception exception = assertThrows(ValidationException.class, () -> {

@@ -30,7 +30,7 @@ class TestCreateDesign {
 
 		assertDoesNotThrow(() -> {
 			styleService.createStyle(newStyle);
-		});
+		}); 
 	}
 
 	@Test

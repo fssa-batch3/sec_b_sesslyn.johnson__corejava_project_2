@@ -1,7 +1,7 @@
 package in.fssa.minimal.model;
 
 public class DesignAssetEntity {
-	
+	 
 	private int id;
 	private int designId;
 	private int assetsId;

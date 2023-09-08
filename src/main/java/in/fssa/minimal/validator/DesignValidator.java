@@ -18,7 +18,7 @@ public class DesignValidator {
 	 * Validates the provided design object.
 	 *
 	 * @param design The design object to be validated.
-	 * @throws ValidationException If the design object is invalid.
+	 * @throws ValidationException If the design object is invalid. 
 	 * @throws ServiceException   If a service-related error occurs during validation.
 	 */
 	public static void validateDesign(Design design) throws ValidationException, ServiceException {

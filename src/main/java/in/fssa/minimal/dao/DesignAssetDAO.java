@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import in.fssa.minimal.dto.DesignAssetRespondDTO;
 import in.fssa.minimal.exception.PersistenceException;
@@ -18,11 +16,12 @@ import in.fssa.minimal.model.DesignAsset;
 import in.fssa.minimal.service.AssetService;
 import in.fssa.minimal.service.DesignService;
 import in.fssa.minimal.util.ConnectionUtil;
-
+import in.fssa.minimal.util.Logger;
+ 
 public class DesignAssetDAO {
-	/**
+	/** 
 	 * Creates a new design asset.
-	 *
+	 * 
 	 * @param newDesignAsset The DesignAsset object to be created.
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 */
@@ -36,11 +35,10 @@ public class DesignAssetDAO {
 			ps.setInt(1, newDesignAsset.getDesignId());
 			ps.setInt(2, newDesignAsset.getAssetsId());
 			ps.executeUpdate();
-			System.out.println("Design Asset has been created successfully");
+			Logger.info("Design Asset has been created successfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps);
@@ -63,10 +61,9 @@ public class DesignAssetDAO {
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, designAssetId);
 			ps.executeUpdate();
-			System.out.println("Design Asset has been deleted successfully");
+			Logger.info("Design Asset has been deleted successfully");
 		} catch (SQLException e) {
-
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, null);
@@ -110,8 +107,7 @@ public class DesignAssetDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -157,8 +153,7 @@ public class DesignAssetDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -188,8 +183,7 @@ public class DesignAssetDAO {
 				throw new ValidationException("Design Asset Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
@@ -217,8 +211,7 @@ public class DesignAssetDAO {
 				id = rs.getInt("id");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -226,7 +219,7 @@ public class DesignAssetDAO {
 		return id;
 	}
 
-	public DesignAsset findDesignAssetById(int designAssetId) throws ValidationException, PersistenceException, ServiceException {
+	public DesignAsset findDesignAssetById(int designAssetId) throws PersistenceException{
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -246,8 +239,7 @@ public class DesignAssetDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -269,8 +261,7 @@ public class DesignAssetDAO {
 				designerId = rs.getInt("id");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -292,8 +283,7 @@ public class DesignAssetDAO {
 				assetId = rs.getInt("id");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);

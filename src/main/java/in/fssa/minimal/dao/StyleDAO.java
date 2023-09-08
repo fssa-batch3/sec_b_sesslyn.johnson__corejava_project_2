@@ -9,16 +9,17 @@ import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Style;
 import in.fssa.minimal.util.ConnectionUtil;
+import in.fssa.minimal.util.Logger;
 
 public class StyleDAO {
 	 /**
      * Creates a new style with the provided name.
-     *
+     * 
      * @param newStyle The Style object containing the name of the new style.
      * @throws PersistenceException If a database error occurs while creating the style.
      */
 	public void create(Style newStyle) throws PersistenceException {
-		Connection conn = null;
+		Connection conn = null; 
 		PreparedStatement ps = null;
 		try {
 			String query = "INSERT INTO styles ( name ) VALUES (?)";
@@ -26,11 +27,10 @@ public class StyleDAO {
 			ps = conn.prepareStatement(query);
 			ps.setString(1, newStyle.getName());
 			ps.executeUpdate();
-			System.out.println("Style has been created successfully");
+			Logger.info("Style has been created successfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps);
@@ -54,10 +54,9 @@ public class StyleDAO {
 			ps.setString(1, updateStyle.getName());
 			ps.setInt(2, styleId);
 			ps.executeUpdate();
-			System.out.println("Style has been updated successfully");
+			Logger.info("Style has been updated successfully");
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps);
@@ -86,8 +85,7 @@ public class StyleDAO {
 				throw new ValidationException("Style Name already exists");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
@@ -116,8 +114,7 @@ public class StyleDAO {
 				throw new ValidationException("Style Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);

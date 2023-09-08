@@ -7,8 +7,8 @@ import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
 import in.fssa.minimal.validator.DesignAssetValidator;
 
-
-public class AssetService {
+ 
+public class AssetService { 
 	/**
 	 * Creates a new asset with the provided URL.
 	 *

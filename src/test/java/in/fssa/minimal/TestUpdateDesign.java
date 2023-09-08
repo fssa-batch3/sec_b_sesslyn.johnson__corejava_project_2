@@ -30,7 +30,7 @@ class TestUpdateDesign {
 			newStyle.setName(generatedName);
 			styleService.updateStyle(1, newStyle);
 		});
-	}
+	} 
 
 	@Test
 	@Order(2)

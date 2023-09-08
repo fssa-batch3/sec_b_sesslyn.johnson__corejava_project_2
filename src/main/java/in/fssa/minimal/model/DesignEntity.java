@@ -3,7 +3,7 @@ package in.fssa.minimal.model;
 public class DesignEntity {
 
 	private int id;
-	private String name;
+	private String name; 
 	private String description;
 	private String location;
 	private int styleId;

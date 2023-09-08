@@ -3,13 +3,13 @@ package in.fssa.minimal.dto;
 import in.fssa.minimal.model.Asset;
 import in.fssa.minimal.model.Design;
 
-public class DesignAssetRespondDTO {
+public class DesignAssetRespondDTO { 
 
 	private int id;
 
 	private Design designId;
 	private Asset assetsId;
-	private boolean isActive = true;
+	private boolean isActive = true; 
 
 	public int getId() {
 		return id;

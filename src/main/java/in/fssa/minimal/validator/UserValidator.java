@@ -17,7 +17,7 @@ public class UserValidator {
 	private static final String PATTERN = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}";
 	private static final String IMAGE_PATTERN = "^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$";
 
-	/**
+	/** 
 	 * Validates a User object by checking its attributes including name, email,
 	 * password, and phone number.
 	 *

@@ -17,10 +17,11 @@ import in.fssa.minimal.model.Appointment;
 import in.fssa.minimal.model.User;
 import in.fssa.minimal.service.UserService;
 import in.fssa.minimal.util.ConnectionUtil;
+import in.fssa.minimal.util.Logger;
 
 public class AppointmentDAO {
 
-	/**
+	/** 
 	 * This method is responsible for creating a new appointment record in the
 	 * database.
 	 *
@@ -36,7 +37,7 @@ public class AppointmentDAO {
 			String query = "INSERT INTO appointments (from_user, to_user,email,phone_number, status, date, time, address) VALUES (?,?,?,?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, newAppointment.getFromUser());
+			ps.setInt(1, newAppointment.getFromUser()); 
 			ps.setInt(2, newAppointment.getToUser());
 			ps.setString(3, newAppointment.getEmail());
 			ps.setLong(4, newAppointment.getPhoneNumber());
@@ -55,11 +56,10 @@ public class AppointmentDAO {
 			}
 
 			ps.executeUpdate();
-			System.out.println("Appointment has been created successfully");
+			Logger.info("Appointment has been created successfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps);
@@ -114,7 +114,7 @@ public class AppointmentDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -173,8 +173,7 @@ public class AppointmentDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -229,8 +228,7 @@ public class AppointmentDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -285,8 +283,7 @@ public class AppointmentDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -344,8 +341,7 @@ public class AppointmentDAO {
 
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -371,10 +367,9 @@ public class AppointmentDAO {
 			ps.setString(1, status);
 			ps.setInt(2, appointmentId);
 			ps.executeUpdate();
-			System.out.println("Appointment Status has been updated successfully");
+			Logger.info("Appointment Status has been updated successfully");
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps);
@@ -404,8 +399,7 @@ public class AppointmentDAO {
 				throw new ValidationException("The appointment you have is yet to be completed. Please be patient");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
@@ -445,8 +439,7 @@ public class AppointmentDAO {
 						"The designer has an appointment at that specific time. Please reschedule the appointment for a different time slot");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
@@ -476,8 +469,7 @@ public class AppointmentDAO {
 				throw new ValidationException("Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);

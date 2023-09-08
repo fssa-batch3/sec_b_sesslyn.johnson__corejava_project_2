@@ -17,14 +17,14 @@ public class StyleService {
 	 * @throws PersistenceException If a database error occurs while creating the
 	 *                              style.
 	 * @throws ServiceException    If a service-related error occurs while creating the
-	 *                              style.
+	 *                              style. 
 	 */
 	public void createStyle(Style newStyle) throws ValidationException, PersistenceException, ServiceException {
 	    try {
 	        if (newStyle == null) {
 	            throw new ValidationException("Style object cannot be null");
 	        }
-	        DesignValidator.validateStyleName(newStyle.getName());
+	        DesignValidator.validateStyleName(newStyle.getName()); 
 	        StyleDAO styleDAO = new StyleDAO();
 	        styleDAO.create(newStyle);
 	    } catch (PersistenceException e) {

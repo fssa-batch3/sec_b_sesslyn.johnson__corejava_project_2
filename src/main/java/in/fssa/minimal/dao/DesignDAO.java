@@ -11,12 +11,13 @@ import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Design;
 import in.fssa.minimal.util.ConnectionUtil;
+import in.fssa.minimal.util.Logger;
 
 public class DesignDAO {
-
+ 
 
 	/**
-	 * Creates a new design entity in the database.
+	 * Creates a new design entity in the database. 
 	 *
 	 * @param newDesign The design to be created.
 	 * @throws PersistenceException If a database error occurs during creation.
@@ -41,12 +42,11 @@ public class DesignDAO {
 			if(rs.next()) {
 				designId = rs.getInt(1);
 			}
-			System.out.println("Design has been created successfully");
+			Logger.info("Design has been created successfully");
 			
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps,rs);
@@ -96,9 +96,9 @@ public class DesignDAO {
 			}
 			ps.setInt(values.size() + 1, designId);
 			ps.executeUpdate();
-			System.out.println("Design has been updated successfully");
+			Logger.info("Design has been updated successfully");
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, null);
@@ -132,8 +132,7 @@ public class DesignDAO {
 				designList.add(design);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -170,8 +169,7 @@ public class DesignDAO {
 				design.setCreatedBy(rs.getInt("created_by"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -212,8 +210,7 @@ public class DesignDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -244,8 +241,7 @@ public class DesignDAO {
 				throw new ValidationException("Design Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
@@ -275,8 +271,7 @@ public class DesignDAO {
 				throw new ValidationException("Designers doesn't have any design yet");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
@@ -297,8 +292,7 @@ public class DesignDAO {
 				designerId = rs.getInt("id");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);

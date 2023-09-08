@@ -26,8 +26,8 @@ public class TestCreateDesignAsset {
 		newAsset.setAssetsUrl(generatedUrl);
 
 		assertDoesNotThrow(() -> {
-			assetService.createAsset(newAsset);
-		});
+			assetService.createAsset(newAsset); 
+		}); 
 	}
 	private String generateRandomUrl() {
 		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

@@ -26,7 +26,7 @@ public class TestDeleteDesignAsset {
 
 		assertEquals(expectedMessage, actualMessage);
 	}
-
+ 
 	@Test
 	@Order(2)
 	void testDeleteDesignAsset() {

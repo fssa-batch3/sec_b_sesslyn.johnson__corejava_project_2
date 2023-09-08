@@ -5,7 +5,7 @@ public abstract class StyleEntity {
 	private String name;
 	private boolean isActive = true;
 
-	public int getId() {
+	public int getId() { 
 		return id;
 	}
 

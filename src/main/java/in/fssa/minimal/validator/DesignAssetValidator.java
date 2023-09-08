@@ -16,7 +16,7 @@ public class DesignAssetValidator {
 	 * Validates the combination of a Design object and an Asset object.
 	 * Ensures that both Design and Asset objects are not null.
 	 *
-	 * @param newDesign The Design object to be validated.
+	 * @param newDesign The Design object to be validated. 
 	 * @param newAsset  The Asset object to be validated.
 	 * @throws ValidationException If either the Design or Asset object is null.
 	 */

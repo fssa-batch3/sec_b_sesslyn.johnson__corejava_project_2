@@ -20,16 +20,16 @@ import in.fssa.minimal.service.AppointmentService;
 @TestMethodOrder(OrderAnnotation.class)
 class TestCreateAppointment {
 
-	@Test
+	@Test 
 	@Order(1)
 	void testCreateAppointmentWithValidInput() throws PersistenceException {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
-		UserDAO app = new UserDAO();
+		UserDAO app = new UserDAO(); 
 		int user = app.getLastUpdatedUserId();
 		newAppointment.setFromUser(user);
 		int designer = app.getLastUpdatedDesignerId();
-		newAppointment.setToUser(designer);
+		newAppointment.setToUser(designer); 
 		newAppointment.setEmail("sesslyn@gmail.com");
 		newAppointment.setPhoneNumber(6381040916L);
 		newAppointment.setStatus("waiting_list");
@@ -161,10 +161,10 @@ class TestCreateAppointment {
 	void testCreateAppointmentWithDesignerHasAppointment() {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
-		newAppointment.setFromUser(15);
+		newAppointment.setFromUser(16);
 		newAppointment.setToUser(2);
 		newAppointment.setEmail("jelisha@gmail.com");
-		newAppointment.setPhoneNumber(9787896543l);
+		newAppointment.setPhoneNumber(9787896543l); 
 		newAppointment.setStatus("waiting_list");
 		newAppointment.setDate("2023-09-10");
 		newAppointment.setTime("10:00:00");

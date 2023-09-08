@@ -14,7 +14,7 @@ public class StringUtil {
     	 if(input == null || "".equals(input.trim())) {
     		 throw new ValidationException(inputName.concat(" cannot be null or empty"));
     	 }
-     }
-    
+     } 
+     
     
 }

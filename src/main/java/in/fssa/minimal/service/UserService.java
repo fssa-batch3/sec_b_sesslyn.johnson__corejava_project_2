@@ -19,8 +19,8 @@ public class UserService {
 	 */
 	public Set<User> getAllUser() throws ServiceException {
 	    try {
-	        UserDAO userDAO = new UserDAO();
-	        return userDAO.findAll();
+	        UserDAO userDAO = new UserDAO(); 
+	        return userDAO.findAll(); 
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while retrieving users.", e);
 	    }

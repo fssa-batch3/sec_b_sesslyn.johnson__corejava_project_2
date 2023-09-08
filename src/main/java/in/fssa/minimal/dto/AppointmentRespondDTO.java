@@ -8,7 +8,7 @@ public class AppointmentRespondDTO {
 	private User fromUser;
 	private User toUser;
 	private String status;
-	private String date;
+	private String date; 
 	private String time;
 	private String address;
 

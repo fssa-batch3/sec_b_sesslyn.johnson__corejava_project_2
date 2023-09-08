@@ -13,7 +13,7 @@ import in.fssa.minimal.model.DesignAsset;
 import in.fssa.minimal.validator.DesignAssetValidator;
 
 public class DesignAssetService {
-	/**
+	/** 
 	 * Creates a new design asset.
 	 *
 	 * @param newDesign The Design object to be associated with the new design asset.
@@ -29,7 +29,7 @@ public class DesignAssetService {
 	        DesignService designService = new DesignService();
 	        AssetService assetService = new AssetService();
 	        DesignAssetDAO designAssetDAO = new DesignAssetDAO();
-
+ 
 	        int designId = designService.createDesign(newDesign);
 	        int assetId = assetService.createAsset(newAsset);
 
@@ -42,7 +42,7 @@ public class DesignAssetService {
 	        throw new ServiceException("Error occurred during connecting design and their assets", e);
 	    }
 	}
-
+ 
 	/**
 	 * Updates an existing design asset.
 	 *

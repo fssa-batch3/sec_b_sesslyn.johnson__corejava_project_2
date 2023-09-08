@@ -7,13 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.interfaces.UserInterface;
 import in.fssa.minimal.model.User;
+import in.fssa.minimal.util.Logger;
 import in.fssa.minimal.util.ConnectionUtil;
 
 public class UserDAO implements UserInterface {
@@ -42,6 +42,7 @@ public class UserDAO implements UserInterface {
 				user.setId(rs.getInt("id"));
 				user.setName(rs.getString("name"));
 				user.setEmail(rs.getString("email"));
+
 				user.setPassword(rs.getString("password"));
 				user.setImage(rs.getString("image"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
@@ -50,8 +51,7 @@ public class UserDAO implements UserInterface {
 				userList.add(user);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -92,8 +92,7 @@ public class UserDAO implements UserInterface {
 				user.setDesigner(rs.getBoolean("is_designer"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -134,8 +133,7 @@ public class UserDAO implements UserInterface {
 				user.setDesigner(rs.getBoolean("is_designer"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -164,19 +162,18 @@ public class UserDAO implements UserInterface {
 			ps.setString(2, newUser.getEmail());
 			ps.setString(3, newUser.getPassword());
 			if (newUser.getImage() != null) {
-				ps.setString(4,newUser.getImage());
+				ps.setString(4, newUser.getImage());
 			} else {
 				ps.setNull(4, java.sql.Types.VARCHAR);
 			}
-			
+
 			ps.setBoolean(5, newUser.isDesigner());
 			ps.setLong(6, newUser.getPhoneNumber());
 			ps.executeUpdate();
-			System.out.println("User has been created successfully");
+			Logger.info("User has been created successfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps);
@@ -236,9 +233,9 @@ public class UserDAO implements UserInterface {
 			ps.setInt(values.size() + 1, userId);
 
 			ps.executeUpdate();
-			System.out.println("User has been updated successfully");
+			Logger.info("User has been updated successfully");
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, null);
@@ -260,8 +257,7 @@ public class UserDAO implements UserInterface {
 				r = rs.getBoolean("is_designer");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -286,10 +282,9 @@ public class UserDAO implements UserInterface {
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, userId);
 			ps.executeUpdate();
-			System.out.println("User has been deleted successfully");
+			Logger.info("User has been deleted successfully");
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, null);
@@ -327,8 +322,7 @@ public class UserDAO implements UserInterface {
 				userList.add(user);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -368,8 +362,7 @@ public class UserDAO implements UserInterface {
 				user.setDesigner(rs.getBoolean("is_designer"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -402,8 +395,7 @@ public class UserDAO implements UserInterface {
 				throw new ValidationException("Email already exists.Try with a new email id");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Email already exists.Try with a new email id");
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
@@ -435,8 +427,7 @@ public class UserDAO implements UserInterface {
 				throw new ValidationException("User Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Id doesn't exist");
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
@@ -467,8 +458,7 @@ public class UserDAO implements UserInterface {
 				throw new ValidationException("Email doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Email doesn't exist");
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
@@ -500,8 +490,7 @@ public class UserDAO implements UserInterface {
 				throw new ValidationException("Designer Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Designer Id doesn't exist");
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
@@ -529,8 +518,7 @@ public class UserDAO implements UserInterface {
 				userId = rs.getInt("id");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -560,8 +548,7 @@ public class UserDAO implements UserInterface {
 				designerId = rs.getInt("id");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
@@ -601,8 +588,7 @@ public class UserDAO implements UserInterface {
 				user.setDesigner(rs.getBoolean("is_designer"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps, rs);
