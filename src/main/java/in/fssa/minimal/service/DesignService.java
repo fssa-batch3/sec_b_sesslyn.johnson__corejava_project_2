@@ -22,7 +22,7 @@ public class DesignService {
 	public int createDesign(Design newDesign) throws ValidationException, PersistenceException, ServiceException {
 		 int designId = -1;
 		try {
-	        DesignValidator.validateDesign(newDesign);
+	        DesignValidator.validateDesign(newDesign); 
 	        DesignDAO designDAO = new DesignDAO();
 	        designId =  designDAO.create(newDesign);
 	    } catch (PersistenceException e) {
@@ -81,9 +81,6 @@ public class DesignService {
 	    try {
 	        DesignDAO designDao = new DesignDAO();
 	        Set<Design> designList = designDao.findAllDesign();
-	        for (Design design : designList) {
-	            System.out.println(design);
-	        }
 	        return designList;
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while retrieving designs", e);
@@ -123,9 +120,6 @@ public class DesignService {
 	        DesignValidator.validateDesignerId(designId);
 	        DesignDAO designDAO = new DesignDAO();
 	        Set<Design> designList = designDAO.findAllDesignsByDesignerId(designId);
-	        for (Design design : designList) {
-	            System.out.println(design);
-	        }
 	        return designList;
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while retrieving designs by the designer id", e);

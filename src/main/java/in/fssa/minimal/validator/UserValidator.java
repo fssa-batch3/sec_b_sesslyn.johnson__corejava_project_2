@@ -17,7 +17,7 @@ public class UserValidator {
 	private static final String PATTERN = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}";
 	private static final String IMAGE_PATTERN = "^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$";
 
-	/** 
+	/**
 	 * Validates a User object by checking its attributes including name, email,
 	 * password, and phone number.
 	 *
@@ -26,7 +26,7 @@ public class UserValidator {
 	 *                              required validation criteria.
 	 * @throws PersistenceException If an error occurs during data persistence
 	 *                              checks.
-	 * @throws ServiceException 
+	 * @throws ServiceException
 	 */
 	public static void validateUser(User user) throws ValidationException, ServiceException {
 		if (user == null) {
@@ -35,8 +35,8 @@ public class UserValidator {
 		validateName(user.getName());
 		validateEmailCreate(user.getEmail());
 		validatePassword(user.getPassword());
-		if(user.getImage() != null) {
-		validateImage(user.getImage());
+		if (user.getImage() != null) {
+			validateImage(user.getImage());
 		}
 		validatePhoneNumber(user.getPhoneNumber());
 	}
@@ -48,21 +48,34 @@ public class UserValidator {
 	 * @throws ValidationException If the name does not match the required format.
 	 */
 	public static void validateName(String userName) throws ValidationException {
-	    StringUtil.rejectIfInvalidString(userName, "User Name");
-	    
-	    // Trim leading and trailing spaces
-	    userName = userName.trim();
-	    
-	    if (userName.length() < 3) {
-	        throw new ValidationException("User Name should be at least 3 characters long");
-	    }
-	    
-	    if (!Pattern.matches(NAME_PATTERN, userName)) {
-	        throw new ValidationException("User Name should only contain alphabetic characters and allow only one space between words");
-	    }
+		StringUtil.rejectIfInvalidString(userName, "User Name");
+
+		// Trim leading and trailing spaces
+		userName = userName.trim();
+
+		if (userName.length() < 3) {
+			throw new ValidationException("User Name should be at least 3 characters long");
+		}
+
+		if (!Pattern.matches(NAME_PATTERN, userName)) {
+			throw new ValidationException(
+					"User Name should only contain alphabetic characters and allow only one space between words");
+		}
 	}
 
-
+	/**
+	 * Validates an email address using a regular expression pattern.
+	 *
+	 * @param email The email address to validate.
+	 * @throws ValidationException  If the email address does not match the required
+	 *                              format or if it already exists.
+	 */
+	public static void validateAllEmail(String email) throws ValidationException {
+		StringUtil.rejectIfInvalidString(email, "Email");
+		if (!email.matches(EMAIL_PATTERN)) {
+			throw new ValidationException("Invalid email format. Please provide a valid email address");
+		}
+	}
 
 	/**
 	 * Validates an email address using a regular expression pattern.
@@ -76,10 +89,7 @@ public class UserValidator {
 	 */
 	public static void validateEmail(String email) throws ValidationException, ServiceException {
 		try {
-			StringUtil.rejectIfInvalidString(email, "Email");
-			if (!email.matches(EMAIL_PATTERN)) {
-				throw new ValidationException("Invalid email format. Please provide a valid email address");
-			}
+			validateAllEmail(email);
 			UserDAO.checkEmailExists(email);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during validation", e);
@@ -98,10 +108,7 @@ public class UserValidator {
 	 */
 	public static void validateEmailCreate(String email) throws ValidationException, ServiceException {
 		try {
-			StringUtil.rejectIfInvalidString(email, "Email");
-			if (!email.matches(EMAIL_PATTERN)) {
-				throw new ValidationException("Invalid email format. Please provide a valid email address");
-			}
+			validateAllEmail(email);
 			UserDAO.emailExists(email);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during validation", e);
@@ -145,6 +152,7 @@ public class UserValidator {
 			throw new ValidationException("Invalid phone number format. Make sure not to include +91");
 		}
 	}
+
 	/**
 	 * Validates an ID value.
 	 *
@@ -152,11 +160,12 @@ public class UserValidator {
 	 * @throws ValidationException If the ID is not valid (less than or equal to
 	 *                             zero).
 	 */
-	public static void validateId(String name , int id) throws ValidationException {
-	    if (id <= 0) {
-	        throw new ValidationException(name + " cannot be less than or equal to zero");
-	    }
+	public static void validateId(String name, int id) throws ValidationException {
+		if (id <= 0) {
+			throw new ValidationException(name + " cannot be less than or equal to zero");
+		}
 	}
+
 	/**
 	 * Validates an ID to ensure it is not zero or negative.
 	 *
@@ -168,7 +177,7 @@ public class UserValidator {
 	 */
 	public static void validateUserId(int userId) throws ValidationException, ServiceException {
 		try {
-			validateId("User Id",userId);
+			validateId("User Id", userId);
 			UserDAO.checkIdExists(userId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during validation", e);
@@ -180,23 +189,23 @@ public class UserValidator {
 	 *
 	 * @param id The ID to validate.
 	 * @throws ValidationException  If the ID is invalid or does not exist.
-	 * @throws ServiceException 
+	 * @throws ServiceException
 	 * @throws PersistenceException If an error occurs during data persistence
 	 *                              checks.
 	 */
 	public static void validateDesignerId(int designerId) throws ValidationException, ServiceException {
 		try {
-			validateId("Designer Id",designerId);
+			validateId("Designer Id", designerId);
 			UserDAO.checkDesignerIdExists(designerId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during validation", e);
 		}
 	}
-	
+
 	public static void validateImage(String image) throws ValidationException, ServiceException {
 		if (!image.matches(IMAGE_PATTERN)) {
 			throw new ValidationException("Invalid image format. Please provide a valid image url.");
 		}
-}
+	}
 
 }

@@ -31,7 +31,7 @@ public class AppointmentDAO {
 	 * @throws
 	 */
 	public void create(Appointment newAppointment) throws PersistenceException {
-		Connection conn = null;
+		Connection conn = null; 
 		PreparedStatement ps = null;
 		try {
 			String query = "INSERT INTO appointments (from_user, to_user,email,phone_number, status, date, time, address) VALUES (?,?,?,?,?,?,?,?)";

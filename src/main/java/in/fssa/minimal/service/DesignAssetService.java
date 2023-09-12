@@ -11,7 +11,7 @@ import in.fssa.minimal.model.Asset;
 import in.fssa.minimal.model.Design;
 import in.fssa.minimal.model.DesignAsset;
 import in.fssa.minimal.validator.DesignAssetValidator;
-
+ 
 public class DesignAssetService {
 	/** 
 	 * Creates a new design asset.
@@ -108,9 +108,6 @@ public class DesignAssetService {
 		try {
 			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
 			Set<DesignAssetRespondDTO> assetList = designAssetDAO.findAllDesignAsset();
-			for (DesignAssetRespondDTO asset : assetList) {
-				System.out.println(asset);
-			}
 			return assetList;
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while retrieveing all designs and thier assets", e);

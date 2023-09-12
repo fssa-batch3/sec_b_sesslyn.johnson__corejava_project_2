@@ -14,9 +14,7 @@ import in.fssa.minimal.model.Appointment;
 import in.fssa.minimal.util.StringUtil;
 
 public class AppointmentValidator {
-	private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+(?:[_+\\-.][a-zA-Z0-9]+)*@[a-zA-Z0-9]++(?:[\\-.][a-zA-Z0-9]++)*\\.[a-zA-Z]{2,}$";
-
-	/**
+	/** 
 	 * Validates an Appointment object's properties.
 	 * 
 	 * @param appointment The Appointment object to be validated.
@@ -47,18 +45,7 @@ public class AppointmentValidator {
 		}
 	}
 
-	/**
-	 * Validates an ID value.
-	 *
-	 * @param id The ID to be validated.
-	 * @throws ValidationException If the ID is not valid (less than or equal to
-	 *                             zero).
-	 */
-	public static void validateId(String name, int appointmentId) throws ValidationException {
-		if (appointmentId <= 0) {
-			throw new ValidationException(name + " cannot be less than or equal to zero");
-		}
-	}
+	
 
 	/**
 	 * Validates the 'fromUserId' parameter to ensure it is a valid user ID.
@@ -68,7 +55,7 @@ public class AppointmentValidator {
 	 * @throws ServiceException    If an error occurs during the validation process.
 	 */
 	public static void validateFromUserId(int fromUserId) throws ValidationException, ServiceException {
-		validateId("User Id", fromUserId);
+		UserValidator.validateId("User Id", fromUserId);
 		try {
 			UserDAO.checkIdExists(fromUserId);
 		} catch (PersistenceException e) {
@@ -84,7 +71,7 @@ public class AppointmentValidator {
 	 * @throws ServiceException    If an error occurs during the validation process.
 	 */
 	public static void validateToUserId(int toUserId) throws ValidationException, ServiceException {
-		validateId("Designer Id", toUserId);
+		UserValidator.validateId("Designer Id", toUserId);
 		try {
 			UserDAO.checkDesignerIdExists(toUserId);
 		} catch (PersistenceException e) {
@@ -103,7 +90,7 @@ public class AppointmentValidator {
 	 */
 	public static void validateIdExists(int appointmentId) throws ValidationException, ServiceException {
 		try {
-			validateId("Appointment Id", appointmentId);
+			UserValidator.validateId("Appointment Id", appointmentId);
 			AppointmentDAO.checkIdExists(appointmentId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during validation.", e);
@@ -118,10 +105,7 @@ public class AppointmentValidator {
 	 *                             format.
 	 */
 	public static void validateEmail(String email) throws ValidationException {
-		StringUtil.rejectIfInvalidString(email, "Email");
-		if (!email.matches(EMAIL_PATTERN)) {
-			throw new ValidationException("Invalid email format. Please provide a valid email address");
-		}
+		UserValidator.validateAllEmail(email);
 	}
 
 	/**
@@ -132,16 +116,7 @@ public class AppointmentValidator {
 	 *                             criteria.
 	 */
 	public static void validatePhoneNumber(long phoneNumber) throws ValidationException {
-		String phoneNumberStr = String.valueOf(phoneNumber);
-		if (phoneNumber <= 0) {
-			throw new ValidationException("Phone number cannot be zero or negative");
-		}
-		if (phoneNumberStr.length() != 10) {
-			throw new ValidationException("Phone number should be exactly 10 digits long");
-		}
-		if (phoneNumber < 6000000000L || phoneNumber >= 10000000000L) {
-			throw new ValidationException("Invalid phone number format. Make sure not to include +91");
-		}
+		UserValidator.validatePhoneNumber(phoneNumber);
 	}
 
 	/**

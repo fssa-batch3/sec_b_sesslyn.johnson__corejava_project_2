@@ -19,7 +19,7 @@ class TestCreateUser {
 	@Test 
 	@Order(1) 
 	 void testCreateUserWithValidInput() {
-	    UserService userService = new UserService();
+	    UserService userService = new UserService(); 
 	    User newUser = new User();
 	    String randomString = generateRandomString(8); 
 	    newUser.setName("Sesslyn");

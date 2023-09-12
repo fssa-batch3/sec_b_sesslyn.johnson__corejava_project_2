@@ -11,7 +11,7 @@ import in.fssa.minimal.validator.DesignAssetValidator;
 public class AssetService { 
 	/**
 	 * Creates a new asset with the provided URL.
-	 *
+	 * 
 	 * @param newAsset The Asset object containing the URL of the new asset.
 	 * @throws ValidationException  If the Asset object is null or the URL is
 	 *                              invalid.

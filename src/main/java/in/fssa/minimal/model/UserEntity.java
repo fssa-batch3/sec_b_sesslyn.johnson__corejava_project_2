@@ -12,15 +12,6 @@ public abstract class UserEntity {
 	private boolean isDesigner;
 	private boolean isActive = true;
 	
-//	public UserEntity(String name, String email, String password, String image, long phoneNumber, boolean isDesigner) {
-//		super();
-//		this.name = name;
-//		this.email = email;
-//		this.password = password;
-//		this.image = image;
-//		this.phoneNumber = phoneNumber;
-//		this.isDesigner = isDesigner;
-//	}
 
 	public String getName() {
 		return name;

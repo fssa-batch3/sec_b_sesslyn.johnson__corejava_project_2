@@ -7,6 +7,7 @@ import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Appointment;
+import in.fssa.minimal.util.Logger;
 import in.fssa.minimal.validator.AppointmentValidator;
 
 public class AppointmentService {
@@ -21,7 +22,7 @@ public class AppointmentService {
 	 *                             operation.
 	 */
 	public void createAppointment(Appointment newAppointment) throws ValidationException, ServiceException {
-		try {
+		try { 
 			AppointmentValidator.validateAppointment(newAppointment);
 			AppointmentDAO appointmentDAO = new AppointmentDAO();  
 			appointmentDAO.create(newAppointment); 
@@ -43,9 +44,6 @@ public class AppointmentService {
 		try {
 			AppointmentDAO appointmentDTO = new AppointmentDAO();
 			Set<AppointmentRespondDTO> appointmentList = appointmentDTO.findAll();
-			for (AppointmentRespondDTO appointment : appointmentList) {
-				System.out.println(appointment);
-			}
 			return appointmentList;
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while retrieving all appointments", e);
@@ -69,9 +67,6 @@ public class AppointmentService {
 			AppointmentValidator.validateStatus(status);
 			AppointmentDAO appointmentDTO = new AppointmentDAO();
 			Set<AppointmentRespondDTO> appointmentList = appointmentDTO.findAllAppointmentByStatus(status);
-			for (AppointmentRespondDTO appointment : appointmentList) {
-				System.out.println(appointment);
-			}
 			return appointmentList;
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while retrieving appointments by their status", e);
@@ -97,9 +92,6 @@ public class AppointmentService {
 			AppointmentValidator.validateFromUserId(fromUserId);
 			AppointmentDAO appointmentDTO = new AppointmentDAO();
 			Set<AppointmentRespondDTO> appointmentList = appointmentDTO.findAllAppointmentByFromUserId(fromUserId);
-			for (AppointmentRespondDTO appointment : appointmentList) {
-				System.out.println(appointment);
-			}
 			return appointmentList;
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while retrieving appointments by their status", e);
@@ -126,9 +118,6 @@ public class AppointmentService {
 			AppointmentValidator.validateToUserId(toUserId);
 			AppointmentDAO appointmentDTO = new AppointmentDAO();
 			Set<AppointmentRespondDTO> appointmentList = appointmentDTO.findAllAppointmentByToUserId(toUserId);
-			for (AppointmentRespondDTO appointment : appointmentList) {
-				System.out.println(appointment);
-			}
 			return appointmentList;
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while retrieving appointments by their status", e);
