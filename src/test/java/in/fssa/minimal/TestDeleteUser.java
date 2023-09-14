@@ -68,7 +68,7 @@ class TestDeleteUser {
 	    newUser.setPassword("Jenusha@2303");
 	    newUser.setImage("https://goodhomes.wwmindia.com/content/2020/apr/sarah-sham1587387881.jpg");
 	    newUser.setPhoneNumber(9863456787L);
-	    newUser.setDesigner(false);
+	    newUser.setRole("user");
 
 	    assertDoesNotThrow(() -> {
 	        userService.createUser(newUser);

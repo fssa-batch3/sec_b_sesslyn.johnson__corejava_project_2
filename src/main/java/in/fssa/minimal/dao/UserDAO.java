@@ -1,14 +1,18 @@
 package in.fssa.minimal.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import in.fssa.minimal.enums.GenderEnum;
+import in.fssa.minimal.enums.RoleEnum;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.interfaces.UserInterface;
@@ -24,15 +28,16 @@ public class UserDAO implements UserInterface {
 	 * @return A set containing all active User objects in the database.
 	 * @throws PersistenceException If a database-related error occurs during
 	 *                              retrieval.
+	 * @throws ValidationException
 	 */
 	@Override
-	public Set<User> findAll() throws PersistenceException {
+	public Set<User> findAll() throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Set<User> userList = new HashSet<>();
 		try {
-			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
+			String query = "SELECT id,name,email,password,image,phone_number,date_of_birth,gender,role,is_active "
 					+ "FROM users WHERE is_active = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
@@ -42,12 +47,29 @@ public class UserDAO implements UserInterface {
 				user.setId(rs.getInt("id"));
 				user.setName(rs.getString("name"));
 				user.setEmail(rs.getString("email"));
-
 				user.setPassword(rs.getString("password"));
 				user.setImage(rs.getString("image"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
+				Date dateOfBirth = rs.getDate("date_of_birth");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				if (dateOfBirth != null) {
+					user.setDateOfBirth(dateFormat.format(dateOfBirth));
+				}
+				else {
+	                user.setDateOfBirth(null); 
+	            }
+				String gender = rs.getString("gender");
+				if (gender != null) {
+					gender = GenderEnum.getGenderString(gender);
+				}
+				user.setGender(gender);
+				String role = rs.getString("role");
+				if (role != null) {
+					role = RoleEnum.getRoleString(role);
+				}
+				user.setRole(role);
+
 				user.setActive(rs.getBoolean("is_active"));
-				user.setDesigner(rs.getBoolean("is_designer"));
 				userList.add(user);
 			}
 		} catch (SQLException e) {
@@ -66,15 +88,16 @@ public class UserDAO implements UserInterface {
 	 * @return The User object corresponding to the provided user ID.
 	 * @throws PersistenceException If a database-related error occurs during
 	 *                              retrieval.
+	 * @throws ValidationException
 	 */
 	@Override
-	public User findById(int userId) throws PersistenceException {
+	public User findById(int userId) throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User user = null;
 		try {
-			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
+			String query = "SELECT id,name,email,password,image,phone_number,date_of_birth,gender,role,is_active "
 					+ "FROM users WHERE is_active = 1 AND id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
@@ -87,9 +110,26 @@ public class UserDAO implements UserInterface {
 				user.setEmail(rs.getString("email"));
 				user.setPassword(rs.getString("password"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
+				Date dateOfBirth = rs.getDate("date_of_birth");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				if (dateOfBirth != null) {
+					user.setDateOfBirth(dateFormat.format(dateOfBirth));
+				}
+				else {
+	                user.setDateOfBirth(null); 
+	            }
+				String gender = rs.getString("gender");
+				if (gender != null) {
+					gender = GenderEnum.getGenderString(gender);
+				}
+				user.setGender(gender);
+				String role = rs.getString("role");
+				if (role != null) {
+					role = RoleEnum.getRoleString(role);
+				}
+				user.setRole(role);
 				user.setImage(rs.getString("image"));
 				user.setActive(rs.getBoolean("is_active"));
-				user.setDesigner(rs.getBoolean("is_designer"));
 			}
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -107,15 +147,16 @@ public class UserDAO implements UserInterface {
 	 * @return The User object corresponding to the provided email address.
 	 * @throws PersistenceException If a database-related error occurs during
 	 *                              retrieval.
+	 * @throws ValidationException
 	 */
 	@Override
-	public User findByEmail(String email) throws PersistenceException {
+	public User findByEmail(String email) throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User user = null;
 		try {
-			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
+			String query = "SELECT id,name,email,password,image,phone_number,date_of_birth,gender,role,is_active "
 					+ "FROM users WHERE is_active = 1 AND email = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
@@ -129,8 +170,25 @@ public class UserDAO implements UserInterface {
 				user.setPassword(rs.getString("password"));
 				user.setImage(rs.getString("image"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
+				Date dateOfBirth = rs.getDate("date_of_birth");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				if (dateOfBirth != null) {
+					user.setDateOfBirth(dateFormat.format(dateOfBirth));
+				}
+				else {
+	                user.setDateOfBirth(null); 
+	            }
+				String gender = rs.getString("gender");
+				if (gender != null) {
+					gender = GenderEnum.getGenderString(gender);
+				}
+				user.setGender(gender);
+				String role = rs.getString("role");
+				if (role != null) {
+					role = RoleEnum.getRoleString(role);
+				}
+				user.setRole(role);
 				user.setActive(rs.getBoolean("is_active"));
-				user.setDesigner(rs.getBoolean("is_designer"));
 			}
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -148,27 +206,22 @@ public class UserDAO implements UserInterface {
 	 *                create.
 	 * @throws PersistenceException If a database-related error occurs during
 	 *                              creation.
+	 * @throws ValidationException 
 	 */
 
 	@Override
-	public void create(User newUser) throws PersistenceException {
+	public void create(User newUser) throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
-			String query = "INSERT INTO users (name, email, password, image,is_designer, phone_number) VALUES (?,?,?,?,?,?)";
+			String query = "INSERT INTO users (name, email, password, role, phone_number) VALUES (?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, newUser.getName());
 			ps.setString(2, newUser.getEmail());
 			ps.setString(3, newUser.getPassword());
-			if (newUser.getImage() != null) {
-				ps.setString(4, newUser.getImage());
-			} else {
-				ps.setNull(4, java.sql.Types.VARCHAR);
-			}
-
-			ps.setBoolean(5, newUser.isDesigner());
-			ps.setLong(6, newUser.getPhoneNumber());
+			ps.setString(4, RoleEnum.getRole(newUser.getRole()));
+			ps.setLong(5, newUser.getPhoneNumber());
 			ps.executeUpdate();
 			Logger.info("User has been created successfully");
 
@@ -188,9 +241,10 @@ public class UserDAO implements UserInterface {
 	 *                    user.
 	 * @throws PersistenceException If a database-related error occurs during the
 	 *                              update.
+	 * @throws ValidationException
 	 */
 	@Override
-	public void update(int userId, User updatedUser) throws PersistenceException {
+	public void update(int userId, User updatedUser) throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
@@ -213,12 +267,18 @@ public class UserDAO implements UserInterface {
 				queryBuilder.append("phone_number = ?, ");
 				values.add(updatedUser.getPhoneNumber());
 			}
-
-			Boolean newValue = updatedUser.isDesigner();
-			Boolean oldValue = getDesignerValueFromDatabase(userId);
-			if (!newValue.equals(oldValue)) {
-				queryBuilder.append("is_designer = ?, ");
-				values.add(newValue);
+			if (updatedUser.getDateOfBirth() != null) {
+				queryBuilder.append("date_of_birth = ?, ");
+				java.sql.Date dateOfBirth = java.sql.Date.valueOf(updatedUser.getDateOfBirth());
+				values.add(dateOfBirth);
+			}
+			if (updatedUser.getGender() != null) {
+				queryBuilder.append("gender = ?, ");
+				values.add(GenderEnum.getGender(updatedUser.getGender()));
+			}
+			if (updatedUser.getRole() != null) {
+				queryBuilder.append("role = ?, ");
+				values.add(RoleEnum.getRole(updatedUser.getRole()));
 			}
 
 			queryBuilder.setLength(queryBuilder.length() - 2);
@@ -240,29 +300,6 @@ public class UserDAO implements UserInterface {
 		} finally {
 			ConnectionUtil.close(conn, ps, null);
 		}
-	}
-
-	private Boolean getDesignerValueFromDatabase(int userId) throws PersistenceException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		boolean r = false;
-		try {
-			String query = "SELECT is_designer FROM users WHERE is_active = 1 AND id = ?";
-			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(query);
-			ps.setInt(1, userId);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				r = rs.getBoolean("is_designer");
-			}
-		} catch (SQLException e) {
-			Logger.error(e);
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, ps, rs);
-		}
-		return r;
 	}
 
 	/**
@@ -297,15 +334,16 @@ public class UserDAO implements UserInterface {
 	 * @return A set containing all active designer User objects in the database.
 	 * @throws PersistenceException If a database-related error occurs during
 	 *                              retrieval.
+	 * @throws ValidationException
 	 */
-	public Set<User> findAllDesigner() throws PersistenceException {
+	public Set<User> findAllDesigner() throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Set<User> userList = new HashSet<>();
 		try {
-			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
-					+ "FROM users WHERE is_active = 1 AND is_designer = 1";
+			String query = "SELECT id,name,email,password,image,phone_number,date_of_birth,gender,role,is_active "
+					+ "FROM users WHERE role = 'd' AND is_active = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -317,8 +355,25 @@ public class UserDAO implements UserInterface {
 				user.setPassword(rs.getString("password"));
 				user.setImage(rs.getString("image"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
+				Date dateOfBirth = rs.getDate("date_of_birth");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				if (dateOfBirth != null) {
+					user.setDateOfBirth(dateFormat.format(dateOfBirth));
+				}
+				else {
+	                user.setDateOfBirth(null); 
+	            }
+				String gender = rs.getString("gender");
+				if (gender != null) {
+					gender = GenderEnum.getGenderString(gender);
+				}
+				user.setGender(gender);
+				String role = rs.getString("role");
+				if (role != null) {
+					role = RoleEnum.getRoleString(role);
+				}
+				user.setRole(role);
 				user.setActive(rs.getBoolean("is_active"));
-				user.setDesigner(rs.getBoolean("is_designer"));
 				userList.add(user);
 			}
 		} catch (SQLException e) {
@@ -337,15 +392,16 @@ public class UserDAO implements UserInterface {
 	 * @return The User object corresponding to the provided designer user ID.
 	 * @throws PersistenceException If a database-related error occurs during
 	 *                              retrieval.
+	 * @throws ValidationException
 	 */
-	public User findDesignerById(int userId) throws PersistenceException {
+	public User findDesignerById(int userId) throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User user = null;
 		try {
-			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
-					+ "FROM users WHERE is_active = 1 AND is_designer = 1 AND id = ?";
+			String query = "SELECT id,name,email,password,image,phone_number,date_of_birth,gender,role,is_active "
+					+ "FROM users WHERE is_active = 1 AND role = 'd' AND id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, userId);
@@ -358,8 +414,25 @@ public class UserDAO implements UserInterface {
 				user.setPassword(rs.getString("password"));
 				user.setImage(rs.getString("image"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
+				Date dateOfBirth = rs.getDate("date_of_birth");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				if (dateOfBirth != null) {
+					user.setDateOfBirth(dateFormat.format(dateOfBirth));
+				}
+				else {
+	                user.setDateOfBirth(null); 
+	            }
+				String gender = rs.getString("gender");
+				if (gender != null) {
+					gender = GenderEnum.getGenderString(gender);
+				}
+				user.setGender(gender);
+				String role = rs.getString("role");
+				if (role != null) {
+					role = RoleEnum.getRoleString(role);
+				}
+				user.setRole(role);
 				user.setActive(rs.getBoolean("is_active"));
-				user.setDesigner(rs.getBoolean("is_designer"));
 			}
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -481,7 +554,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT id FROM users WHERE is_active = 1 AND is_designer = 1 AND id = ?";
+			String query = "SELECT id FROM users WHERE is_active = 1 AND role = 'd' AND id = ?";
 			conn = ConnectionUtil.getConnection();
 			pre = conn.prepareStatement(query);
 			pre.setInt(1, userId);
@@ -510,7 +583,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		int userId = 0;
 		try {
-			String query = "SELECT id FROM users WHERE is_active = 1 AND is_designer = 0 ORDER BY created_at DESC LIMIT 1";
+			String query = "SELECT id FROM users WHERE is_active = 1 AND role = 'u' ORDER BY created_at DESC LIMIT 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -539,8 +612,8 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		int designerId = 0;
 		try {
-			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
-					+ "FROM users WHERE is_active = 1 AND is_designer = 1 ORDER BY created_at DESC LIMIT 1";
+			String query = "SELECT id,name,email,password,image,phone_number,date_of_birth,gender,role,is_active "
+					+ "FROM users WHERE is_active = 1 AND role = 'd' ORDER BY created_at DESC LIMIT 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -563,14 +636,15 @@ public class UserDAO implements UserInterface {
 	 * @return The User object corresponding to the provided user ID.
 	 * @throws PersistenceException If a database-related error occurs during
 	 *                              retrieval.
+	 * @throws ValidationException
 	 */
-	public User findByUserIdForAppointment(int userId) throws PersistenceException {
+	public User findByUserIdForAppointment(int userId) throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User user = null;
 		try {
-			String query = "SELECT id,name,email,password,image,phone_number,is_active,is_designer "
+			String query = "SELECT id,name,email,password,image,phone_number,date_of_birth,gender,role,is_active "
 					+ "FROM users WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
@@ -584,8 +658,25 @@ public class UserDAO implements UserInterface {
 				user.setPassword(rs.getString("password"));
 				user.setImage(rs.getString("image"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
+				Date dateOfBirth = rs.getDate("date_of_birth");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				if (dateOfBirth != null) {
+					user.setDateOfBirth(dateFormat.format(dateOfBirth));
+				}
+				else {
+	                user.setDateOfBirth(null); 
+	            }
+				String gender = rs.getString("gender");
+				if (gender != null) {
+					gender = GenderEnum.getGenderString(gender);
+				}
+				user.setGender(gender);
+				String role = rs.getString("role");
+				if (role != null) {
+					role = RoleEnum.getRoleString(role);
+				}
+				user.setRole(role);
 				user.setActive(rs.getBoolean("is_active"));
-				user.setDesigner(rs.getBoolean("is_designer"));
 			}
 		} catch (SQLException e) {
 			Logger.error(e);

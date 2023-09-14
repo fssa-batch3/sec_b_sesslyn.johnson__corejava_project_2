@@ -16,8 +16,9 @@ public class UserService {
 	 *
 	 * @return A set containing all User objects in the database.
 	 * @throws ServiceException If a service-related error occurs during retrieval.
+	 * @throws ValidationException 
 	 */
-	public Set<User> getAllUser() throws ServiceException {
+	public Set<User> getAllUser() throws ServiceException, ValidationException {
 	    try {
 	        UserDAO userDAO = new UserDAO(); 
 	        return userDAO.findAll(); 
@@ -102,6 +103,15 @@ public class UserService {
 	        if (updatedUser.getPhoneNumber() != 0) {
 	            UserValidator.validatePhoneNumber(updatedUser.getPhoneNumber());
 	        }
+	        if(updatedUser.getDateOfBirth() != null) {
+	        	UserValidator.validateDateOfBirth(updatedUser.getDateOfBirth());
+	        }
+	        if(updatedUser.getGender() != null) {
+	        	UserValidator.validateGender(updatedUser.getGender());
+	        }
+	        if(updatedUser.getRole() != null) {
+	        	UserValidator.validateRole(updatedUser.getRole());
+	        }
 	        UserDAO userDao = new UserDAO();
 	        userDao.update(userId, updatedUser);
 	    } catch (PersistenceException e) {
@@ -131,8 +141,9 @@ public class UserService {
 	 *
 	 * @return A set containing all designer User objects in the database.
 	 * @throws ServiceException If a service-related error occurs during retrieval.
+	 * @throws ValidationException 
 	 */
-	public Set<User> getAllDesigner() throws ServiceException {
+	public Set<User> getAllDesigner() throws ServiceException, ValidationException {
 	    try {
 	        UserDAO userDAO = new UserDAO();
 	        return userDAO.findAllDesigner();

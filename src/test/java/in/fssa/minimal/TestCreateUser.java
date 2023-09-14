@@ -27,7 +27,7 @@ class TestCreateUser {
 	    newUser.setPassword("Jenusha@2303");
 	    newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 	    newUser.setPhoneNumber(9863456787L); 
-	    newUser.setDesigner(false);
+	    newUser.setRole("user");
 
 	    assertDoesNotThrow(() -> {
 	        userService.createUser(newUser); 
@@ -45,7 +45,7 @@ class TestCreateUser {
 	    newUser.setPassword("Jenusha@2303");
 	    newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 	    newUser.setPhoneNumber(9863456787L);
-	    newUser.setDesigner(true);
+	    newUser.setRole("designer");
 
 	    assertDoesNotThrow(() -> {
 	        userService.createUser(newUser);
@@ -88,7 +88,7 @@ class TestCreateUser {
 		newUser.setPassword("Sam@2303");
 		newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		newUser.setPhoneNumber(9923456787L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -110,7 +110,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(9923456787L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -132,7 +132,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(9923456787L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -154,7 +154,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(9923456787L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -177,7 +177,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(9923456787L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -200,7 +200,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(9923456787L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -223,7 +223,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(9923456787L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -246,8 +246,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(6381040916L);
-		newUser.setDesigner(false);
-
+		 newUser.setRole("user");
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
 		});
@@ -268,7 +267,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(9923456787L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -290,7 +289,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(9923456787L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -312,7 +311,7 @@ class TestCreateUser {
 	    newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 	    newUser.setPhoneNumber(9923456787L);
-	    newUser.setDesigner(false);
+	    newUser.setRole("user");
 
 	    Exception exception = assertThrows(ValidationException.class, () -> {
 	        userService.createUser(newUser);
@@ -338,7 +337,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(9923456787L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -359,8 +358,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(-2);
-		newUser.setDesigner(false);
-
+		 newUser.setRole("user");
 		ValidationException exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
 		});
@@ -382,7 +380,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(98760567890L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		ValidationException exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -405,7 +403,7 @@ class TestCreateUser {
 		  newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
 		  
 		newUser.setPhoneNumber(3895673456L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		ValidationException exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -428,7 +426,7 @@ class TestCreateUser {
 		newUser.setPassword("Sam@2303");
 		  newUser.setImage("wp-content/uploads/2021/07/headshot-for-startup.jpg");
 		newUser.setPhoneNumber(3895673456L);
-		newUser.setDesigner(false);
+		 newUser.setRole("user");
 
 		ValidationException exception = assertThrows(ValidationException.class, () -> {
 			userService.createUser(newUser);
@@ -438,5 +436,23 @@ class TestCreateUser {
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage,actualMessage);
+	}
+	
+	@Test
+	@Order(20)
+	 void testCreateSellerWithValidInput() {
+	    UserService userService = new UserService();
+	    User newUser = new User();
+	    String randomString = generateRandomString(8); 
+	    newUser.setName("Sesslyn");
+	    newUser.setEmail(randomString + "@" + "gmail.com");
+	    newUser.setPassword("Jenusha@2303");
+	    newUser.setImage("https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+	    newUser.setPhoneNumber(9863456787L);
+	    newUser.setRole("seller");
+
+	    assertDoesNotThrow(() -> {
+	        userService.createUser(newUser);
+	    });
 	}
 }

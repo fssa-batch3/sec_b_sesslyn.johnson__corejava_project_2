@@ -1,17 +1,17 @@
 package in.fssa.minimal.model;
 
-
 public abstract class UserEntity {
-	
-	private String name; 
+
+	private String name;
 	private int id;
 	private String email;
 	private String password;
 	private String image;
+	private String gender;
+	private String role;
+	private String date_of_birth;
 	private long phoneNumber;
-	private boolean isDesigner;
 	private boolean isActive = true;
-	
 
 	public String getName() {
 		return name;
@@ -41,10 +41,10 @@ public abstract class UserEntity {
 		return password;
 	}
 
-	public void setPassword(String passsword) {
-		this.password = passsword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	
+
 	public String getImage() {
 		return image;
 	}
@@ -53,20 +53,36 @@ public abstract class UserEntity {
 		this.image = image;
 	}
 
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getDateOfBirth() {
+		return date_of_birth;
+	}
+
+	public void setDateOfBirth(String date_of_birth) {
+		this.date_of_birth = date_of_birth;
+	}
+
 	public long getPhoneNumber() {
 		return phoneNumber;
 	}
 
 	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	public boolean isDesigner() {
-		return isDesigner;
-	}
-
-	public void setDesigner(boolean isDesigner) {
-		this.isDesigner = isDesigner;
 	}
 
 	public boolean isActive() {
@@ -80,8 +96,7 @@ public abstract class UserEntity {
 	@Override
 	public String toString() {
 		return "UserEntity [name=" + name + ", id=" + id + ", email=" + email + ", password=" + password + ", image="
-				+ image + ", phoneNumber=" + phoneNumber + ", isDesigner=" + isDesigner + ", isActive=" + isActive
-				+ "]";
+				+ image + ", gender=" + gender + ", roles=" + role + ", date_of_birth=" + date_of_birth + ", phoneNumber=" + phoneNumber
+				+ ", isActive=" + isActive + "]";
 	}
-	
 }

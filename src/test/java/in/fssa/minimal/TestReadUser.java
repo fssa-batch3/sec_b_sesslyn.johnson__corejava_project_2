@@ -31,7 +31,7 @@ class TestReadUser {
     void testGetUserById() {
         assertDoesNotThrow(() -> {
             UserService userService = new UserService();
-            User arr = userService.findByUserId(1);
+            User arr = userService.findByUserId(3);
             System.out.println(arr);
         });
     }
@@ -67,7 +67,7 @@ class TestReadUser {
 	    void testGetUserByEmailId() {
 	        assertDoesNotThrow(() -> {
 	            UserService userService = new UserService();
-	            User arr = userService.findByEmail("ruby@gmail.com");
+	            User arr = userService.findByEmail("ash@gmail.com");
 	            System.out.println(arr);
 	        });
 	    }

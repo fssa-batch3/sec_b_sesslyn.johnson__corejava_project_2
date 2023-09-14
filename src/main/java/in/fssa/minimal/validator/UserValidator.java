@@ -1,8 +1,13 @@
 package in.fssa.minimal.validator;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Pattern;
 
 import in.fssa.minimal.dao.UserDAO;
+import in.fssa.minimal.enums.GenderEnum;
+import in.fssa.minimal.enums.RoleEnum;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
 import in.fssa.minimal.exception.ValidationException;
@@ -67,8 +72,8 @@ public class UserValidator {
 	 * Validates an email address using a regular expression pattern.
 	 *
 	 * @param email The email address to validate.
-	 * @throws ValidationException  If the email address does not match the required
-	 *                              format or if it already exists.
+	 * @throws ValidationException If the email address does not match the required
+	 *                             format or if it already exists.
 	 */
 	public static void validateAllEmail(String email) throws ValidationException {
 		StringUtil.rejectIfInvalidString(email, "Email");
@@ -205,6 +210,44 @@ public class UserValidator {
 	public static void validateImage(String image) throws ValidationException, ServiceException {
 		if (!image.matches(IMAGE_PATTERN)) {
 			throw new ValidationException("Invalid image format. Please provide a valid image url.");
+		}
+	}
+
+	public static void validateDateOfBirth(String dateOfBirth) throws ValidationException, ServiceException {
+	    StringUtil.rejectIfInvalidString(dateOfBirth, "Date Of Birth");
+	    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate dueDate;
+
+	    try {
+	        dueDate = LocalDate.parse(dateOfBirth, inputFormatter);
+	    } catch (DateTimeParseException e) {
+	        throw new ValidationException("Invalid date format (yyyy-MM-dd)");
+	    }
+
+	    LocalDate currentDate = LocalDate.now();
+	    LocalDate minimumAgeDate = currentDate.minusYears(18);
+
+	    if (dueDate.isAfter(currentDate) || dueDate.equals(currentDate)) {
+	        throw new ValidationException("Invalid date. The date can't be today or future.");
+	    }
+
+	    if (dueDate.isAfter(minimumAgeDate)) {
+	        throw new ValidationException("Users must be at least 18 years old.");
+	    }
+	}
+
+
+	public static void validateGender(String gender) throws ValidationException, ServiceException {
+		StringUtil.rejectIfInvalidString(gender, "Gender");
+		if (GenderEnum.getGender(gender).equals("non")) {
+			throw new ValidationException("Invalid Gender type");
+		}
+	}
+	
+	public static void validateRole(String role) throws ValidationException, ServiceException {
+		StringUtil.rejectIfInvalidString(role, "Role");
+		if (RoleEnum.getRole(role).equals("non")) {
+			throw new ValidationException("Invalid Role type");
 		}
 	}
 
