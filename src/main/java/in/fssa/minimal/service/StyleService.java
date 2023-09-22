@@ -1,9 +1,13 @@
 package in.fssa.minimal.service;
 
+import java.util.Set;
+
+import in.fssa.minimal.dao.DesignDAO;
 import in.fssa.minimal.dao.StyleDAO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
 import in.fssa.minimal.exception.ValidationException;
+import in.fssa.minimal.model.Design;
 import in.fssa.minimal.model.Style;
 import in.fssa.minimal.validator.DesignValidator;
 
@@ -55,5 +59,38 @@ public class StyleService {
 	    }
 	}
 
-
+     public int findStyleId(String styleName) throws ValidationException, ServiceException {
+    	 int styleId = 0;
+    	 try {
+ 	        DesignValidator.validateName(styleName);
+ 	        StyleDAO styleDAO = new StyleDAO();
+ 	        styleId = styleDAO.getStyleId(styleName);
+ 	    } catch (PersistenceException e) {
+ 	        throw new ServiceException("Error occurred while updating style", e);
+ 	    }
+		return styleId; 
+     }
+     
+     public Set<Style> getAllStyle() throws ServiceException {
+ 	    try {
+ 	        StyleDAO styleDao = new StyleDAO();
+ 	        Set<Style> styleList = styleDao.findAllStyle();
+ 	        return styleList;
+ 	    } catch (PersistenceException e) {
+ 	        throw new ServiceException("Error occurred while retrieving designs", e);
+ 	    }
+ 	}
+     
+     public String findStyleName(int styleId) throws ValidationException, ServiceException {
+        String styleName = null;
+    	 try {
+ 	        DesignValidator.validateId("Style Id",styleId);
+ 	        StyleDAO styleDAO = new StyleDAO();
+ 	        styleName = styleDAO.getStyleName(styleId);
+ 	    } catch (PersistenceException e) {
+ 	        throw new ServiceException("Error occurred while updating style", e);
+ 	    }
+		return styleName; 
+     }
+     
 }

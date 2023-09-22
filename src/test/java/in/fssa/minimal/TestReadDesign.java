@@ -14,7 +14,9 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Design;
+import in.fssa.minimal.model.Style;
 import in.fssa.minimal.service.DesignService;
+import in.fssa.minimal.service.StyleService;
 
 @TestMethodOrder(OrderAnnotation.class)
 class TestReadDesign {
@@ -52,7 +54,7 @@ class TestReadDesign {
 	
 	@Test
 	@Order(4)
-	void testWitNonExistingId() {
+	void testWithNonExistingId() {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Design arr = designService.findByDesignId(5000);
@@ -64,37 +66,35 @@ class TestReadDesign {
 	}
 	
 	@Test
- @Order(5)
- void testGetAllDesignByDesignerId() {
-     assertDoesNotThrow(() -> {
-         DesignService designService = new DesignService();
-         Set<Design> designList = designService.findAllDesignsByDesignerId(2);
-     });
- }
- 
- @Test
- @Order(6)
- void testGetAllDesignWithNonExistingId() {
-     DesignService designService = new DesignService();
-     Exception exception = assertThrows(ValidationException.class, () -> {
-         Set<Design> designList = designService.findAllDesignsByDesignerId(6);
-     });
-     String expectedMessage = "Designers doesn't have any design yet";
-     String actualMessage = exception.getMessage();
-
-     assertEquals(expectedMessage, actualMessage);    
- }
- 
+	@Order(5)
+	void testWithValidStyleName() {
+		 assertDoesNotThrow(() -> {
+	            StyleService styleService = new StyleService();
+	             int styleId = styleService.findStyleId("Minimalism");
+	            System.out.println(styleId);
+	        });
+	    }
+	
 	@Test
-	@Order(7)
-	void testGetAllDesignWithNonExistingDesigner() throws PersistenceException, ValidationException {
-		DesignService designService = new DesignService();
+	@Order(6)
+	void testWithInValidStyleName() {
+		StyleService styleService = new StyleService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<Design>  designList = designService.findAllDesignsByDesignerId(5000);
+			  int styleId = styleService.findStyleId("Rustic Architecture");
 		});
-		String expectedMessage = "Designer Id doesn't exist";
+		String expectedMessage = "Style Name doesn't exist";
 		String actualMessage = exception.getMessage();
 
-		assertEquals(expectedMessage, actualMessage);	
+		assertEquals(expectedMessage, actualMessage);
 	}
+	@Test
+    @Order(7)
+    void testGetAllStyle() {
+        assertDoesNotThrow(() -> {
+        	StyleService styleService = new StyleService();
+            Set<Style> arr = styleService.getAllStyle();
+            System.out.println(arr);
+        });
+    }
+			
 }

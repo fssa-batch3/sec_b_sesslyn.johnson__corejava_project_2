@@ -46,7 +46,7 @@ public class DesignService {
 	        throws ValidationException, PersistenceException, ServiceException {
 	    try {
 	        DesignValidator.validateDesignId(designId);
-
+ 
 	        if (updatedDesign.getName() != null) {
 	            DesignValidator.validateName(updatedDesign.getName());
 	        }
@@ -59,9 +59,7 @@ public class DesignService {
 	        if (updatedDesign.getStyleId() != 0) {
 	            DesignValidator.validateStyleId(updatedDesign.getStyleId());
 	        }
-	        if (updatedDesign.getCreatedBy() != 0) {
-	            DesignValidator.validateCreatedById(updatedDesign.getCreatedBy());
-	        }
+
 
 	        DesignDAO designDao = new DesignDAO();
 	        designDao.update(designId, updatedDesign);
@@ -106,24 +104,6 @@ public class DesignService {
 	    }
 	}
 
-	/**
-	 * Retrieves all design entities created by a specific designer.
-	 *
-	 * @param id The ID of the designer.
-	 * @return A set of designs created by the specified designer.
-	 * @throws ValidationException  If the input ID is invalid.
-	 * @throws ServiceException    If an error occurs during database operation.
-	 * @throws PersistenceException If a database error occurs during retrieval.
-	 */
-	public static Set<Design> findAllDesignsByDesignerId(int designId) throws ValidationException, ServiceException {
-	    try {
-	        DesignValidator.validateDesignerId(designId);
-	        DesignDAO designDAO = new DesignDAO();
-	        Set<Design> designList = designDAO.findAllDesignsByDesignerId(designId);
-	        return designList;
-	    } catch (PersistenceException e) {
-	        throw new ServiceException("Error occurred while retrieving designs by the designer id", e);
-	    }
-	}
+	
 
 }

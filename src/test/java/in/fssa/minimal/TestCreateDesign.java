@@ -19,7 +19,7 @@ import in.fssa.minimal.service.StyleService;
 
 @TestMethodOrder(OrderAnnotation.class)
 class TestCreateDesign {
-	//Style
+	// Style
 	@Test
 	@Order(1)
 	void testCreateStyleWithValidInput() {
@@ -30,7 +30,7 @@ class TestCreateDesign {
 
 		assertDoesNotThrow(() -> {
 			styleService.createStyle(newStyle);
-		}); 
+		});
 	}
 
 	@Test
@@ -60,8 +60,8 @@ class TestCreateDesign {
 
 		assertEquals(expectedMessage, actualMessage);
 	}
-	
-	//Design
+
+	// Design
 	@Order(4)
 	@Test
 	void testCreateDesignWithValidInput() {
@@ -70,14 +70,13 @@ class TestCreateDesign {
 		newDesign.setName("Modern 4 Bhk Home");
 		newDesign.setDescription("Customer Name: Mr. Johnson & Mrs. Ruby \r\n" + "Apartment Size: 4 BHK, 3200 Sq Ft\r\n"
 				+ "Project Value:  35-38 Lakhs\r\n" + "Project Manager: Muzammil\r\n"
-				+ "Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of "
+				+ "Design Description: Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of "
 				+ "Johnson and Ruby offers some major design goals. The house is the true epitome of elegance and"
 				+ " warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms,"
 				+ " making them look regal. The accessories scattered throughout the space club everything together, "
 				+ "radiating charm and opulence.\r\n");
 		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(2);
-		newDesign.setCreatedBy(2);
 
 		assertDoesNotThrow(() -> {
 			designService.createDesign(newDesign);
@@ -106,7 +105,6 @@ class TestCreateDesign {
 		newDesign.setDescription("Customer Name: Mr. Kiran Kunjur & Mrs. Ramya Kiran\r\n");
 		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(2);
-		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
@@ -126,7 +124,6 @@ class TestCreateDesign {
 		newDesign.setDescription("Customer Name: Mr. Kiran Kunjur & Mrs. Ramya Kiran\r\n");
 		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(2);
-		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
@@ -146,7 +143,6 @@ class TestCreateDesign {
 		newDesign.setDescription(null);
 		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(2);
-		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
@@ -166,7 +162,6 @@ class TestCreateDesign {
 		newDesign.setDescription("");
 		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(2);
-		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
@@ -186,7 +181,6 @@ class TestCreateDesign {
 		newDesign.setDescription("Modern 3BHK Home");
 		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(2);
-		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
@@ -206,7 +200,6 @@ class TestCreateDesign {
 		newDesign.setDescription("Customer Name: Mr. Kiran Kunjur & Mrs. Ramya Kiran\r\n");
 		newDesign.setLocation(null);
 		newDesign.setStyleId(2);
-		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
@@ -226,7 +219,6 @@ class TestCreateDesign {
 		newDesign.setDescription("Customer Name: Mr. Kiran Kunjur & Mrs. Ramya Kiran\r\n");
 		newDesign.setLocation("");
 		newDesign.setStyleId(2);
-		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
@@ -246,7 +238,6 @@ class TestCreateDesign {
 		newDesign.setDescription("Customer Name: Mr. Kiran Kunjur & Mrs. Ramya Kiran\r\n");
 		newDesign.setLocation("Chennai1234");
 		newDesign.setStyleId(-2);
-		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
@@ -266,7 +257,6 @@ class TestCreateDesign {
 		newDesign.setDescription("Customer Name: Mr. Kiran Kunjur & Mrs. Ramya Kiran");
 		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(0);
-		newDesign.setCreatedBy(3);
 
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
@@ -286,7 +276,6 @@ class TestCreateDesign {
 		newDesign.setDescription("Customer Name: Mr. Kiran Kunjur & Mrs. Ramya Kiran");
 		newDesign.setLocation("Chennai");
 		newDesign.setStyleId(5000);
-		newDesign.setCreatedBy(2);
 
 		Exception exception = assertThrows(Exception.class, () -> {
 			designService.createDesign(newDesign);
@@ -297,26 +286,7 @@ class TestCreateDesign {
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	@Order(13)
-	@Test
-	void testCreateDesignWithNonExistingDesigner() {
-		DesignService designService = new DesignService();
-		Design newDesign = new Design();
-		newDesign.setName("Modern 3Bhk Home");
-		newDesign.setDescription("Customer Name: Mr. Kiran Kunjur & Mrs. Ramya Kiran");
-		newDesign.setLocation("Chennai");
-		newDesign.setStyleId(1);
-		newDesign.setCreatedBy(3);
 
-		Exception exception = assertThrows(Exception.class, () -> {
-			designService.createDesign(newDesign);
-		});
-		String expectedMessage = "Designer Id doesn't exist";
-		String actualMessage = exception.getMessage();
-
-		assertEquals(expectedMessage, actualMessage);
-	}
-	
 	private String generateRandomString(int length) {
 		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		StringBuilder randomString = new StringBuilder();

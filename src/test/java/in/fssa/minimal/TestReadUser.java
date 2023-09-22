@@ -76,7 +76,7 @@ class TestReadUser {
 	@Order(6)
 	void testGetUserByNonExistingEmail() {
 		UserService userService = new UserService();
-		Exception exception = assertThrows(ValidationException.class, () -> {
+		Exception exception = assertThrows(ValidationException.class, () -> { 
 			User arr = userService.findByEmail("sesslyn2002@gmail.com");
 		});
 		String expectedMessage = "Email doesn't exist";
@@ -104,16 +104,49 @@ class TestReadUser {
             System.out.println(arr);
         });
     }
+    
+    @Test
+    @Order(9)
+    void testGetAllSeller() {
+        assertDoesNotThrow(() -> {
+            UserService userService = new UserService();
+            Set<User> arr = userService.getAllSeller();
+            System.out.println(arr);
+        });
+    }
+
+    @Test
+    @Order(10)
+    void testGetSellerById() {
+        assertDoesNotThrow(() -> {
+            UserService userService = new UserService();
+            User arr = userService.findBySellerId(15);
+            System.out.println(arr);
+        });
+    }
 
 
 	@Test
-	@Order(9)
+	@Order(11)
 	void testGetDesignerByNonExistingId() {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			User arr = userService.findByDesignerId(3);
 		});
 		String expectedMessage = "Designer Id doesn't exist";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	@Order(12)
+	void testGetSellerByNonExistingId() {
+		UserService userService = new UserService();
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			User arr = userService.findBySellerId(1);
+		});
+		String expectedMessage = "Seller Id doesn't exist";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);

@@ -8,6 +8,7 @@ import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.User;
+import in.fssa.minimal.util.StringUtil;
 import in.fssa.minimal.validator.UserValidator;
 
 public class UserService {
@@ -40,7 +41,7 @@ public class UserService {
 	        UserValidator.validateUserId(userId);
 	        UserDAO userDAO = new UserDAO();
 	        return userDAO.findById(userId);
-	    } catch (PersistenceException e) {
+	    } catch (PersistenceException e) { 
 	        throw new ServiceException("Error occurred while finding user by their id.", e);
 	    }
 	}
@@ -79,6 +80,28 @@ public class UserService {
 	        throw new ServiceException("Error occurred while creating user.", e);
 	    }
 	}
+	
+	public void createDesigner(User newUser) throws ValidationException, ServiceException {
+	    try {
+	        UserValidator.validateUser(newUser);
+	       UserValidator.validateDesigner(newUser);
+	        UserDAO userDAO = new UserDAO();
+	        userDAO.create(newUser);
+	    } catch (PersistenceException e) {
+	        throw new ServiceException("Error occurred while creating user.", e);
+	    }
+	} 
+	
+	public void createSeller(User newUser) throws ValidationException, ServiceException {
+	    try {
+	        UserValidator.validateUser(newUser);
+	       UserValidator.validateSeller(newUser);
+	        UserDAO userDAO = new UserDAO();
+	        userDAO.create(newUser);
+	    } catch (PersistenceException e) {
+	        throw new ServiceException("Error occurred while creating user.", e);
+	    }
+	}
 
 	/**
 	 * Updates a user's information.
@@ -91,33 +114,53 @@ public class UserService {
 	public void updateUser(int userId, User updatedUser) throws ValidationException, ServiceException {
 	    try {
 	        UserValidator.validateUserId(userId);
-	        if (updatedUser.getName() != null) {
-	            UserValidator.validateName(updatedUser.getName());
+
+	        // Validate updated user fields
+	        if (updatedUser != null) {
+	        
+	            if (updatedUser.getName() != null) {
+	                UserValidator.validateName(updatedUser.getName());
+	            }
+	            if (updatedUser.getImage() != null) {
+	                UserValidator.validateImage(updatedUser.getImage());
+	            }
+	            if (updatedUser.getPhoneNumber() != 0) {
+	                UserValidator.validatePhoneNumber(updatedUser.getPhoneNumber());
+	            }
+	            if (updatedUser.getDateOfBirth() != null) {
+	                UserValidator.validateDateOfBirth(updatedUser.getDateOfBirth());
+	            }
+	            if (updatedUser.getGender() != null) {
+	                UserValidator.validateGender(updatedUser.getGender());
+	            }
+	            if(updatedUser.getRole() == null) {
+	            	updatedUser.setRole("user");
+	            }
+	            if (updatedUser.getRole().equals("seller") ) {
+	            	 if(updatedUser.getGst_number() != null) {
+	       	        	UserValidator.validateGstNumber(updatedUser.getGst_number());
+	       	        }
+	 	            if (updatedUser.getShop_address() != null) {
+	 	                StringUtil.rejectIfInvalidString(updatedUser.getShop_address(), "Shop Address");
+	 	            }
+	            }
+	            else if (updatedUser.getRole().equals("designer")) {
+	                if (updatedUser.getExperience() != 0) {
+	                    UserValidator.validateExperience("Experience", updatedUser.getExperience());
+	                }
+	                if (updatedUser.getDesigner_description() != null) {
+	                    StringUtil.rejectIfInvalidString(updatedUser.getDesigner_description(), "Designer Description");
+	                }
+	            }
 	        }
-	        if (updatedUser.getPassword() != null) {
-	            UserValidator.validatePassword(updatedUser.getPassword());
-	        }
-	        if (updatedUser.getImage() != null) {
-	            UserValidator.validateImage(updatedUser.getImage());
-	        }
-	        if (updatedUser.getPhoneNumber() != 0) {
-	            UserValidator.validatePhoneNumber(updatedUser.getPhoneNumber());
-	        }
-	        if(updatedUser.getDateOfBirth() != null) {
-	        	UserValidator.validateDateOfBirth(updatedUser.getDateOfBirth());
-	        }
-	        if(updatedUser.getGender() != null) {
-	        	UserValidator.validateGender(updatedUser.getGender());
-	        }
-	        if(updatedUser.getRole() != null) {
-	        	UserValidator.validateRole(updatedUser.getRole());
-	        }
+
 	        UserDAO userDao = new UserDAO();
 	        userDao.update(userId, updatedUser);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while updating user.", e);
 	    }
 	}
+
 
 	/**
 	 * Deletes a user.
@@ -151,6 +194,15 @@ public class UserService {
 	        throw new ServiceException("Error occurred while retrieving designers.", e);
 	    }
 	}
+	
+	public Set<User> getAllSeller() throws ServiceException, ValidationException {
+	    try {
+	        UserDAO userDAO = new UserDAO();
+	        return userDAO.findAllSeller();
+	    } catch (PersistenceException e) {
+	        throw new ServiceException("Error occurred while retrieving designers.", e);
+	    }
+	}
 
 	/**
 	 * Retrieves a designer user by their ID.
@@ -169,6 +221,16 @@ public class UserService {
 	        throw new ServiceException("Error occurred while finding designer by their id.", e);
 	    }
 	}
+	
+	public User findBySellerId(int sellerId) throws ValidationException, ServiceException {
+	    try {
+	        UserValidator.validateSellerId(sellerId);
+	        UserDAO userDao = new UserDAO();
+	        return userDao.findSellerById(sellerId);
+	    } catch (PersistenceException e) {
+	        throw new ServiceException("Error occurred while finding designer by their id.", e);
+	    }
+	}
 
 	public static User findByUserIdForAppointment(int userId) throws ValidationException, ServiceException {
 	    try {
@@ -178,5 +240,17 @@ public class UserService {
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while finding user by their id.", e);
 	    }
+	}
+	public User Login(String email) throws ValidationException, ServiceException {
+		User user = null;
+		try {
+			user = new User();
+			UserDAO userDAO = new UserDAO();
+			user = userDAO.logIn(email);
+		} catch (PersistenceException e) {
+			 throw new ServiceException("Error occurred while finding user by their id.", e);
+		}
+		
+		return user;
 	}
 }

@@ -100,6 +100,8 @@ public class AppointmentDAO {
 				appointmentRespondDTO.setId(rs.getInt("id"));
 				appointmentRespondDTO.setFromUser(fromUserObj);
 				appointmentRespondDTO.setToUser(toUserObj);
+				appointmentRespondDTO.setEmail(rs.getString("email"));
+				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
 				appointmentRespondDTO.setStatus(rs.getString("status"));
 				Date date = rs.getDate("date");
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -159,6 +161,8 @@ public class AppointmentDAO {
 				appointmentRespondDTO.setId(rs.getInt("id"));
 				appointmentRespondDTO.setFromUser(fromUserObj);
 				appointmentRespondDTO.setToUser(toUserObj);
+				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
+				appointmentRespondDTO.setStatus(rs.getString("status"));
 				appointmentRespondDTO.setStatus(rs.getString("status"));
 				Date date = rs.getDate("date");
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -214,6 +218,8 @@ public class AppointmentDAO {
 				appointmentRespondDTO.setId(rs.getInt("id"));
 				appointmentRespondDTO.setFromUser(fromUserObj);
 				appointmentRespondDTO.setToUser(toUserObj);
+				appointmentRespondDTO.setEmail(rs.getString("email"));
+				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
 				appointmentRespondDTO.setStatus(rs.getString("status"));
 				Date date = rs.getDate("date");
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -222,6 +228,8 @@ public class AppointmentDAO {
 				Time time = rs.getTime("time");
 				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 				appointmentRespondDTO.setTime(timeFormat.format(time));
+				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
+				appointmentRespondDTO.setStatus(rs.getString("status"));
 
 				appointmentRespondDTO.setAddress(rs.getString("address"));
 				appointmentList.add(appointmentRespondDTO);
@@ -269,6 +277,8 @@ public class AppointmentDAO {
 				appointmentRespondDTO.setId(rs.getInt("id"));
 				appointmentRespondDTO.setFromUser(fromUserObj);
 				appointmentRespondDTO.setToUser(toUserObj);
+				appointmentRespondDTO.setEmail(rs.getString("email"));
+				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
 				appointmentRespondDTO.setStatus(rs.getString("status"));
 				Date date = rs.getDate("date");
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -277,7 +287,7 @@ public class AppointmentDAO {
 				Time time = rs.getTime("time");
 				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 				appointmentRespondDTO.setTime(timeFormat.format(time));
-
+				appointmentRespondDTO.setStatus(rs.getString("status"));
 				appointmentRespondDTO.setAddress(rs.getString("address"));
 				appointmentList.add(appointmentRespondDTO);
 			}
@@ -323,8 +333,10 @@ public class AppointmentDAO {
 				int toUser = rs.getInt("to_user");
 				fromUserObj = UserService.findByUserId(fromUser);
 				toUserObj = UserService.findByUserId(toUser);
-
 				appointmentRespondDTO = new AppointmentRespondDTO();
+				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
+				appointmentRespondDTO.setStatus(rs.getString("status"));
+				
 				appointmentRespondDTO.setId(rs.getInt("id"));
 				appointmentRespondDTO.setFromUser(fromUserObj);
 				appointmentRespondDTO.setToUser(toUserObj);

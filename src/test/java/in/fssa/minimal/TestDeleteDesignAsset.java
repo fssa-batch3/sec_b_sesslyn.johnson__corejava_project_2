@@ -37,5 +37,16 @@ public class TestDeleteDesignAsset {
 			designAssetService.deleteDesignAsset(design);
 		});
 	}
+	
+	@Test
+	@Order(3)
+	void testActivateDesignAsset() {
+		assertDoesNotThrow(() -> {
+			DesignAssetDAO app = new DesignAssetDAO();
+			int design = app.getLastUpdatedDesignAssetId();
+			DesignAssetService designAssetService = new DesignAssetService();
+			designAssetService.activateDesignAsset(design);
+		});
+	}
 
 }

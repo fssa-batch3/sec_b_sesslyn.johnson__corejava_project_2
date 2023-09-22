@@ -3,7 +3,7 @@ package in.fssa.minimal.enums;
 import in.fssa.minimal.exception.ValidationException;
 
 public enum StatusEnum {
-    waiting_list, approved, rejected;
+    waiting_list, approved, rejected,completed;
     
     public static String getStatus(String input) throws ValidationException {
         String lowerCaseInput = input.toLowerCase();
@@ -14,6 +14,8 @@ public enum StatusEnum {
                 return "approved";
             case "rejected":
                 return "rejected";
+            case "completed":
+                return "completed";
             default:
                 return "non";
         }

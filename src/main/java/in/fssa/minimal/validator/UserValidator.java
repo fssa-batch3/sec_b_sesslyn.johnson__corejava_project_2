@@ -21,7 +21,7 @@ public class UserValidator {
 	private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+([a-zA-Z0-9_+\\-\\. ]*[a-zA-Z0-9]+)?@[a-zA-Z0-9]+([a-zA-Z0-9\\-\\.]*[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$";
 	private static final String PATTERN = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}";
 	private static final String IMAGE_PATTERN = "^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$";
-
+	 private static final String GST_PATTERN = "\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}";
 	/**
 	 * Validates a User object by checking its attributes including name, email,
 	 * password, and phone number.
@@ -45,6 +45,61 @@ public class UserValidator {
 		}
 		validatePhoneNumber(user.getPhoneNumber());
 	}
+	
+	public static void validateDesigner(User user) throws ValidationException{
+		validateExperience("Experience",user.getExperience());
+		StringUtil.rejectIfInvalidString(user.getDesigner_description(), "Designer Description");	
+	}
+	
+	public static void validateSeller(User user) throws ValidationException, ServiceException {
+		validateAadharNumber(user.getAadhar_number());
+		validateGstNumber(user.getGst_number());
+		StringUtil.rejectIfInvalidString(user.getShop_address(), "Shop Address");	
+	}
+	
+
+	public static void validateGstNumber(String gstNumber) throws ValidationException {
+		StringUtil.rejectIfInvalidString(gstNumber, "Gst Number");
+	    if (!gstNumber.matches(GST_PATTERN)) {
+	        throw new ValidationException("GST Number doesn't match the pattern");
+	    }
+
+	}
+	
+	public static void validateAadharNumber(long aadharNumber) throws ValidationException, ServiceException {
+	    String aadharStr = String.valueOf(aadharNumber);
+	    if (aadharStr.length() != 12) {
+	        throw new ValidationException("Aadhar Number must have exactly 12 digits");
+	    }
+	    char firstDigit = aadharStr.charAt(0);
+	    if (firstDigit == '0' || firstDigit == '1') {
+	        throw new ValidationException("The first digit of Aadhar Number cannot be 0 or 1");
+	    }
+	    boolean allDigitsSame = true;
+	    for (int i = 1; i < aadharStr.length(); i++) {
+	        if (aadharStr.charAt(i) != firstDigit) {
+	            allDigitsSame = false;
+	            break;
+	        }
+	    }
+	    
+	    
+	    if (allDigitsSame) {
+	        throw new ValidationException("Aadhar Number cannot have all 12 digits the same");
+	    }
+		try {
+			UserDAO.checkAadharNumberExists(aadharNumber);
+		}  catch (PersistenceException e) {
+			throw new ServiceException("Error occurred during validation", e);
+		}
+	}
+	
+	
+	public static void validateExperience(String experience, int id) throws ValidationException {
+		if (id < 0) {
+			throw new ValidationException(experience + " cannot be less than zero");
+		}
+	}
 
 	/**
 	 * Validates a name to ensure it only contains alphabetic characters.
@@ -53,15 +108,12 @@ public class UserValidator {
 	 * @throws ValidationException If the name does not match the required format.
 	 */
 	public static void validateName(String userName) throws ValidationException {
+		
 		StringUtil.rejectIfInvalidString(userName, "User Name");
-
-		// Trim leading and trailing spaces
 		userName = userName.trim();
-
 		if (userName.length() < 3) {
 			throw new ValidationException("User Name should be at least 3 characters long");
 		}
-
 		if (!Pattern.matches(NAME_PATTERN, userName)) {
 			throw new ValidationException(
 					"User Name should only contain alphabetic characters and allow only one space between words");
@@ -202,6 +254,15 @@ public class UserValidator {
 		try {
 			validateId("Designer Id", designerId);
 			UserDAO.checkDesignerIdExists(designerId);
+		} catch (PersistenceException e) {
+			throw new ServiceException("Error occurred during validation", e);
+		}
+	}
+	
+	public static void validateSellerId(int sellerId) throws ValidationException, ServiceException {
+		try {
+			validateId("Seller Id", sellerId);
+			UserDAO.checkSellerIdExists(sellerId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during validation", e);
 		}

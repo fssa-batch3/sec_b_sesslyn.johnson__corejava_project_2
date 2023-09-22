@@ -29,11 +29,12 @@ public class DesignAssetDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
-			String query = "INSERT INTO design_assets (design_id, assets_id) VALUES (?, ?)";
+			String query = "INSERT INTO design_assets (design_id, assets_id, designer_id) VALUES (?, ?, ?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, newDesignAsset.getDesignId());
 			ps.setInt(2, newDesignAsset.getAssetsId());
+			ps.setInt(3, newDesignAsset.getDesignerId());
 			ps.executeUpdate();
 			Logger.info("Design Asset has been created successfully");
 
@@ -69,6 +70,24 @@ public class DesignAssetDAO {
 			ConnectionUtil.close(conn, ps, null);
 		}
 	}
+	
+	public void activate(int designAssetId) throws PersistenceException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			String query = "UPDATE design_assets SET is_active = true WHERE is_active = false AND id = ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, designAssetId);
+			ps.executeUpdate();
+			Logger.info("Design Asset has been activated successfully");
+		} catch (SQLException e) {
+			Logger.error(e);
+			throw new PersistenceException(e);
+		} finally {
+			ConnectionUtil.close(conn, ps, null);
+		}
+	}
 	/**
 	 * Retrieves all active design assets.
 	 *
@@ -85,7 +104,7 @@ public class DesignAssetDAO {
 		ResultSet rs = null;
 		Set<DesignAssetRespondDTO> designAssetList = new HashSet<>();
 		try {
-			String query = "SELECT * FROM design_assets WHERE is_active = 1";
+			String query = "SELECT * FROM design_assets ";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -102,6 +121,85 @@ public class DesignAssetDAO {
 				designAss.setId(rs.getInt("id"));
 				designAss.setDesignId(designObj);
 				designAss.setAssetsId(assetObj);
+				designAss.setDesignerId(rs.getInt("designer_id"));
+				designAss.setActive(rs.getBoolean("is_active"));
+				designAssetList.add(designAss);
+			}
+
+		} catch (SQLException e) {
+			Logger.error(e);
+			throw new PersistenceException(e);
+		} finally {
+			ConnectionUtil.close(conn, ps, rs);
+		}
+		return designAssetList;
+	}
+
+	public Set<DesignAssetRespondDTO> findAllDesignAssetByDesignerId(int designerId)
+			throws ValidationException, PersistenceException, ServiceException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Set<DesignAssetRespondDTO> designAssetList = new HashSet<>();
+		try {
+			String query = "SELECT * FROM design_assets WHERE designer_id = ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, designerId);
+			rs = ps.executeQuery();
+			Design designObj = null;
+			Asset assetObj = null;
+			while (rs.next()) {
+				int designId = rs.getInt("design_id");
+				int assetsId = rs.getInt("assets_id");
+
+				designObj = DesignService.findByDesignId(designId);
+				assetObj = AssetService.findByAssetId(assetsId);
+
+				DesignAssetRespondDTO designAss = new DesignAssetRespondDTO();
+				designAss.setId(rs.getInt("id"));
+				designAss.setDesignId(designObj);
+				designAss.setAssetsId(assetObj);
+				designAss.setDesignerId(rs.getInt("designer_id"));
+				designAss.setActive(rs.getBoolean("is_active"));
+				designAssetList.add(designAss);
+			}
+
+		} catch (SQLException e) {
+			Logger.error(e);
+			throw new PersistenceException(e);
+		} finally {
+			ConnectionUtil.close(conn, ps, rs);
+		}
+		return designAssetList;
+	}
+	
+	public Set<DesignAssetRespondDTO> findAllActiveDesignAssetByDesignerId(int designerId)
+			throws ValidationException, PersistenceException, ServiceException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Set<DesignAssetRespondDTO> designAssetList = new HashSet<>();
+		try {
+			String query = "SELECT * FROM design_assets WHERE is_active = 1 AND designer_id = ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, designerId);
+			rs = ps.executeQuery();
+			Design designObj = null;
+			Asset assetObj = null;
+			while (rs.next()) {
+				int designId = rs.getInt("design_id");
+				int assetsId = rs.getInt("assets_id");
+
+				designObj = DesignService.findByDesignId(designId);
+				assetObj = AssetService.findByAssetId(assetsId);
+
+				DesignAssetRespondDTO designAss = new DesignAssetRespondDTO();
+				designAss.setId(rs.getInt("id"));
+				designAss.setDesignId(designObj);
+				designAss.setAssetsId(assetObj);
+				designAss.setDesignerId(rs.getInt("designer_id"));
 				designAss.setActive(rs.getBoolean("is_active"));
 				designAssetList.add(designAss);
 			}
@@ -131,7 +229,7 @@ public class DesignAssetDAO {
 		ResultSet rs = null;
 		DesignAssetRespondDTO designAss = null;
 		try {
-			String query = "SELECT * FROM design_assets WHERE is_active = 1 AND id = ?";
+			String query = "SELECT * FROM design_assets WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, designAssetId);
@@ -149,6 +247,7 @@ public class DesignAssetDAO {
 				designAss.setId(rs.getInt("id"));
 				designAss.setDesignId(designObj);
 				designAss.setAssetsId(assetObj);
+				designAss.setDesignerId(rs.getInt("designer_id"));
 				designAss.setActive(rs.getBoolean("is_active"));
 			}
 
@@ -163,7 +262,7 @@ public class DesignAssetDAO {
 
 	/**
 	 * Checks if a design asset with the given ID exists.
-	 *
+	 * 
 	 * @param id The ID to be checked.
 	 * @throws ValidationException  If the ID does not exist.
 	 * @throws PersistenceException
@@ -225,7 +324,7 @@ public class DesignAssetDAO {
 		ResultSet rs = null;
 		DesignAsset designAss = null;
 		try {
-			String query = "SELECT * FROM design_assets WHERE is_active = 1 AND id = ?";
+			String query = "SELECT * FROM design_assets WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, designAssetId);
@@ -235,6 +334,7 @@ public class DesignAssetDAO {
 				designAss.setId(rs.getInt("id"));
 				designAss.setDesignId(rs.getInt("design_id"));
 				designAss.setAssetsId(rs.getInt("assets_id"));
+				designAss.setDesignerId(rs.getInt("designer_id"));
 				designAss.setActive(rs.getBoolean("is_active"));
 			}
 

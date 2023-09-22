@@ -11,9 +11,9 @@ import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
 import in.fssa.minimal.util.ConnectionUtil;
 import in.fssa.minimal.util.Logger;
- 
+
 public class AssetDAO {
-	/** 
+	/**
 	 * Creates a new asset with the provided URL.
 	 *
 	 * @param newAsset The Asset object containing the URL of the new asset.
@@ -32,7 +32,7 @@ public class AssetDAO {
 			ps.setString(1, newAsset.getAssetsUrl());
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
-			if(rs.next()) {
+			if (rs.next()) {
 				assetId = rs.getInt(1);
 			}
 			Logger.info("Asset has been created successfully");
@@ -110,8 +110,9 @@ public class AssetDAO {
 	 * Checks if an asset with the given ID exists in the database.
 	 *
 	 * @param id The ID of the asset to check.
-	 * @throws ValidationException If the asset with the specified ID doesn't exist.
-	 *  @throws PersistenceException If a database error occurs while retrieving the
+	 * @throws ValidationException  If the asset with the specified ID doesn't
+	 *                              exist.
+	 * @throws PersistenceException If a database error occurs while retrieving the
 	 *                              asset id.
 	 */
 	public static void checkIdExists(int assetId) throws ValidationException, PersistenceException {
@@ -136,34 +137,5 @@ public class AssetDAO {
 		}
 	}
 
-	/**
-	 * Checks if an asset with the given URL exists in the database.
-	 *
-	 * @param assetUrl The URL of the asset to check.
-	 * @throws ValidationException If an asset with the specified URL already
-	 *                             exists.
-	 *  @throws PersistenceException If a database error occurs while retrieving the
-	 *                              asset.
-	 */
-	public static void checkAssetUrlExists(String assetUrl) throws ValidationException, PersistenceException {
-		Connection conn = null;
-		PreparedStatement pre = null;
-		ResultSet rs = null;
 
-		try {
-			String query = "SELECT asset_url FROM assets WHERE asset_url = ?";
-			conn = ConnectionUtil.getConnection();
-			pre = conn.prepareStatement(query);
-			pre.setString(1, assetUrl);
-			rs = pre.executeQuery();
-			if (rs.next()) {
-				throw new ValidationException("Asset Url already exists");
-			}
-		} catch (SQLException e) {
-			Logger.error(e);
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, pre, rs);
-		}
-	}
 }

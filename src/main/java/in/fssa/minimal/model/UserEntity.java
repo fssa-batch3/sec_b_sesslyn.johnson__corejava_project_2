@@ -12,6 +12,14 @@ public abstract class UserEntity {
 	private String date_of_birth;
 	private long phoneNumber;
 	private boolean isActive = true;
+	
+	private String gst_number;
+	private long  aadhar_number;
+	private String  shop_address;
+	private int experience;
+	private String designer_description;
+	
+	
 
 	public String getName() {
 		return name;
@@ -92,11 +100,61 @@ public abstract class UserEntity {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+	
+	public String getDate_of_birth() {
+		return date_of_birth;
+	}
+
+	public void setDate_of_birth(String date_of_birth) {
+		this.date_of_birth = date_of_birth;
+	}
+
+	public String getGst_number() {
+		return gst_number;
+	}
+
+	public void setGst_number(String gst_number) {
+		this.gst_number = gst_number;
+	}
+
+	public long getAadhar_number() {
+		return aadhar_number;
+	}
+
+	public void setAadhar_number(long aadhar_number) {
+		this.aadhar_number = aadhar_number;
+	}
+
+	public String getShop_address() {
+		return shop_address;
+	}
+
+	public void setShop_address(String shop_address) {
+		this.shop_address = shop_address;
+	}
+
+	public int getExperience() {
+		return experience;
+	}
+
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+
+	public String getDesigner_description() {
+		return designer_description;
+	}
+
+	public void setDesigner_description(String designer_description) {
+		this.designer_description = designer_description;
+	}
 
 	@Override
 	public String toString() {
 		return "UserEntity [name=" + name + ", id=" + id + ", email=" + email + ", password=" + password + ", image="
-				+ image + ", gender=" + gender + ", roles=" + role + ", date_of_birth=" + date_of_birth + ", phoneNumber=" + phoneNumber
-				+ ", isActive=" + isActive + "]";
+				+ image + ", gender=" + gender + ", role=" + role + ", date_of_birth=" + date_of_birth
+				+ ", phoneNumber=" + phoneNumber + ", isActive=" + isActive + ", gst_number=" + gst_number
+				+ ", aadhar_number=" + aadhar_number + ", shop_address=" + shop_address + ", experience=" + experience
+				+ ", designer_description=" + designer_description + "]";
 	}
 }

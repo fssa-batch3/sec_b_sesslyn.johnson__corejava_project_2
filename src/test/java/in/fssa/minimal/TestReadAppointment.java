@@ -23,6 +23,7 @@ class TestReadAppointment {
 		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {
 			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointment();
+			System.out.println(arr);
 		});
 	} 
 
@@ -66,7 +67,7 @@ class TestReadAppointment {
 	void testGetAllByStatusPattern() {
 		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("completed");
+			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("accepted");
 		});
 		String expectedMessage = "Invalid status value. The status can only be one of:"
 				+ " waiting_list, approved, rejected";

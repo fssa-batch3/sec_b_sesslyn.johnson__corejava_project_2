@@ -14,8 +14,10 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import in.fssa.minimal.dto.DesignAssetRespondDTO;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
+import in.fssa.minimal.model.Design;
 import in.fssa.minimal.service.AssetService;
 import in.fssa.minimal.service.DesignAssetService;
+import in.fssa.minimal.service.DesignService;
 
 @TestMethodOrder(OrderAnnotation.class)
 public class TestReadDesignAsset {
@@ -48,6 +50,7 @@ public class TestReadDesignAsset {
 		assertDoesNotThrow(() -> {
 			DesignAssetService designAssetService = new DesignAssetService();
 			Set<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAsset();
+			System.out.println(arr);
 		});
 	}
 
@@ -86,4 +89,45 @@ public class TestReadDesignAsset {
 
 		assertEquals(expectedMessage, actualMessage);
 	}
+	
+	 @Test
+	    @Order(7)
+	    void testGetAllDesignAsset() {
+	        assertDoesNotThrow(() -> {
+	        	DesignAssetService designAssetService = new DesignAssetService();
+	            Set<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAsset();
+	        });
+	    }
+	 
+	 @Test
+	    @Order(8)
+	    void testGetAllActiveDesignAsset() {
+	        assertDoesNotThrow(() -> {
+	        	DesignAssetService designAssetService = new DesignAssetService();
+	            Set<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAssetByDesignerId(2);
+	        });
+	    }
+	 
+	 @Test
+	    @Order(9)
+	    void testGetAllActiveDesignAssetWithInvalidId() {
+		 DesignAssetService designAssetService = new DesignAssetService();
+			Exception exception = assertThrows(ValidationException.class, () -> {
+				 Set<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAssetByDesignerId(1);
+			});
+			String expectedMessage = "Designer Id doesn't exist";
+			String actualMessage = exception.getMessage();
+
+			assertEquals(expectedMessage, actualMessage);
+	    }
+	 
+	 @Test
+	    @Order(10)
+	    void testGetAllActiveDesignAssetByDesignId() {
+	        assertDoesNotThrow(() -> {
+	        	DesignAssetService designAssetService = new DesignAssetService();
+	            Set<DesignAssetRespondDTO> arr = designAssetService.getAllActiveDesignAssetByDesignerId(2);
+	            System.out.println(arr);
+	        });
+	    }
 }

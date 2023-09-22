@@ -407,7 +407,7 @@ class TestCreateAppointment {
 		newAppointment.setToUser(2);
 		newAppointment.setEmail("sam@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
-		newAppointment.setStatus("completed");
+		newAppointment.setStatus("accepted");
 		newAppointment.setDate("2023-09-10");
 		newAppointment.setTime("15:30:00");
 		newAppointment.setAddress(null);

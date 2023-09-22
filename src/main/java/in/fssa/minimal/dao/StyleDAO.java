@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
+import in.fssa.minimal.model.Design;
 import in.fssa.minimal.model.Style;
 import in.fssa.minimal.util.ConnectionUtil;
 import in.fssa.minimal.util.Logger;
@@ -120,5 +123,83 @@ public class StyleDAO {
 			ConnectionUtil.close(conn, pre, rs);
 		}
 	}
+	
+	public int getStyleId(String styleName) throws ValidationException, PersistenceException {
+	    Connection conn = null;
+	    PreparedStatement pre = null;
+	    ResultSet rs = null;
+	    int id = 0;
+
+	    try {
+	        String query = "SELECT id FROM styles WHERE name = ?";
+	        conn = ConnectionUtil.getConnection();
+	        pre = conn.prepareStatement(query);
+	        pre.setString(1, styleName);
+	        rs = pre.executeQuery();
+	        if (rs.next()) { 
+	            id = rs.getInt("id");
+	        }else {
+	        	throw new ValidationException("Style Name doesn't exist");
+	        }
+	    } catch (SQLException e) {
+	        Logger.error(e);
+	        throw new PersistenceException(e);
+	    } finally {
+	        ConnectionUtil.close(conn, pre, rs);
+	    }
+	    return id;
+	}
+	
+	public String getStyleName(int styleId) throws ValidationException, PersistenceException {
+	    Connection conn = null;
+	    PreparedStatement pre = null;
+	    ResultSet rs = null;
+	    String styleName = null;
+
+	    try {
+	        String query = "SELECT name FROM styles WHERE id = ?";
+	        conn = ConnectionUtil.getConnection();
+	        pre = conn.prepareStatement(query);
+	        pre.setInt(1, styleId);
+	        rs = pre.executeQuery();
+	        if (rs.next()) { 
+	        	styleName = rs.getString("name");
+	        }else {
+	        	throw new ValidationException("Style Id doesn't exist");
+	        }
+	    } catch (SQLException e) {
+	        Logger.error(e);
+	        throw new PersistenceException(e);
+	    } finally {
+	        ConnectionUtil.close(conn, pre, rs);
+	    }
+	    return styleName;
+	}
+	
+	public Set<Style> findAllStyle() throws RuntimeException, PersistenceException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Set<Style> styleList = new HashSet<>();
+		try {
+			String query = "SELECT id, name FROM styles";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Style style = new Style();
+				style.setId(rs.getInt("id"));
+				style.setName(rs.getString("name"));
+				styleList.add(style);
+			}
+		} catch (SQLException e) {
+			Logger.error(e);
+			throw new PersistenceException(e);
+		} finally {
+			ConnectionUtil.close(conn, ps, rs);
+		}
+		return styleList;
+	}
+
 
 }

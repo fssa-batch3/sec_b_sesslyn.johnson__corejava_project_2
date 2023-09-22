@@ -34,21 +34,6 @@ public class TestUpdateDesignAsset {
  
 	@Test
 	@Order(2)
-	void testUpdateAssetWithExistingUrl() throws ValidationException, PersistenceException {
-		AssetService assetService = new AssetService();
-		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/Hu-TLhYu1wY?si=3PDuCbvGFFNfYTDR");
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			assetService.updateAsset(1, newAsset);
-		});
-		String expectedMessage = "Asset Url already exists";
-		String actualMessage = exception.getMessage();
-
-		assertEquals(expectedMessage, actualMessage);
-	}
-
-	@Test
-	@Order(3)
 	void testUpdateAssetWithNonExistingId() throws ValidationException, PersistenceException {
 		AssetService assetService = new AssetService();
 		Asset newAsset = new Asset();
@@ -79,7 +64,7 @@ public class TestUpdateDesignAsset {
 	}
 	
 	@Test
-	@Order(4)
+	@Order(3)
 	void testCreateDesignAssetWithValidInput() {
 	    DesignAssetService designAssetService = new DesignAssetService();
 	    DesignAsset newDesignAsset = new DesignAsset();
@@ -87,11 +72,10 @@ public class TestUpdateDesignAsset {
 	    updateDesign.setName("Modern 4 Bhk Home");
 	    updateDesign.setDescription("Customer Name: Mr. Johnson & Mrs. Ruby \r\n" + "Apartment Size: 4 BHK, 3200 Sq Ft\r\n"
 	            + "Project Value:  35-38 Lakhs\r\n" + "Project Manager: Muzammil\r\n"
-	            + "Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of Johnson and Ruby offers some major design goals. The house is the true epitome of elegance and warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms, making them look regal. The accessories scattered throughout the space club everything together, radiating charm and opulence.\r\n");
+	            + "Design Description: Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of Johnson and Ruby offers some major design goals. The house is the true epitome of elegance and warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms, making them look regal. The accessories scattered throughout the space club everything together, radiating charm and opulence.\r\n");
 	    updateDesign.setLocation("Chennai");
 	    updateDesign.setStyleId(2);
-	    updateDesign.setCreatedBy(2);
-	    
+	   
 	    Asset updateAsset = new Asset();
 	    String generatedUrl = generateRandomUrl();
 	    updateAsset.setAssetsUrl(generatedUrl);
@@ -103,7 +87,7 @@ public class TestUpdateDesignAsset {
 	}
 	
 	@Test
-	@Order(5)
+	@Order(4)
 	void testUpdateDesignAsset() {
 	    assertDoesNotThrow(() -> {
 	        DesignAssetService designAssetService = new DesignAssetService();
@@ -112,8 +96,7 @@ public class TestUpdateDesignAsset {
 	        Design updateDesign = new Design();
 	        updateDesign.setName("Modern 2 Bhk Home");
 	        updateDesign.setStyleId(1);
-	        updateDesign.setCreatedBy(4);
-	        
+	       
 	        Asset updateAsset = new Asset();
 	        String generatedUrl = generateRandomUrl();
 	        updateAsset.setAssetsUrl(generatedUrl);
@@ -125,7 +108,7 @@ public class TestUpdateDesignAsset {
 	}
 
 	@Test
-	@Order(6)
+	@Order(5)
 	void testUpdateDesign() {
 	    assertDoesNotThrow(() -> {
 	        DesignAssetService designAssetService = new DesignAssetService();
@@ -134,8 +117,7 @@ public class TestUpdateDesignAsset {
 	        Design updateDesign = new Design();
 	        updateDesign.setName("Modern 2 Bhk Home");
 	        updateDesign.setStyleId(1);
-	        updateDesign.setCreatedBy(4);
-	        
+	   
 	     
 	        assertDoesNotThrow(() -> {
 	            designAssetService.updateDesignAsset(2, updateDesign, null);
@@ -144,7 +126,7 @@ public class TestUpdateDesignAsset {
 	}
 
 	@Test
-	@Order(7)
+	@Order(6)
 	void testUpdateAssetObject() {
 	    assertDoesNotThrow(() -> {
 	        DesignAssetService designAssetService = new DesignAssetService();
@@ -162,7 +144,7 @@ public class TestUpdateDesignAsset {
 
 
 	@Test
-	@Order(6)
+	@Order(7)
 	void testUpdateSpecificFields() {
 		 DesignAssetService designAssetService = new DesignAssetService();
 		    Exception exception = assertThrows(ValidationException.class, () -> {

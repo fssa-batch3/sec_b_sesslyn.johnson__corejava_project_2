@@ -69,10 +69,9 @@ class TestUpdateDesign {
 			newDesign.setName("Modern 3.5 Bhk Home");
 			newDesign.setDescription("Customer Name: Madhu & Naveen\r\n" + "Apartment Size: 2 BHK\r\n"
 					+ "Project Value: 9.02 lacs\r\n" + "Project Manager: Nanda Kumar\r\n"
-					+ "Welcome to Bonito Designs! Today, we will take you on a tour of Madhu & Naveen’s Contemporary 2bhk interior design, which is a world of zen and whimsy, where tranquillity meets playfulness.  Are you also looking for a home that embodies the comfort and beauty that you need in your home? Look no further than Bonito Designs!");
+					+ "Design Description: Welcome to Bonito Designs! Today, we will take you on a tour of Madhu & Naveen’s Contemporary 2bhk interior design, which is a world of zen and whimsy, where tranquillity meets playfulness.  Are you also looking for a home that embodies the comfort and beauty that you need in your home? Look no further than Bonito Designs!");
 			newDesign.setLocation("Chennai");
 			newDesign.setStyleId(1);
-			newDesign.setCreatedBy(2);
 			designService.updateDesign(1, newDesign);
 		});
 	}

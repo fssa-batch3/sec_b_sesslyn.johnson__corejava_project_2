@@ -7,8 +7,7 @@ import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
 import in.fssa.minimal.validator.DesignAssetValidator;
 
- 
-public class AssetService { 
+public class AssetService {
 	/**
 	 * Creates a new asset with the provided URL.
 	 * 
@@ -26,8 +25,8 @@ public class AssetService {
 			if (newAsset == null) {
 				throw new ValidationException("Asset object can not be null");
 			}
-			DesignAssetValidator.validateAssetUrl(newAsset.getAssetsUrl());
-
+			String embeddedLink = DesignAssetValidator.validateAssetUrl(newAsset.getAssetsUrl());
+			newAsset.setAssetsUrl(embeddedLink);
 			AssetDAO assetDAO = new AssetDAO();
 			assetId = assetDAO.create(newAsset);
 		} catch (PersistenceException e) {
@@ -49,9 +48,10 @@ public class AssetService {
 	 */
 	public void updateAsset(int assetId, Asset updateAsset) throws ValidationException, ServiceException {
 		try {
-			DesignAssetValidator.validateAssetUrl(updateAsset.getAssetsUrl());
+			String embeddedLink = DesignAssetValidator.validateAssetUrl(updateAsset.getAssetsUrl());
 			DesignAssetValidator.validateAssetId(assetId);
 			AssetDAO assetDAO = new AssetDAO();
+			updateAsset.setAssetsUrl(embeddedLink);
 			assetDAO.update(assetId, updateAsset);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while updating asset url", e);

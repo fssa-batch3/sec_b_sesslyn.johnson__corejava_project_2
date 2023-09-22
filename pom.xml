@@ -11,8 +11,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
-		
-        <sonar.projectKey>fssa-batch3_sec_b_sesslyn.johnson__corejava_project_2</sonar.projectKey>	
+
+		<sonar.projectKey>fssa-batch3_sec_b_sesslyn.johnson__corejava_project_2</sonar.projectKey>
 		<sonar.organization>fssa-batch3</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
@@ -40,7 +40,12 @@
 			<version>5.7.0</version>
 			<scope>test</scope>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.4</version>
+		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/io.github.cdimascio/java-dotenv -->
 		<dependency>
