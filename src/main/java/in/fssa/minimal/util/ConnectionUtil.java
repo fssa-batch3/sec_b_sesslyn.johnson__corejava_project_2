@@ -24,13 +24,9 @@ public class ConnectionUtil {
 		String userName;
 		String passWord;
 
-//			url = System.getenv("DATABASE_HOSTNAME");
-//			userName = System.getenv("DATABASE_USERNAME");
-//			passWord = System.getenv("DATABASE_PASSWORD");
-
-			url = "jdbc:mysql://localhost:3306/minimal";
-			userName =	"root";
-			passWord = "12345678";
+			url = System.getenv("DATABASE_HOSTNAME");
+			userName = System.getenv("DATABASE_USERNAME");
+			passWord = System.getenv("DATABASE_PASSWORD");
 		Connection connection = null;
 
 		try {
