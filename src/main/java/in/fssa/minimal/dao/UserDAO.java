@@ -240,8 +240,8 @@ public class UserDAO implements UserInterface {
 		PreparedStatement ps = null;
 		try {
 			String query = "INSERT INTO users (name, email, password, role,"
-					+ " phone_number, experience, designer_description, gst_number, aadhar_number,"
-					+ " shop_address) VALUES (?,?,?,?,?,?,?,?,?,?)";
+					+ " phone_number, experience, image,designer_description, gst_number, aadhar_number,"
+					+ " shop_address) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, newUser.getName());
@@ -253,22 +253,25 @@ public class UserDAO implements UserInterface {
 
 			if (RoleEnum.getRole(newUser.getRole()) == "d") {
 				ps.setInt(6, newUser.getExperience());
-				ps.setString(7, newUser.getDesigner_description());
-				ps.setNull(8, Types.BIGINT);
+				ps.setString(7, newUser.getImage());
+				ps.setString(8, newUser.getDesigner_description());
 				ps.setNull(9, Types.BIGINT);
-				ps.setNull(10, Types.VARCHAR);
+				ps.setNull(10, Types.BIGINT);
+				ps.setNull(11, Types.VARCHAR);
 			} else if (RoleEnum.getRole(newUser.getRole()) == "s") {
 				ps.setNull(6, Types.VARCHAR);
 				ps.setNull(7, Types.VARCHAR);
-				ps.setString(8, newUser.getGst_number());
-				ps.setLong(9, newUser.getAadhar_number());
-				ps.setString(10, newUser.getShop_address());
+				ps.setNull(8, Types.VARCHAR);
+				ps.setString(9, newUser.getGst_number());
+				ps.setLong(10, newUser.getAadhar_number());
+				ps.setString(11, newUser.getShop_address());
 			} else {
 				ps.setNull(6, Types.VARCHAR);
 				ps.setNull(7, Types.VARCHAR);
-				ps.setNull(8, Types.BIGINT);
+				ps.setNull(8, Types.VARCHAR);
 				ps.setNull(9, Types.BIGINT);
-				ps.setNull(10, Types.VARCHAR);
+				ps.setNull(10, Types.BIGINT);
+				ps.setNull(11, Types.VARCHAR);
 			}
 
 			ps.executeUpdate();

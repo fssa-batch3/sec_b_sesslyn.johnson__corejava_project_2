@@ -73,9 +73,16 @@ public class UserService {
 	 */
 	public void createUser(User newUser) throws ValidationException, ServiceException {
 	    try {
+	    	String role = newUser.getRole();
+	    	if(role.equals("seller")) {
+	    		createSeller(newUser);
+	    	}else if(role.equals("designer")) {
+	    		createDesigner(newUser);
+	    	}else {
 	        UserValidator.validateUser(newUser);
 	        UserDAO userDAO = new UserDAO();
 	        userDAO.create(newUser);
+	    	}
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while creating user.", e);
 	    }
@@ -117,12 +124,11 @@ public class UserService {
 
 	        // Validate updated user fields
 	        if (updatedUser != null) {
-	        
-	            if (updatedUser.getName() != null) {
-	                UserValidator.validateName(updatedUser.getName());
+	            if (updatedUser.getName() != null && !updatedUser.getName().trim().isEmpty()) {
+	                UserValidator.validateName(updatedUser.getName().trim());
 	            }
-	            if (updatedUser.getImage() != null) {
-	                UserValidator.validateImage(updatedUser.getImage());
+	            if (updatedUser.getImage() != null && !updatedUser.getImage().trim().isEmpty()) {
+	                UserValidator.validateImage(updatedUser.getImage().trim());
 	            }
 	            if (updatedUser.getPhoneNumber() != 0) {
 	                UserValidator.validatePhoneNumber(updatedUser.getPhoneNumber());
@@ -133,23 +139,22 @@ public class UserService {
 	            if (updatedUser.getGender() != null) {
 	                UserValidator.validateGender(updatedUser.getGender());
 	            }
-	            if(updatedUser.getRole() == null) {
-	            	updatedUser.setRole("user");
+	            if (updatedUser.getRole() == null) {
+	                updatedUser.setRole("user");
 	            }
-	            if (updatedUser.getRole().equals("seller") ) {
-	            	 if(updatedUser.getGst_number() != null) {
-	       	        	UserValidator.validateGstNumber(updatedUser.getGst_number());
-	       	        }
-	 	            if (updatedUser.getShop_address() != null) {
-	 	                StringUtil.rejectIfInvalidString(updatedUser.getShop_address(), "Shop Address");
-	 	            }
-	            }
-	            else if (updatedUser.getRole().equals("designer")) {
+	            if (updatedUser.getRole().equals("seller")) {
+	                if (updatedUser.getGst_number() != null && !updatedUser.getGst_number().trim().isEmpty()) {
+	                    UserValidator.validateGstNumber(updatedUser.getGst_number().trim());
+	                }
+	                if (updatedUser.getShop_address() != null && !updatedUser.getShop_address().trim().isEmpty()) {
+	                    StringUtil.rejectIfInvalidString(updatedUser.getShop_address().trim(), "Shop Address");
+	                }
+	            } else if (updatedUser.getRole().equals("designer")) {
 	                if (updatedUser.getExperience() != 0) {
 	                    UserValidator.validateExperience("Experience", updatedUser.getExperience());
 	                }
-	                if (updatedUser.getDesigner_description() != null) {
-	                    StringUtil.rejectIfInvalidString(updatedUser.getDesigner_description(), "Designer Description");
+	                if (updatedUser.getDesigner_description() != null && !updatedUser.getDesigner_description().trim().isEmpty()) {
+	                    StringUtil.rejectIfInvalidString(updatedUser.getDesigner_description().trim(), "Designer Description");
 	                }
 	            }
 	        }

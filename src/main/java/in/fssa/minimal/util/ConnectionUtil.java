@@ -27,8 +27,9 @@ public class ConnectionUtil {
 			url = System.getenv("DATABASE_HOSTNAME");
 			userName = System.getenv("DATABASE_USERNAME");
 			passWord = System.getenv("DATABASE_PASSWORD");
-		Connection connection = null;
+		
 
+		Connection connection = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection(url, userName, passWord);
