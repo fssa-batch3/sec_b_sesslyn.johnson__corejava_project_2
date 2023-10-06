@@ -14,7 +14,7 @@ import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.User;
 import in.fssa.minimal.util.StringUtil;
 
-public class UserValidator {
+public class UserValidator { 
 
 	// Regular expression patterns for validation
 	private static final String NAME_PATTERN = "^[A-Za-z]+(\\s[A-Za-z]+)?$";
@@ -45,19 +45,36 @@ public class UserValidator {
 		}
 		validatePhoneNumber(user.getPhoneNumber());
 	}
-	
+	/**
+	 * Validates a user as a designer by checking their experience and designer description.
+	 *
+	 * @param user The User object to be validated as a designer.
+	 * @throws ValidationException If the experience is less than zero or if the designer description is invalid.
+	 */
 	public static void validateDesigner(User user) throws ValidationException{
 		validateExperience("Experience",user.getExperience());
 		StringUtil.rejectIfInvalidString(user.getDesigner_description(), "Designer Description");	
 	}
 	
+	/**
+	 * Validates a user as a seller by checking their Aadhar number, GST number, and shop address.
+	 *
+	 * @param user The User object to be validated as a seller.
+	 * @throws ValidationException If the Aadhar number, GST number, or shop address is invalid.
+	 * @throws ServiceException   If an error occurs during Aadhar number validation.
+	 */
 	public static void validateSeller(User user) throws ValidationException, ServiceException {
 		validateAadharNumber(user.getAadhar_number());
 		validateGstNumber(user.getGst_number());
 		StringUtil.rejectIfInvalidString(user.getShop_address(), "Shop Address");	
 	}
 	
-
+	/**
+	 * Validates a GST number using a regular expression pattern.
+	 *
+	 * @param gstNumber The GST number to be validated.
+	 * @throws ValidationException If the GST number doesn't match the required pattern.
+	 */
 	public static void validateGstNumber(String gstNumber) throws ValidationException {
 		StringUtil.rejectIfInvalidString(gstNumber, "Gst Number");
 	    if (!gstNumber.matches(GST_PATTERN)) {
@@ -65,7 +82,14 @@ public class UserValidator {
 	    }
 
 	}
-	
+	/**
+	 * Validates an Aadhar number for its length, first digit, and all digits being the same.
+	 * Additionally, it checks if the Aadhar number already exists in the database.
+	 *
+	 * @param aadharNumber The Aadhar number to be validated.
+	 * @throws ValidationException If the Aadhar number doesn't meet the specified criteria or already exists.
+	 * @throws ServiceException   If an error occurs during Aadhar number validation.
+	 */
 	public static void validateAadharNumber(long aadharNumber) throws ValidationException, ServiceException {
 	    String aadharStr = String.valueOf(aadharNumber);
 	    if (aadharStr.length() != 12) {
@@ -94,7 +118,13 @@ public class UserValidator {
 		}
 	}
 	
-	
+	/**
+	 * Validates the experience value to ensure it is not less than zero.
+	 *
+	 * @param experience The experience value to be validated.
+	 * @param id         The identifier associated with the experience (e.g., user ID).
+	 * @throws ValidationException If the experience value is less than zero.
+	 */
 	public static void validateExperience(String experience, int id) throws ValidationException {
 		if (id < 0) {
 			throw new ValidationException(experience + " cannot be less than zero");
@@ -135,14 +165,12 @@ public class UserValidator {
 	}
 
 	/**
-	 * Validates an email address using a regular expression pattern.
+	 * Validates an email address using a regular expression pattern and checks its existence in the database.
 	 *
-	 * @param email The email address to validate.
-	 * @throws ValidationException  If the email address does not match the required
-	 *                              format or if it already exists.
-	 * @throws PersistenceException If an error occurs during data persistence
-	 *                              checks.
-	 * @throws ServiceException
+	 * @param email The email address to be validated.
+	 * @throws ValidationException  If the email address does not match the required format or if it already exists.
+	 * @throws ServiceException   If a service-related error occurs during validation.
+	 * @throws PersistenceException If an error occurs during data persistence checks.
 	 */
 	public static void validateEmail(String email) throws ValidationException, ServiceException {
 		try {
@@ -259,6 +287,13 @@ public class UserValidator {
 		}
 	}
 	
+	/**
+	 * Validates a seller's ID by checking its existence in the database.
+	 *
+	 * @param sellerId The ID of the seller to be validated.
+	 * @throws ValidationException If the seller ID is invalid or doesn't exist.
+	 * @throws ServiceException   If a service-related error occurs during validation.
+	 */
 	public static void validateSellerId(int sellerId) throws ValidationException, ServiceException {
 		try {
 			validateId("Seller Id", sellerId);
@@ -268,12 +303,26 @@ public class UserValidator {
 		}
 	}
 
+	/**
+	 * Validates an image URL by checking if it matches the expected pattern.
+	 *
+	 * @param image The image URL to be validated.
+	 * @throws ValidationException If the image URL format is invalid.
+	 * @throws ServiceException   If a service-related error occurs during validation.
+	 */
 	public static void validateImage(String image) throws ValidationException, ServiceException {
 		if (!image.matches(IMAGE_PATTERN)) {
 			throw new ValidationException("Invalid image format. Please provide a valid image url.");
 		}
 	}
 
+	/**
+	 * Validates a date of birth by checking its format and age.
+	 *
+	 * @param dateOfBirth The date of birth to be validated in "yyyy-MM-dd" format.
+	 * @throws ValidationException If the date of birth is in an invalid format or the user is under 18 years old.
+	 * @throws ServiceException   If a service-related error occurs during validation.
+	 */
 	public static void validateDateOfBirth(String dateOfBirth) throws ValidationException, ServiceException {
 	    StringUtil.rejectIfInvalidString(dateOfBirth, "Date Of Birth");
 	    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -297,7 +346,13 @@ public class UserValidator {
 	    }
 	}
 
-
+	/**
+	 * Validates a gender string by checking if it is a valid gender type.
+	 *
+	 * @param gender The gender string to be validated.
+	 * @throws ValidationException If the gender type is invalid.
+	 * @throws ServiceException   If a service-related error occurs during validation.
+	 */
 	public static void validateGender(String gender) throws ValidationException, ServiceException {
 		StringUtil.rejectIfInvalidString(gender, "Gender");
 		if (GenderEnum.getGender(gender).equals("non")) {
@@ -305,6 +360,13 @@ public class UserValidator {
 		}
 	}
 	
+	/**
+	 * Validates a role string by checking if it is a valid role type.
+	 *
+	 * @param role The role string to be validated.
+	 * @throws ValidationException If the role type is invalid.
+	 * @throws ServiceException   If a service-related error occurs during validation.
+	 */
 	public static void validateRole(String role) throws ValidationException, ServiceException {
 		StringUtil.rejectIfInvalidString(role, "Role");
 		if (RoleEnum.getRole(role).equals("non")) {

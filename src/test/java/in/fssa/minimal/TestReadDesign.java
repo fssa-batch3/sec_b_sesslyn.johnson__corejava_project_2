@@ -27,7 +27,7 @@ class TestReadDesign {
 	            DesignService designService = new DesignService();
 	            Set<Design> arr = designService.getAllDesign();
 	        });
-	    }
+	    } 
 	    
 	    @Test 
 	    @Order(2)

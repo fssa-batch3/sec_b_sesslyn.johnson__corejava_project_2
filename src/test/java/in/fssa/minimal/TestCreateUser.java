@@ -34,7 +34,7 @@ class TestCreateUser {
 	    assertDoesNotThrow(() -> {
 	        userService.createUser(newUser); 
 	    });
-	}
+	} 
 	
 	@Test
 	@Order(2)
@@ -582,18 +582,4 @@ class TestCreateUser {
 		assertEquals(expectedMessage,actualMessage);
 	}
 	
-	@Test
-	@Order(26)
-	public void TestuserLoginWithValidInput() {
-		UserService userService = new UserService();
-		assertDoesNotThrow(() -> {
-			UserEntity user  = userService.Login("sesslyn@gmail.com");
-			if(!BCrypt.checkpw("Sesslyn@12", user.getPassword())) {
-				throw new ValidationException("Incorrect Password");
-			}
-			System.out.println(user);
-			}
-		);
-		
-	}
 }

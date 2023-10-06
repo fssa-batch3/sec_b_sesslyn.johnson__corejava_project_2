@@ -21,7 +21,7 @@ public class AssetService {
 	 */
 	public int createAsset(Asset newAsset) throws ValidationException, ServiceException {
 		int assetId = -1;
-		try {
+		try { 
 			if (newAsset == null) {
 				throw new ValidationException("Asset object can not be null");
 			}

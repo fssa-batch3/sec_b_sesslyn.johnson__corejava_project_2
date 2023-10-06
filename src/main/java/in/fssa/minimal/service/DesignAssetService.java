@@ -1,6 +1,6 @@
 package in.fssa.minimal.service;
 
-import java.util.Set;
+import java.util.Set; 
 
 import in.fssa.minimal.dao.DesignAssetDAO;
 import in.fssa.minimal.dto.DesignAssetRespondDTO;
@@ -29,7 +29,7 @@ public class DesignAssetService {
 	        DesignService designService = new DesignService();
 	        AssetService assetService = new AssetService();
 	        DesignAssetDAO designAssetDAO = new DesignAssetDAO();
- 
+  
 	        int designId = designService.createDesign(newDesign);
 	        int assetId = assetService.createAsset(newAsset);
 	        DesignAsset newDesignAsset = new DesignAsset();
@@ -128,6 +128,15 @@ public class DesignAssetService {
 		}
 	}
 	
+	/**
+	 * Retrieves a set of DesignAssetRespondDTO objects representing all design assets
+	 * associated with a designer specified by their ID.
+	 *
+	 * @param designerId The ID of the designer for whom design assets are to be retrieved.
+	 * @return A set of DesignAssetRespondDTO objects representing design assets.
+	 * @throws ValidationException If the designer ID validation fails.
+	 * @throws ServiceException If a service-related error occurs during the operation.
+	 */
 	public Set<DesignAssetRespondDTO> getAllDesignAssetByDesignerId(int designerId) throws ValidationException, ServiceException {
 		try {
 			DesignAssetValidator.validateDesignerId(designerId);
@@ -139,6 +148,15 @@ public class DesignAssetService {
 		}
 	}
 
+	/**
+	 * Retrieves a set of DesignAssetRespondDTO objects representing all active design assets
+	 * associated with a designer specified by their ID.
+	 *
+	 * @param designerId The ID of the designer for whom active design assets are to be retrieved.
+	 * @return A set of DesignAssetRespondDTO objects representing active design assets.
+	 * @throws ValidationException If the designer ID validation fails.
+	 * @throws ServiceException If a service-related error occurs during the operation.
+	 */
 	public Set<DesignAssetRespondDTO> getAllActiveDesignAssetByDesignerId(int designerId) throws ValidationException, ServiceException {
 		try {
 			DesignAssetValidator.validateDesignerId(designerId);

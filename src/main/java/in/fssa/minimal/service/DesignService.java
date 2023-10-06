@@ -28,7 +28,7 @@ public class DesignService {
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while creating design", e);
 	    }
-		return designId;
+		return designId; 
 	}
 
 	/**

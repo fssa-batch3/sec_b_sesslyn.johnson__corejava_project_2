@@ -16,8 +16,15 @@ public class StringUtil {
 		if (input == null || "".equals(input.trim())) {
 			throw new ValidationException(inputName.concat(" cannot be null or empty"));
 		}
-	}
-
+	} 
+	
+	/**
+	 * Extracts the value associated with a specific key from a multi-line description string.
+	 *
+	 * @param key         The key for which the value is to be extracted.
+	 * @param description The multi-line description string to search for the key-value pair.
+	 * @return The value associated with the provided key, or an empty string if not found.
+	 */
 	public static String extractValue(String key, String description) {
 	    if (description != null) {
 	        String[] parts = description.split("\n"); // Split by newlines

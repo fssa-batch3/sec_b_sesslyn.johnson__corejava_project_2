@@ -28,17 +28,15 @@ public class AppointmentService {
 			appointmentDAO.create(newAppointment); 
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while creating appointment", e);
-		}
+		} 
 	} 
 
 	/**
-	 * Retrieves a set of AppointmentRespondDto objects representing all
-	 * appointments.
+	 * Retrieves a set of AppointmentRespondDTO objects representing all appointments.
 	 *
-	 * @return A set of AppointmentRespondDto objects representing all appointments.
-	 * @throws ServiceException    If a service-related error occurs during the
-	 *                             operation.
-	 * @throws ValidationException
+	 * @return A set of AppointmentRespondDTO objects representing all appointments.
+	 * @throws ServiceException If a service-related error occurs during the operation.
+	 * @throws ValidationException If validation of retrieved data fails.
 	 */
 	public Set<AppointmentRespondDTO> getAllAppointment() throws ServiceException, ValidationException {
 		try {

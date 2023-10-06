@@ -22,13 +22,14 @@ public class ConnectionUtil {
 
 		String url; 
 		String userName;
-		String passWord;
+		String passWord; 
 
 			url = System.getenv("DATABASE_HOSTNAME");
 			userName = System.getenv("DATABASE_USERNAME");
 			passWord = System.getenv("DATABASE_PASSWORD");
 		
-
+	
+			
 		Connection connection = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");

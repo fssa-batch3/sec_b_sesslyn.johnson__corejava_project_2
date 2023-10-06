@@ -1,12 +1,13 @@
 package in.fssa.minimal.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class RandomValue {
+	   /**
+     * Generates a random Aadhar number as a long.
+     *
+     * @return A randomly generated Aadhar number.
+     */
 	public static long generateRandomAadharNumber() {
 	        String nNum = "0123456789";
 	        String fNum = "9876";
@@ -22,8 +23,13 @@ public class RandomValue {
 	        return numericValue;
 	   
 	}
-
-
+ 
+	 /**
+     * Generates a random string of the specified length.
+     *
+     * @param length The length of the random string to generate.
+     * @return A randomly generated string.
+     */
 	public static String generateRandomString(int length) {
 		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		StringBuilder randomString = new StringBuilder();

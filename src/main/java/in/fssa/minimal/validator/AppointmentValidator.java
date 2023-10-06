@@ -27,7 +27,7 @@ public class AppointmentValidator {
 	 */
 	public static void validateAppointment(Appointment appointment) throws ValidationException, ServiceException {
 		try {
-			if (appointment == null) {
+			if (appointment == null) { 
 				throw new ValidationException("Appointment object cannot be null");
 			} 
 

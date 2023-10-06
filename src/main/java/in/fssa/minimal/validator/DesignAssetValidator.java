@@ -15,7 +15,7 @@ import in.fssa.minimal.model.DesignAsset;
 import in.fssa.minimal.util.StringUtil;
 
 public class DesignAssetValidator {
-
+ 
 	/**
 	 * Validates the combination of a Design object and an Asset object. Ensures
 	 * that both Design and Asset objects are not null.
@@ -79,12 +79,12 @@ public class DesignAssetValidator {
 	}
 
 	/**
-	 * Validates an asset URL string.
+	 * Validates an asset URL string and converts it to an embedded format if necessary.
 	 *
-	 * @param assetUrl The asset URL to be validated.
+	 * @param assetUrl The asset URL to be validated and converted.
+	 * @return The valid asset URL in embedded format.
 	 * @throws ValidationException If the asset URL is invalid.
-	 * @throws ServiceException    If a service-related error occurs during
-	 *                             validation.
+	 * @throws ServiceException    If a service-related error occurs during validation.
 	 */
 	public static String validateAssetUrl(String assetUrl) throws ValidationException, ServiceException {
 	    String embeddedLink = null;
@@ -101,17 +101,35 @@ public class DesignAssetValidator {
 	    return embeddedLink;
 	}
 
+	/**
+	 * Checks if the provided asset URL is in embedded format.
+	 *
+	 * @param assetUrl The asset URL to be checked.
+	 * @return True if the URL is in embedded format, false otherwise.
+	 */
 	public static boolean isEmbeddedLink(String assetUrl) {
 	  
 	    String embeddedPattern = "^https://www.youtube.com/embed/";
 	    return assetUrl.matches(embeddedPattern);
 	}
 
+	/**
+	 * Converts a valid YouTube video URL to its embedded format.
+	 *
+	 * @param assetUrl The valid YouTube video URL to be converted.
+	 * @return The URL in embedded format.
+	 */
 	public static String convertToEmbeddedLink(String assetUrl) {
 	    String videoId = extractVideoId(assetUrl);
 	    return "https://www.youtube.com/embed/" + videoId;
 	}
 
+	/**
+	 * Extracts the video ID from a YouTube video URL.
+	 *
+	 * @param youtubeUrl The YouTube video URL.
+	 * @return The extracted video ID.
+	 */
 	public static String extractVideoId(String youtubeUrl) {
 	    String videoId = null;
 	    String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed\n\\/|e\n\\/|v=|%2Fv%2F|e\\/)[^#\\&\\?\\n]*";
@@ -140,6 +158,13 @@ public class DesignAssetValidator {
 		}
 	}
 
+	/**
+	 * Validates a designer's ID by checking its existence in the database.
+	 *
+	 * @param designerId The ID of the designer to be validated.
+	 * @throws ValidationException If the designer ID is invalid or doesn't exist.
+	 * @throws ServiceException   If a service-related error occurs during validation.
+	 */
 	public static void validateDesignerId(int designerId) throws ValidationException, ServiceException {
 		try {
 			validateId("Designer Id", designerId);

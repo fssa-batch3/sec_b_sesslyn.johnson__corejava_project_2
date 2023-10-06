@@ -38,7 +38,7 @@ public class TestReadDesignAsset {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Asset arr = assetService.findByAssetId(5000);
 		});
-		String expectedMessage = "Asset Id doesn't exist";
+		String expectedMessage = "Asset Id doesn't exist"; 
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);

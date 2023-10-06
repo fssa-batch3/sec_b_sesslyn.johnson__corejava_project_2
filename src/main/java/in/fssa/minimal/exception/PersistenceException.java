@@ -15,5 +15,5 @@ public class PersistenceException extends Exception {
      */
     public PersistenceException(SQLException e) {
         super(e.getMessage(), e);
-    }
+    } 
 }

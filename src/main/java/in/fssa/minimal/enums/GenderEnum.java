@@ -13,8 +13,15 @@ public enum GenderEnum {
 
 	public String getValue() {
 		return value;
-	}
+	} 
 
+	 /**
+     * Get the gender value for the provided input (case-insensitive).
+     *
+     * @param input The input string (e.g., "male", "female", "other").
+     * @return The gender value (e.g., "m" for "male").
+     * @throws ValidationException If the input is not a valid gender value.
+     */
 	public static String getGender(String input) throws ValidationException {
 	    String lowerCaseInput = input.toLowerCase();
 	    switch (lowerCaseInput) {
@@ -29,6 +36,13 @@ public enum GenderEnum {
 	    }
 	}
 
+	 /**
+     * Get the string representation of a gender value based on its value.
+     *
+     * @param input The gender value (e.g., "m", "f", "o").
+     * @return The string representation (e.g., "male", "female", "other").
+     * @throws ValidationException If the input is not a valid gender value.
+     */
 	public static String getGenderString(String input) throws ValidationException {
 		for (GenderEnum gender : GenderEnum.values()) {
 		    if (gender.getValue().equals(input)) {

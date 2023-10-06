@@ -34,7 +34,7 @@ class TestReadUser {
             User arr = userService.findByUserId(3);
             System.out.println(arr);
         });
-    }
+    } 
 
 	@Test
 	@Order(3)

@@ -19,9 +19,9 @@ import in.fssa.minimal.util.ConnectionUtil;
 import in.fssa.minimal.util.Logger;
  
 public class DesignAssetDAO {
-	/** 
+	/**
 	 * Creates a new design asset.
-	 * 
+	 *
 	 * @param newDesignAsset The DesignAsset object to be created.
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 */
@@ -39,7 +39,7 @@ public class DesignAssetDAO {
 			Logger.info("Design Asset has been created successfully");
 
 		} catch (SQLException e) {
-			Logger.error(e);
+			Logger.error(e); 
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, ps);
@@ -50,7 +50,7 @@ public class DesignAssetDAO {
 	/**
 	 * Deletes a design asset.
 	 *
-	 * @param id The ID of the design asset to be deleted.
+	 * @param designAssetId The ID of the design asset to be deleted.
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 */
 	public void delete(int designAssetId) throws PersistenceException {
@@ -71,6 +71,12 @@ public class DesignAssetDAO {
 		}
 	}
 	
+	/**
+	 * Activates a design asset.
+	 *
+	 * @param designAssetId The ID of the design asset to be activated.
+	 * @throws PersistenceException If there's an issue with database interaction.
+	 */
 	public void activate(int designAssetId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -88,14 +94,14 @@ public class DesignAssetDAO {
 			ConnectionUtil.close(conn, ps, null);
 		}
 	}
+	
 	/**
 	 * Retrieves all active design assets.
 	 *
-	 * @return A set of DesignAssetRespondDto objects representing all active design
-	 *         assets.
+	 * @return A set of DesignAssetRespondDto objects representing all active design assets.
 	 * @throws ValidationException  If there's an issue with data validation.
 	 * @throws PersistenceException If there's an issue with database interaction.
-	 * @throws ServiceException
+	 * @throws ServiceException If there's an issue with a service.
 	 */
 	public Set<DesignAssetRespondDTO> findAllDesignAsset()
 			throws ValidationException, PersistenceException, ServiceException {
@@ -135,6 +141,15 @@ public class DesignAssetDAO {
 		return designAssetList;
 	}
 
+	/**
+	 * Retrieves all design assets associated with a specific designer.
+	 *
+	 * @param designerId The ID of the designer.
+	 * @return A set of DesignAssetRespondDto objects representing design assets of the designer.
+	 * @throws ValidationException  If there's an issue with data validation.
+	 * @throws PersistenceException If there's an issue with database interaction.
+	 * @throws ServiceException If there's an issue with a service.
+	 */
 	public Set<DesignAssetRespondDTO> findAllDesignAssetByDesignerId(int designerId)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
@@ -174,6 +189,15 @@ public class DesignAssetDAO {
 		return designAssetList;
 	}
 	
+	/**
+	 * Retrieves all active design assets associated with a specific designer.
+	 *
+	 * @param designerId The ID of the designer.
+	 * @return A set of DesignAssetRespondDto objects representing active design assets of the designer.
+	 * @throws ValidationException  If there's an issue with data validation.
+	 * @throws PersistenceException If there's an issue with database interaction.
+	 * @throws ServiceException If there's an issue with a service.
+	 */
 	public Set<DesignAssetRespondDTO> findAllActiveDesignAssetByDesignerId(int designerId)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
@@ -216,11 +240,11 @@ public class DesignAssetDAO {
 	/**
 	 * Retrieves a specific design asset by ID.
 	 *
-	 * @param id The ID of the design asset to be retrieved.
+	 * @param designAssetId The ID of the design asset to be retrieved.
 	 * @return The DesignAssetRespondDto object representing the design asset.
 	 * @throws ValidationException  If there's an issue with data validation.
 	 * @throws PersistenceException If there's an issue with database interaction.
-	 * @throws ServiceException
+	 * @throws ServiceException If there's an issue with a service.
 	 */
 	public DesignAssetRespondDTO findAllDesignAssetById(int designAssetId)
 			throws ValidationException, PersistenceException, ServiceException {
@@ -262,10 +286,10 @@ public class DesignAssetDAO {
 
 	/**
 	 * Checks if a design asset with the given ID exists.
-	 * 
-	 * @param id The ID to be checked.
+	 *
+	 * @param designAssetId The ID to be checked.
 	 * @throws ValidationException  If the ID does not exist.
-	 * @throws PersistenceException
+	 * @throws PersistenceException If there's an issue with database interaction.
 	 */
 	public static void checkIdExists(int designAssetId) throws ValidationException, PersistenceException {
 		Connection conn = null;
@@ -293,8 +317,7 @@ public class DesignAssetDAO {
 	 * Retrieves the ID of the last updated non-designer user who is active.
 	 *
 	 * @return The ID of the last updated non-designer user.
-	 * @throws PersistenceException If a database error occurs while retrieving the
-	 *                              ID.
+	 * @throws PersistenceException If a database error occurs while retrieving the ID.
 	 */
 	public static int getLastUpdatedDesignAssetId() throws PersistenceException {
 		Connection conn = null;
@@ -318,6 +341,13 @@ public class DesignAssetDAO {
 		return id;
 	}
 
+	/**
+	 * Retrieves a specific design asset by ID.
+	 *
+	 * @param designAssetId The ID of the design asset to retrieve.
+	 * @return The DesignAsset object representing the design asset.
+	 * @throws PersistenceException If there's an issue with database interaction.
+	 */
 	public DesignAsset findDesignAssetById(int designAssetId) throws PersistenceException{
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -347,6 +377,12 @@ public class DesignAssetDAO {
 		return designAss;
 	}
 
+	/**
+	 * Retrieves the ID of the last updated design.
+	 *
+	 * @return The ID of the last updated design.
+	 * @throws PersistenceException If a database error occurs while retrieving the ID.
+	 */
 	public static int getLastUpdatedDesignId() throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -369,6 +405,12 @@ public class DesignAssetDAO {
 		return designerId;
 	}
 
+	/**
+	 * Retrieves the ID of the last updated asset.
+	 *
+	 * @return The ID of the last updated asset.
+	 * @throws PersistenceException If a database error occurs while retrieving the ID.
+	 */
 	public static int getLastUpdatedAssetId() throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;

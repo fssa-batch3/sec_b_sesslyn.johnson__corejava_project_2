@@ -1,5 +1,3 @@
-
-
 package in.fssa.minimal.service;
 
 import java.util.Set;
@@ -12,12 +10,13 @@ import in.fssa.minimal.util.StringUtil;
 import in.fssa.minimal.validator.UserValidator;
 
 public class UserService {
+	
 	/**
 	 * Retrieves a set of all users from the database.
 	 *
 	 * @return A set containing all User objects in the database.
 	 * @throws ServiceException If a service-related error occurs during retrieval.
-	 * @throws ValidationException 
+	 * @throws ValidationException If a validation error occurs during the operation.
 	 */
 	public Set<User> getAllUser() throws ServiceException, ValidationException {
 	    try {
@@ -26,7 +25,7 @@ public class UserService {
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while retrieving users.", e);
 	    }
-	}
+	}  
 
 	/**
 	 * Retrieves a user by their ID.
@@ -57,7 +56,7 @@ public class UserService {
 	public User findByEmail(String email) throws ValidationException, ServiceException {
 	    try {
 	        UserValidator.validateEmail(email);
-	        UserDAO userDAO = new UserDAO();
+	        UserDAO userDAO = new UserDAO(); 
 	        return userDAO.findByEmail(email);
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while finding user by their email.", e);
@@ -73,13 +72,14 @@ public class UserService {
 	 */
 	public void createUser(User newUser) throws ValidationException, ServiceException {
 	    try {
+	    	UserValidator.validateUser(newUser);
 	    	String role = newUser.getRole();
 	    	if(role.equals("seller")) {
 	    		createSeller(newUser);
 	    	}else if(role.equals("designer")) {
 	    		createDesigner(newUser);
 	    	}else {
-	        UserValidator.validateUser(newUser);
+	      
 	        UserDAO userDAO = new UserDAO();
 	        userDAO.create(newUser);
 	    	}
@@ -88,6 +88,13 @@ public class UserService {
 	    }
 	}
 	
+	/**
+	 * Creates a designer user.
+	 *
+	 * @param newUser The User object representing the new designer user to create.
+	 * @throws ValidationException If validation of the user object fails.
+	 * @throws ServiceException If a service-related error occurs during user creation.
+	 */
 	public void createDesigner(User newUser) throws ValidationException, ServiceException {
 	    try {
 	        UserValidator.validateUser(newUser);
@@ -99,6 +106,13 @@ public class UserService {
 	    }
 	} 
 	
+	/**
+	 * Creates a seller user.
+	 *
+	 * @param newUser The User object representing the new seller user to create.
+	 * @throws ValidationException If validation of the user object fails.
+	 * @throws ServiceException If a service-related error occurs during user creation.
+	 */
 	public void createSeller(User newUser) throws ValidationException, ServiceException {
 	    try {
 	        UserValidator.validateUser(newUser);
@@ -189,7 +203,7 @@ public class UserService {
 	 *
 	 * @return A set containing all designer User objects in the database.
 	 * @throws ServiceException If a service-related error occurs during retrieval.
-	 * @throws ValidationException 
+	 * @throws ValidationException If validation of the retrieved data fails.
 	 */
 	public Set<User> getAllDesigner() throws ServiceException, ValidationException {
 	    try {
@@ -200,6 +214,13 @@ public class UserService {
 	    }
 	}
 	
+	/**
+	 * Retrieves a set of all seller users from the database.
+	 *
+	 * @return A set containing all seller User objects in the database.
+	 * @throws ServiceException If a service-related error occurs during retrieval.
+	 * @throws ValidationException If validation of the retrieved data fails.
+	 */
 	public Set<User> getAllSeller() throws ServiceException, ValidationException {
 	    try {
 	        UserDAO userDAO = new UserDAO();
@@ -227,6 +248,14 @@ public class UserService {
 	    }
 	}
 	
+	/**
+	 * Retrieves a seller user from the database based on their seller ID.
+	 *
+	 * @param sellerId The ID of the seller user to retrieve.
+	 * @return The User object corresponding to the provided seller user ID.
+	 * @throws ValidationException If validation of the provided seller ID fails.
+	 * @throws ServiceException If a service-related error occurs during retrieval.
+	 */
 	public User findBySellerId(int sellerId) throws ValidationException, ServiceException {
 	    try {
 	        UserValidator.validateSellerId(sellerId);
@@ -237,6 +266,14 @@ public class UserService {
 	    }
 	}
 
+	/**
+	 * Retrieves a user from the database based on their user ID for appointment purposes.
+	 *
+	 * @param userId The ID of the user to retrieve.
+	 * @return The User object corresponding to the provided user ID.
+	 * @throws ValidationException If validation of the provided user ID fails.
+	 * @throws ServiceException If a service-related error occurs during retrieval.
+	 */
 	public static User findByUserIdForAppointment(int userId) throws ValidationException, ServiceException {
 	    try {
 	        UserValidator.validateId("Id", userId);
@@ -245,17 +282,5 @@ public class UserService {
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while finding user by their id.", e);
 	    }
-	}
-	public User Login(String email) throws ValidationException, ServiceException {
-		User user = null;
-		try {
-			user = new User();
-			UserDAO userDAO = new UserDAO();
-			user = userDAO.logIn(email);
-		} catch (PersistenceException e) {
-			 throw new ServiceException("Error occurred while finding user by their id.", e);
-		}
-		
-		return user;
 	}
 }

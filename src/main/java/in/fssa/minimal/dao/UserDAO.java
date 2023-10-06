@@ -23,16 +23,15 @@ import in.fssa.minimal.service.UserService;
 import in.fssa.minimal.util.Logger;
 import in.fssa.minimal.util.Password;
 import in.fssa.minimal.util.ConnectionUtil;
-
+ 
 public class UserDAO implements UserInterface {
 
 	/**
 	 * Retrieves a set of all active users from the database.
 	 *
 	 * @return A set containing all active User objects in the database.
-	 * @throws PersistenceException If a database-related error occurs during
-	 *                              retrieval.
-	 * @throws ValidationException
+	 * @throws PersistenceException If a database-related error occurs during retrieval.
+	 * @throws ValidationException If validation of retrieved data fails.
 	 */
 	@Override
 	public Set<User> findAll() throws PersistenceException, ValidationException {
@@ -96,10 +95,9 @@ public class UserDAO implements UserInterface {
 	 * Retrieves a user from the database based on their user ID.
 	 *
 	 * @param userId The ID of the user to retrieve.
-	 * @return The User object corresponding to the provided user ID.
-	 * @throws PersistenceException If a database-related error occurs during
-	 *                              retrieval.
-	 * @throws ValidationException
+	 * @return The User object corresponding to the provided user ID, or null if not found.
+	 * @throws PersistenceException If a database-related error occurs during retrieval.
+	 * @throws ValidationException If validation of retrieved data fails.
 	 */
 	@Override
 	public User findById(int userId) throws PersistenceException, ValidationException {
@@ -162,10 +160,9 @@ public class UserDAO implements UserInterface {
 	 * Retrieves a user from the database based on their email address.
 	 *
 	 * @param email The email address of the user to retrieve.
-	 * @return The User object corresponding to the provided email address.
-	 * @throws PersistenceException If a database-related error occurs during
-	 *                              retrieval.
-	 * @throws ValidationException
+	 * @return The User object corresponding to the provided email address, or null if not found.
+	 * @throws PersistenceException If a database-related error occurs during retrieval.
+	 * @throws ValidationException If validation of retrieved data fails.
 	 */
 	@Override
 	public User findByEmail(String email) throws PersistenceException, ValidationException {
@@ -174,12 +171,12 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		User user = null;
 		try {
-			String query = "SELECT id,name,email,image,phone_number,date_of_birth,gender,role,is_active"
+			String query = "SELECT id,name,email,image,password,phone_number,date_of_birth,gender,role,is_active"
 					+ ",experience,designer_description,gst_number,aadhar_number,shop_address "
 					+ "FROM users WHERE is_active = 1 AND email = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setString(1, email);
+			ps.setString(1, email); 
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				user = new User();
@@ -187,6 +184,7 @@ public class UserDAO implements UserInterface {
 				user.setName(rs.getString("name"));
 				user.setEmail(rs.getString("email"));
 				user.setImage(rs.getString("image"));
+				user.setPassword(rs.getString("password"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
 				Date dateOfBirth = rs.getDate("date_of_birth");
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -227,13 +225,10 @@ public class UserDAO implements UserInterface {
 	/**
 	 * Creates a new user in the database.
 	 *
-	 * @param newUser The User object containing the details of the new user to
-	 *                create.
-	 * @throws PersistenceException If a database-related error occurs during
-	 *                              creation.
-	 * @throws ValidationException
+	 * @param newUser The User object containing the details of the new user to create.
+	 * @throws PersistenceException If a database-related error occurs during creation.
+	 * @throws ValidationException If validation of user data fails.
 	 */
-
 	@Override
 	public void create(User newUser) throws PersistenceException, ValidationException {
 		Connection conn = null;
@@ -287,15 +282,12 @@ public class UserDAO implements UserInterface {
 	/**
 	 * Updates the details of an existing user in the database.
 	 *
-	 * @param id          The ID of the user to update.
-	 * @param updatedUser The User object containing the updated details for the
-	 *                    user.
-	 * @throws PersistenceException If a database-related error occurs during the
-	 *                              update.
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * @param userId      The ID of the user to update.
+	 * @param updatedUser The User object containing the updated details for the user.
+	 * @throws PersistenceException If a database-related error occurs during the update.
+	 * @throws ValidationException If validation of updated user data fails.
+	 * @throws ServiceException If a service-related error occurs during the update.
 	 */
-
 	public void update(int userId, User updatedUser)
 			throws PersistenceException, ValidationException, ServiceException {
 		Connection conn = null;
@@ -362,8 +354,7 @@ public class UserDAO implements UserInterface {
 	 * Deletes a user from the database.
 	 *
 	 * @param userId The ID of the user to delete.
-	 * @throws PersistenceException If a database-related error occurs during
-	 *                              deletion.
+	 * @throws PersistenceException If a database-related error occurs during deletion.
 	 */
 	@Override
 	public void delete(int userId) throws PersistenceException {
@@ -388,11 +379,9 @@ public class UserDAO implements UserInterface {
 	 * Retrieves a set of all active designer users from the database.
 	 *
 	 * @return A set containing all active designer User objects in the database.
-	 * @throws PersistenceException If a database-related error occurs during
-	 *                              retrieval.
-	 * @throws ValidationException
+	 * @throws PersistenceException If a database-related error occurs during retrieval.
+	 * @throws ValidationException If validation of retrieved data fails.
 	 */
-
 	public Set<User> findAllDesigner() throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -445,6 +434,13 @@ public class UserDAO implements UserInterface {
 		return userList;
 	}
 
+	/**
+	 * Retrieves a set of all active seller users from the database.
+	 *
+	 * @return A set containing all active seller User objects in the database.
+	 * @throws PersistenceException If a database-related error occurs during retrieval.
+	 * @throws ValidationException If validation of retrieved data fails.
+	 */
 	public Set<User> findAllSeller() throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -500,10 +496,9 @@ public class UserDAO implements UserInterface {
 	 * Retrieves a designer user from the database based on their user ID.
 	 *
 	 * @param userId The ID of the designer user to retrieve.
-	 * @return The User object corresponding to the provided designer user ID.
-	 * @throws PersistenceException If a database-related error occurs during
-	 *                              retrieval.
-	 * @throws ValidationException
+	 * @return The User object corresponding to the provided designer user ID, or null if not found.
+	 * @throws PersistenceException If a database-related error occurs during retrieval.
+	 * @throws ValidationException If validation of retrieved data fails.
 	 */
 	public User findDesignerById(int userId) throws PersistenceException, ValidationException {
 		Connection conn = null;
@@ -556,6 +551,14 @@ public class UserDAO implements UserInterface {
 		return user;
 	}
 
+	/**
+	 * Retrieves a seller user from the database based on their user ID.
+	 *
+	 * @param sellerId The ID of the seller user to retrieve.
+	 * @return The User object corresponding to the provided seller user ID, or null if not found.
+	 * @throws PersistenceException If a database-related error occurs during retrieval.
+	 * @throws ValidationException If validation of retrieved data fails.
+	 */
 	public User findSellerById(int sellerId) throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -612,12 +615,9 @@ public class UserDAO implements UserInterface {
 	 * Checks if an email address already exists in the users table.
 	 *
 	 * @param email The email address to check.
-	 * @throws ValidationException  If the email address already exists or doesn't
-	 *                              match the specified criteria.
-	 * @throws PersistenceException If a database-related error occurs during the
-	 *                              validation process.
+	 * @throws ValidationException If the email address already exists or doesn't match the specified criteria.
+	 * @throws PersistenceException If a database-related error occurs during the validation process.
 	 */
-	// Catch
 	public static void emailExists(String email) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
@@ -643,11 +643,9 @@ public class UserDAO implements UserInterface {
 	/**
 	 * Checks if a user ID exists in the users table.
 	 *
-	 * @param id The ID to check.
-	 * @throws ValidationException  If the ID doesn't exist or doesn't match the
-	 *                              specified criteria.
-	 * @throws PersistenceException If a database-related error occurs during the
-	 *                              validation process.
+	 * @param userId The ID to check.
+	 * @throws ValidationException If the ID doesn't exist or doesn't match the specified criteria.
+	 * @throws PersistenceException If a database-related error occurs during the validation process.
 	 */
 	public static void checkIdExists(int userId) throws ValidationException, PersistenceException {
 		Connection conn = null;
@@ -676,10 +674,8 @@ public class UserDAO implements UserInterface {
 	 * Checks if an email address exists for an active user.
 	 *
 	 * @param email The email address to check.
-	 * @throws ValidationException  If the email address doesn't exist or doesn't
-	 *                              match the specified criteria.
-	 * @throws PersistenceException If a database-related error occurs during the
-	 *                              validation process.
+	 * @throws ValidationException If the email address doesn't exist or doesn't match the specified criteria.
+	 * @throws PersistenceException If a database-related error occurs during the validation process.
 	 */
 	public static void checkEmailExists(String email) throws ValidationException, PersistenceException {
 		Connection conn = null;
@@ -703,6 +699,13 @@ public class UserDAO implements UserInterface {
 		}
 	}
 
+	/**
+	 * Checks if an Aadhar number already exists for an active seller user.
+	 *
+	 * @param aadharNumber The Aadhar number to check.
+	 * @throws ValidationException If the Aadhar number already exists.
+	 * @throws PersistenceException If a database-related error occurs during the validation process.
+	 */
 	public static void checkAadharNumberExists(long aadharNumber) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
@@ -726,14 +729,11 @@ public class UserDAO implements UserInterface {
 	}
 
 	/**
-	 * Checks if a designer's ID exists and is associated with an active designer
-	 * user.
+	 * Checks if a designer's ID exists and is associated with an active designer user.
 	 *
-	 * @param id The ID to check.
-	 * @throws ValidationException  If the designer's ID doesn't exist or doesn't
-	 *                              match the specified criteria.
-	 * @throws PersistenceException If a database-related error occurs during the
-	 *                              validation process.
+	 * @param userId The ID to check.
+	 * @throws ValidationException If the designer's ID doesn't exist or doesn't match the specified criteria.
+	 * @throws PersistenceException If a database-related error occurs during the validation process.
 	 */
 	public static void checkDesignerIdExists(int userId) throws ValidationException, PersistenceException {
 		Connection conn = null;
@@ -757,6 +757,13 @@ public class UserDAO implements UserInterface {
 		}
 	}
 
+	/**
+	 * Checks if a seller's ID exists and is associated with an active seller user.
+	 *
+	 * @param sellerId The ID to check.
+	 * @throws ValidationException If the seller's ID doesn't exist or doesn't match the specified criteria.
+	 * @throws PersistenceException If a database-related error occurs during the validation process.
+	 */
 	public static void checkSellerIdExists(int sellerId) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
@@ -783,8 +790,7 @@ public class UserDAO implements UserInterface {
 	 * Retrieves the ID of the last updated non-designer user who is active.
 	 *
 	 * @return The ID of the last updated non-designer user.
-	 * @throws PersistenceException If a database error occurs while retrieving the
-	 *                              ID.
+	 * @throws PersistenceException If a database error occurs while retrieving the ID.
 	 */
 	public static int getLastUpdatedUserId() throws PersistenceException {
 		Connection conn = null;
@@ -812,8 +818,7 @@ public class UserDAO implements UserInterface {
 	 * Retrieves the ID of the last updated designer who is active.
 	 *
 	 * @return The ID of the last updated designer.
-	 * @throws PersistenceException If a database error occurs while retrieving the
-	 *                              ID.
+	 * @throws PersistenceException If a database error occurs while retrieving the ID.
 	 */
 	public static int getLastUpdatedDesignerId() throws PersistenceException {
 		Connection conn = null;
@@ -837,6 +842,12 @@ public class UserDAO implements UserInterface {
 		return designerId;
 	}
 
+	/**
+	 * Retrieves the ID of the last updated seller who is active.
+	 *
+	 * @return The ID of the last updated seller.
+	 * @throws PersistenceException If a database error occurs while retrieving the ID.
+	 */
 	public static int getLastUpdatedSellerId() throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -860,13 +871,12 @@ public class UserDAO implements UserInterface {
 	}
 
 	/**
-	 * Retrieves a user from the database based on their user ID.
+	 * Retrieves a user from the database based on their user ID for appointment booking.
 	 *
 	 * @param userId The ID of the user to retrieve.
-	 * @return The User object corresponding to the provided user ID.
-	 * @throws PersistenceException If a database-related error occurs during
-	 *                              retrieval.
-	 * @throws ValidationException
+	 * @return The User object corresponding to the provided user ID, or null if not found.
+	 * @throws PersistenceException If a database-related error occurs during retrieval.
+	 * @throws ValidationException If validation of retrieved data fails.
 	 */
 	public User findByUserIdForAppointment(int userId) throws PersistenceException, ValidationException {
 		Connection conn = null;
@@ -915,32 +925,4 @@ public class UserDAO implements UserInterface {
 		return user;
 	}
 
-	public User logIn(String email) throws ValidationException, PersistenceException {
-		Connection conn = null;
-		PreparedStatement pre = null;
-		ResultSet rs = null;
-		User user = null;
-		try {
-			String query = "SELECT id,email,password,role FROM users WHERE email = ? AND is_active = 1";
-			conn = ConnectionUtil.getConnection();
-			pre = conn.prepareStatement(query);
-			pre.setString(1, email);
-			rs = pre.executeQuery();
-			if (rs.next()) {
-				user = new User();
-				user.setId(rs.getInt("id"));
-				user.setPassword(rs.getString("password"));
-				user.setEmail(rs.getString("email"));
-				user.setRole(rs.getString("role"));
-			} else {
-				throw new ValidationException("Email doesn't exits");
-			}
-		} catch (SQLException e) {
-			Logger.error(e);
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, pre, rs);
-		}
-		return user;
-	}
 }

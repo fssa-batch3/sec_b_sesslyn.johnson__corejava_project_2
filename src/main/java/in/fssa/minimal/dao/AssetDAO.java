@@ -17,14 +17,14 @@ public class AssetDAO {
 	 * Creates a new asset with the provided URL.
 	 *
 	 * @param newAsset The Asset object containing the URL of the new asset.
-	 * @throws PersistenceException If a database error occurs while creating the
-	 *                              asset.
+	 * @return The ID of the newly created asset.
+	 * @throws PersistenceException If a database error occurs while creating the asset.
 	 */
 	public int create(Asset newAsset) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		int assetId = -1;
+		int assetId = -1; 
 		try {
 			String query = "INSERT INTO assets ( asset_url ) VALUES (?)";
 			conn = ConnectionUtil.getConnection();
@@ -49,10 +49,9 @@ public class AssetDAO {
 	/**
 	 * Updates the URL of an existing asset.
 	 *
-	 * @param id           The ID of the asset to update.
+	 * @param assetId     The ID of the asset to update.
 	 * @param updatedAsset The Asset object containing the updated URL.
-	 * @throws PersistenceException If a database error occurs while updating the
-	 *                              asset.
+	 * @throws PersistenceException If a database error occurs while updating the asset.
 	 */
 	public void update(int assetId, Asset updateAsset) throws PersistenceException {
 		Connection conn = null;
@@ -76,10 +75,9 @@ public class AssetDAO {
 	/**
 	 * Retrieves detailed information about an asset by its ID.
 	 *
-	 * @param id The ID of the asset to retrieve.
+	 * @param assetId The ID of the asset to retrieve.
 	 * @return An Asset object representing the requested asset.
-	 * @throws PersistenceException If a database error occurs while retrieving the
-	 *                              asset.
+	 * @throws PersistenceException If a database error occurs while retrieving the asset.
 	 */
 	public Asset findById(int assetId) throws PersistenceException {
 		Connection conn = null;
@@ -109,11 +107,9 @@ public class AssetDAO {
 	/**
 	 * Checks if an asset with the given ID exists in the database.
 	 *
-	 * @param id The ID of the asset to check.
-	 * @throws ValidationException  If the asset with the specified ID doesn't
-	 *                              exist.
-	 * @throws PersistenceException If a database error occurs while retrieving the
-	 *                              asset id.
+	 * @param assetId The ID of the asset to check.
+	 * @throws ValidationException  If the asset with the specified ID doesn't exist.
+	 * @throws PersistenceException If a database error occurs while retrieving the asset ID.
 	 */
 	public static void checkIdExists(int assetId) throws ValidationException, PersistenceException {
 		Connection conn = null;

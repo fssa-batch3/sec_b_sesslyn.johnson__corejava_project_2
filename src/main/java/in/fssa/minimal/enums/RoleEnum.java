@@ -15,12 +15,19 @@ public enum RoleEnum {
         return value;
     }
 
+    /**
+     * Get the role value for the provided input (case-insensitive).
+     *
+     * @param input The input string (e.g., "user", "designer", "seller", "admin").
+     * @return The role value (e.g., "u" for "user").
+     * @throws ValidationException If the input is not a valid role value.
+     */
     public static String getRole(String input) throws ValidationException {
         String lowerCaseInput = input.toLowerCase();
         switch (lowerCaseInput) {
             case "user":
                 return USER.value;
-            case "designer":
+            case "designer": 
                 return DESIGNER.value;
             case "seller":
                 return SELLER.value;
@@ -31,6 +38,13 @@ public enum RoleEnum {
         }
     }
 
+    /**
+     * Get the role string for the provided role value.
+     *
+     * @param input The role value (e.g., "u" for "user", "d" for "designer").
+     * @return The role string (e.g., "user" for "u").
+     * @throws ValidationException If the input is not a valid role value.
+     */
     public static String getRoleString(String input) throws ValidationException {
         for (RoleEnum roles : RoleEnum.values()) {
             if (roles.getValue().equals(input)) {

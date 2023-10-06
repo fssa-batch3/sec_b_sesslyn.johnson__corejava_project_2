@@ -144,7 +144,7 @@ class TestCreateAppointment {
 		newAppointment.setEmail("sess@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
 		newAppointment.setStatus("waiting_list");
-		newAppointment.setDate("2023-09-30");
+		newAppointment.setDate("2023-11-30");
 		newAppointment.setTime("15:30:00");
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {

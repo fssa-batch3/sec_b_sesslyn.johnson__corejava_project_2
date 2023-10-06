@@ -15,7 +15,7 @@ public class DesignValidator {
 
 	private static final String NAME_PATTERN = "^[A-Za-z][A-Za-z\\\\s]*$";
 
-	/**
+	/** 
 	 * Validates the provided design object.
 	 *
 	 * @param design The design object to be validated.

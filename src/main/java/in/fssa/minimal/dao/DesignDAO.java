@@ -17,12 +17,12 @@ public class DesignDAO {
  
 
 	/**
-	 * Creates a new design entity in the database. 
+	 * Creates a new design entity in the database.
 	 *
 	 * @param newDesign The design to be created.
+	 * @return The ID of the newly created design entity.
 	 * @throws PersistenceException If a database error occurs during creation.
 	 */
-
 	public int create(Design newDesign) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -56,7 +56,7 @@ public class DesignDAO {
 	/**
 	 * Updates an existing design entity in the database.
 	 *
-	 * @param id            The ID of the design to be updated.
+	 * @param designId       The ID of the design to be updated.
 	 * @param updatedDesign The updated design data.
 	 * @throws PersistenceException If a database error occurs during update.
 	 */
@@ -99,13 +99,15 @@ public class DesignDAO {
 			ConnectionUtil.close(conn, ps, null);
 		}
 	}
-	/**
-	 * Retrieves all design entities from the database.
-	 *
-	 * @return A set of all designs in the database.
-	 * @throws PersistenceException If a database error occurs during retrieval.
-	 */
+	
 
+/**
+ * Retrieves all design entities from the database.
+ *
+ * @return A set of all designs in the database.
+ * @throws RuntimeException   If there's a runtime error during retrieval.
+ * @throws PersistenceException If a database error occurs during retrieval.
+ */
 	public Set<Design> findAllDesign() throws RuntimeException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -137,7 +139,7 @@ public class DesignDAO {
 	/**
 	 * Retrieves a design entity by its ID from the database.
 	 *
-	 * @param id The ID of the design to retrieve.
+	 * @param designId The ID of the design to retrieve.
 	 * @return The retrieved design entity.
 	 * @throws PersistenceException If a database error occurs during retrieval.
 	 */
@@ -174,9 +176,9 @@ public class DesignDAO {
 	/**
 	 * Checks if a design ID exists in the database.
 	 *
-	 * @param id The ID to check for existence.
+	 * @param designId The ID to check for existence.
 	 * @throws ValidationException  If the design ID doesn't exist.
-	 * @throws PersistenceException
+	 * @throws PersistenceException If a database error occurs during validation.
 	 */
 	public static void checkIdExists(int designId) throws ValidationException, PersistenceException {
 	    Connection conn = null;
@@ -202,6 +204,12 @@ public class DesignDAO {
 	}
 
 	
+	/**
+	 * Retrieves the ID of the last updated design entity in the database.
+	 *
+	 * @return The ID of the last updated design entity.
+	 * @throws PersistenceException If a database error occurs during retrieval.
+	 */
 	public static int getLastUpdatedDesignId() throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
