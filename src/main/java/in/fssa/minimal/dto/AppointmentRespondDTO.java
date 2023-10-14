@@ -8,7 +8,10 @@ public class AppointmentRespondDTO {
 	private User fromUser;
 	private User toUser;
 	private String status;
-	private String date; 
+	private String email;
+	private long phoneNumber;
+
+	private String date;
 	private String time;
 	private String address;
 
@@ -44,6 +47,14 @@ public class AppointmentRespondDTO {
 		this.status = status;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getDate() {
 		return date;
 	}
@@ -68,11 +79,19 @@ public class AppointmentRespondDTO {
 		this.address = address;
 	}
 
-	@Override
-	public String toString() {
-		return "AppointmentRespondDto [fromUser=" + fromUser + ", toUser=" + toUser + ", status=" + status + ", date="
-				+ date + ", time=" + time + ", address=" + address + ", id=" + id + "]";
+	public long getPhoneNumber() {
+		return phoneNumber;
 	}
 
+	public void setPhoneNumber(long phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	@Override
+	public String toString() {
+		return "AppointmentRespondDTO [id=" + id + ", fromUser=" + fromUser + ", toUser=" + toUser + ", status="
+				+ status + ", email=" + email + ", phoneNumber=" + phoneNumber + ", date=" + date + ", time=" + time
+				+ ", address=" + address + "]";
+	}
 
 }

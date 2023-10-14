@@ -43,23 +43,10 @@ public class TestCreateDesignAsset {
 		return randomUrl.toString();
 	}
 
+	
+
 	@Test
 	@Order(2)
-	void testCreateAssetUrlAlreadyExists() {
-		AssetService assetService = new AssetService();
-		Asset newAsset = new Asset();
-		newAsset.setAssetsUrl("https://youtu.be/Hu-TLhYu1wY?si=3PDuCbvGFFNfYTDR");
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			assetService.createAsset(newAsset);
-		});
-		String expectedMessage = "Asset Url already exists";
-		String actualMessage = exception.getMessage();
-
-		assertEquals(expectedMessage, actualMessage);
-	}
-
-	@Test
-	@Order(3)
 	void testCreateAssetWithInValidInput() {
 		AssetService assetService = new AssetService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -72,7 +59,7 @@ public class TestCreateDesignAsset {
 	}
 
 	@Test
-	@Order(4)
+	@Order(3)
 	void testCreateDesignAssetWithValidInput() {
 	    DesignAssetService designAssetService = new DesignAssetService();
 	    DesignAsset newDesignAsset = new DesignAsset();
@@ -80,18 +67,17 @@ public class TestCreateDesignAsset {
 	    newDesign.setName("Modern 4 Bhk Home");
 	    newDesign.setDescription("Customer Name: Mr. Johnson & Mrs. Ruby \r\n" + "Apartment Size: 4 BHK, 3200 Sq Ft\r\n"
 	            + "Project Value:  35-38 Lakhs\r\n" + "Project Manager: Muzammil\r\n"
-	            + "Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of Johnson and Ruby offers some major design goals. The house is the true epitome of elegance and warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms, making them look regal. The accessories scattered throughout the space club everything together, radiating charm and opulence.\r\n");
+	            + "Design Description: Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of Johnson and Ruby offers some major design goals. The house is the true epitome of elegance and warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms, making them look regal. The accessories scattered throughout the space club everything together, radiating charm and opulence.\r\n");
 	    newDesign.setLocation("Chennai");
 	    newDesign.setStyleId(2);
-	    newDesign.setCreatedBy(2);
-	    
+	
 	    Asset newAsset = new Asset();
 	    String generatedUrl = generateRandomUrl();
 	    newAsset.setAssetsUrl(generatedUrl);
-	   
+	   int designerId = 2;
 	 
 	    assertDoesNotThrow(() -> {
-	        designAssetService.createDesignAsset(newDesign, newAsset);
+	        designAssetService.createDesignAsset(newDesign, newAsset,designerId);
 	    });
 	}
 	
@@ -100,7 +86,7 @@ public class TestCreateDesignAsset {
 	void testCreateDesignAssetWithInValidInput() {
 	    DesignAssetService designAssetService = new DesignAssetService();
 	    Exception exception = assertThrows(ValidationException.class, () -> {
-	    	 designAssetService.createDesignAsset(null, null);
+	    	 designAssetService.createDesignAsset(null, null,0);
 		});
 		String expectedMessage = "Design object and Asset Object cannot be null";
 		String actualMessage = exception.getMessage();
@@ -109,8 +95,59 @@ public class TestCreateDesignAsset {
 	}
 
 
+	@Test
+	@Order(5)
+	void testCreateDesignAssetWithDesignerIdInvalid() {
+	    DesignAssetService designAssetService = new DesignAssetService();
+	    DesignAsset newDesignAsset = new DesignAsset();
+	    Design newDesign = new Design();
+	    newDesign.setName("Modern 4 Bhk Home");
+	    newDesign.setDescription("Customer Name: Mr. Johnson & Mrs. Ruby \r\n" + "Apartment Size: 4 BHK, 3200 Sq Ft\r\n"
+	            + "Project Value:  35-38 Lakhs\r\n" + "Project Manager: Muzammil\r\n"
+	            + "Design Description:Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of Johnson and Ruby offers some major design goals. The house is the true epitome of elegance and warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms, making them look regal. The accessories scattered throughout the space club everything together, radiating charm and opulence.\r\n");
+	    newDesign.setLocation("Chennai");
+	    newDesign.setStyleId(2);
 	
+	    Asset newAsset = new Asset();
+	    String generatedUrl = generateRandomUrl();
+	    newAsset.setAssetsUrl(generatedUrl);
+	   int designerId = 3;
+	 
+	   Exception exception = assertThrows(ValidationException.class, () -> {
+	    	 designAssetService.createDesignAsset(newDesign,newAsset,designerId);
+		});
+		String expectedMessage = "Designer Id doesn't exist";
+		String actualMessage = exception.getMessage();
 
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	@Order(6)
+	void testCreateDesignAssetWithDesignerIdNegative() {
+	    DesignAssetService designAssetService = new DesignAssetService();
+	    DesignAsset newDesignAsset = new DesignAsset();
+	    Design newDesign = new Design();
+	    newDesign.setName("Modern 4 Bhk Home");
+	    newDesign.setDescription("Customer Name: Mr. Johnson & Mrs. Ruby \r\n" + "Apartment Size: 4 BHK, 3200 Sq Ft\r\n"
+	            + "Project Value:  35-38 Lakhs\r\n" + "Project Manager: Muzammil\r\n"
+	            + "Design Description:Enveloped in the grace of contemporary bliss, this modern 4BHK home interiors of Johnson and Ruby offers some major design goals. The house is the true epitome of elegance and warmth, intertwining warmth and grace. The hardware used gives a royal metallic touch to all the rooms, making them look regal. The accessories scattered throughout the space club everything together, radiating charm and opulence.\r\n");
+	    newDesign.setLocation("Chennai");
+	    newDesign.setStyleId(2);
+	
+	    Asset newAsset = new Asset();
+	    String generatedUrl = generateRandomUrl();
+	    newAsset.setAssetsUrl(generatedUrl);
+	   int designerId = -3;
+	 
+	   Exception exception = assertThrows(ValidationException.class, () -> {
+	    	 designAssetService.createDesignAsset(newDesign,newAsset,designerId);
+		});
+		String expectedMessage = "Designer Id cannot be less than or equal to zero";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
 	
 
 }

@@ -23,6 +23,7 @@ class TestReadAppointment {
 		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {
 			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointment();
+			System.out.println(arr);
 		});
 	} 
 
@@ -36,7 +37,7 @@ class TestReadAppointment {
 	}
 
 	@Test
-	@Order(3)
+	@Order(3) 
 	void testGetAllByStatusNull() {
 		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -66,7 +67,7 @@ class TestReadAppointment {
 	void testGetAllByStatusPattern() {
 		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("completed");
+			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("accepted");
 		});
 		String expectedMessage = "Invalid status value. The status can only be one of:"
 				+ " waiting_list, approved, rejected";
@@ -77,7 +78,7 @@ class TestReadAppointment {
 	
 	@Test
 	@Order(6)
-	void testGetAllByFromUserId() throws ValidationException, PersistenceException {
+	void testGetAllAppointmentByFromUserId() throws ValidationException, PersistenceException {
 		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {
 			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByFromUserId(3);
@@ -86,7 +87,7 @@ class TestReadAppointment {
 
 	@Test
 	@Order(7)
-	void testGetAllByFromUserIdNotExist() {
+	void testGetAllAppointmentByFromUserIdNotExist() {
 		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByFromUserId(1000);

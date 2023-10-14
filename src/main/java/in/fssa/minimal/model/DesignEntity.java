@@ -7,7 +7,6 @@ public class DesignEntity {
 	private String description;
 	private String location;
 	private int styleId;
-	private int createdBy;
 
 	public int getId() {
 		return id;
@@ -49,17 +48,11 @@ public class DesignEntity {
 		this.styleId = styleId;
 	}
 
-	public int getCreatedBy() {
-		return createdBy;
-	}
 
-	public void setCreatedBy(int createdBy) {
-		this.createdBy = createdBy;
-	}
 
 	@Override
 	public String toString() {
 		return "DesignEntity [id=" + id + ", name=" + name + ", description=" + description + ", location=" + location
-				+ ", styleId=" + styleId + ", createdBy=" + createdBy + "]";
+				+ ", styleId=" + styleId + "]";
 	}
 }

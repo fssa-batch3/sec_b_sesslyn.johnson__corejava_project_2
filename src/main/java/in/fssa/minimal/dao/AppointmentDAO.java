@@ -21,25 +21,24 @@ import in.fssa.minimal.util.Logger;
 
 public class AppointmentDAO {
 
-	/** 
-	 * This method is responsible for creating a new appointment record in the
-	 * database.
-	 *
-	 * @param newAppointment The appointment to be created.
-	 * @throws PersistenceException If a database error occurs while creating the
-	 *                              appointment. 
-	 * @throws
-	 */
+	/**
+     * This method is responsible for creating a new appointment record in the
+     * database.
+     *
+     * @param newAppointment The appointment to be created.
+     * @throws PersistenceException If a database error occurs while creating the
+     *                              appointment.
+     */
 	public void create(Appointment newAppointment) throws PersistenceException {
-		Connection conn = null; 
-		PreparedStatement ps = null;
+		Connection conn = null;  
+		PreparedStatement ps = null; 
 		try {
 			String query = "INSERT INTO appointments (from_user, to_user,email,phone_number, status, date, time, address) VALUES (?,?,?,?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, newAppointment.getFromUser()); 
 			ps.setInt(2, newAppointment.getToUser());
-			ps.setString(3, newAppointment.getEmail());
+			ps.setString(3, newAppointment.getEmail()); 
 			ps.setLong(4, newAppointment.getPhoneNumber());
 			ps.setString(5, newAppointment.getStatus());
 
@@ -66,16 +65,16 @@ public class AppointmentDAO {
 		}
 	}
 
-	/**
-	 * Retrieves all appointments from the database.
-	 *
-	 * @return A set of AppointmentRespondDto objects representing all appointments.
-	 * @throws ValidationException  If validation of appointment data fails.
-	 * @throws PersistenceException If a database error occurs while retrieving
-	 *                              appointments.
-	 * @throws ServiceException     If a service-related error occurs during the
-	 *                              operation.
-	 */
+	 /**
+     * Retrieves all appointments from the database.
+     *
+     * @return A set of AppointmentRespondDto objects representing all appointments.
+     * @throws ValidationException  If validation of appointment data fails.
+     * @throws PersistenceException If a database error occurs while retrieving
+     *                              appointments.
+     * @throws ServiceException     If a service-related error occurs during the
+     *                              operation.
+     */
 	public Set<AppointmentRespondDTO> findAll() throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -88,7 +87,7 @@ public class AppointmentDAO {
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
 			User fromUserObj = null;
-			User toUserObj = null;
+			User toUserObj = null; 
 			while (rs.next()) {
 				int fromUser = rs.getInt("from_user");
 				int toUser = rs.getInt("to_user");
@@ -100,6 +99,8 @@ public class AppointmentDAO {
 				appointmentRespondDTO.setId(rs.getInt("id"));
 				appointmentRespondDTO.setFromUser(fromUserObj);
 				appointmentRespondDTO.setToUser(toUserObj);
+				appointmentRespondDTO.setEmail(rs.getString("email"));
+				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
 				appointmentRespondDTO.setStatus(rs.getString("status"));
 				Date date = rs.getDate("date");
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -122,18 +123,18 @@ public class AppointmentDAO {
 		return appointmentList;
 	}
 
-	/**
-	 * Retrieves appointments with a specific status from the database.
-	 *
-	 * @param status The status of appointments to retrieve.
-	 * @return A set of AppointmentRespondDto objects representing appointments with
-	 *         the specified status.
-	 * @throws ValidationException  If validation of status data fails.
-	 * @throws PersistenceException If a database error occurs while retrieving
-	 *                              appointments.
-	 * @throws ServiceException     If a service-related error occurs during the
-	 *                              operation.
-	 */
+	 /**
+     * Retrieves appointments with a specific status from the database.
+     *
+     * @param status The status of appointments to retrieve.
+     * @return A set of AppointmentRespondDto objects representing appointments with
+     *         the specified status.
+     * @throws ValidationException  If validation of status data fails.
+     * @throws PersistenceException If a database error occurs while retrieving
+     *                              appointments.
+     * @throws ServiceException     If a service-related error occurs during the
+     *                              operation.
+     */
 	public Set<AppointmentRespondDTO> findAllAppointmentByStatus(String status)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
@@ -159,6 +160,8 @@ public class AppointmentDAO {
 				appointmentRespondDTO.setId(rs.getInt("id"));
 				appointmentRespondDTO.setFromUser(fromUserObj);
 				appointmentRespondDTO.setToUser(toUserObj);
+				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
+				appointmentRespondDTO.setStatus(rs.getString("status"));
 				appointmentRespondDTO.setStatus(rs.getString("status"));
 				Date date = rs.getDate("date");
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -181,15 +184,15 @@ public class AppointmentDAO {
 		return appointmentList;
 	}
 
-	/**
-	 * Retrieves a set of appointment responses based on the provided 'fromUserId'.
-	 *
-	 * @param fromUserId The ID of the user initiating the appointments.
-	 * @return A Set of AppointmentRespondDTO objects representing the appointments.
-	 * @throws ValidationException  if the input validation fails.
-	 * @throws PersistenceException if there's an issue with data persistence.
-	 * @throws ServiceException     if a service-related error occurs.
-	 */
+	 /**
+     * Retrieves a set of appointment responses based on the provided 'fromUserId'.
+     *
+     * @param fromUserId The ID of the user initiating the appointments.
+     * @return A Set of AppointmentRespondDTO objects representing the appointments.
+     * @throws ValidationException  if the input validation fails.
+     * @throws PersistenceException if there's an issue with data persistence.
+     * @throws ServiceException     if a service-related error occurs.
+     */
 	public Set<AppointmentRespondDTO> findAllAppointmentByFromUserId(int fromUserId)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
@@ -214,6 +217,8 @@ public class AppointmentDAO {
 				appointmentRespondDTO.setId(rs.getInt("id"));
 				appointmentRespondDTO.setFromUser(fromUserObj);
 				appointmentRespondDTO.setToUser(toUserObj);
+				appointmentRespondDTO.setEmail(rs.getString("email"));
+				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
 				appointmentRespondDTO.setStatus(rs.getString("status"));
 				Date date = rs.getDate("date");
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -222,6 +227,8 @@ public class AppointmentDAO {
 				Time time = rs.getTime("time");
 				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 				appointmentRespondDTO.setTime(timeFormat.format(time));
+				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
+				appointmentRespondDTO.setStatus(rs.getString("status"));
 
 				appointmentRespondDTO.setAddress(rs.getString("address"));
 				appointmentList.add(appointmentRespondDTO);
@@ -236,15 +243,15 @@ public class AppointmentDAO {
 		return appointmentList;
 	}
 
-	/**
-	 * Retrieves a set of appointment responses based on the provided 'toUserId'.
-	 *
-	 * @param toUserId The ID of the user initiating the appointments.
-	 * @return A Set of AppointmentRespondDTO objects representing the appointments.
-	 * @throws ValidationException  if the input validation fails.
-	 * @throws PersistenceException if there's an issue with data persistence.
-	 * @throws ServiceException     if a service-related error occurs.
-	 */
+	 /**
+     * Retrieves a set of appointment responses based on the provided 'toUserId'.
+     *
+     * @param toUserId The ID of the user initiating the appointments.
+     * @return A Set of AppointmentRespondDTO objects representing the appointments.
+     * @throws ValidationException  if the input validation fails.
+     * @throws PersistenceException if there's an issue with data persistence.
+     * @throws ServiceException     if a service-related error occurs.
+     */
 	public Set<AppointmentRespondDTO> findAllAppointmentByToUserId(int toUserId)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
@@ -269,6 +276,8 @@ public class AppointmentDAO {
 				appointmentRespondDTO.setId(rs.getInt("id"));
 				appointmentRespondDTO.setFromUser(fromUserObj);
 				appointmentRespondDTO.setToUser(toUserObj);
+				appointmentRespondDTO.setEmail(rs.getString("email"));
+				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
 				appointmentRespondDTO.setStatus(rs.getString("status"));
 				Date date = rs.getDate("date");
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -277,7 +286,7 @@ public class AppointmentDAO {
 				Time time = rs.getTime("time");
 				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 				appointmentRespondDTO.setTime(timeFormat.format(time));
-
+				appointmentRespondDTO.setStatus(rs.getString("status"));
 				appointmentRespondDTO.setAddress(rs.getString("address"));
 				appointmentList.add(appointmentRespondDTO);
 			}
@@ -292,17 +301,17 @@ public class AppointmentDAO {
 	}
 
 	/**
-	 * Retrieves a specific appointment by its ID from the database.
-	 *
-	 * @param id The ID of the appointment to retrieve.
-	 * @return An AppointmentRespondDto object representing the requested
-	 *         appointment.
-	 * @throws ValidationException  If validation of ID data fails.
-	 * @throws PersistenceException If a database error occurs while retrieving the
-	 *                              appointment.
-	 * @throws ServiceException     If a service-related error occurs during the
-	 *                              operation.
-	 */
+     * Retrieves a specific appointment by its ID from the database.
+     *
+     * @param id The ID of the appointment to retrieve.
+     * @return An AppointmentRespondDto object representing the requested
+     *         appointment.
+     * @throws ValidationException  If validation of ID data fails.
+     * @throws PersistenceException If a database error occurs while retrieving the
+     *                              appointment.
+     * @throws ServiceException     If a service-related error occurs during the
+     *                              operation.
+     */
 	public AppointmentRespondDTO findById(int appointmentId)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
@@ -323,8 +332,10 @@ public class AppointmentDAO {
 				int toUser = rs.getInt("to_user");
 				fromUserObj = UserService.findByUserId(fromUser);
 				toUserObj = UserService.findByUserId(toUser);
-
 				appointmentRespondDTO = new AppointmentRespondDTO();
+				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
+				appointmentRespondDTO.setStatus(rs.getString("status"));
+				
 				appointmentRespondDTO.setId(rs.getInt("id"));
 				appointmentRespondDTO.setFromUser(fromUserObj);
 				appointmentRespondDTO.setToUser(toUserObj);
@@ -349,14 +360,14 @@ public class AppointmentDAO {
 		return appointmentRespondDTO;
 	}
 
-	/**
-	 * Updates the status of a specific appointment in the database.
-	 *
-	 * @param id     The ID of the appointment to update.
-	 * @param status The new status to set for the appointment.
-	 * @throws PersistenceException If a database error occurs while updating the
-	 *                              status.
-	 */
+	 /**
+     * Updates the status of a specific appointment in the database.
+     *
+     * @param id     The ID of the appointment to update.
+     * @param status The new status to set for the appointment.
+     * @throws PersistenceException If a database error occurs while updating the
+     *                              status.
+     */
 	public void updateRequestStatus(int appointmentId, String status) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -376,13 +387,13 @@ public class AppointmentDAO {
 		}
 	}
 
-	/**
-	 * Checks if a user has upcoming appointments.
-	 *
-	 * @param fromUser The ID of the user to check.
-	 * @throws ValidationException  If the user has an upcoming appointment.
-	 * @throws PersistenceException If a database error occurs during the check.
-	 */
+	 /**
+     * Checks if a user has upcoming appointments.
+     *
+     * @param fromUser The ID of the user to check.
+     * @throws ValidationException  If the user has an upcoming appointment.
+     * @throws PersistenceException If a database error occurs during the check.
+     */
 	public static void checkFromUserHasUpcomingAppointments(int fromUser)
 			throws ValidationException, PersistenceException {
 		Connection conn = null;
@@ -407,15 +418,15 @@ public class AppointmentDAO {
 	}
 
 	/**
-	 * Checks if a user has an appointment at the same date and time.
-	 *
-	 * @param toUser The ID of the user to check.
-	 * @param date   The date of the appointment to check.
-	 * @param time   The time of the appointment to check.
-	 * @throws ValidationException  If the user has an appointment at the same date
-	 *                              and time.
-	 * @throws PersistenceException If a database error occurs during the check.
-	 */
+     * Checks if a user has an appointment at the same date and time.
+     *
+     * @param toUser The ID of the user to check.
+     * @param date   The date of the appointment to check.
+     * @param time   The time of the appointment to check.
+     * @throws ValidationException  If the user has an appointment at the same date
+     *                              and time.
+     * @throws PersistenceException If a database error occurs during the check.
+     */
 	public static void checkToUserHasAppointmentAtSameDateTime(int toUser, String date, String time)
 			throws ValidationException, PersistenceException {
 		Connection conn = null;
@@ -446,14 +457,14 @@ public class AppointmentDAO {
 		}
 	}
 
-	/**
-	 * Checks if an appointment with the given ID exists in the database.
-	 *
-	 * @param id The ID of the appointment to check.
-	 * @throws ValidationException  If the appointment with the specified ID doesn't
-	 *                              exist.
-	 * @throws PersistenceException If a database error occurs during the check.
-	 */
+	  /**
+     * Checks if an appointment with the given ID exists in the database.
+     *
+     * @param id The ID of the appointment to check.
+     * @throws ValidationException  If the appointment with the specified ID doesn't
+     *                              exist.
+     * @throws PersistenceException If a database error occurs during the check.
+     */
 	public static void checkIdExists(int appointmentId) throws ValidationException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement pre = null;
@@ -466,7 +477,7 @@ public class AppointmentDAO {
 			pre.setInt(1, appointmentId);
 			rs = pre.executeQuery();
 			if (!rs.next()) {
-				throw new ValidationException("Id doesn't exist");
+				throw new ValidationException("Appointment Id doesn't exist");
 			}
 		} catch (SQLException e) {
 			Logger.error(e);

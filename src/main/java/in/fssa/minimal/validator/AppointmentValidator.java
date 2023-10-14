@@ -7,6 +7,8 @@ import java.time.format.DateTimeParseException;
 
 import in.fssa.minimal.dao.AppointmentDAO;
 import in.fssa.minimal.dao.UserDAO;
+import in.fssa.minimal.enums.StatusEnum;
+import in.fssa.minimal.enums.StatusEnum;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
 import in.fssa.minimal.exception.ValidationException;
@@ -25,7 +27,7 @@ public class AppointmentValidator {
 	 */
 	public static void validateAppointment(Appointment appointment) throws ValidationException, ServiceException {
 		try {
-			if (appointment == null) {
+			if (appointment == null) { 
 				throw new ValidationException("Appointment object cannot be null");
 			} 
 
@@ -126,13 +128,12 @@ public class AppointmentValidator {
 	 * @throws ValidationException If the status doesn't match the expected values.
 	 */
 	public static void validateStatus(String status) throws ValidationException {
-		StringUtil.rejectIfInvalidString(status, "Status");
-		if (!("approved".equalsIgnoreCase(status) || "rejected".equalsIgnoreCase(status)
-				|| "waiting_list".equalsIgnoreCase(status))) {
-			throw new ValidationException(
-					"Invalid status value. The status can only be one of: waiting_list, approved, rejected");
-		}
+	    StringUtil.rejectIfInvalidString(status, "Status");
+	    if (StatusEnum.getStatus(status).equals("non")) {
+	        throw new ValidationException("Invalid status value. The status can only be one of: waiting_list, approved, rejected");
+	    }
 	}
+	
 
 	/**
 	 * Validates the status parameter for updating an appointment's status.

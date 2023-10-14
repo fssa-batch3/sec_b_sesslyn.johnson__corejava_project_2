@@ -144,7 +144,7 @@ class TestCreateAppointment {
 		newAppointment.setEmail("sess@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
 		newAppointment.setStatus("waiting_list");
-		newAppointment.setDate("2023-09-30");
+		newAppointment.setDate("2023-11-30");
 		newAppointment.setTime("15:30:00");
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -166,7 +166,7 @@ class TestCreateAppointment {
 		newAppointment.setEmail("jelisha@gmail.com");
 		newAppointment.setPhoneNumber(9787896543l); 
 		newAppointment.setStatus("waiting_list");
-		newAppointment.setDate("2023-09-10");
+		newAppointment.setDate("2023-10-20");
 		newAppointment.setTime("10:00:00");
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -407,7 +407,7 @@ class TestCreateAppointment {
 		newAppointment.setToUser(2);
 		newAppointment.setEmail("sam@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
-		newAppointment.setStatus("completed");
+		newAppointment.setStatus("accepted");
 		newAppointment.setDate("2023-09-10");
 		newAppointment.setTime("15:30:00");
 		newAppointment.setAddress(null);
@@ -607,7 +607,7 @@ class TestCreateAppointment {
 		newAppointment.setEmail("sam@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
 		newAppointment.setStatus("approved");
-		newAppointment.setDate("2023-09-10");
+		newAppointment.setDate("2023-10-20");
 		newAppointment.setTime("15:30");
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -629,7 +629,7 @@ class TestCreateAppointment {
 		newAppointment.setEmail("joe@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
 		newAppointment.setStatus("approved");
-		newAppointment.setDate("2023-09-12");
+		newAppointment.setDate("2023-10-12");
 		newAppointment.setTime("22:30:00");
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {

@@ -17,26 +17,25 @@ public class DesignDAO {
  
 
 	/**
-	 * Creates a new design entity in the database. 
+	 * Creates a new design entity in the database.
 	 *
 	 * @param newDesign The design to be created.
+	 * @return The ID of the newly created design entity.
 	 * @throws PersistenceException If a database error occurs during creation.
 	 */
-
 	public int create(Design newDesign) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int designId = -1;
 		try {
-			String query = "INSERT INTO designs ( name, description,location,style_id,created_by ) VALUES (?,?,?,?,?)";
+			String query = "INSERT INTO designs ( name, description,location,style_id ) VALUES (?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, newDesign.getName());
 			ps.setString(2, newDesign.getDescription());
 			ps.setString(3, newDesign.getLocation());
 			ps.setInt(4, newDesign.getStyleId());
-			ps.setInt(5, newDesign.getCreatedBy());
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
 			if(rs.next()) {
@@ -57,7 +56,7 @@ public class DesignDAO {
 	/**
 	 * Updates an existing design entity in the database.
 	 *
-	 * @param id            The ID of the design to be updated.
+	 * @param designId       The ID of the design to be updated.
 	 * @param updatedDesign The updated design data.
 	 * @throws PersistenceException If a database error occurs during update.
 	 */
@@ -83,10 +82,6 @@ public class DesignDAO {
 				queryBuilder.append("style_id = ?, ");
 				values.add(updatedDesign.getStyleId());
 			}
-			if (updatedDesign.getCreatedBy() != 0) {
-				queryBuilder.append("created_by = ?, ");
-				values.add(updatedDesign.getCreatedBy());
-			}
 			queryBuilder.setLength(queryBuilder.length() - 2);
 			queryBuilder.append(" WHERE id = ?");
 			conn = ConnectionUtil.getConnection();
@@ -104,20 +99,22 @@ public class DesignDAO {
 			ConnectionUtil.close(conn, ps, null);
 		}
 	}
-	/**
-	 * Retrieves all design entities from the database.
-	 *
-	 * @return A set of all designs in the database.
-	 * @throws PersistenceException If a database error occurs during retrieval.
-	 */
+	
 
+/**
+ * Retrieves all design entities from the database.
+ *
+ * @return A set of all designs in the database.
+ * @throws RuntimeException   If there's a runtime error during retrieval.
+ * @throws PersistenceException If a database error occurs during retrieval.
+ */
 	public Set<Design> findAllDesign() throws RuntimeException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Set<Design> designList = new HashSet<>();
 		try {
-			String query = "SELECT id, name, description, location, style_id, created_by FROM designs";
+			String query = "SELECT id, name, description, location, style_id FROM designs";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -128,7 +125,6 @@ public class DesignDAO {
 				design.setDescription(rs.getString("description"));
 				design.setLocation(rs.getString("location"));
 				design.setStyleId(rs.getInt("style_id"));
-				design.setCreatedBy(rs.getInt("created_by"));
 				designList.add(design);
 			}
 		} catch (SQLException e) {
@@ -143,7 +139,7 @@ public class DesignDAO {
 	/**
 	 * Retrieves a design entity by its ID from the database.
 	 *
-	 * @param id The ID of the design to retrieve.
+	 * @param designId The ID of the design to retrieve.
 	 * @return The retrieved design entity.
 	 * @throws PersistenceException If a database error occurs during retrieval.
 	 */
@@ -153,7 +149,7 @@ public class DesignDAO {
 		ResultSet rs = null;
 		Design design = null;
 		try {
-			String query = "SELECT id, name, description, location, style_id, created_by "
+			String query = "SELECT id, name, description, location, style_id "
 					+ "FROM designs WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
@@ -166,7 +162,6 @@ public class DesignDAO {
 				design.setDescription(rs.getString("description"));
 				design.setLocation(rs.getString("location"));
 				design.setStyleId(rs.getInt("style_id"));
-				design.setCreatedBy(rs.getInt("created_by"));
 			}
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -177,107 +172,44 @@ public class DesignDAO {
 		return design;
 	}
 
-	/**
-	 * Retrieves all design entities created by a specific designer from the
-	 * database.
-	 *
-	 * @param id The ID of the designer.
-	 * @return A set of designs created by the specified designer.
-	 * @throws PersistenceException If a database error occurs during retrieval.
-	 */
-	public Set<Design> findAllDesignsByDesignerId(int designId) throws PersistenceException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Design design = null;
-		Set<Design> designList = new HashSet<>();
-		try {
-			String query = "SELECT id, name, description, location, style_id, created_by "
-					+ "FROM designs WHERE created_by = ?";
-			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(query);
-			ps.setInt(1, designId);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				design = new Design();
-				design.setId(rs.getInt("id"));
-				design.setName(rs.getString("name"));
-				design.setDescription(rs.getString("description"));
-				design.setLocation(rs.getString("location"));
-				design.setStyleId(rs.getInt("style_id"));
-				design.setCreatedBy(rs.getInt("created_by"));
-				designList.add(design);
-			}
-
-		} catch (SQLException e) {
-			Logger.error(e);
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, ps, rs);
-		}
-		return designList;
-	}
 
 	/**
 	 * Checks if a design ID exists in the database.
 	 *
-	 * @param id The ID to check for existence.
+	 * @param designId The ID to check for existence.
 	 * @throws ValidationException  If the design ID doesn't exist.
-	 * @throws PersistenceException
+	 * @throws PersistenceException If a database error occurs during validation.
 	 */
 	public static void checkIdExists(int designId) throws ValidationException, PersistenceException {
-		Connection conn = null;
-		PreparedStatement pre = null;
-		ResultSet rs = null;
+	    Connection conn = null;
+	    PreparedStatement pre = null;
+	    ResultSet rs = null;
 
-		try {
-			String query = "SELECT id, name, description, location, style_id, created_by "
-					+ "FROM designs WHERE id = ?";
-			conn = ConnectionUtil.getConnection();
-			pre = conn.prepareStatement(query);
-			pre.setInt(1, designId);
-			rs = pre.executeQuery();
-			if (!rs.next()) {
-				throw new ValidationException("Design Id doesn't exist");
-			}
-		} catch (SQLException e) {
-			Logger.error(e);
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, pre, rs);
-		}
+	    try {
+	        String query = "SELECT id " +  // Add a space after "id"
+	                "FROM designs WHERE id = ?";
+	        conn = ConnectionUtil.getConnection();
+	        pre = conn.prepareStatement(query);
+	        pre.setInt(1, designId);
+	        rs = pre.executeQuery();
+	        if (!rs.next()) {
+	            throw new ValidationException("Design Id doesn't exist");
+	        }
+	    } catch (SQLException e) {
+	        Logger.error(e);
+	        throw new PersistenceException(e);
+	    } finally {
+	        ConnectionUtil.close(conn, pre, rs);
+	    }
 	}
 
-	/**
-	 * Checks if a designer has any designs in the database.
-	 *
-	 * @param createdBy The designer's ID to check.
-	 * @throws ValidationException  If the designer has no designs.
-	 * @throws PersistenceException
-	 */
-	public static void checkCreatedByExists(int createdBy) throws ValidationException, PersistenceException {
-		Connection conn = null;
-		PreparedStatement pre = null;
-		ResultSet rs = null;
-
-		try {
-			String query = "SELECT id, name, description, location, style_id, created_by "
-					+ "FROM designs WHERE created_by = ?";
-			conn = ConnectionUtil.getConnection();
-			pre = conn.prepareStatement(query);
-			pre.setInt(1, createdBy);
-			rs = pre.executeQuery();
-			if (!rs.next()) {
-				throw new ValidationException("Designers doesn't have any design yet");
-			}
-		} catch (SQLException e) {
-			Logger.error(e);
-			throw new PersistenceException(e);
-		} finally {
-			ConnectionUtil.close(conn, pre, rs);
-		}
-	}
 	
+	/**
+	 * Retrieves the ID of the last updated design entity in the database.
+	 *
+	 * @return The ID of the last updated design entity.
+	 * @throws PersistenceException If a database error occurs during retrieval.
+	 */
 	public static int getLastUpdatedDesignId() throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
