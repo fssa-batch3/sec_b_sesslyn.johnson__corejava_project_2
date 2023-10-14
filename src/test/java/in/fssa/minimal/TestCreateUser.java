@@ -7,12 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.mindrot.jbcrypt.BCrypt;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.User;
-import in.fssa.minimal.model.UserEntity;
 import in.fssa.minimal.service.UserService;
 import in.fssa.minimal.util.RandomValue;
 @TestMethodOrder(OrderAnnotation.class)

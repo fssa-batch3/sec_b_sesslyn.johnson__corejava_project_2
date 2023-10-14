@@ -2,7 +2,7 @@ package in.fssa.minimal.enums;
 
 import in.fssa.minimal.exception.ValidationException;
 
-public enum StatusEnum {
+public enum StatusEnum{
     waiting_list, approved, rejected,completed;
     
 	/**

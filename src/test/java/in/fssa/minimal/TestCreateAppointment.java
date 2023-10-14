@@ -7,10 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+
 import in.fssa.minimal.dao.UserDAO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
@@ -22,7 +24,7 @@ class TestCreateAppointment {
 
 	@Test 
 	@Order(1)
-	void testCreateAppointmentWithValidInput() throws PersistenceException {
+	void testCreateAppointmentWithValidInput() throws PersistenceException{
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
 		UserDAO app = new UserDAO(); 
@@ -563,7 +565,7 @@ class TestCreateAppointment {
 		newAppointment.setEmail("sam@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
 		newAppointment.setStatus("approved");
-		newAppointment.setDate("2023-10-08");
+		newAppointment.setDate("2023-11-08");
 		newAppointment.setTime(null);
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -585,7 +587,7 @@ class TestCreateAppointment {
 		newAppointment.setEmail("sam@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
 		newAppointment.setStatus("approved");
-		newAppointment.setDate("2023-10-08");
+		newAppointment.setDate("2023-11-08");
 		newAppointment.setTime("");
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -607,7 +609,7 @@ class TestCreateAppointment {
 		newAppointment.setEmail("sam@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
 		newAppointment.setStatus("approved");
-		newAppointment.setDate("2023-10-20");
+		newAppointment.setDate("2023-11-20");
 		newAppointment.setTime("15:30");
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -629,7 +631,7 @@ class TestCreateAppointment {
 		newAppointment.setEmail("joe@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
 		newAppointment.setStatus("approved");
-		newAppointment.setDate("2023-10-12");
+		newAppointment.setDate("2023-11-12");
 		newAppointment.setTime("22:30:00");
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {

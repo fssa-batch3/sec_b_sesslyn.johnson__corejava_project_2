@@ -2,7 +2,7 @@ package in.fssa.minimal.enums;
 
 import in.fssa.minimal.exception.ValidationException;
 
-public enum RoleEnum {
+public enum RoleEnum{
     USER("u"), DESIGNER("d"), SELLER("s"), ADMIN("a");
 
     private final String value;
@@ -54,4 +54,3 @@ public enum RoleEnum {
         return "non";
     }
 }
-

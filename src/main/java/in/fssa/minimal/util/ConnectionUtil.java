@@ -6,9 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import in.fssa.minimal.exception.PersistenceException;
-//import io.github.cdimascio.dotenv.Dotenv;
+
 
 public class ConnectionUtil { 
  
@@ -24,11 +23,10 @@ public class ConnectionUtil {
 		String userName;
 		String passWord; 
 
-			url = System.getenv("DATABASE_HOSTNAME");
-			userName = System.getenv("DATABASE_USERNAME");
-			passWord = System.getenv("DATABASE_PASSWORD");
+		url = System.getenv("DATABASE_HOSTNAME");
+		userName = System.getenv("DATABASE_USERNAME");
+		passWord = System.getenv("DATABASE_PASSWORD");
 		
-	
 			
 		Connection connection = null;
 		try {
