@@ -57,7 +57,7 @@ class TestReadDesign {
 	void testWithNonExistingId() {
 		DesignService designService = new DesignService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Design arr = designService.findByDesignId(5000);
+			Design arr = designService.findByDesignId(6000);
 		});
 		String expectedMessage = "Design Id doesn't exist";
 		String actualMessage = exception.getMessage();
