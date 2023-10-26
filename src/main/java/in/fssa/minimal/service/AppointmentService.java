@@ -19,7 +19,7 @@ public class AppointmentService {
 	 *                       to be created.
 	 * @throws ValidationException If the provided appointment data is invalid.
 	 * @throws ServiceException    If a service-related error occurs during the
-	 *                             operation.
+	 *                             operation. 
 	 */
 	public void createAppointment(Appointment newAppointment) throws ValidationException, ServiceException {
 		try { 

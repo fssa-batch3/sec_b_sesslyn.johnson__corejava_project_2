@@ -279,7 +279,7 @@ public class AppointmentDAO {
 				appointmentRespondDTO.setEmail(rs.getString("email"));
 				appointmentRespondDTO.setPhoneNumber(rs.getLong("phone_number"));
 				appointmentRespondDTO.setStatus(rs.getString("status"));
-				Date date = rs.getDate("date");
+				Date date = rs.getDate("date"); 
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				appointmentRespondDTO.setDate(dateFormat.format(date));
 

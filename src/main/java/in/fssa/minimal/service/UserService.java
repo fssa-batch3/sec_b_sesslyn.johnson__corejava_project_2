@@ -266,7 +266,7 @@ public class UserService {
 	    }
 	}
 
-	/**
+	/** 
 	 * Retrieves a user from the database based on their user ID for appointment purposes.
 	 *
 	 * @param userId The ID of the user to retrieve.

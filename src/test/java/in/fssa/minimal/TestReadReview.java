@@ -20,7 +20,8 @@ public class TestReadReview {
         assertDoesNotThrow(() -> {
             ReviewService reviewService = new  ReviewService();
             Set<Review> arr = reviewService.getAllReviewByDesignerId(2);
-        });
+            System.out.println(arr);
+            });
     } 
 	
 	@Test

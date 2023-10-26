@@ -43,7 +43,7 @@ public class UserDAO implements UserInterface {
 			String query = "SELECT id,name,email,image,phone_number,date_of_birth,gender,role,"
 					+ "is_active,experience,designer_description,gst_number,aadhar_number,shop_address "
 					+ "FROM users WHERE is_active = 1";
-			conn = ConnectionUtil.getConnection();
+			conn = ConnectionUtil.getConnection(); 
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -888,7 +888,7 @@ public class UserDAO implements UserInterface {
 					+ "FROM users WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, userId);
+			ps.setInt(1, userId); 
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				user = new User();

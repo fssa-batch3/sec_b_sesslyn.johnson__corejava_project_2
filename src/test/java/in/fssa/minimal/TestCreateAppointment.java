@@ -520,7 +520,7 @@ class TestCreateAppointment {
 		newAppointment.setEmail("sam@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
 		newAppointment.setStatus("approved");
-		newAppointment.setDate("2024-01-15");
+		newAppointment.setDate("2024-04-15");
 		newAppointment.setTime("15:30:00");
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -528,7 +528,7 @@ class TestCreateAppointment {
 		});
 		String expectedMessage = "Invalid date. The date should be within the next 90 days";
 		String actualMessage = exception.getMessage();
-
+ 
 		assertEquals(expectedMessage, actualMessage);
 	}
 
