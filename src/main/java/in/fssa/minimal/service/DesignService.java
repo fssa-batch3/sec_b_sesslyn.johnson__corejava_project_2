@@ -20,8 +20,8 @@ public class DesignService {
 	 * @throws ServiceException    If an error occurs during validation or database operation.
 	 */
 	public int createDesign(Design newDesign) throws ValidationException, PersistenceException, ServiceException {
-		 int designId = -1;
-		try {
+		 int designId = -1; 
+		try { 
 	        DesignValidator.validateDesign(newDesign); 
 	        DesignDAO designDAO = new DesignDAO();
 	        designId =  designDAO.create(newDesign);

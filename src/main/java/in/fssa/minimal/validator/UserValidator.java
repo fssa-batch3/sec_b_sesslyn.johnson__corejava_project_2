@@ -26,7 +26,7 @@ public class UserValidator {
 	 * Validates a User object by checking its attributes including name, email,
 	 * password, and phone number.
 	 *
-	 * @param user The User object to validate.
+	 * @param user The User object to validate. 
 	 * @throws ValidationException  If any of the attributes do not meet the
 	 *                              required validation criteria.
 	 * @throws PersistenceException If an error occurs during data persistence
@@ -38,7 +38,7 @@ public class UserValidator {
 			throw new ValidationException("User object cannot be null");
 		}
 		validateName(user.getName());
-		validateEmailCreate(user.getEmail());
+		validateEmailCreate(user.getEmail());  
 		validatePassword(user.getPassword());
 		if (user.getImage() != null) {
 			validateImage(user.getImage());
@@ -138,7 +138,6 @@ public class UserValidator {
 	 * @throws ValidationException If the name does not match the required format.
 	 */
 	public static void validateName(String userName) throws ValidationException {
-		
 		StringUtil.rejectIfInvalidString(userName, "User Name");
 		userName = userName.trim();
 		if (userName.length() < 3) {
@@ -241,7 +240,7 @@ public class UserValidator {
 	/**
 	 * Validates an ID value.
 	 *
-	 * @param id The ID to be validated.
+	 * @param id The ID to be validate d.
 	 * @throws ValidationException If the ID is not valid (less than or equal to
 	 *                             zero).
 	 */
@@ -262,7 +261,7 @@ public class UserValidator {
 	 */
 	public static void validateUserId(int userId) throws ValidationException, ServiceException {
 		try {
-			validateId("User Id", userId);
+			validateId("User Id", userId); 
 			UserDAO.checkIdExists(userId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during validation", e);
@@ -295,13 +294,13 @@ public class UserValidator {
 	 * @throws ServiceException   If a service-related error occurs during validation.
 	 */
 	public static void validateSellerId(int sellerId) throws ValidationException, ServiceException {
-		try {
+		try { 
 			validateId("Seller Id", sellerId);
 			UserDAO.checkSellerIdExists(sellerId);
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred during validation", e);
 		}
-	}
+	} 
 
 	/**
 	 * Validates an image URL by checking if it matches the expected pattern.
@@ -313,7 +312,7 @@ public class UserValidator {
 	public static void validateImage(String image) throws ValidationException, ServiceException {
 		if (!image.matches(IMAGE_PATTERN)) {
 			throw new ValidationException("Invalid image format. Please provide a valid image url.");
-		}
+		} 
 	}
 
 	/**

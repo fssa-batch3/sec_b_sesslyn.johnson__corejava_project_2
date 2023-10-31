@@ -25,7 +25,7 @@ public class UserService {
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while retrieving users.", e);
 	    }
-	}  
+	}    
 
 	/**
 	 * Retrieves a user by their ID.
@@ -79,7 +79,7 @@ public class UserService {
 	    	}else if(role.equals("designer")) {
 	    		createDesigner(newUser);
 	    	}else {
-	      
+	       
 	        UserDAO userDAO = new UserDAO();
 	        userDAO.create(newUser);
 	    	}
@@ -256,7 +256,7 @@ public class UserService {
 	 * @throws ValidationException If validation of the provided seller ID fails.
 	 * @throws ServiceException If a service-related error occurs during retrieval.
 	 */
-	public User findBySellerId(int sellerId) throws ValidationException, ServiceException {
+	public static User findBySellerId(int sellerId) throws ValidationException, ServiceException {
 	    try {
 	        UserValidator.validateSellerId(sellerId);
 	        UserDAO userDao = new UserDAO();

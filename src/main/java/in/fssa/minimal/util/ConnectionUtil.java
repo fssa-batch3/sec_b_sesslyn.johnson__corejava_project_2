@@ -19,11 +19,10 @@ public class ConnectionUtil {
      */
 	public static Connection getConnection() throws SQLException {
 
-		String url; 
+		String url;  
 		String userName;
 		String passWord; 
-		
-		
+				
 		url = System.getenv("DATABASE_HOSTNAME");
 		userName = System.getenv("DATABASE_USERNAME");
 		passWord = System.getenv("DATABASE_PASSWORD");
@@ -33,7 +32,6 @@ public class ConnectionUtil {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection(url, userName, passWord);
-
 		} catch (ClassNotFoundException|SQLException e) {
 			throw new SQLException(e);
 		}
@@ -60,6 +58,22 @@ public class ConnectionUtil {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public static void close(Connection connection, PreparedStatement ps1, PreparedStatement ps2) {
+		try {
+			if (ps1 != null) {
+				ps1.close();
+			}
+			if (ps2 != null) {
+				ps2.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
 	/**
 	 * Closes a database connection, a prepared statement, and a result set.
@@ -73,7 +87,7 @@ public class ConnectionUtil {
 		try {
 			if (rs != null) {
 				rs.close();
-			}
+			} 
 			if (ps != null) {
 				ps.close();
 			}

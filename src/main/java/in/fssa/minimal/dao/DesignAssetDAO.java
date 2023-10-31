@@ -38,7 +38,7 @@ public class DesignAssetDAO {
 			ps.executeUpdate();
 			Logger.info("Design Asset has been created successfully");
 
-		} catch (SQLException e) {
+		} catch (SQLException e) { 
 			Logger.error(e); 
 			throw new PersistenceException(e);
 		} finally {
@@ -67,7 +67,7 @@ public class DesignAssetDAO {
 			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
-			ConnectionUtil.close(conn, ps, null);
+			ConnectionUtil.close(conn, ps);
 		}
 	}
 	
@@ -91,7 +91,7 @@ public class DesignAssetDAO {
 			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
-			ConnectionUtil.close(conn, ps, null);
+			ConnectionUtil.close(conn, ps);
 		}
 	}
 	

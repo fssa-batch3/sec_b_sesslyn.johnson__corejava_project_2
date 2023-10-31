@@ -31,7 +31,7 @@ class TestCreateAppointment {
 		int user = app.getLastUpdatedUserId();
 		newAppointment.setFromUser(user);
 		int designer = app.getLastUpdatedDesignerId();
-		newAppointment.setToUser(designer); 
+		newAppointment.setToUser(designer);  
 		newAppointment.setEmail("sesslyn@gmail.com");
 		newAppointment.setPhoneNumber(6381040916L);
 		newAppointment.setStatus("waiting_list");
@@ -44,7 +44,7 @@ class TestCreateAppointment {
 
 		LocalTime minTime = LocalTime.parse("08:00:00");
 		LocalTime maxTime = LocalTime.parse("20:00:00");
-
+ 
 		if (dueTime.isBefore(minTime) || dueTime.isAfter(maxTime)) {
 			dueTime = LocalTime.parse("11:35:29", inputFormatter);
 		}
@@ -60,7 +60,7 @@ class TestCreateAppointment {
 	@Test
 	@Order(2)
 	void testCreateAppointmentWithInvalidInput() {
-		AppointmentService appointmentService = new AppointmentService();
+		AppointmentService appointmentService = new AppointmentService(); 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.createAppointment(null);
 		});
@@ -154,8 +154,8 @@ class TestCreateAppointment {
 		});
 		String expectedMessage = "The appointment you have is yet to be completed. Please be patient";
 		String actualMessage = exception.getMessage();
-
-		assertEquals(expectedMessage, actualMessage);
+ 
+		assertEquals(expectedMessage, actualMessage); 
 	}
 
 	@Test
@@ -168,17 +168,17 @@ class TestCreateAppointment {
 		newAppointment.setEmail("jelisha@gmail.com");
 		newAppointment.setPhoneNumber(9787896543l); 
 		newAppointment.setStatus("waiting_list");
-		newAppointment.setDate("2023-10-20");
+		newAppointment.setDate("2023-11-20");
 		newAppointment.setTime("10:00:00");
-		newAppointment.setAddress(null);
-		Exception exception = assertThrows(ValidationException.class, () -> {
+		newAppointment.setAddress(null);  
+		Exception exception = assertThrows(ValidationException.class, () -> { 
 			appointmentService.createAppointment(newAppointment);
 		});
 		String expectedMessage = "The designer has an appointment at that specific time. Please reschedule the appointment for a different time slot";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
-	}
+	} 
 
 	@Test
 	@Order(8)

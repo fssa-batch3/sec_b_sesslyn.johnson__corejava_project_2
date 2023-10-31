@@ -34,8 +34,8 @@ public class RandomValue {
 		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		StringBuilder randomString = new StringBuilder();
 		Random random = new Random();
-
-		for (int i = 0; i < length; i++) {
+ 
+		for (int i = 0; i < length; i++) { 
 			int index = random.nextInt(characters.length());
 			randomString.append(characters.charAt(index));
 		}
@@ -43,5 +43,23 @@ public class RandomValue {
 		return randomString.toString();
 	}
 
-	
+	 /**
+     * Generates a random string of the specified length.
+     *
+     * @param length The length of the random string to generate.
+     * @return A randomly generated string.
+     */
+	public static String generateRandomStringWithAlphabets(int length) {
+		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		StringBuilder randomString = new StringBuilder();
+		Random random = new Random();
+ 
+		for (int i = 0; i < length; i++) { 
+			int index = random.nextInt(characters.length());
+			randomString.append(characters.charAt(index));
+		}
+
+		return randomString.toString();
+	}
+
 }

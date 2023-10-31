@@ -29,14 +29,14 @@ class TestCreateUser {
 	    newUser.setPhoneNumber(9863456787L); 
 	    newUser.setRole("user");
 
-	    assertDoesNotThrow(() -> {
+	    assertDoesNotThrow(() -> { 
 	        userService.createUser(newUser); 
 	    });
 	} 
 	
 	@Test
 	@Order(2)
-	 void testCreateDesignerWithValidInput() {
+	 void testCreateDesignerWithValidInput() { 
 	    UserService userService = new UserService();
 	    User newUser = new User();
 	    String randomString = RandomValue.generateRandomString(8); 

@@ -7,7 +7,7 @@ public abstract class ReviewEntity {
 	private int ratings;
 	private int appointment_id;
 	private int from_user;
-	private int to_user;
+	private int to_user; 
 
 	public int getId() {
 		return id;

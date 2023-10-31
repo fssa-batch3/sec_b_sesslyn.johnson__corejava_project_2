@@ -19,7 +19,7 @@ import in.fssa.minimal.service.UserService;
 class TestDeleteUser { 
 	
 	@Test
-	@Order(2)
+	@Order(1)
 	void testGetUserByIdLessThanZero() { 
 		UserService userService = new UserService();
         UserDAO app = new UserDAO();
@@ -31,9 +31,9 @@ class TestDeleteUser {
 
 		assertEquals(expectedMessage, actualMessage);
 	}
-
+ 
 	 @Test
-	    @Order(3)
+	    @Order(2)
 	    void testDeleteUser() {
 	        assertDoesNotThrow(() -> {
 	            UserService userService = new UserService();
@@ -45,7 +45,7 @@ class TestDeleteUser {
 
 
 	@Test
-	@Order(4)
+	@Order(3)
 	void testDeleteWithNonExistingId() throws ValidationException {
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -58,7 +58,7 @@ class TestDeleteUser {
 	}
 	
 	@Test
-	@Order(1)
+	@Order(4)
 	 void testCreateUserWithValidInput() {
 	    UserService userService = new UserService();
 	    User newUser = new User();

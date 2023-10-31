@@ -1,12 +1,12 @@
 package in.fssa.minimal.model;
 
-public class DesignAssetEntity {
+public abstract class DesignAssetEntity {
 	private int id;
 	private int designId;
 	private int assetsId;
 	private int designerId;
 	private boolean isActive = true;
-	
+	 
 	public int getId() {
 		return id;
 	}

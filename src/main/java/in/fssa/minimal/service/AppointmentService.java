@@ -1,4 +1,4 @@
-package in.fssa.minimal.service;
+ package in.fssa.minimal.service;
 
 import java.util.Set;
 import in.fssa.minimal.dao.AppointmentDAO;
@@ -24,7 +24,7 @@ public class AppointmentService {
 	public void createAppointment(Appointment newAppointment) throws ValidationException, ServiceException {
 		try { 
 			AppointmentValidator.validateAppointment(newAppointment);
-			AppointmentDAO appointmentDAO = new AppointmentDAO();  
+			AppointmentDAO appointmentDAO = new AppointmentDAO();   
 			appointmentDAO.create(newAppointment); 
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while creating appointment", e);
@@ -152,7 +152,7 @@ public class AppointmentService {
 	 *                             operation.
 	 */
 	public void updateAppointmentRequestStatus(int appointmentId, String status)
-			throws ValidationException, ServiceException {
+			throws ValidationException, ServiceException { 
 		try {
 			AppointmentValidator.validateIdExists(appointmentId);
 			AppointmentValidator.validateUpdateStatus(status);

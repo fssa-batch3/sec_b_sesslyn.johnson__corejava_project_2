@@ -37,12 +37,12 @@ public class UserDAO implements UserInterface {
 	public Set<User> findAll() throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
+		ResultSet rs = null; 
 		Set<User> userList = new HashSet<>();
 		try {
 			String query = "SELECT id,name,email,image,phone_number,date_of_birth,gender,role,"
 					+ "is_active,experience,designer_description,gst_number,aadhar_number,shop_address "
-					+ "FROM users WHERE is_active = 1";
+					+ "FROM users WHERE is_active = 1"; 
 			conn = ConnectionUtil.getConnection(); 
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -245,7 +245,7 @@ public class UserDAO implements UserInterface {
 			ps.setString(3, hashPassword);
 			ps.setString(4, RoleEnum.getRole(newUser.getRole()));
 			ps.setLong(5, newUser.getPhoneNumber());
-
+ 
 			if (RoleEnum.getRole(newUser.getRole()) == "d") {
 				ps.setInt(6, newUser.getExperience());
 				ps.setString(7, newUser.getImage());
@@ -346,7 +346,7 @@ public class UserDAO implements UserInterface {
 			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
-			ConnectionUtil.close(conn, ps, null);
+			ConnectionUtil.close(conn, ps);
 		}
 	}
 
@@ -371,7 +371,7 @@ public class UserDAO implements UserInterface {
 			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
-			ConnectionUtil.close(conn, ps, null);
+			ConnectionUtil.close(conn, ps);
 		}
 	}
 
@@ -663,7 +663,7 @@ public class UserDAO implements UserInterface {
 				throw new ValidationException("User Id doesn't exist");
 			}
 		} catch (SQLException e) {
-			Logger.error(e);
+			Logger.error(e); 
 			throw new PersistenceException(e);
 		} finally {
 			ConnectionUtil.close(conn, pre, rs);
@@ -773,16 +773,16 @@ public class UserDAO implements UserInterface {
 			String query = "SELECT id FROM users WHERE is_active = 1 AND role = 's' AND id = ?";
 			conn = ConnectionUtil.getConnection();
 			pre = conn.prepareStatement(query);
-			pre.setInt(1, sellerId);
+			pre.setInt(1, sellerId); 
 			rs = pre.executeQuery();
 			if (!rs.next()) {
 				throw new ValidationException("Seller Id doesn't exist");
-			}
-		} catch (SQLException e) {
-			Logger.error(e);
+			} 
+		} catch (SQLException e) { 
+			Logger.error(e); 
 			throw new PersistenceException(e);
 		} finally {
-			ConnectionUtil.close(conn, pre, rs);
+			ConnectionUtil.close(conn, pre, rs); 
 		}
 	}
 
@@ -798,13 +798,13 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 		int userId = 0;
 		try {
-			String query = "SELECT id FROM users WHERE is_active = 1 AND role = 'u' ORDER BY created_at DESC LIMIT 1";
+			String query = "SELECT id FROM users WHERE is_active = 1 AND role = 'u' ORDER BY id DESC LIMIT 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				userId = rs.getInt("id");
-			}
+				userId = rs.getInt("id"); 
+			}  
 		} catch (SQLException e) {
 			Logger.error(e);
 			throw new PersistenceException(e);

@@ -1,6 +1,6 @@
 package in.fssa.minimal.model;
 
-public class DesignEntity {
+public abstract class DesignEntity {
 
 	private int id;
 	private String name; 

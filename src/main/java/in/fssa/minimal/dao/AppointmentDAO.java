@@ -21,7 +21,7 @@ import in.fssa.minimal.util.Logger;
 
 public class AppointmentDAO {
 
-	/**
+	/** 
      * This method is responsible for creating a new appointment record in the
      * database.
      *
@@ -31,14 +31,14 @@ public class AppointmentDAO {
      */
 	public void create(Appointment newAppointment) throws PersistenceException {
 		Connection conn = null;  
-		PreparedStatement ps = null; 
+		PreparedStatement ps = null;  
 		try {
 			String query = "INSERT INTO appointments (from_user, to_user,email,phone_number, status, date, time, address) VALUES (?,?,?,?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, newAppointment.getFromUser()); 
 			ps.setInt(2, newAppointment.getToUser());
-			ps.setString(3, newAppointment.getEmail()); 
+			ps.setString(3, newAppointment.getEmail());  
 			ps.setLong(4, newAppointment.getPhoneNumber());
 			ps.setString(5, newAppointment.getStatus());
 

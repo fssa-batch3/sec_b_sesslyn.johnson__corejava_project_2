@@ -1,6 +1,6 @@
 package in.fssa.minimal.model;
 
-public class AppointmentEntity {
+public abstract class AppointmentEntity {
 
 	private int id;
 	private int fromUser;
@@ -8,7 +8,7 @@ public class AppointmentEntity {
 	private String email;
 	private long phoneNumber;
 	private String status;
-	private String date;
+	private String date; 
 	private String time;
 	private String address;
 	 

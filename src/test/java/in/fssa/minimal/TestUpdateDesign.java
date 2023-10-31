@@ -31,7 +31,7 @@ class TestUpdateDesign {
 			styleService.updateStyle(1, newStyle);
 		});
 	} 
-
+ 
 	@Test
 	@Order(2)
 	void testUpdateStyleWithNonExistingId() throws ValidationException, PersistenceException {

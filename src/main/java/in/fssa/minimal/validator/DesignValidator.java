@@ -27,7 +27,7 @@ public class DesignValidator {
 		if (design == null) {
 			throw new ValidationException("Design object cannot be null");
 		}
-		validateName(design.getName());
+		validateName(design.getName()); 
 		validateDescription(design.getDescription());
 		validateLocation(design.getLocation());
 		validateStyleId(design.getStyleId());
@@ -66,7 +66,7 @@ public class DesignValidator {
 		StringUtil.rejectIfInvalidString(description, "Description");
 		 description = description.trim();
 		 int length = description.length();
-		if (length < 30) {
+		if (length < 30) { 
 			throw new ValidationException("Description should be at least 30 characters long");
 		}
 	}

@@ -5,7 +5,7 @@ import in.fssa.minimal.exception.ValidationException;
 public enum StatusEnum{
     waiting_list, approved, rejected,completed;
     
-	/**
+	/** 
 	 * Get the status string for the provided status value.
 	 *
 	 * @param input The status value (e.g., "waiting_list", "approved", "rejected").
@@ -18,7 +18,7 @@ public enum StatusEnum{
             case "waiting_list":
                 return "waiting_list";
             case "approved":
-                return "approved";
+                return "approved"; 
             case "rejected":
                 return "rejected";
             case "completed":

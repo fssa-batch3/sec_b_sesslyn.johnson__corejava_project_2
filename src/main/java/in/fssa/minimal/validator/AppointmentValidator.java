@@ -30,10 +30,10 @@ public class AppointmentValidator {
 			if (appointment == null) { 
 				throw new ValidationException("Appointment object cannot be null");
 			} 
-
+ 
 			validateFromUserId(appointment.getFromUser());
 			validateToUserId(appointment.getToUser());
-			validateEmail(appointment.getEmail());
+			validateEmail(appointment.getEmail()); 
 			validatePhoneNumber(appointment.getPhoneNumber());
 			validateStatus(appointment.getStatus());
 			validateDate(appointment.getDate());

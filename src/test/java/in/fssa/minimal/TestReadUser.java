@@ -29,7 +29,7 @@ class TestReadUser {
     @Test 
     @Order(2)
     void testGetUserById() {
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> { 
             UserService userService = new UserService();
             User arr = userService.findByUserId(3);
             System.out.println(arr);

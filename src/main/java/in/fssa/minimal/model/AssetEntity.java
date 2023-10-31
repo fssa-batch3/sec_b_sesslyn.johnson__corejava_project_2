@@ -1,6 +1,6 @@
 package in.fssa.minimal.model;
 
-public class AssetEntity {
+public abstract class AssetEntity {
 	private int id;
 	private String assetsUrl;
 

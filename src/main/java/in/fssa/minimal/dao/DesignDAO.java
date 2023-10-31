@@ -25,7 +25,7 @@ public class DesignDAO {
 	 */
 	public int create(Design newDesign) throws PersistenceException {
 		Connection conn = null;
-		PreparedStatement ps = null;
+		PreparedStatement ps = null; 
 		ResultSet rs = null;
 		int designId = -1;
 		try {
@@ -96,7 +96,7 @@ public class DesignDAO {
 			Logger.error(e);
 			throw new PersistenceException(e);
 		} finally {
-			ConnectionUtil.close(conn, ps, null);
+			ConnectionUtil.close(conn, ps);
 		}
 	}
 	
