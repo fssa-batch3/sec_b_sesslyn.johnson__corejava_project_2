@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import in.fssa.minimal.dto.DesignAssetRespondDTO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
@@ -103,12 +103,12 @@ public class DesignAssetDAO {
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 * @throws ServiceException If there's an issue with a service.
 	 */
-	public Set<DesignAssetRespondDTO> findAllDesignAsset()
+	public List<DesignAssetRespondDTO> findAllDesignAsset()
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<DesignAssetRespondDTO> designAssetList = new HashSet<>();
+		List<DesignAssetRespondDTO> designAssetList = new ArrayList<>();
 		try {
 			String query = "SELECT * FROM design_assets ";
 			conn = ConnectionUtil.getConnection();
@@ -150,12 +150,12 @@ public class DesignAssetDAO {
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 * @throws ServiceException If there's an issue with a service.
 	 */
-	public Set<DesignAssetRespondDTO> findAllDesignAssetByDesignerId(int designerId)
+	public List<DesignAssetRespondDTO> findAllDesignAssetByDesignerId(int designerId)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<DesignAssetRespondDTO> designAssetList = new HashSet<>();
+		List<DesignAssetRespondDTO> designAssetList = new ArrayList<>();
 		try {
 			String query = "SELECT * FROM design_assets WHERE designer_id = ?";
 			conn = ConnectionUtil.getConnection();
@@ -198,12 +198,12 @@ public class DesignAssetDAO {
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 * @throws ServiceException If there's an issue with a service.
 	 */
-	public Set<DesignAssetRespondDTO> findAllActiveDesignAssetByDesignerId(int designerId)
+	public List<DesignAssetRespondDTO> findAllActiveDesignAssetByDesignerId(int designerId)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<DesignAssetRespondDTO> designAssetList = new HashSet<>();
+		List<DesignAssetRespondDTO> designAssetList = new ArrayList<>();
 		try {
 			String query = "SELECT * FROM design_assets WHERE is_active = 1 AND designer_id = ?";
 			conn = ConnectionUtil.getConnection();

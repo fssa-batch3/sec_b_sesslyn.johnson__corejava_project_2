@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import in.fssa.minimal.dto.AppointmentRespondDTO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
@@ -75,11 +75,11 @@ public class AppointmentDAO {
      * @throws ServiceException     If a service-related error occurs during the
      *                              operation.
      */
-	public Set<AppointmentRespondDTO> findAll() throws ValidationException, PersistenceException, ServiceException {
+	public List<AppointmentRespondDTO> findAll() throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<AppointmentRespondDTO> appointmentList = new HashSet<>();
+		List<AppointmentRespondDTO> appointmentList = new ArrayList<>();
 		try {
 			String query = "SELECT id, from_user, to_user, email, phone_number, status, date, time, address"
 					+ " FROM appointments";
@@ -135,12 +135,12 @@ public class AppointmentDAO {
      * @throws ServiceException     If a service-related error occurs during the
      *                              operation.
      */
-	public Set<AppointmentRespondDTO> findAllAppointmentByStatus(String status)
+	public List<AppointmentRespondDTO> findAllAppointmentByStatus(String status)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<AppointmentRespondDTO> appointmentList = new HashSet<>();
+		List<AppointmentRespondDTO> appointmentList = new ArrayList<>();
 		try {
 			String query = "SELECT id, from_user, to_user, email, phone_number, status, date, time, address"
 					+ " FROM appointments WHERE status = ?";
@@ -193,12 +193,12 @@ public class AppointmentDAO {
      * @throws PersistenceException if there's an issue with data persistence.
      * @throws ServiceException     if a service-related error occurs.
      */
-	public Set<AppointmentRespondDTO> findAllAppointmentByFromUserId(int fromUserId)
+	public List<AppointmentRespondDTO> findAllAppointmentByFromUserId(int fromUserId)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<AppointmentRespondDTO> appointmentList = new HashSet<>();
+		List<AppointmentRespondDTO> appointmentList = new ArrayList<>();
 		try {
 			String query = "SELECT id, from_user, to_user, email, phone_number, status, date, time, address"
 					+ " FROM appointments WHERE from_user = ?";
@@ -252,12 +252,12 @@ public class AppointmentDAO {
      * @throws PersistenceException if there's an issue with data persistence.
      * @throws ServiceException     if a service-related error occurs.
      */
-	public Set<AppointmentRespondDTO> findAllAppointmentByToUserId(int toUserId)
+	public List<AppointmentRespondDTO> findAllAppointmentByToUserId(int toUserId)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<AppointmentRespondDTO> appointmentList = new HashSet<>();
+		List<AppointmentRespondDTO> appointmentList = new ArrayList<>();
 		try {
 			String query = "SELECT id, from_user, to_user, email, phone_number, status, date, time, address"
 					+ " FROM appointments WHERE to_user = ?";

@@ -6,8 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import in.fssa.minimal.dto.OrderRespondDTO;
 import in.fssa.minimal.dto.ProductRespondDTO;
@@ -72,11 +72,11 @@ public class OrderDAO {
 		}
 	}
 
-	public Set<OrderRespondDTO> findAllOrders() throws ValidationException, PersistenceException, ServiceException {
+	public List<OrderRespondDTO> findAllOrders() throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<OrderRespondDTO> orderList = new HashSet<>();
+		List<OrderRespondDTO> orderList = new ArrayList<>();
 		try {
 			String query = "SELECT id, price, quantity, payment, status, delivery_date, user_id, seller_id, address_id, product_id,created_date"
 					+ " FROM orders";
@@ -132,18 +132,18 @@ public class OrderDAO {
 		return orderList;
 	}
 
-	public Set<OrderRespondDTO> findAllOrdersByUserId(int userId)
+	public List<OrderRespondDTO> findAllOrdersByUserId(int userId)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<OrderRespondDTO> orderList = new HashSet<>();
+		List<OrderRespondDTO> orderList = new ArrayList<>();
 		try {
 			String query = "SELECT id, price, quantity, payment, status, delivery_date, user_id, seller_id, address_id, product_id,created_date"
 					+ " FROM orders WHERE user_id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, userId); 
+			ps.setInt(1, userId);
 			rs = ps.executeQuery();
 			User userObj = null;
 			User sellerObj = null;
@@ -183,7 +183,7 @@ public class OrderDAO {
 				String dateString = dateFormat.format(date);
 				order.setCreatedDate(dateString);
 				orderList.add(order);
-			} 
+			}
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -194,12 +194,12 @@ public class OrderDAO {
 		return orderList;
 	}
 
-	public Set<OrderRespondDTO> findAllOrdersBySellerId(int sellerId)
+	public List<OrderRespondDTO> findAllOrdersBySellerId(int sellerId)
 			throws ValidationException, PersistenceException, ServiceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<OrderRespondDTO> orderList = new HashSet<>();
+		List<OrderRespondDTO> orderList = new ArrayList<>();
 		try {
 			String query = "SELECT id, price, quantity, payment, status, delivery_date, user_id, seller_id, address_id, product_id,created_date"
 					+ " FROM orders WHERE seller_id = ?";
@@ -320,7 +320,7 @@ public class OrderDAO {
 		Connection conn = null;
 		PreparedStatement pre = null;
 		ResultSet rs = null;
- 
+
 		try {
 			String query = "Select id From orders Where id = ?";
 			conn = ConnectionUtil.getConnection();

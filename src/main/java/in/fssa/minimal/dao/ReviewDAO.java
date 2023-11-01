@@ -4,9 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.model.Review;
 import in.fssa.minimal.util.ConnectionUtil;
@@ -49,11 +48,11 @@ public class ReviewDAO {
 	 * @return A set of Review objects representing reviews for the user.
 	 * @throws PersistenceException If a database error occurs during retrieval.
 	 */
-	public Set<Review> getAllReviewByToUserId(int toUserId) throws PersistenceException {
+	public List<Review> getAllReviewByToUserId(int toUserId) throws PersistenceException {
 	    Connection con = null;
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
-	    Set<Review> reviewList = new HashSet<>(); 
+	    List<Review> reviewList = new ArrayList<>(); 
 	    try {
 	        String query = "SELECT ratings FROM appointment_reviews WHERE to_user = ?";
 	        con = ConnectionUtil.getConnection();

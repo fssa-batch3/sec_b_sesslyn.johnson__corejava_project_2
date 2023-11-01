@@ -1,6 +1,6 @@
 package in.fssa.minimal.service;
 
-import java.util.Set;
+import java.util.List;
 import in.fssa.minimal.dao.CategoryDAO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
@@ -51,7 +51,7 @@ public class CategoryService {
 	    }
 	}
 
-	public Set<Category> getAllCategory() throws ServiceException {
+	public List<Category> getAllCategory() throws ServiceException {
 	    try {
 	    	CategoryDAO categoryDAO = new CategoryDAO();
 	        return categoryDAO.findAll(); 

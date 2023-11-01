@@ -5,9 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import in.fssa.minimal.dto.ProductRespondDTO;
 import in.fssa.minimal.exception.PersistenceException;
@@ -37,8 +35,8 @@ public class ProductDAO {
 	 * @throws ValidationException 
 	 */
 
-	public Set<ProductRespondDTO> findAll() throws PersistenceException, ValidationException, ServiceException {
-	    Set<ProductRespondDTO> productList = new HashSet<>();
+	public List<ProductRespondDTO> findAll() throws PersistenceException, ValidationException, ServiceException {
+		List<ProductRespondDTO> productList = new ArrayList<>();
 
 	    Connection con = null;
 	    PreparedStatement ps = null;
@@ -244,6 +242,27 @@ public class ProductDAO {
 		}
 
 	}
+	
+	public void updateQuantity(int quantity, int productId) throws PersistenceException {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			String query = "UPDATE products SET quantity = ? WHERE is_active = 1 AND id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, quantity);
+			ps.setInt(2, productId);
+			ps.executeUpdate();
+			Logger.info("Product Quantity has been updated successfully");
+		} catch (SQLException e) {
+			Logger.error(e);
+			throw new PersistenceException(e);
+		} finally {
+			ConnectionUtil.close(con, ps);
+		}
+
+	}
 
 	/**
 	 * Finds the category ID by its name in the database.
@@ -370,12 +389,12 @@ public class ProductDAO {
 	 * @throws ValidationException 
 	 */
 
-	public Set<ProductRespondDTO> findAllProductsBySellerId(int sellerId) throws PersistenceException, ValidationException, ServiceException {
+	public List<ProductRespondDTO> findAllProductsBySellerId(int sellerId) throws PersistenceException, ValidationException, ServiceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<ProductRespondDTO> pdt = new HashSet<>();
+		List<ProductRespondDTO> pdt = new ArrayList<>();
 
 		try {
 			 String query = "SELECT id, name, image_url, description, seller_id, price, discount, quantity,warranty, category_id, is_active"
@@ -419,12 +438,12 @@ public class ProductDAO {
 		return pdt;
 	}
 	
-	public Set<ProductRespondDTO> findAllProductsByCategoryId(int categoryId) throws PersistenceException, ValidationException, ServiceException {
+	public List<ProductRespondDTO> findAllProductsByCategoryId(int categoryId) throws PersistenceException, ValidationException, ServiceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<ProductRespondDTO> pdt = new HashSet<>();
+		List<ProductRespondDTO> pdt = new ArrayList<>();
 
 		try {
 			 String query = "SELECT id, name, image_url, description, seller_id, price, discount, quantity,warranty, category_id, is_active"
@@ -528,8 +547,6 @@ public class ProductDAO {
 	public static void reactivateProduct(int productId) throws PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
-		int userId = 0;
 		try {
 			String query = "UPDATE products SET is_active = 1 WHERE is_active = 0 AND id = ?";
 			conn = ConnectionUtil.getConnection();

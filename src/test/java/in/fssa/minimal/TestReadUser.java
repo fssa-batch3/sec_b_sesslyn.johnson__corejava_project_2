@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Set;
+import java.util.List;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ class TestReadUser {
     void testGetAllUser() {
         assertDoesNotThrow(() -> {
             UserService userService = new UserService();
-            Set<User> arr = userService.getAllUser();
+            List<User> arr = userService.getAllUser();
             System.out.println(arr);
         });
     }
@@ -90,7 +90,7 @@ class TestReadUser {
     void testGetAllDesigner() {
         assertDoesNotThrow(() -> {
             UserService userService = new UserService();
-            Set<User> arr = userService.getAllDesigner();
+            List<User> arr = userService.getAllDesigner();
             System.out.println(arr);
         });
     }
@@ -110,7 +110,7 @@ class TestReadUser {
     void testGetAllSeller() {
         assertDoesNotThrow(() -> {
             UserService userService = new UserService();
-            Set<User> arr = userService.getAllSeller();
+            List<User> arr = userService.getAllSeller();
             System.out.println(arr);
         });
     }

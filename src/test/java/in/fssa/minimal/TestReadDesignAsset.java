@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Set;
-
+import java.util.List;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -14,10 +13,8 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import in.fssa.minimal.dto.DesignAssetRespondDTO;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Asset;
-import in.fssa.minimal.model.Design;
 import in.fssa.minimal.service.AssetService;
 import in.fssa.minimal.service.DesignAssetService;
-import in.fssa.minimal.service.DesignService;
 
 @TestMethodOrder(OrderAnnotation.class)
 public class TestReadDesignAsset {
@@ -49,7 +46,7 @@ public class TestReadDesignAsset {
 	void testGetAllDesignAndAsset() {
 		assertDoesNotThrow(() -> {
 			DesignAssetService designAssetService = new DesignAssetService();
-			Set<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAsset();
+			List<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAsset();
 			System.out.println(arr);
 		});
 	}
@@ -95,7 +92,7 @@ public class TestReadDesignAsset {
 	    void testGetAllDesignAsset() {
 	        assertDoesNotThrow(() -> {
 	        	DesignAssetService designAssetService = new DesignAssetService();
-	            Set<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAsset();
+	        	List<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAsset();
 	        });
 	    }
 	 
@@ -104,7 +101,7 @@ public class TestReadDesignAsset {
 	    void testGetAllActiveDesignAsset() {
 	        assertDoesNotThrow(() -> {
 	        	DesignAssetService designAssetService = new DesignAssetService();
-	            Set<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAssetByDesignerId(2);
+	        	List<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAssetByDesignerId(2);
 	        });
 	    }
 	 
@@ -113,7 +110,7 @@ public class TestReadDesignAsset {
 	    void testGetAllActiveDesignAssetWithInvalidId() {
 		 DesignAssetService designAssetService = new DesignAssetService();
 			Exception exception = assertThrows(ValidationException.class, () -> {
-				 Set<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAssetByDesignerId(1);
+				List<DesignAssetRespondDTO> arr = designAssetService.getAllDesignAssetByDesignerId(1);
 			});
 			String expectedMessage = "Designer Id doesn't exist";
 			String actualMessage = exception.getMessage();
@@ -126,7 +123,7 @@ public class TestReadDesignAsset {
 	    void testGetAllActiveDesignAssetByDesignId() {
 	        assertDoesNotThrow(() -> {
 	        	DesignAssetService designAssetService = new DesignAssetService();
-	            Set<DesignAssetRespondDTO> arr = designAssetService.getAllActiveDesignAssetByDesignerId(2);
+	        	List<DesignAssetRespondDTO> arr = designAssetService.getAllActiveDesignAssetByDesignerId(2);
 	            System.out.println(arr);
 	        });
 	    }

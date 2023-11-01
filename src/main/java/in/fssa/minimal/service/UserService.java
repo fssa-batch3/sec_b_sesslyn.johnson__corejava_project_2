@@ -1,6 +1,7 @@
 package in.fssa.minimal.service;
 
-import java.util.Set;
+import java.util.List;
+
 import in.fssa.minimal.dao.UserDAO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
@@ -18,7 +19,7 @@ public class UserService {
 	 * @throws ServiceException If a service-related error occurs during retrieval.
 	 * @throws ValidationException If a validation error occurs during the operation.
 	 */
-	public Set<User> getAllUser() throws ServiceException, ValidationException {
+	public List<User> getAllUser() throws ServiceException, ValidationException {
 	    try {
 	        UserDAO userDAO = new UserDAO(); 
 	        return userDAO.findAll(); 
@@ -205,7 +206,7 @@ public class UserService {
 	 * @throws ServiceException If a service-related error occurs during retrieval.
 	 * @throws ValidationException If validation of the retrieved data fails.
 	 */
-	public Set<User> getAllDesigner() throws ServiceException, ValidationException {
+	public List<User> getAllDesigner() throws ServiceException, ValidationException {
 	    try {
 	        UserDAO userDAO = new UserDAO();
 	        return userDAO.findAllDesigner();
@@ -221,7 +222,7 @@ public class UserService {
 	 * @throws ServiceException If a service-related error occurs during retrieval.
 	 * @throws ValidationException If validation of the retrieved data fails.
 	 */
-	public Set<User> getAllSeller() throws ServiceException, ValidationException {
+	public List<User> getAllSeller() throws ServiceException, ValidationException {
 	    try {
 	        UserDAO userDAO = new UserDAO();
 	        return userDAO.findAllSeller();

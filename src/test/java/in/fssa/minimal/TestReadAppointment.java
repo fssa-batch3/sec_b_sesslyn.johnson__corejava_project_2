@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Set;
+import java.util.List;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class TestReadAppointment {
 	void testGetAllAppointment() throws ValidationException, PersistenceException {
 		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {
-			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointment();
+			List<AppointmentRespondDTO> arr = appointmentService.getAllAppointment();
 			System.out.println(arr);
 		});
 	} 
@@ -32,7 +32,7 @@ class TestReadAppointment {
 	void testGetAllByStatus() throws ValidationException, PersistenceException {
 		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {
-			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("approved");
+			List<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("approved");
 		});
 	}
 
@@ -41,7 +41,7 @@ class TestReadAppointment {
 	void testGetAllByStatusNull() {
 		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus(null);
+			List<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus(null);
 		});
 		String expectedMessage = "Status cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -54,7 +54,7 @@ class TestReadAppointment {
 	void testGetAllByStatusEmpty() {
 		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("");
+			List<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("");
 		});
 		String expectedMessage = "Status cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -67,7 +67,7 @@ class TestReadAppointment {
 	void testGetAllByStatusPattern() {
 		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("accepted");
+			List<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByStatus("accepted");
 		});
 		String expectedMessage = "Invalid status value. The status can only be one of:"
 				+ " waiting_list, approved, rejected";
@@ -81,7 +81,7 @@ class TestReadAppointment {
 	void testGetAllAppointmentByFromUserId() throws ValidationException, PersistenceException {
 		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {
-			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByFromUserId(3);
+			List<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByFromUserId(3);
 		});
 	}
 
@@ -90,7 +90,7 @@ class TestReadAppointment {
 	void testGetAllAppointmentByFromUserIdNotExist() {
 		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByFromUserId(1000);
+			List<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByFromUserId(1000);
 		});
 		String expectedMessage = "User Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -103,7 +103,7 @@ class TestReadAppointment {
 	void testGetAllByToUserId() throws ValidationException, PersistenceException {
 		AppointmentService appointmentService = new AppointmentService();
 		assertDoesNotThrow(() -> {
-			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByToUserId(2);
+			List<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByToUserId(2);
 		});
 	}
 
@@ -112,7 +112,7 @@ class TestReadAppointment {
 	void testGetAllByToUserIdNotExist() {
 		AppointmentService appointmentService = new AppointmentService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByToUserId(1);
+			List<AppointmentRespondDTO> arr = appointmentService.getAllAppointmentByToUserId(1);
 		});
 		String expectedMessage = "Designer Id doesn't exist";
 		String actualMessage = exception.getMessage();

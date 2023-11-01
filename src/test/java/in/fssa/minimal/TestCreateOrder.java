@@ -19,9 +19,9 @@ class TestCreateOrder {
 	 void testCreateOrderWithValidInput() {
 	    OrderService orderService = new OrderService(); 
 	    Order newOrder = new Order();
-	    newOrder.setPrice(50000);
+	    newOrder.setPrice(45000);
 	    newOrder.setQuantity(1);
-	    newOrder.setPayment("Cash on Delivery");
+	    newOrder.setPayment("Cash On Delivery");
 	    newOrder.setStatus("Waiting_list");
 	    newOrder.setUserId(1); 
 	    newOrder.setSellerId(15);
@@ -52,7 +52,7 @@ class TestCreateOrder {
 	    Order newOrder = new Order();
 	    newOrder.setPrice(250);
 	    newOrder.setQuantity(1);
-	    newOrder.setPayment("Cash on Delivery");
+	    newOrder.setPayment("Cash On Delivery");
 	    newOrder.setStatus("Waiting_list");
 	    newOrder.setUserId(1);
 	    newOrder.setSellerId(15);
@@ -74,7 +74,7 @@ class TestCreateOrder {
 	    Order newOrder = new Order();
 	    newOrder.setPrice(5000);
 	    newOrder.setQuantity(0);
-	    newOrder.setPayment("Cash on Delivery");
+	    newOrder.setPayment("Cash On Delivery");
 	    newOrder.setStatus("Waiting_list");
 	    newOrder.setUserId(1);
 	    newOrder.setSellerId(15);
@@ -96,7 +96,7 @@ class TestCreateOrder {
 	    Order newOrder = new Order();
 	    newOrder.setPrice(5000);
 	    newOrder.setQuantity(1);
-	    newOrder.setPayment("Cash on Delivery");
+	    newOrder.setPayment("Cash On Delivery");
 	    newOrder.setStatus("approved");
 	    newOrder.setUserId(1);
 	    newOrder.setSellerId(15);
@@ -118,7 +118,7 @@ class TestCreateOrder {
 	    Order newOrder = new Order();
 	    newOrder.setPrice(5000);
 	    newOrder.setQuantity(1);
-	    newOrder.setPayment("Cash on Delivery");
+	    newOrder.setPayment("Cash On Delivery");
 	    newOrder.setStatus("Waiting_list");
 	    newOrder.setUserId(1000);
 	    newOrder.setSellerId(15);
@@ -140,7 +140,7 @@ class TestCreateOrder {
 	    Order newOrder = new Order();
 	    newOrder.setPrice(5000);
 	    newOrder.setQuantity(1);
-	    newOrder.setPayment("Cash on Delivery");
+	    newOrder.setPayment("Cash On Delivery");
 	    newOrder.setStatus("Waiting_list");
 	    newOrder.setUserId(1);
 	    newOrder.setSellerId(1);
@@ -162,7 +162,7 @@ class TestCreateOrder {
 	    Order newOrder = new Order();
 	    newOrder.setPrice(5000);
 	    newOrder.setQuantity(1);
-	    newOrder.setPayment("Cash on Delivery");
+	    newOrder.setPayment("Cash On Delivery");
 	    newOrder.setStatus("Waiting_list");
 	    newOrder.setUserId(1);
 	    newOrder.setSellerId(15);
@@ -184,7 +184,7 @@ class TestCreateOrder {
 	    Order newOrder = new Order();
 	    newOrder.setPrice(5000);
 	    newOrder.setQuantity(1);
-	    newOrder.setPayment("Cash on Delivery");
+	    newOrder.setPayment("Cash On Delivery");
 	    newOrder.setStatus("Waiting_list");
 	    newOrder.setUserId(1);
 	    newOrder.setSellerId(15);

@@ -1,6 +1,6 @@
 package in.fssa.minimal.service;
 
-import java.util.Set;
+import java.util.List;
 
 import in.fssa.minimal.dao.ReviewDAO;
 import in.fssa.minimal.exception.PersistenceException;
@@ -36,11 +36,11 @@ public class ReviewService {
 	 * @throws ValidationException If the designer ID validation fails.
 	 * @throws ServiceException If a service-related error occurs during the operation.
 	 */
-	public Set<Review> getAllReviewByDesignerId(int designerId) throws ValidationException, ServiceException {
+	public List<Review> getAllReviewByDesignerId(int designerId) throws ValidationException, ServiceException {
 		try {
 			ReviewValidator.validateDesignerId(designerId);
 			ReviewDAO reviewDAO = new ReviewDAO();
-			Set<Review> reviewList = reviewDAO.getAllReviewByToUserId(designerId);
+			List<Review> reviewList = reviewDAO.getAllReviewByToUserId(designerId);
 			return reviewList;
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while retrieveing all designs and thier assets", e);

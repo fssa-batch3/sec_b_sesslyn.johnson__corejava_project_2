@@ -1,7 +1,6 @@
 package in.fssa.minimal.service;
 
-import java.util.Set;
-
+import java.util.List;
 import in.fssa.minimal.dao.DesignDAO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
@@ -75,10 +74,10 @@ public class DesignService {
 	 * @throws PersistenceException If a database error occurs during retrieval.
 	 * @throws ServiceException    If an error occurs during database operation.
 	 */
-	public Set<Design> getAllDesign() throws PersistenceException, ServiceException {
+	public List<Design> getAllDesign() throws PersistenceException, ServiceException {
 	    try {
 	        DesignDAO designDao = new DesignDAO();
-	        Set<Design> designList = designDao.findAllDesign();
+	        List<Design> designList = designDao.findAllDesign();
 	        return designList;
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while retrieving designs", e);

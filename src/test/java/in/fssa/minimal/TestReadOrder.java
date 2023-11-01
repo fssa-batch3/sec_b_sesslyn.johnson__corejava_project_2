@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Set;
-
+import java.util.List;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +18,7 @@ class TestReadOrder {
     void testGetAllAddress() { 
         assertDoesNotThrow(() -> {
             OrderService orderService = new OrderService();
-            Set<OrderRespondDTO> arr = orderService.getAllOrder();
+            List<OrderRespondDTO> arr = orderService.getAllOrder();
             System.out.println(arr);
         });
     }
@@ -29,7 +28,7 @@ class TestReadOrder {
     void testGetAllOrderByUserId() { 
         assertDoesNotThrow(() -> {
             OrderService orderService = new OrderService();
-            Set<OrderRespondDTO> arr = orderService.getAllOrderByUserId(1);
+            List<OrderRespondDTO> arr = orderService.getAllOrderByUserId(1);
             System.out.println(arr);
         });
     }
@@ -39,7 +38,7 @@ class TestReadOrder {
 	void testGetAllOrderByInvalidUserId() {
 		OrderService orderService = new OrderService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<OrderRespondDTO> arr = orderService.getAllOrderByUserId(100);
+			List<OrderRespondDTO> arr = orderService.getAllOrderByUserId(100);
 		});
 		String expectedMessage = "User Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -52,7 +51,7 @@ class TestReadOrder {
     void testGetAllOrderBySellerId() { 
         assertDoesNotThrow(() -> {
             OrderService orderService = new OrderService();
-            Set<OrderRespondDTO> arr = orderService.getAllOrderBySellerId(15);
+            List<OrderRespondDTO> arr = orderService.getAllOrderBySellerId(15);
             System.out.println(arr);
         });
     }
@@ -62,7 +61,7 @@ class TestReadOrder {
 	void testGetAllOrderByInvalidSellerId() {
 		OrderService orderService = new OrderService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<OrderRespondDTO> arr = orderService.getAllOrderBySellerId(100);
+			List<OrderRespondDTO> arr = orderService.getAllOrderBySellerId(100);
 		});
 		String expectedMessage = "Seller Id doesn't exist";
 		String actualMessage = exception.getMessage();

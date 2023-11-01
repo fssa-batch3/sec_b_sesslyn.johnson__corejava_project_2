@@ -1,6 +1,6 @@
 package in.fssa.minimal.service;
 
-import java.util.Set;
+import java.util.List;
 
 import in.fssa.minimal.dao.ProductDAO;
 import in.fssa.minimal.dto.ProductRespondDTO;
@@ -15,7 +15,7 @@ import in.fssa.minimal.validator.UserValidator;
  
 public class ProductService {
 	
-	public Set<ProductRespondDTO> getAllProduct() throws ServiceException, ValidationException {
+	public List<ProductRespondDTO> getAllProduct() throws ServiceException, ValidationException {
 	    try {
 	        ProductDAO productDAO = new ProductDAO(); 
 	        return productDAO.findAll(); 
@@ -34,7 +34,7 @@ public class ProductService {
 	    }
 	}
 
-	public  Set<ProductRespondDTO>  findProductBySellerId(int sellerId) throws ValidationException, ServiceException {
+	public  List<ProductRespondDTO>  findProductBySellerId(int sellerId) throws ValidationException, ServiceException {
 	    try {
 	        UserValidator.validateSellerId(sellerId);
 	        ProductDAO productDAO = new ProductDAO(); 
@@ -44,7 +44,7 @@ public class ProductService {
 	    }
 	} 
 
-	public  Set<ProductRespondDTO>  findProductByCategoryId(int categoryId) throws ValidationException, ServiceException {
+	public  List<ProductRespondDTO>  findProductByCategoryId(int categoryId) throws ValidationException, ServiceException {
 	    try {
 	    	ProductValidator.validateCategoryId(categoryId);
 	        ProductDAO productDAO = new ProductDAO(); 
@@ -71,7 +71,7 @@ public class ProductService {
 		        	throw new ValidationException("Nothing has been updated in the product");
 		        }
 		        if (updatedProduct.getName() != null) {
-		        	ProductValidator.validateProductName(updatedProduct.getName(), "Product Name");
+		        	ProductValidator.validateUpdateProductName(updatedProduct.getName(), "Product Name");
 		        }
 		        if (updatedProduct.getImageUrl() != null) {
 		        	DesignValidator.validateDescription(updatedProduct.getImageUrl());
@@ -113,6 +113,18 @@ public class ProductService {
 	        throw new ServiceException("Error occurred while creating product.", e);
 	    }
 	}
+	
+	public static void updateQuantityProduct(int quantity, int productId) throws ValidationException, ServiceException {
+	    try {
+	    	ProductValidator.validateProductId(productId);
+	    	ProductValidator.validateUpdateQuantity(quantity);
+	    	ProductDAO productDAO = new ProductDAO(); 
+		    productDAO.updateQuantity(quantity, productId);
+	    } catch (PersistenceException e) {
+	        throw new ServiceException("Error occurred while creating product.", e);
+	    }
+	}
+	
 	public void reactivateProduct(int productId) throws ValidationException, ServiceException {
 	    try {
 	    	ProductDAO productDAO = new ProductDAO(); 

@@ -1,5 +1,6 @@
 package in.fssa.minimal.service;
 
+import java.util.List;
 import java.util.Set; 
 
 import in.fssa.minimal.dao.DesignAssetDAO;
@@ -118,10 +119,10 @@ public class DesignAssetService {
 	 * @throws PersistenceException If there's an issue with database interaction.
 	 * @throws ServiceException     If an error occurs during the service operation.
 	 */
-	public Set<DesignAssetRespondDTO> getAllDesignAsset() throws ValidationException, ServiceException {
+	public List<DesignAssetRespondDTO> getAllDesignAsset() throws ValidationException, ServiceException {
 		try {
 			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
-			Set<DesignAssetRespondDTO> assetList = designAssetDAO.findAllDesignAsset();
+			List<DesignAssetRespondDTO> assetList = designAssetDAO.findAllDesignAsset();
 			return assetList;
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while retrieveing all designs and thier assets", e);
@@ -137,11 +138,11 @@ public class DesignAssetService {
 	 * @throws ValidationException If the designer ID validation fails.
 	 * @throws ServiceException If a service-related error occurs during the operation.
 	 */
-	public Set<DesignAssetRespondDTO> getAllDesignAssetByDesignerId(int designerId) throws ValidationException, ServiceException {
+	public List<DesignAssetRespondDTO> getAllDesignAssetByDesignerId(int designerId) throws ValidationException, ServiceException {
 		try {
 			DesignAssetValidator.validateDesignerId(designerId);
 			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
-			Set<DesignAssetRespondDTO> assetList = designAssetDAO.findAllDesignAssetByDesignerId(designerId);
+			List<DesignAssetRespondDTO> assetList = designAssetDAO.findAllDesignAssetByDesignerId(designerId);
 			return assetList;
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while retrieveing all designs and thier assets", e);
@@ -157,11 +158,11 @@ public class DesignAssetService {
 	 * @throws ValidationException If the designer ID validation fails.
 	 * @throws ServiceException If a service-related error occurs during the operation.
 	 */
-	public Set<DesignAssetRespondDTO> getAllActiveDesignAssetByDesignerId(int designerId) throws ValidationException, ServiceException {
+	public List<DesignAssetRespondDTO> getAllActiveDesignAssetByDesignerId(int designerId) throws ValidationException, ServiceException {
 		try {
 			DesignAssetValidator.validateDesignerId(designerId);
 			DesignAssetDAO designAssetDAO = new DesignAssetDAO();
-			Set<DesignAssetRespondDTO> assetList = designAssetDAO.findAllActiveDesignAssetByDesignerId(designerId);
+			List<DesignAssetRespondDTO> assetList = designAssetDAO.findAllActiveDesignAssetByDesignerId(designerId);
 			return assetList;
 		} catch (PersistenceException e) {
 			throw new ServiceException("Error occurred while retrieveing all designs and thier assets", e);

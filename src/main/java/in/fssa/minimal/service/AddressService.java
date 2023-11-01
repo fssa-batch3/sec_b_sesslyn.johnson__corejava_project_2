@@ -1,7 +1,6 @@
  package in.fssa.minimal.service;
 
-import java.util.Set;
-
+import java.util.List;
 import in.fssa.minimal.dao.AddressDAO;
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ServiceException;
@@ -76,7 +75,7 @@ public class AddressService {
 		}
 	}
 
-	public Set<Address> getAllAddress() throws ServiceException, ValidationException {
+	public List<Address> getAllAddress() throws ServiceException, ValidationException {
 	    try {
 	    	AddressDAO addressDAO = new AddressDAO();
 	        return addressDAO.findAllAddress(); 
@@ -85,7 +84,7 @@ public class AddressService {
 	    }
 	}    
 	
-	public Set<Address> getAllAddressByUserId(int userId) throws ServiceException, ValidationException {
+	public List<Address> getAllAddressByUserId(int userId) throws ServiceException, ValidationException {
 	    try {
 	    	UserValidator.validateUserId(userId);
 	    	AddressDAO addressDAO = new AddressDAO();

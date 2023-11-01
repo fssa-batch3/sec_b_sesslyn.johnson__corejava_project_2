@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Set;
-
+import java.util.List;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +18,7 @@ public class TestReadReview {
     void testGetAllReviewByDesignerId() {
         assertDoesNotThrow(() -> {
             ReviewService reviewService = new  ReviewService();
-            Set<Review> arr = reviewService.getAllReviewByDesignerId(2);
+            List<Review> arr = reviewService.getAllReviewByDesignerId(2);
             System.out.println(arr);
             });
     } 
@@ -29,7 +28,7 @@ public class TestReadReview {
 	void testWithDesignerIdNotExists() {
 		 ReviewService reviewService = new  ReviewService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<Review> arr = reviewService.getAllReviewByDesignerId(1);
+			List<Review> arr = reviewService.getAllReviewByDesignerId(1);
 		});
 		String expectedMessage = "Designer Id doesn't exist";
 		String actualMessage = exception.getMessage();

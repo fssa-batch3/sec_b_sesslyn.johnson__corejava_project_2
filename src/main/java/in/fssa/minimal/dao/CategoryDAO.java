@@ -4,8 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Category;
@@ -21,9 +22,9 @@ public class CategoryDAO {
 	 *                              connection or query.
 	 */
 
-	public Set<Category> findAll() throws PersistenceException {
+	public List<Category> findAll() throws PersistenceException {
 
-		Set<Category> categoryList = new HashSet<>();
+		List<Category> categoryList = new ArrayList<>();
 
 		Connection con = null;
 		PreparedStatement ps = null;

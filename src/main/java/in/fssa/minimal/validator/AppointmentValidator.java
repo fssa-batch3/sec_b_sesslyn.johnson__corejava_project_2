@@ -155,25 +155,32 @@ public class AppointmentValidator {
 	 * @throws ValidationException If the date is not valid (format or range).
 	 */
 	public static void validateDate(String date) throws ValidationException {
-		StringUtil.rejectIfInvalidString(date, "Date");
-		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate dueDate;
+	    try {
+	        String[] dateParts = date.split("-");
 
-		try {
-			dueDate = LocalDate.parse(date, inputFormatter);
-		} catch (DateTimeParseException e) {
-			throw new ValidationException("Invalid date format (yyyy-MM-dd)");
-		}
+	        if (dateParts.length == 3) {
+	            dateParts[1] = String.format("%02d", Integer.parseInt(dateParts[1])); // Month
+	            dateParts[2] = String.format("%02d", Integer.parseInt(dateParts[2])); // Day
+	        }
+	        String formattedDate = String.join("-", dateParts);
+	        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	        LocalDate dueDate = LocalDate.parse(formattedDate, inputFormatter);
 
-		LocalDate currentDate = LocalDate.now();
-		LocalDate maxAllowedDate = currentDate.plusDays(90);
-		if (dueDate.equals(currentDate)) {
-			throw new ValidationException("Invalid date. The date can't be today");
-		}
-		if (dueDate.isBefore(currentDate) || dueDate.isAfter(maxAllowedDate)) {
-			throw new ValidationException("Invalid date. The date should be within the next 90 days");
-		}
+	        LocalDate currentDate = LocalDate.now();
+	        LocalDate maxAllowedDate = currentDate.plusDays(90);
+
+	        if (dueDate.isEqual(currentDate)) {
+	            throw new ValidationException("Invalid date. The date can't be today.");
+	        }
+	        if (dueDate.isBefore(currentDate) || dueDate.isAfter(maxAllowedDate)) {
+	            throw new ValidationException("Invalid date. The date should be within the next 90 days.");
+	        }
+
+	    } catch (DateTimeParseException e) {
+	        throw new ValidationException("Invalid date format (yyyy-MM-dd)");
+	    }
 	}
+
 
 	/**
 	 * Validates a time for format and range constraints.

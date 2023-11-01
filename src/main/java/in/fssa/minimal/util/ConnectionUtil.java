@@ -8,31 +8,30 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import in.fssa.minimal.exception.PersistenceException;
 
+public class ConnectionUtil {
 
-public class ConnectionUtil { 
- 
 	/**
-     * Establishes a database connection using environment variables or a local configuration.
-     *
-     * @return A database connection instance.
-     * @throws SQLException 
-     */
+	 * Establishes a database connection using environment variables or a local
+	 * configuration.
+	 *
+	 * @return A database connection instance.
+	 * @throws SQLException
+	 */
 	public static Connection getConnection() throws SQLException {
 
-		String url;  
+		String url;
 		String userName;
-		String passWord; 
-				
+		String passWord;
+
 		url = System.getenv("DATABASE_HOSTNAME");
 		userName = System.getenv("DATABASE_USERNAME");
 		passWord = System.getenv("DATABASE_PASSWORD");
-		
-			
+
 		Connection connection = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection(url, userName, passWord);
-		} catch (ClassNotFoundException|SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			throw new SQLException(e);
 		}
 		return connection;
@@ -58,7 +57,7 @@ public class ConnectionUtil {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public static void close(Connection connection, PreparedStatement ps1, PreparedStatement ps2) {
 		try {
 			if (ps1 != null) {
@@ -87,7 +86,7 @@ public class ConnectionUtil {
 		try {
 			if (rs != null) {
 				rs.close();
-			} 
+			}
 			if (ps != null) {
 				ps.close();
 			}

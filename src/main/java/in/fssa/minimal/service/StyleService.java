@@ -1,6 +1,6 @@
 package in.fssa.minimal.service;
 
-import java.util.Set;
+import java.util.List;
 
 import in.fssa.minimal.dao.DesignDAO;
 import in.fssa.minimal.dao.StyleDAO;
@@ -85,10 +85,10 @@ public class StyleService {
 	 * @return A set of Style objects representing all available styles.
 	 * @throws ServiceException If a service-related error occurs during the operation.
 	 */
-	public Set<Style> getAllStyle() throws ServiceException {
+	public List<Style> getAllStyle() throws ServiceException {
 	    try {
 	        StyleDAO styleDao = new StyleDAO();
-	        Set<Style> styleList = styleDao.findAllStyle();
+	        List<Style> styleList = styleDao.findAllStyle();
 	        return styleList;
 	    } catch (PersistenceException e) {
 	        throw new ServiceException("Error occurred while retrieving all styles.", e);

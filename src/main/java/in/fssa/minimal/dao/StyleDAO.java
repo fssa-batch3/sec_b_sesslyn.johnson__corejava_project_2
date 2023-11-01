@@ -4,12 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
-import in.fssa.minimal.model.Design;
 import in.fssa.minimal.model.Style;
 import in.fssa.minimal.util.ConnectionUtil;
 import in.fssa.minimal.util.Logger;
@@ -198,11 +197,11 @@ public class StyleDAO {
 	 * @return A set of all styles in the database.
 	 * @throws PersistenceException If a database error occurs during retrieval.
 	 */
-	public Set<Style> findAllStyle() throws RuntimeException, PersistenceException {
+	public List<Style> findAllStyle() throws RuntimeException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<Style> styleList = new HashSet<>();
+		List<Style> styleList = new ArrayList<>();
 		try {
 			String query = "SELECT id, name FROM styles";
 			conn = ConnectionUtil.getConnection();

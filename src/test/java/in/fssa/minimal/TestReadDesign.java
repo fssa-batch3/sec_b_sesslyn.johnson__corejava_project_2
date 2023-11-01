@@ -4,14 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Set;
+import java.util.List;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
-import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
 import in.fssa.minimal.model.Design;
 import in.fssa.minimal.model.Style;
@@ -25,7 +24,7 @@ class TestReadDesign {
 	    void testGetAllDesign() {
 	        assertDoesNotThrow(() -> {
 	            DesignService designService = new DesignService();
-	            Set<Design> arr = designService.getAllDesign();
+	            List<Design> arr = designService.getAllDesign();
 	        });
 	    } 
 	    
@@ -92,7 +91,7 @@ class TestReadDesign {
     void testGetAllStyle() {
         assertDoesNotThrow(() -> {
         	StyleService styleService = new StyleService();
-            Set<Style> arr = styleService.getAllStyle();
+        	List<Style> arr = styleService.getAllStyle();
             System.out.println(arr);
         });
     }

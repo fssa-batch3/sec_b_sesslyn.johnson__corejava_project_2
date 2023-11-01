@@ -108,11 +108,11 @@ public class DesignDAO {
  * @throws RuntimeException   If there's a runtime error during retrieval.
  * @throws PersistenceException If a database error occurs during retrieval.
  */
-	public Set<Design> findAllDesign() throws RuntimeException, PersistenceException {
+	public List<Design> findAllDesign() throws RuntimeException, PersistenceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<Design> designList = new HashSet<>();
+		List<Design> designList = new ArrayList<>();
 		try {
 			String query = "SELECT id, name, description, location, style_id FROM designs";
 			conn = ConnectionUtil.getConnection();

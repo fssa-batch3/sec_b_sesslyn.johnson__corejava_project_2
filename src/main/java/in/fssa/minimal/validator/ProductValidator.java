@@ -86,5 +86,22 @@ public class ProductValidator {
         }
     }
 
-
+  
+    public static void validateUpdateQuantity(int quantity) throws ValidationException {
+        if (quantity < 0) {
+            throw new ValidationException("Quantity cannot be negative");
+        }
+    } 
+    
+    public static void validateUpdateProductName(String productName, String value) throws ValidationException, ServiceException {
+		StringUtil.rejectIfInvalidString(productName, value);
+		productName = productName.trim();
+		if (productName.length() < 3) {
+			throw new ValidationException(value + " should be at least 3 characters long");
+		}
+		if (!Pattern.matches(NAME_PATTERN, productName)) {
+			throw new ValidationException(
+					value + " should only contain alphabetic characters and allow spaces between words");
+		}
+	}
 }

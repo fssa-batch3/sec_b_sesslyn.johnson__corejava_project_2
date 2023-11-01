@@ -8,9 +8,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import in.fssa.minimal.enums.GenderEnum;
 import in.fssa.minimal.enums.RoleEnum;
@@ -34,11 +32,11 @@ public class UserDAO implements UserInterface {
 	 * @throws ValidationException If validation of retrieved data fails.
 	 */
 	@Override
-	public Set<User> findAll() throws PersistenceException, ValidationException {
+	public List<User> findAll() throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null; 
-		Set<User> userList = new HashSet<>();
+		List<User> userList = new ArrayList<>();
 		try {
 			String query = "SELECT id,name,email,image,phone_number,date_of_birth,gender,role,"
 					+ "is_active,experience,designer_description,gst_number,aadhar_number,shop_address "
@@ -382,11 +380,11 @@ public class UserDAO implements UserInterface {
 	 * @throws PersistenceException If a database-related error occurs during retrieval.
 	 * @throws ValidationException If validation of retrieved data fails.
 	 */
-	public Set<User> findAllDesigner() throws PersistenceException, ValidationException {
+	public List<User> findAllDesigner() throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<User> userList = new HashSet<>();
+		List<User> userList = new ArrayList<>();
 		try {
 			String query = "SELECT id, name, email, image, phone_number, date_of_birth, gender, role, is_active, experience, designer_description "
 					+ "FROM users WHERE role = 'd' AND is_active = 1";
@@ -441,11 +439,11 @@ public class UserDAO implements UserInterface {
 	 * @throws PersistenceException If a database-related error occurs during retrieval.
 	 * @throws ValidationException If validation of retrieved data fails.
 	 */
-	public Set<User> findAllSeller() throws PersistenceException, ValidationException {
+	public List<User> findAllSeller() throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<User> userList = new HashSet<>();
+		List<User> userList = new ArrayList<>();
 		try {
 			String query = "SELECT id,name,email,image,phone_number,date_of_birth,gender,role,is_active,gst_number,aadhar_number,shop_address "
 					+ " FROM users WHERE role = 's' AND is_active = 1";

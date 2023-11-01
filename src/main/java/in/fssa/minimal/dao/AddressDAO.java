@@ -5,9 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import in.fssa.minimal.exception.PersistenceException;
 import in.fssa.minimal.exception.ValidationException;
@@ -156,11 +154,11 @@ public class AddressDAO {
 		}
 	}
 
-	public Set<Address> findAllAddress() throws PersistenceException, ValidationException {
+	public List<Address> findAllAddress() throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<Address> addressList = new HashSet<>();
+		List<Address> addressList = new ArrayList<>();
 		try {
 			String query = "SELECT id, name, email, phone_number, address, city, state, country, pincode, title, user_id,is_default, is_active FROM address WHERE is_active = 1";
 			conn = ConnectionUtil.getConnection();
@@ -192,11 +190,11 @@ public class AddressDAO {
 		return addressList;
 	}
 	
-	public Set<Address> findAllAddressByUserId(int userId) throws PersistenceException, ValidationException {
+	public List<Address> findAllAddressByUserId(int userId) throws PersistenceException, ValidationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<Address> addressList = new HashSet<>();
+		List<Address> addressList = new ArrayList<>();
 		try {
 			String query = "SELECT id, name, email, phone_number, address, city, state, country, pincode, title, user_id,is_default, is_active FROM address WHERE user_id = ? AND is_active = 1";
 			conn = ConnectionUtil.getConnection();

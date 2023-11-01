@@ -3,7 +3,7 @@ package in.fssa.minimal;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import java.util.Set;
+import java.util.List;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -21,7 +21,7 @@ class TestReadProduct {
     void testGetAllProduct() {
         assertDoesNotThrow(() -> {
             ProductService productService = new ProductService();
-            Set<ProductRespondDTO> arr = productService.getAllProduct();
+            List<ProductRespondDTO> arr = productService.getAllProduct();
             System.out.println(arr);
         });
     }
@@ -31,7 +31,7 @@ class TestReadProduct {
     void testGetAllProductBySellerId() {
         assertDoesNotThrow(() -> {
             ProductService productService = new ProductService();
-            Set<ProductRespondDTO> arr = productService.findProductBySellerId(15);
+            List<ProductRespondDTO> arr = productService.findProductBySellerId(15);
             System.out.println(arr);
         });
     }
@@ -41,7 +41,7 @@ class TestReadProduct {
 	void testGetProductByIdLessThanZeroSellerId() {
 		ProductService productService = new ProductService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<ProductRespondDTO> arr = productService.findProductBySellerId(-5);
+			List<ProductRespondDTO> arr = productService.findProductBySellerId(-5);
 		});
 		String expectedMessage = "Seller Id cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -54,7 +54,7 @@ class TestReadProduct {
 	void testGetProductByNotExistingSellerId() {
 		ProductService productService = new ProductService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<ProductRespondDTO> arr = productService.findProductBySellerId(1);
+			List<ProductRespondDTO> arr = productService.findProductBySellerId(1);
 		});
 		String expectedMessage = "Seller Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -67,7 +67,7 @@ class TestReadProduct {
     void testGetAllProductByCategoryId() {
         assertDoesNotThrow(() -> {
             ProductService productService = new ProductService();
-            Set<ProductRespondDTO> arr = productService.findProductByCategoryId(1);
+            List<ProductRespondDTO> arr = productService.findProductByCategoryId(1);
             System.out.println(arr);
         });
     }
@@ -77,7 +77,7 @@ class TestReadProduct {
 	void testGetProductByNotExistingCategoryId(){
 		ProductService productService = new ProductService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			Set<ProductRespondDTO> arr = productService.findProductByCategoryId(1000);
+			List<ProductRespondDTO> arr = productService.findProductByCategoryId(1000);
 		});
 		String expectedMessage = "Category Id doesn't exist";
 		String actualMessage = exception.getMessage();
@@ -113,7 +113,7 @@ class TestReadProduct {
     void testGetAllCategory() {
         assertDoesNotThrow(() -> {
             CategoryService categoryService = new CategoryService();
-            Set<Category> arr = categoryService.getAllCategory();
+            List<Category> arr = categoryService.getAllCategory();
             System.out.println(arr);
         });
     }

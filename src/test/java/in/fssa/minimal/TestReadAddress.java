@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Set;
+import java.util.List;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class TestReadAddress {
     void testGetAllAddress() { 
         assertDoesNotThrow(() -> {
             AddressService addressService = new AddressService();
-            Set<Address> arr = addressService.getAllAddress();
+            List<Address> arr = addressService.getAllAddress();
             System.out.println(arr);
         });
     }
@@ -29,7 +29,7 @@ class TestReadAddress {
     void testGetAllAddressByUserId() {
         assertDoesNotThrow(() -> {
             AddressService addressService = new AddressService();
-            Set<Address> arr = addressService.getAllAddressByUserId(1);
+            List<Address> arr = addressService.getAllAddressByUserId(1);
             System.out.println(arr);
         });
     }
@@ -49,7 +49,7 @@ class TestReadAddress {
 	void testGetAllAddressByInvalidUserId() {
 		 AddressService addressService = new AddressService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			 Set<Address> arr = addressService.getAllAddressByUserId(500);
+			List<Address> arr = addressService.getAllAddressByUserId(500);
 		});
 		String expectedMessage = "User Id doesn't exist";
 		String actualMessage = exception.getMessage();
