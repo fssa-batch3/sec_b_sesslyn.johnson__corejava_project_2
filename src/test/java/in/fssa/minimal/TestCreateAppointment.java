@@ -164,12 +164,12 @@ class TestCreateAppointment {
 		AppointmentService appointmentService = new AppointmentService();
 		Appointment newAppointment = new Appointment();
 		newAppointment.setFromUser(16);
-		newAppointment.setToUser(2);
+		newAppointment.setToUser(8);
 		newAppointment.setEmail("jelisha@gmail.com");
 		newAppointment.setPhoneNumber(9787896543l); 
 		newAppointment.setStatus("waiting_list");
-		newAppointment.setDate("2023-11-20");
-		newAppointment.setTime("10:00:00");
+		newAppointment.setDate("2023-11-21");
+		newAppointment.setTime("13:20:00");
 		newAppointment.setAddress(null);  
 		Exception exception = assertThrows(ValidationException.class, () -> { 
 			appointmentService.createAppointment(newAppointment);
@@ -504,7 +504,7 @@ class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.createAppointment(newAppointment);
 		});
-		String expectedMessage = "Invalid date. The date should be within the next 90 days";
+		String expectedMessage = "Invalid date. The date should be within the next 90 days.";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
@@ -526,7 +526,7 @@ class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.createAppointment(newAppointment);
 		});
-		String expectedMessage = "Invalid date. The date should be within the next 90 days";
+		String expectedMessage = "Invalid date. The date should be within the next 90 days.";
 		String actualMessage = exception.getMessage();
  
 		assertEquals(expectedMessage, actualMessage);
@@ -549,7 +549,7 @@ class TestCreateAppointment {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			appointmentService.createAppointment(newAppointment);
 		});
-		String expectedMessage = "Invalid date. The date can't be today";
+		String expectedMessage = "Invalid date. The date can't be today.";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
@@ -565,7 +565,7 @@ class TestCreateAppointment {
 		newAppointment.setEmail("sam@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
 		newAppointment.setStatus("approved");
-		newAppointment.setDate("2023-11-08");
+		newAppointment.setDate("2023-11-20");
 		newAppointment.setTime(null);
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -587,7 +587,7 @@ class TestCreateAppointment {
 		newAppointment.setEmail("sam@gmail.com");
 		newAppointment.setPhoneNumber(6381040916l);
 		newAppointment.setStatus("approved");
-		newAppointment.setDate("2023-11-08");
+		newAppointment.setDate("2023-11-20");
 		newAppointment.setTime("");
 		newAppointment.setAddress(null);
 		Exception exception = assertThrows(ValidationException.class, () -> {

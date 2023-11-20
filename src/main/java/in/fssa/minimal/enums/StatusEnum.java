@@ -4,7 +4,7 @@ import in.fssa.minimal.exception.ValidationException;
 
 public enum StatusEnum{
     waiting_list, approved, rejected,completed;
-    
+
 	/** 
 	 * Get the status string for the provided status value.
 	 *

@@ -155,6 +155,7 @@ public class AppointmentValidator {
 	 * @throws ValidationException If the date is not valid (format or range).
 	 */
 	public static void validateDate(String date) throws ValidationException {
+		StringUtil.rejectIfInvalidString(date, "Date");
 	    try {
 	        String[] dateParts = date.split("-");
 
